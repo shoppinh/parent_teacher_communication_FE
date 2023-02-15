@@ -102,6 +102,9 @@ export function configureAppStore() {
             device: {
                 ...store.getState().device
             },
+            theme: {
+                ...store.getState().theme
+            },
         });
     }, 1000));
 
