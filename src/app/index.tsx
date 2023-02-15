@@ -1,10 +1,17 @@
 import React from 'react';
+import {FontStyle, GlobalStyle} from "../styles";
+
 
 export function App() {
+
     return (
-        <div>
-            Hello may con vo
-        </div>
+        <>
+            <p> Hello may con vo
+            </p>
+            <GlobalStyle/>
+            <FontStyle/>
+        </>
+
     );
 };
 

@@ -71,10 +71,10 @@ import RobotoMediumItalicWOFF2 from 'assets/fonts/family/Roboto-MediumItalic.wof
 import RobotoMediumItalicTTF from 'assets/fonts/family/Roboto-MediumItalic.ttf';
 import RobotoMediumItalicSVG from 'assets/fonts/family/Roboto-MediumItalic.svg';
 
-import UMenuIconEOT from 'assets/fonts/icon/umenu-icon.eot';
-import UMenuIconTTF from 'assets/fonts/icon/umenu-icon.ttf';
-import UMenuIconWOFF from 'assets/fonts/icon/umenu-icon.woff';
-import UMenuIconSVG from 'assets/fonts/icon/umenu-icon.svg';
+// import UMenuIconEOT from 'assets/fonts/icon/umenu-icon.eot';
+// import UMenuIconTTF from 'assets/fonts/icon/umenu-icon.ttf';
+// import UMenuIconWOFF from 'assets/fonts/icon/umenu-icon.woff';
+// import UMenuIconSVG from 'assets/fonts/icon/umenu-icon.svg';
 import { createGlobalStyle } from 'styled-components/macro';
 
 export const FontStyle = createGlobalStyle`
@@ -228,193 +228,193 @@ export const FontStyle = createGlobalStyle`
         url(${RobotoThinItalicWOFF2}) format('woff2'),
         url(${RobotoThinItalicWOFF}) format('woff'),
         url(${RobotoThinItalicTTF}) format('truetype'),
-        url(${RobotoThinItalicSVG}#Roboto-ThinItalic') format('svg');
+        url(${RobotoThinItalicSVG}#Roboto-ThinItalic) format('svg');
     font-weight: 100;
     font-style: italic;
     font-display: swap;
   }
 `;
 
-export const CustomIconStyle = createGlobalStyle`
-  @font-face {
-    font-family: 'umenu-icon';
-    src:  url(${UMenuIconEOT}?c5mpcx);
-    src:  url(${UMenuIconEOT}?c5mpcx#iefix) format('embedded-opentype'),
-      url(${UMenuIconTTF}?c5mpcx) format('truetype'),
-      url(${UMenuIconWOFF}?c5mpcx) format('woff'),
-      url(${UMenuIconSVG}?c5mpcx#umenu-icon) format('svg');
-    font-weight: normal;
-    font-style: normal;
-    font-display: block;
-  }
-
-  [class^="umni-"], [class*=" umni-"] {
-    /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: 'umenu-icon' !important;
-    speak: never;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-  
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  .umni-arrow-up-right-from-square-solid:before {
-    content: "\\e930";
-  }
-  .umni-file-import-solid:before {
-    content: "\\e92e";
-  }
-  .umni-eye-solid:before {
-    content: "\\e92f";
-  }
-  .umni-download:before {
-    content: "\\e92d";
-  }
-  .umni-table:before {
-    content: "\\e92c";
-  }
-  .umni-chevron-down:before {
-    content: "\\e92b";
-  }
-  .umni-language:before {
-    content: "\\e92a";
-  }
-  .umni-conversation-bar .path1:before {
-    content: "\\e923";
-  }
-  .umni-conversation-bar .path2:before {
-    content: "\\e924";
-    margin-left: -1.4541015625em;
-  }
-  .umni-conversation-bar .path3:before {
-    content: "\\e925";
-    margin-left: -1.4541015625em;
-  }
-  .umni-conversation-bar .path4:before {
-    content: "\\e926";
-    margin-left: -1.4541015625em;
-  }
-  .umni-conversation-bar .path5:before {
-    content: "\\e927";
-    margin-left: -1.4541015625em;
-  }
-  .umni-conversation-bar .path6:before {
-    content: "\\e928";
-    margin-left: -1.4541015625em;
-  }
-  .umni-conversation-bar .path7:before {
-    content: "\\e929";
-    margin-left: -1.4541015625em;
-  }
-  .umni-motor:before {
-    content: "\\e922";
-  }
-  .umni-play:before {
-    content: "\\e91d";
-  }
-  .umni-outline-cart .path1:before {
-    content: "\\e91e";
-  }
-  .umni-outline-cart .path2:before {
-    content: "\\e921";
-    margin-left: -1em;
-  }
-  .umni-bell .path1:before {
-    content: "\\e91f";
-  }
-  .umni-bell .path2:before {
-    content: "\\e920";
-    margin-left: -1em;
-  }
-  .umni-chat:before {
-    content: "\\e91c";
-  }
-  .umni-phone:before {
-    content: "\\e91a";
-  }
-  .umni-send:before {
-    content: "\\e91b";
-  }
-  .umni-conversation:before {
-    content: "\\e919";
-  }
-  .umni-exclamation:before {
-    content: "\\e918";
-  }
-  .umni-confirmed:before {
-    content: "\\e917";
-  }
-  .umni-copy:before {
-    content: "\\e916";
-  }
-  .umni-pencil:before {
-    content: "\\e915";
-  }
-  .umni-chevron-right:before {
-    content: "\\e914";
-  }
-  .umni-solid-success:before {
-    content: "\\e912";
-  }
-  .umni-solid-warning:before {
-    content: "\\e913";
-  }
-  .umni-success:before {
-    content: "\\e910";
-  }
-  .umni-warning:before {
-    content: "\\e911";
-  }
-  .umni-basket:before {
-    content: "\\e900";
-  }
-  .umni-cancel:before {
-    content: "\\e901";
-  }
-  .umni-cart:before {
-    content: "\\e902";
-  }
-  .umni-chevron-left:before {
-    content: "\\e903";
-  }
-  .umni-closed-eye:before {
-    content: "\\e904";
-  }
-  .umni-contract:before {
-    content: "\\e905";
-  }
-  .umni-delivery:before {
-    content: "\\e906";
-  }
-  .umni-eye:before {
-    content: "\\e907";
-  }
-  .umni-faq:before {
-    content: "\\e908";
-  }
-  .umni-location:before {
-    content: "\\e909";
-  }
-  .umni-login:before {
-    content: "\\e90a";
-  }
-  .umni-menu:before {
-    content: "\\e90b";
-  }
-  .umni-minus:before {
-    content: "\\e90c";
-  }
-  .umni-plus:before {
-    content: "\\e90d";
-  }
-  .umni-search:before {
-    content: "\\e90e";
-  }
-  .umni-time:before {
-    content: "\\e90f";
-  }
-`;
+// export const CustomIconStyle = createGlobalStyle`
+//   @font-face {
+//     font-family: 'umenu-icon';
+//     src:  url(${UMenuIconEOT}?c5mpcx);
+//     src:  url(${UMenuIconEOT}?c5mpcx#iefix) format('embedded-opentype'),
+//       url(${UMenuIconTTF}?c5mpcx) format('truetype'),
+//       url(${UMenuIconWOFF}?c5mpcx) format('woff'),
+//       url(${UMenuIconSVG}?c5mpcx#umenu-icon) format('svg');
+//     font-weight: normal;
+//     font-style: normal;
+//     font-display: block;
+//   }
+//
+//   [class^="umni-"], [class*=" umni-"] {
+//     /* use !important to prevent issues with browser extensions that change fonts */
+//     font-family: 'umenu-icon' !important;
+//     speak: never;
+//     font-style: normal;
+//     font-weight: normal;
+//     font-variant: normal;
+//     text-transform: none;
+//     line-height: 1;
+//
+//     /* Better Font Rendering =========== */
+//     -webkit-font-smoothing: antialiased;
+//     -moz-osx-font-smoothing: grayscale;
+//   }
+//   .umni-arrow-up-right-from-square-solid:before {
+//     content: "\\e930";
+//   }
+//   .umni-file-import-solid:before {
+//     content: "\\e92e";
+//   }
+//   .umni-eye-solid:before {
+//     content: "\\e92f";
+//   }
+//   .umni-download:before {
+//     content: "\\e92d";
+//   }
+//   .umni-table:before {
+//     content: "\\e92c";
+//   }
+//   .umni-chevron-down:before {
+//     content: "\\e92b";
+//   }
+//   .umni-language:before {
+//     content: "\\e92a";
+//   }
+//   .umni-conversation-bar .path1:before {
+//     content: "\\e923";
+//   }
+//   .umni-conversation-bar .path2:before {
+//     content: "\\e924";
+//     margin-left: -1.4541015625em;
+//   }
+//   .umni-conversation-bar .path3:before {
+//     content: "\\e925";
+//     margin-left: -1.4541015625em;
+//   }
+//   .umni-conversation-bar .path4:before {
+//     content: "\\e926";
+//     margin-left: -1.4541015625em;
+//   }
+//   .umni-conversation-bar .path5:before {
+//     content: "\\e927";
+//     margin-left: -1.4541015625em;
+//   }
+//   .umni-conversation-bar .path6:before {
+//     content: "\\e928";
+//     margin-left: -1.4541015625em;
+//   }
+//   .umni-conversation-bar .path7:before {
+//     content: "\\e929";
+//     margin-left: -1.4541015625em;
+//   }
+//   .umni-motor:before {
+//     content: "\\e922";
+//   }
+//   .umni-play:before {
+//     content: "\\e91d";
+//   }
+//   .umni-outline-cart .path1:before {
+//     content: "\\e91e";
+//   }
+//   .umni-outline-cart .path2:before {
+//     content: "\\e921";
+//     margin-left: -1em;
+//   }
+//   .umni-bell .path1:before {
+//     content: "\\e91f";
+//   }
+//   .umni-bell .path2:before {
+//     content: "\\e920";
+//     margin-left: -1em;
+//   }
+//   .umni-chat:before {
+//     content: "\\e91c";
+//   }
+//   .umni-phone:before {
+//     content: "\\e91a";
+//   }
+//   .umni-send:before {
+//     content: "\\e91b";
+//   }
+//   .umni-conversation:before {
+//     content: "\\e919";
+//   }
+//   .umni-exclamation:before {
+//     content: "\\e918";
+//   }
+//   .umni-confirmed:before {
+//     content: "\\e917";
+//   }
+//   .umni-copy:before {
+//     content: "\\e916";
+//   }
+//   .umni-pencil:before {
+//     content: "\\e915";
+//   }
+//   .umni-chevron-right:before {
+//     content: "\\e914";
+//   }
+//   .umni-solid-success:before {
+//     content: "\\e912";
+//   }
+//   .umni-solid-warning:before {
+//     content: "\\e913";
+//   }
+//   .umni-success:before {
+//     content: "\\e910";
+//   }
+//   .umni-warning:before {
+//     content: "\\e911";
+//   }
+//   .umni-basket:before {
+//     content: "\\e900";
+//   }
+//   .umni-cancel:before {
+//     content: "\\e901";
+//   }
+//   .umni-cart:before {
+//     content: "\\e902";
+//   }
+//   .umni-chevron-left:before {
+//     content: "\\e903";
+//   }
+//   .umni-closed-eye:before {
+//     content: "\\e904";
+//   }
+//   .umni-contract:before {
+//     content: "\\e905";
+//   }
+//   .umni-delivery:before {
+//     content: "\\e906";
+//   }
+//   .umni-eye:before {
+//     content: "\\e907";
+//   }
+//   .umni-faq:before {
+//     content: "\\e908";
+//   }
+//   .umni-location:before {
+//     content: "\\e909";
+//   }
+//   .umni-login:before {
+//     content: "\\e90a";
+//   }
+//   .umni-menu:before {
+//     content: "\\e90b";
+//   }
+//   .umni-minus:before {
+//     content: "\\e90c";
+//   }
+//   .umni-plus:before {
+//     content: "\\e90d";
+//   }
+//   .umni-search:before {
+//     content: "\\e90e";
+//   }
+//   .umni-time:before {
+//     content: "\\e90f";
+//   }
+// `;
