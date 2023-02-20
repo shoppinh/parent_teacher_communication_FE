@@ -16,25 +16,29 @@ import {
  * Taken from https://github.com/DefinitelyTyped/DefinitelyTyped/issues/32914
  */
 
+import resolveConfig from 'tailwindcss/resolveConfig';
+import tailwindConfig from '../../tailwind.config';
+import { Theme } from './theme/themes';
+
+const ScreenConfig: any = resolveConfig(tailwindConfig).theme?.screens || {
+  sm: '640px',
+  md: '768px',
+  lg: '1024px',
+  xl: '1280px',
+  '2xl': '1536px',
+};
+
 // Update your breakpoints if you want
-export const sizes = {
-  // small: 600,
-  // medium: 1024,
-  // large: 1440,
-  // xlarge: 1920,
-  xs: 0,
-  xsm: 321,
-  sm: 576,
-  md: 768,
-  lg: 992,
-  xl: 1200,
-  xxl: 1400,
+export const sizes: {
+  [key: string]: string;
+} = {
+  ...ScreenConfig,
 };
 
 // Iterate through the sizes and create a media template
 export const media = (Object.keys(sizes) as Array<keyof typeof sizes>).reduce((acc, label) => {
   acc[label] = (first: any, ...interpolations: any[]) => css`
-    @media (min-width: ${sizes[label]}px) {
+    @media (min-width: ${sizes[label]}) {
       ${css(first, ...interpolations)}
     }
   `;
@@ -48,19 +52,16 @@ export const media = (Object.keys(sizes) as Array<keyof typeof sizes>).reduce((a
  * Be carefull and keep an eye on the issue and the possible improvements
  */
 type MediaFunction = <P extends object>(
-  first:
-    | TemplateStringsArray
-    | CSSObject
-    | InterpolationFunction<ThemedStyledProps<P, DefaultTheme>>,
-  ...interpolations: Array<Interpolation<ThemedStyledProps<P, DefaultTheme>>>
-) => FlattenInterpolation<ThemedStyledProps<P, DefaultTheme>>;
+    first: TemplateStringsArray | CSSObject | InterpolationFunction<ThemedStyledProps<P, Theme>>,
+    ...interpolations: Array<Interpolation<ThemedStyledProps<P, Theme>>>
+) => FlattenInterpolation<ThemedStyledProps<P, Theme>>;
 
 /* Example
-const SomeDiv = styled.div`
-  display: flex;
-  ....
-  ${media.medium`
-    display: block
-  `}
-`;
-*/
+  const SomeDiv = styled.div`
+    display: flex;
+    ....
+    ${media.medium`
+      display: block
+    `}
+  `;
+  */
