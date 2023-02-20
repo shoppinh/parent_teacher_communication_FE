@@ -71,10 +71,10 @@ import RobotoMediumItalicWOFF2 from 'assets/fonts/family/Roboto-MediumItalic.wof
 import RobotoMediumItalicTTF from 'assets/fonts/family/Roboto-MediumItalic.ttf';
 import RobotoMediumItalicSVG from 'assets/fonts/family/Roboto-MediumItalic.svg';
 
-import ParTeIconEOT from 'assets/fonts/icon/umenu-icon.eot';
-import ParTeIconTTF from 'assets/fonts/icon/umenu-icon.ttf';
-import ParTeIconWOFF from 'assets/fonts/icon/umenu-icon.woff';
-import ParTeIconSVG from 'assets/fonts/icon/umenu-icon.svg';
+import ParTeIconEOT from 'assets/fonts/icon/parte_icon.eot';
+import ParTeIconTTF from 'assets/fonts/icon/parte_icon.ttf';
+import ParTeIconWOFF from 'assets/fonts/icon/parte_icon.woff';
+import ParTeIconSVG from 'assets/fonts/icon/parte_icon.svg';
 import { createGlobalStyle } from 'styled-components/macro';
 
 export const FontStyle = createGlobalStyle`
@@ -236,17 +236,17 @@ export const FontStyle = createGlobalStyle`
 `;
 
 export const CustomIconStyle = createGlobalStyle`
-  @font-face {
-    font-family: 'umenu-icon';
-    src:  url(${ParTeIconEOT}?c5mpcx);
-    src:  url(${ParTeIconEOT}?c5mpcx#iefix) format('embedded-opentype'),
-      url(${ParTeIconTTF}?c5mpcx) format('truetype'),
-      url(${ParTeIconWOFF}?c5mpcx) format('woff'),
-      url(${ParTeIconSVG}?c5mpcx#umenu-icon) format('svg');
-    font-weight: normal;
-    font-style: normal;
-    font-display: block;
-  }
+@font-face {
+  font-family: 'parte_icon';
+  src:  url(${ParTeIconEOT}?7bn842);
+  src:  url(${ParTeIconEOT}?7bn842#iefix) format('embedded-opentype'),
+    url(${ParTeIconTTF}?7bn842) format('truetype'),
+    url(${ParTeIconWOFF}?7bn842) format('woff'),
+    url(${ParTeIconSVG}?7bn842#parte_icon) format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
 
   [class^="partei-"], [class*=" partei-"] {
     /* use !important to prevent issues with browser extensions that change fonts */

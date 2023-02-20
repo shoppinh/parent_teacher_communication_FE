@@ -1,4 +1,4 @@
-import { GlobalStyle } from './global-styles';
+import GlobalStyle from './GlobalStyles';
 import { FontStyle } from './font-styles';
 import { media } from './media';
 

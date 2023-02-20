@@ -35,14 +35,14 @@ export const adminMenuImport = async (query: MenuImportQuery) => {
 };
 
 export const uploadExcelMenuFile = async (query: FileQuery) => {
-  let formData: FormData = new FormData();
+  const formData: FormData = new FormData();
   formData.append('file', query.file);
 
   return new apiClient(query.token || '').post(APIs.admin.uploadExcelMenuFile, formData);
 };
 
 export const uploadImageMenuFile = async (query: FileQuery) => {
-  let formData: FormData = new FormData();
+  const formData: FormData = new FormData();
   formData.append('file', query.file);
 
   return new apiClient(query.token || '').post(APIs.admin.uploadImageMenuFile, formData);

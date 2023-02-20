@@ -4,7 +4,7 @@ export const loadDocumentCookieState = () => {
   try {
     let serializedState = '';
     document.cookie.split(';').forEach(function (el) {
-      let [key, value] = el.split('=');
+      const [key, value] = el.split('=');
       // cookie[key.trim()] = value;
       if (key.trim() === COOKIE_STORAGE_KEY) {
         serializedState = value;

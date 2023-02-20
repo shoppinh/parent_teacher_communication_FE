@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   ${media.md`
     max-width: ${pxToRem(800)}rem;
   `}
+  
   background-color: ${(p) => p.theme.danger};
   width: 100%;
 `;

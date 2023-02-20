@@ -9,13 +9,12 @@ import { currencyList, DEFAULT_LOCALE } from './localization/config';
  * @param   {*}   query   query object (any object that Object.entries() can handle)
  * @returns {string}      query string
  */
-export function qsBuilder(query = {}) {
+export function qsBuilder(query: Record<string | number, any> = {}) {
   // get array of key value pairs ([[k1, v1], [k2, v2]])
   const qs = Object.entries(query)
     // filter pairs with undefined value
     .filter((pair) => pair[1] !== undefined)
     // encode keys and values, remove the value if it is null, but leave the key
-    // @ts-ignore
     .map((pair) =>
       pair
         .filter((i) => i !== null)
@@ -115,10 +114,10 @@ export function isStringEmpty(string: string | undefined | null) {
 }
 
 export function makeid(length) {
-  var result = '';
-  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  var charactersLength = characters.length;
-  for (var i = 0; i < length; i++) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
@@ -151,16 +150,22 @@ export function isElementInView(el: Element | null, isOutofView = false, alt = '
 }
 
 export function isMobileView(width: number | undefined | null) {
-  return (width || window.innerWidth) < sizes.md;
+  if (width) {
+    return width < parseInt(sizes.md.slice(0, -2));
+  }
+  return window.innerWidth < parseInt(sizes.md.slice(0, -2));
 }
 
 export function isTabletView(width: number | undefined | null) {
-  return (width || window.innerWidth) < sizes.lg;
+  if (width) {
+    return width < parseInt(sizes.lg.slice(0, -2));
+  }
+  return window.innerWidth < parseInt(sizes.lg.slice(0, -2));
 }
 
 export function objectToQueryString(obj: any = {}) {
   const str: string[] = [];
-  for (let p in obj) {
+  for (const p in obj) {
     if (obj.hasOwnProperty(p)) {
       str.push(`${encodeURIComponent(p)}=${encodeURIComponent(obj[p])}`);
     }
@@ -188,7 +193,7 @@ export function isiOS() {
 }
 
 export const checkiOSVersion = () => {
-  var agent = window.navigator.userAgent,
+  const agent = window.navigator.userAgent,
     start = agent.indexOf('OS ');
   if ((agent.indexOf('iPhone') > -1 || agent.indexOf('iPad') > -1) && start > -1) {
     return window.Number(agent.substr(start + 3, 3).replace('_', '.'));

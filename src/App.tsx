@@ -17,6 +17,7 @@ import './locales/i18n';
 import { BrowserRouter } from 'react-router-dom';
 import store from 'store';
 import { createRoot } from 'react-dom/client';
+import { GlobalStyle } from './styles';
 
 // Observe loading of Inter (to remove 'Inter', remove the <link> tag in
 // the index.html file and this observer)
@@ -37,7 +38,10 @@ root.render(
     <ThemeProvider>
       <HelmetProvider>
         <React.StrictMode>
-          <App />
+          <>
+            <GlobalStyle />
+            <App />
+          </>
         </React.StrictMode>
       </HelmetProvider>
     </ThemeProvider>
