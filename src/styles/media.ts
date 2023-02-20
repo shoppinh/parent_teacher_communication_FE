@@ -17,7 +17,7 @@ import {
  */
 
 import resolveConfig from 'tailwindcss/resolveConfig';
-import tailwindConfig from '../../tailwind.config';
+import tailwindConfig from './tailwind-inside-duplicated.config';
 import { Theme } from './theme/themes';
 
 const ScreenConfig: any = resolveConfig(tailwindConfig).theme?.screens || {
@@ -52,8 +52,8 @@ export const media = (Object.keys(sizes) as Array<keyof typeof sizes>).reduce((a
  * Be carefull and keep an eye on the issue and the possible improvements
  */
 type MediaFunction = <P extends object>(
-    first: TemplateStringsArray | CSSObject | InterpolationFunction<ThemedStyledProps<P, Theme>>,
-    ...interpolations: Array<Interpolation<ThemedStyledProps<P, Theme>>>
+  first: TemplateStringsArray | CSSObject | InterpolationFunction<ThemedStyledProps<P, Theme>>,
+  ...interpolations: Array<Interpolation<ThemedStyledProps<P, Theme>>>
 ) => FlattenInterpolation<ThemedStyledProps<P, Theme>>;
 
 /* Example

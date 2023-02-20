@@ -7,6 +7,9 @@ import { CustomIconStyle } from '../styles/font-styles';
 import SiteMap from '../utils/sitemap';
 import { RoleBaseProtectedRoute } from './routes';
 import { ConstantRoles } from '../utils/constants';
+import TeacherHomePage from './pages/TeacherHomePage';
+import Login from './pages/Login';
+import Landing from './pages/Landing';
 
 export function App() {
   const { i18n } = useTranslation();
@@ -36,14 +39,13 @@ export function App() {
               role={ConstantRoles.PARENT}
               unAuthorizedRedirectTo={SiteMap.landing.link}
             >
-              <></>
+              <TeacherHomePage />
             </RoleBaseProtectedRoute>
           }
-        ></Route>
+        />
+        <Route path={SiteMap.login.link} element={<Login />} />
+        <Route path={SiteMap.landing.link} element={<Landing />} />
       </Routes>
-      <GlobalStyle />
-      <FontStyle />
-      <CustomIconStyle />
     </BrowserRouter>
   );
 }

@@ -22,8 +22,6 @@
     "jsx": "react-jsx",
     "baseUrl": "./src",
   },
-  "include": [
-    "src",
-    "internals/startingTemplate/**/*"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", "types/**/*.ts"],
+  "exclude": ["node_modules"]
 }
