@@ -1,11 +1,11 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import {DevicePayload, DeviceState} from 'types/Device';
+import { DevicePayload, DeviceState } from 'types/Device';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 
 export const initialState: DeviceState = {
   data: {
-    isIOS: false
-  }
+    isIOS: false,
+  },
 };
 
 const slice = createSlice({
@@ -15,9 +15,9 @@ const slice = createSlice({
     updateDeviceState(state, action: PayloadAction<DevicePayload>) {
       state.data = {
         ...state.data,
-        ...action.payload
+        ...action.payload,
       };
-    }
+    },
   },
 });
 

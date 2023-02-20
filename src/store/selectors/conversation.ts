@@ -6,12 +6,9 @@ import { initialState } from 'store/slices/conversation';
 const selectDomain = (state: RootState) => state.conversation || initialState;
 
 export const getConversationDetailState = (roomId: number) => {
-    return createSelector(
-        [selectDomain],
-        state => {
-            return state.data[roomId]
-        }
-    )
-}
+  return createSelector([selectDomain], (state) => {
+    return state.data[roomId];
+  });
+};
 
 // export const get

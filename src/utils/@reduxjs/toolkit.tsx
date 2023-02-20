@@ -8,11 +8,12 @@ import {
 /* Wrap createSlice with stricter Name options */
 
 /* istanbul ignore next */
-export const createSlice = <State,
+export const createSlice = <
+  State,
   CaseReducers extends SliceCaseReducers<State>,
-  Name extends RootStateKeyType,
-  >(
-  options: CreateSliceOptions<State, CaseReducers, Name>,
+  Name extends RootStateKeyType
+>(
+  options: CreateSliceOptions<State, CaseReducers, Name>
 ) => {
   return createSliceOriginal(options);
 };

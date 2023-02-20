@@ -4,64 +4,52 @@ import { initialState } from 'store/slices/admin';
 
 const selectDomain = (state: RootState) => state.admin || initialState;
 
-export const getAdminError = createSelector(
-  [selectDomain],
-  state => state.error,
-);
+export const getAdminError = createSelector([selectDomain], (state) => state.error);
 
-export const getAdminLoading = createSelector(
-  [selectDomain],
-  state => state.loading,
-);
+export const getAdminLoading = createSelector([selectDomain], (state) => state.loading);
 
 export const getIsImportMenuSuccess = createSelector(
   [selectDomain],
-  state => state.data.import?.success,
-)
+  (state) => state.data.import?.success
+);
 
 export const getImportMenuSuccessData = createSelector(
   [selectDomain],
-  state => state.data.import?.data,
-)
+  (state) => state.data.import?.data
+);
 
-export const getAdminOutletList =  createSelector(
+export const getAdminOutletList = createSelector(
   [selectDomain],
-  state => state.data.outlets?.data?.data,
-)
+  (state) => state.data.outlets?.data?.data
+);
 
-export const getAdminOutletTemp =  createSelector(
-  [selectDomain],
-  state => state.data.outletTemp,
-)
+export const getAdminOutletTemp = createSelector([selectDomain], (state) => state.data.outletTemp);
 
-export const getAdminOutletTotalItem =  createSelector(
+export const getAdminOutletTotalItem = createSelector(
   [selectDomain],
-  state => state.data.outlets?.data?.totalItems,
-)
+  (state) => state.data.outlets?.data?.totalItems
+);
 
-export const getAdminOutletLoading =  createSelector(
+export const getAdminOutletLoading = createSelector(
   [selectDomain],
-  state => state.data.outlets?.loading,
-)
+  (state) => state.data.outlets?.loading
+);
 
 export const getAdminOutletMenus = (outletid: number) => {
-  return createSelector(
-    [selectDomain],
-    state => state.data.menus.data[outletid],
-  )
+  return createSelector([selectDomain], (state) => state.data.menus.data[outletid]);
 };
 
-export const getAdminOutletMenusLoading =  createSelector(
+export const getAdminOutletMenusLoading = createSelector(
   [selectDomain],
-  state => state.data.menus?.loading,
-)
+  (state) => state.data.menus?.loading
+);
 
-export const getAdminConfigPartner =  createSelector(
+export const getAdminConfigPartner = createSelector(
   [selectDomain],
-  state => state.data.config?.partners,
-)
+  (state) => state.data.config?.partners
+);
 
-export const getCurrentMenuDataUrl =  createSelector(
+export const getCurrentMenuDataUrl = createSelector(
   [selectDomain],
-  state => state.data.session?.currentDataMenuUrl,
-)
+  (state) => state.data.session?.currentDataMenuUrl
+);

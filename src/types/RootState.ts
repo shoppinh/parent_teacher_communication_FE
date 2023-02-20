@@ -2,10 +2,10 @@ import { ThemeState } from 'styles/theme/slice/types';
 import { SessionState } from './Session';
 import { DeviceState } from './Device';
 import { ConfigState } from './Config';
-import {SystemState} from "./System";
-import {RegisterState} from "./Register";
-import {ConversationState} from "./Conversation";
-import {AdminState} from "./Admin";
+import { SystemState } from './System';
+import { RegisterState } from './Register';
+import { ConversationState } from './Conversation';
+import { AdminState } from './Admin';
 
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
@@ -23,8 +23,7 @@ export interface RootState {
   system?: SystemState;
   register?: RegisterState;
   conversation?: ConversationState;
-  admin?: AdminState
-
+  admin?: AdminState;
 
   // [INSERT NEW REDUCER KEY ABOVE] < Needed for generating containers seamlessly
 }
