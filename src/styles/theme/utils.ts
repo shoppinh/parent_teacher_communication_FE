@@ -18,5 +18,5 @@ export function getThemeFromStorage(): ThemeKeyType | null {
 }
 
 export function pxToRem(value: number) {
-  return value/StyleConstants.BASE_FONT_SIZE;
+  return value / StyleConstants.BASE_FONT_SIZE;
 }

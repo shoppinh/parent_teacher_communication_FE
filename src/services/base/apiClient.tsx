@@ -38,7 +38,7 @@ class apiClient {
     this.headers = {
       ...defaultHeader,
       ...authHeader,
-      locale: currentLocale
+      locale: currentLocale,
     };
   }
 

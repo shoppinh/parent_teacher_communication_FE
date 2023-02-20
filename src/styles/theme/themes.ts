@@ -1,4 +1,4 @@
-import { colors } from "styles/constants/colors";
+import { colors } from 'styles/constants/colors';
 
 const lightTheme = {
   primary: colors.EVERGLADE,

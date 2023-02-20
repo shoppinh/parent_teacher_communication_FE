@@ -18,9 +18,9 @@ const slice = createSlice({
   },
 });
 
-export const {actions: themeActions, reducer} = slice;
+export const { actions: themeActions, reducer } = slice;
 
 export const useThemeSlice = () => {
-  useInjectReducer({key: slice.name, reducer: slice.reducer});
-  return {actions: slice.actions};
+  useInjectReducer({ key: slice.name, reducer: slice.reducer });
+  return { actions: slice.actions };
 };

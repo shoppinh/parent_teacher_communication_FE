@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
     height: 100%;
     line-height: 1.5;
     font-size: ${StyleConstants.BASE_FONT_SIZE}px;
-    background-color: ${p => p.theme.background};
+    background-color: ${(p) => p.theme.background};
   }
 
   html {
@@ -19,7 +19,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    color: ${p => p.theme.text} !important;
+    color: ${(p) => p.theme.text} !important;
     padding-top: ${StyleConstants.NAV_BAR_HEIGHT}px;
     display: flex;
     flex-direction: column;

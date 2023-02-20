@@ -4,9 +4,7 @@ import { useInjectReducer } from 'utils/redux-injectors';
 import { SystemPayload, SystemState } from '../../types/System';
 
 export const initialState: SystemState = {
-  data: {
-
-  }
+  data: {},
 };
 
 const slice = createSlice({
@@ -16,17 +14,17 @@ const slice = createSlice({
     updateSystemState(state, action: PayloadAction<SystemPayload>) {
       state.data = {
         ...state.data,
-        ...action.payload
+        ...action.payload,
       };
-    }
+    },
   },
 });
 
 export const { name, actions: systemActions, reducer } = slice;
 
 export const useSystemSlice = () => {
-  useInjectReducer({key: slice.name, reducer: slice.reducer});
+  useInjectReducer({ key: slice.name, reducer: slice.reducer });
   return {
     actions: systemActions,
   };
-}
+};

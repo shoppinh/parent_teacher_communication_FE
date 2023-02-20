@@ -6,8 +6,5 @@ import { initialState } from 'store/slices/device';
 const selectDomain = (state: RootState) => state.device || initialState;
 
 export const getIsIOS = () => {
-    return createSelector(
-        [selectDomain],
-        state => state.data.isIOS
-    );
-}
+  return createSelector([selectDomain], (state) => state.data.isIOS);
+};

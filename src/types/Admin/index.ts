@@ -1,6 +1,6 @@
-import { AdminImportSuccess } from "./Import";
-import { AdminMenuState } from "./Menu";
-import { AdminOutlet, AdminOutletState } from "./Outlet";
+import { AdminImportSuccess } from './Import';
+import { AdminMenuState } from './Menu';
+import { AdminOutlet, AdminOutletState } from './Outlet';
 
 export interface AdminState {
   data: AdminData;
@@ -13,38 +13,38 @@ export interface AdminBasicQuery {
 }
 
 export interface AdminConfig {
-  partners?: Partners[]
+  partners?: Partners[];
 }
 
 export interface Partners {
-  id: number,
-  createdAt: Date,
-  updatedAt: Date,
-  code: string,
-  name: string,
-  description: string,
-  isActive: boolean
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+  code: string;
+  name: string;
+  description: string;
+  isActive: boolean;
 }
 
 export interface AdminData {
-  outlets: AdminOutletState,
-  menus: AdminMenuState,
-  outletTemp?: AdminOutlet,
+  outlets: AdminOutletState;
+  menus: AdminMenuState;
+  outletTemp?: AdminOutlet;
   import: {
     success?: boolean;
     data: AdminImportSuccess;
-  },
+  };
   config: {
-    partners?: Partners[]
-  },
+    partners?: Partners[];
+  };
   session: {
     currentDataMenuUrl?: string;
-  }
+  };
 }
 
 export enum AdminErrorType {
   RESPONSE_ERROR = 1,
-  AUTHENTICATION_FAILED = 400
+  AUTHENTICATION_FAILED = 400,
 }
 
 export interface AdminError {

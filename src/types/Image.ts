@@ -2,29 +2,28 @@
  * Image with thumbs for srcset
  */
 export interface ImageData {
-    id?: number;
-    createdAt?: Date;
-    path?: string;
-    primary?: boolean;
-    server?: string;
-    thumbs?: Thumb[];
-    thumbsWebp?: Thumb[];
-    updatedAt?: Date;
+  id?: number;
+  createdAt?: Date;
+  path?: string;
+  primary?: boolean;
+  server?: string;
+  thumbs?: Thumb[];
+  thumbsWebp?: Thumb[];
+  updatedAt?: Date;
 }
 
 export interface Thumb {
-    [resolution: string]: string;
+  [resolution: string]: string;
 }
 
 export enum ImageType {
-    PRODUCT_CART = "PRODUCT_CART",
-    PRODUCT_LIST = "PRODUCT_LIST",
-    PRODUCT_DETAIL = "PRODUCT_DETAIL",
-    GIFT_CART = "GIFT_CART",
-    GIFT_HOME = "GIFT_HOME",
-    GIFT_DETAIL = "GIFT_DETAIL",
-    BANNER_IMAGE = "BANNER_IMAGE",
-
+  PRODUCT_CART = 'PRODUCT_CART',
+  PRODUCT_LIST = 'PRODUCT_LIST',
+  PRODUCT_DETAIL = 'PRODUCT_DETAIL',
+  GIFT_CART = 'GIFT_CART',
+  GIFT_HOME = 'GIFT_HOME',
+  GIFT_DETAIL = 'GIFT_DETAIL',
+  BANNER_IMAGE = 'BANNER_IMAGE',
 }
 
 /*
@@ -58,11 +57,13 @@ Product Image - Detail:
 */
 
 export const ImageSizes = {
-    [ImageType.BANNER_IMAGE] : "(min-width: 1920px) 1920px, (min-width: 1440px) 1440px, (min-width: 1024px) 1024px, (min-width: 768px) 768px, (min-width: 425px) 425px, (min-width: 414px) 414px, (min-width: 375px) 375px, 360px",
-    [ImageType.GIFT_CART]: "60px",
-    [ImageType.GIFT_HOME]: "53px",
-    [ImageType.GIFT_DETAIL]: "45px",
-    [ImageType.PRODUCT_CART] : "90px",
-    [ImageType.PRODUCT_LIST] : "351px",
-    [ImageType.PRODUCT_DETAIL] : "(min-width: 1440px) 412px, (min-width: 1024px) 292px, (min-width: 768px) 212px, 200px",
-}
+  [ImageType.BANNER_IMAGE]:
+    '(min-width: 1920px) 1920px, (min-width: 1440px) 1440px, (min-width: 1024px) 1024px, (min-width: 768px) 768px, (min-width: 425px) 425px, (min-width: 414px) 414px, (min-width: 375px) 375px, 360px',
+  [ImageType.GIFT_CART]: '60px',
+  [ImageType.GIFT_HOME]: '53px',
+  [ImageType.GIFT_DETAIL]: '45px',
+  [ImageType.PRODUCT_CART]: '90px',
+  [ImageType.PRODUCT_LIST]: '351px',
+  [ImageType.PRODUCT_DETAIL]:
+    '(min-width: 1440px) 412px, (min-width: 1024px) 292px, (min-width: 768px) 212px, 200px',
+};

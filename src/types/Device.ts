@@ -1,7 +1,7 @@
 export interface DevicePayload {
-    isIOS?: boolean;
+  isIOS?: boolean;
 }
 
 export interface DeviceState {
-    data: DevicePayload
+  data: DevicePayload;
 }

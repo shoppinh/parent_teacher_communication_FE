@@ -1,7 +1,13 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { loadState } from 'store/localStorage';
-import { ConversationDetailQuery, ConversationError, ConversationMesssages, ConversationState, MessageItem } from 'types/Conversation';
+import {
+  ConversationDetailQuery,
+  ConversationError,
+  ConversationMesssages,
+  ConversationState,
+  MessageItem,
+} from 'types/Conversation';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { conversationSaga } from 'store/sagas/conversationSaga';
 
@@ -22,24 +28,24 @@ const slice = createSlice({
       state.loading = true;
     },
     loadedMessageList(state, action: PayloadAction<ConversationMesssages>) {
-      if(action?.payload.roomId && !isNaN(action?.payload.roomId)) {
+      if (action?.payload.roomId && !isNaN(action?.payload.roomId)) {
         state.data = {
           ...state.data,
           ...{
             [action?.payload.roomId]: {
               messages: action?.payload.messages.reduce((prev, curr) => {
-                const createTimestamp = Date.parse((new Date(curr.createdAt)).toISOString());
+                const createTimestamp = Date.parse(new Date(curr.createdAt).toISOString());
                 return {
                   ...prev,
-                  [createTimestamp]: curr
-                }
-              }, {})
+                  [createTimestamp]: curr,
+                };
+              }, {}),
               // message: action?.payload.messages
-            }
-          }
+            },
+          },
         };
       }
-      state.loading = false
+      state.loading = false;
     },
     // getCountUnreadRoom(state, action?: PayloadAction<ConversationRoomQuery>) {
     //   state.error = null;
@@ -62,19 +68,21 @@ const slice = createSlice({
     //   state.loading = false;
     // },
     addMessageList(state, action?: PayloadAction<MessageItem>) {
-      if(action?.payload.roomId && !isNaN(action?.payload.roomId)) {
-        const createTimestamp = Date.parse((new Date(action?.payload.createdAt)).toISOString());
+      if (action?.payload.roomId && !isNaN(action?.payload.roomId)) {
+        const createTimestamp = Date.parse(new Date(action?.payload.createdAt).toISOString());
         state.data = {
           ...state.data,
           ...{
             [action?.payload.roomId]: {
               messages: {
-                ...(state.data[action?.payload.roomId] ? state.data[action?.payload.roomId].messages : {}),
-                [createTimestamp]: action?.payload
-              }
+                ...(state.data[action?.payload.roomId]
+                  ? state.data[action?.payload.roomId].messages
+                  : {}),
+                [createTimestamp]: action?.payload,
+              },
               // message: action?.payload.messages
-            }
-          }
+            },
+          },
         };
       }
     },
@@ -88,9 +96,9 @@ const slice = createSlice({
 export const { name, actions: conversationActions, reducer } = slice;
 
 export const useConversationSlice = () => {
-  useInjectReducer({key: slice.name, reducer: slice.reducer});
-  useInjectSaga({key: slice.name, saga: conversationSaga});
+  useInjectReducer({ key: slice.name, reducer: slice.reducer });
+  useInjectSaga({ key: slice.name, saga: conversationSaga });
   return {
     actions: slice.actions,
-  }
-}
+  };
+};

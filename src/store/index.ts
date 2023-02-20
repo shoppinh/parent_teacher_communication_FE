@@ -1,4 +1,4 @@
-import { configureAppStore } from "./configureStore";
+import { configureAppStore } from './configureStore';
 
 const store = configureAppStore();
 

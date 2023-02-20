@@ -29,5 +29,5 @@ export const colors = {
   CERULEAN: '#0FACC1',
   TANGERINE: '#F29006',
   CORN: '#DDAC05',
-  BONJOUR: '#E5E2E2'
+  BONJOUR: '#E5E2E2',
 };
