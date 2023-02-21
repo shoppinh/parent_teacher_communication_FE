@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.19.6",
+    "@hookform/resolvers": "^2.9.10",
     "@mui/base": "5.0.0-alpha.118",
+    "@react-spring/web": "^9.5.5",
     "@reduxjs/toolkit": "1.9.2",
     "axios": "1.3.3",
     "core-js": "3.28.0",
@@ -38,7 +41,8 @@
     "ts-node": "10.0.0",
     "twin.macro": "^2.8.2",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -58,6 +62,8 @@
     "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "devDependencies": {
+    "@babel/preset-react": "7.18.6",
+    "@craco/craco": "7.0.0",
     "@types/fontfaceobserver": "0.0.6",
     "@types/jest": "^27.5.2",
     "@types/lodash.debounce": "4.0.6",
@@ -74,6 +80,9 @@
     "@types/webpack": "5.28.0",
     "@types/webpack-env": "1.18.0",
     "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "babel-loader": "^8.2.5",
+    "babel-plugin-macros": "^3.1.0",
+    "babel-plugin-styled-components": "2.0.7",
     "eslint-config-prettier": "8.6.0",
     "eslint-plugin-prettier": "4.2.1",
     "jest-styled-components": "7.0.4",
@@ -82,11 +91,7 @@
     "plop": "2.7.4",
     "serve": "12.0.0",
     "shelljs": "0.8.4",
-    "source-map-explorer": "2.5.2",
-    "stylelint": "13.13.1",
-    "stylelint-config-recommended": "5.0.0",
-    "stylelint-config-styled-components": "0.1.1",
-    "stylelint-processor-styled-components": "1.10.0"
+    "source-map-explorer": "2.5.2"
   },
   "eslintConfig": {
     "extends": [
@@ -112,5 +117,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "resolutions": {
+    "babel-plugin-styled-components": "2.0.7"
   }
 }

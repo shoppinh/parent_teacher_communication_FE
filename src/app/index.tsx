@@ -10,6 +10,8 @@ import { ConstantRoles } from '../utils/constants';
 import TeacherHomePage from './pages/TeacherHomePage';
 import Login from './pages/Login';
 import Landing from './pages/Landing';
+import NotFound from './pages/NotFound';
+import Register from './pages/Register';
 
 export function App() {
   const { i18n } = useTranslation();
@@ -26,18 +28,13 @@ export function App() {
         {/* <meta http-equiv="Content-Security-Policy" content="default-src 'self' *.muangay-vn.com *.googletagmanager.com  *.google-analytics.com *.gstatic.com *.gravatar.com *.googleapis.com *.google.com data: gap: 'unsafe-inline' 'unsafe-eval'; base-uri 'self';"></meta> */}
       </Helmet>
       <Routes>
-        {/*<Route path={SiteMap.landing.link} element={<LandingPage/>}/>*/}
-        {/*<Route path={SiteMap.login.link} element={<LoginPage/>}/>*/}
-        {/*<Route path={SiteMap.register.link} element={<RegisterPage/>}/>*/}
-        {/*<Route path={SiteMap.teacherHome.link} element={<TeacherHomePage/>}/>*/}
-        {/*<Route path={SiteMap.adminHome.link} element={<AdminHomePage/>}/>*/}
         <Route
           path={SiteMap.parentHome.link}
           element={
             <RoleBaseProtectedRoute
-              unAuthenticatedRedirectTo={SiteMap.login.link}
+              unAuthenticatedRedirectTo={SiteMap.landing.link}
               role={ConstantRoles.PARENT}
-              unAuthorizedRedirectTo={SiteMap.landing.link}
+              unAuthorizedRedirectTo={SiteMap.login.link}
             >
               <TeacherHomePage />
             </RoleBaseProtectedRoute>
@@ -45,6 +42,8 @@ export function App() {
         />
         <Route path={SiteMap.login.link} element={<Login />} />
         <Route path={SiteMap.landing.link} element={<Landing />} />
+        <Route path={SiteMap.register.link} element={<Register />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

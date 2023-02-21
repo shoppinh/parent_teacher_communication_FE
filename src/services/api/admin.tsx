@@ -17,7 +17,7 @@ import { AdminBasicQuery } from 'types/Admin';
 
 export const adminLogin = async (query: AuthQuery) => {
   const params = {
-    mobilePhone: query.phone,
+    username: query.username,
     password: query.password,
   };
 

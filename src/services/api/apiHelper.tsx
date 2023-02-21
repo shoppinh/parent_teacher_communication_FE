@@ -2,12 +2,13 @@ import { call } from 'redux-saga/effects';
 import * as api from './index';
 import {
   DeviceTokenQuery,
+  ForgotQuery,
   RegisterQuery,
   ResendCodeQuery,
   SetPasswordQuery,
   VerifyQuery,
 } from 'types/Register';
-import { AuthQuery, LogoutQuery, RefreshTokenQuery, SocialRegisterPayload } from 'types/Session';
+import { AuthQuery, LogoutQuery, RefreshTokenQuery } from 'types/Session';
 import { LanguageQuery } from 'types/Config';
 import { ConversationDetailQuery, ConversationRoomQuery } from 'types/Conversation';
 import { FileQuery, MenuImportQuery } from 'types/Admin/Import';
@@ -54,7 +55,7 @@ export function* apiSetPassword(query: SetPasswordQuery) {
   return yield call(api.setPassword, query);
 }
 
-export function* apiForgotPassword(query: AuthQuery) {
+export function* apiForgotPassword(query: ForgotQuery) {
   return yield call(api.forgotPassword, query);
 }
 
@@ -84,10 +85,6 @@ export function* apiGetConversationDetail(query: ConversationDetailQuery) {
 
 export function* apiGetCountUnreadRoom(query: ConversationRoomQuery) {
   return yield call(api.getCountUnreadRoom, query);
-}
-
-export function* apiDoSocialRegister(query: SocialRegisterPayload) {
-  return yield call(api.doSocialRegister, query);
 }
 
 export function* apiUpdateLanguage(query: LanguageQuery) {

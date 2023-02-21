@@ -1,9 +1,4 @@
-import axios, {
-  AxiosResponse,
-  AxiosError,
-  AxiosRequestConfig,
-  InternalAxiosRequestConfig,
-} from 'axios';
+import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import store from 'store';
 import { STORAGE_KEY } from 'utils/constants';
 import { toast } from 'react-toastify';
@@ -104,7 +99,7 @@ export const responseInterceptor = async (response: AxiosResponse) => {
           sessionActions.doLogout({
             token: sessionAuth?.accessToken || '',
             fcmToken: sessionAuth?.fcmToken || '',
-            consumerId: sessionAuth?.user?.data?.id || 0,
+            userId: sessionAuth?.user?.data?.id || 0,
           })
         );
       }
@@ -120,7 +115,7 @@ export const responseInterceptor = async (response: AxiosResponse) => {
         sessionActions.doLogout({
           token: sessionAuth?.accessToken || '',
           fcmToken: sessionAuth?.fcmToken || '',
-          consumerId: sessionAuth?.user?.data?.id || 0,
+          userId: sessionAuth?.user?.data?.id || 0,
         })
       );
       isLogout = true;

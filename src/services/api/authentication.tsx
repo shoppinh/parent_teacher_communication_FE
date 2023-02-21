@@ -1,10 +1,10 @@
 import apiClient from '../base/apiClient';
 import { APIs } from 'services/base/type';
-import { AuthQuery, LogoutQuery, RefreshTokenQuery, SocialRegisterPayload } from 'types/Session';
+import { AuthQuery, LogoutQuery, RefreshTokenQuery } from 'types/Session';
 
 export const login = async (query: AuthQuery) => {
   const params = {
-    mobilePhone: query.phone,
+    mobilePhone: query.username,
     password: query.password,
   };
 
@@ -15,7 +15,7 @@ export const logout = async (query: LogoutQuery) => {
   const params = {
     token: query.token,
     fcmToken: query.fcmToken,
-    consumerId: query.consumerId,
+    userId: query.userId,
   };
 
   return new apiClient(query.token).post(APIs.consumer.logout, params);
@@ -35,13 +35,5 @@ export const refreshToken = async (query: RefreshTokenQuery) => {
 };
 
 export const getUserInfo = async (query: AuthQuery) => {
-  return new apiClient('').get(APIs.consumer.info + query.phone);
-};
-
-export const doSocialRegister = async (query: SocialRegisterPayload) => {
-  const params = {
-    data: query.data,
-  };
-
-  return new apiClient('').post(APIs.social.register, params);
+  return new apiClient('').get(APIs.consumer.info + query.username);
 };

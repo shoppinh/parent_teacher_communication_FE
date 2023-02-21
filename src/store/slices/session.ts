@@ -12,7 +12,6 @@ import {
   RefreshTokenQuery,
   SessionError,
   SessionState,
-  SocialRegisterPayload,
 } from 'types/Session';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
@@ -113,10 +112,6 @@ const slice = createSlice({
         };
       }
       state.loading = false;
-    },
-    doSocialRegister(state, action?: PayloadAction<SocialRegisterPayload>) {
-      state.error = null;
-      state.loading = true;
     },
     Error(state, action: PayloadAction<SessionError>) {
       state.error = action.payload;

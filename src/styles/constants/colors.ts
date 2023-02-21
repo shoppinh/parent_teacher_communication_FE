@@ -30,4 +30,6 @@ export const colors = {
   TANGERINE: '#F29006',
   CORN: '#DDAC05',
   BONJOUR: '#E5E2E2',
+  DODGER_BLUE: '#3B82F6',
+  ATHENS_GRAY: '#F0F2F4',
 };
