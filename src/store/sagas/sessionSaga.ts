@@ -1,7 +1,6 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import {
   apiAdminLogin,
-  apiDoSocialRegister,
   apiGetCountUnreadRoom,
   apiGetUserInfo,
   apiLogin,
@@ -29,7 +28,6 @@ export function* sessionSaga() {
     takeLatest(actions.doRegisterDeviceToken.type, doRegisterDeviceToken),
     takeLatest(actions.doRefreshToken.type, doRefreshToken),
     takeLatest(actions.getCountUnreadRoom.type, getCountUnreadRoom),
-    takeLatest(actions.doSocialRegister.type, doSocialRegister),
   ]);
 }
 
@@ -186,24 +184,6 @@ export function* getCountUnreadRoom({ payload }: any) {
           roleId: response.data?.data?.roleId,
         })
       );
-    } else {
-      yield put(actions.Error(response.data.error));
-    }
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-export function* doSocialRegister({ payload }: any) {
-  try {
-    const response = yield call(apiDoSocialRegister, payload);
-    if (response.data && response.data.status) {
-      const authData = ParseLogin(payload.phoneNumber, true, response.data.data);
-      yield put(actions.updateAuth(authData));
-      localStorage.setItem(PREVIOUS_STORAGE_KEY, JSON.stringify(authData));
-      setTimeout(() => {
-        localStorage.setItem(_FORCE_REFRESH_KEY, 'true');
-      }, 1500);
     } else {
       yield put(actions.Error(response.data.error));
     }

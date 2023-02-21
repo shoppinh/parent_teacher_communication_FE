@@ -1,4 +1,4 @@
-export { login, logout, getUserInfo, refreshToken, doSocialRegister } from './authentication';
+export { login, logout, getUserInfo, refreshToken } from './authentication';
 export {
   register,
   verifyCode,

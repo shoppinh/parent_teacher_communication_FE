@@ -1,7 +1,7 @@
 import { User } from './User';
 
 export interface AuthQuery {
-  phone: string;
+  username: string;
   password?: string;
   rememberMe?: boolean;
 }
@@ -21,14 +21,10 @@ export interface AuthUserPayload {
   user: User;
 }
 
-export enum SocialRegisterType {
-  ZALO = 'ZALO',
-}
-
 export interface LogoutQuery {
   token?: string;
   fcmToken?: string;
-  consumerId: number;
+  userId?: number;
 }
 
 export interface SessionState {
@@ -58,12 +54,6 @@ export interface AuthPayLoad {
 
 export interface SessionPayload {
   auth?: AuthPayLoad;
-}
-
-export interface SocialRegisterPayload {
-  data: string;
-  phoneNumber: string;
-  typeRegister: SocialRegisterType;
 }
 
 export enum SessionErrorType {

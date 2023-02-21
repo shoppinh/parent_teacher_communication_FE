@@ -62,6 +62,10 @@
     "notYetRegisteredRegisterHere": "Not yet registered? <1>Register here</1> to access chat and more.",
     "accountHasBeenDeactivated": "Your account has been deactivated. Please contact your site administrator"
   },
+  "form": {
+    "emailOrPhone": "Email or phone number",
+    "password": "Password"
+  },
   "logout": {
     "title": "Logout"
   },

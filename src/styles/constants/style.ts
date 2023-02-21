@@ -6,6 +6,7 @@ export enum StyleConstants {
   NAV_BAR_HEIGHT = 70,
   FONT_FAMILY = "'Roboto', Helvetica, Arial, sans-serif",
   BASE_FONT_SIZE = 14,
+  BASE_LINE_HEIGHT = 24,
   BS_GUTTER_X_OVERRIDE = 2,
   MODAL_RADIUS = 10,
   PRODUCT_TITLE_MAX_WIDTH = 270,
