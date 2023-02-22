@@ -3,17 +3,11 @@
 import { Direction } from 'types/Layout';
 
 export enum StyleConstants {
-  NAV_BAR_HEIGHT = 70,
+  HEADER_HEIGHT = 70,
   FONT_FAMILY = "'Roboto', Helvetica, Arial, sans-serif",
   BASE_FONT_SIZE = 14,
   BASE_LINE_HEIGHT = 24,
-  BS_GUTTER_X_OVERRIDE = 2,
-  MODAL_RADIUS = 10,
-  PRODUCT_TITLE_MAX_WIDTH = 270,
-  PRODUCT_ITEM_MAX_WIDTH = 300,
-  SEARCH_RESULT_DESKTOP_HEIGHT = 300,
-  TRACK_ORDER_HEIGHT = 62,
-  TRACK_ORDER_CONTENT_MAX_WIDTH = 816,
+  LEFT_BAR_WIDTH = 300,
 }
 
 export const position = {

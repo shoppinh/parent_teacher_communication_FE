@@ -28,18 +28,19 @@ export function App() {
         {/* <meta http-equiv="Content-Security-Policy" content="default-src 'self' *.muangay-vn.com *.googletagmanager.com  *.google-analytics.com *.gstatic.com *.gravatar.com *.googleapis.com *.google.com data: gap: 'unsafe-inline' 'unsafe-eval'; base-uri 'self';"></meta> */}
       </Helmet>
       <Routes>
-        <Route
-          path={SiteMap.parentHome.link}
-          element={
-            <RoleBaseProtectedRoute
-              unAuthenticatedRedirectTo={SiteMap.landing.link}
-              role={ConstantRoles.PARENT}
-              unAuthorizedRedirectTo={SiteMap.login.link}
-            >
-              <TeacherHomePage />
-            </RoleBaseProtectedRoute>
-          }
-        />
+        {/*<Route*/}
+        {/*  path={SiteMap.parentHome.link}*/}
+        {/*  element={*/}
+        {/*    <RoleBaseProtectedRoute*/}
+        {/*      unAuthenticatedRedirectTo={SiteMap.landing.link}*/}
+        {/*      role={ConstantRoles.PARENT}*/}
+        {/*      unAuthorizedRedirectTo={SiteMap.login.link}*/}
+        {/*    >*/}
+        {/*      <TeacherHomePage />*/}
+        {/*    </RoleBaseProtectedRoute>*/}
+        {/*  }*/}
+        {/*/>*/}
+        <Route path={SiteMap.teacherHome.link} element={<TeacherHomePage />} />
         <Route path={SiteMap.login.link} element={<Login />} />
         <Route path={SiteMap.landing.link} element={<Landing />} />
         <Route path={SiteMap.register.link} element={<Register />} />

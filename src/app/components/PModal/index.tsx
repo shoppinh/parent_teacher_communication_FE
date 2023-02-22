@@ -10,7 +10,7 @@ interface Props {
   onClose?: () => void;
 }
 
-const Modal = styled(ModalUnstyled)`
+const Modal = styled(ModalUnstyled)<Props>`
   position: fixed;
   z-index: ${zIndex.modal};
   right: 0;
