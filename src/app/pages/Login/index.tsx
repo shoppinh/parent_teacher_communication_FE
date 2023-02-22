@@ -5,7 +5,7 @@ import { media } from '../../../styles';
 import { useTranslation } from 'react-i18next';
 import BaseLayout from '../../layouts/BaseLayout';
 import LoginForm from '../../containers/Login/LoginForm';
-import { H1, P } from '../../../styles/constants/fonts';
+import { H1 } from '../../../styles/constants/fonts';
 
 const Wrapper = styled.div`
   ${tw`container mx-auto `}
