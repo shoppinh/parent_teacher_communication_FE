@@ -30,7 +30,7 @@ openSansObserver
     document.body.classList.add('fontLoaded');
   })
   .catch(() => {});
-
+// Test github pr
 const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
 root.render(
