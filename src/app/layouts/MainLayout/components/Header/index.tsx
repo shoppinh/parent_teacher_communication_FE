@@ -1,8 +1,9 @@
 import React from 'react';
 import { pxToRem } from '../../../../../styles/theme/utils';
 import { StyleConstants } from '../../../../../styles/constants/style';
-import { styled } from 'twin.macro';
+import tw, { styled } from 'twin.macro';
 import { media } from '../../../../../styles';
+import {PButton} from "../../../../components/PButton";
 
 interface Props {
   onRightBarClick: () => void;
@@ -13,20 +14,24 @@ const Container = styled.div`
   background-color: ${(p) => p.theme.backgroundVariant};
   width: 100%;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+
 `;
-const BarIcon = styled.div`
+const StyledButton = styled(PButton)`
+  ${tw`p-3`}
   display: block;
   ${media.md`
     display: none;
   `}
+
 `;
 const Header: React.FC<Props> = ({ onRightBarClick, onLeftBarClick }) => {
   return (
     <Container>
-      <BarIcon onClick={onLeftBarClick}>Click me to open left bar</BarIcon>
+      <StyledButton variant='secondary' onClick={onLeftBarClick}>Click me to open left bar</StyledButton>
       Header
-      <BarIcon onClick={onRightBarClick}>Click me to open right bar</BarIcon>
+      <StyledButton variant='secondary' onClick={onRightBarClick}>Click me to open right bar</StyledButton>
     </Container>
   );
 };
