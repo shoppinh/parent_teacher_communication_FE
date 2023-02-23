@@ -29,9 +29,7 @@ const DrawerWrapper = styled.div<Props>`
 `;
 
 const LeftBarDrawer = () => {
-  return (
-      <Container>Left Bar Drawer</Container>
-  );
+  return <Container>Left Bar Drawer</Container>;
 };
 
 export default LeftBarDrawer;
