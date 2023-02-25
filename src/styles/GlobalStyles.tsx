@@ -13,6 +13,10 @@ const CustomStyles = createGlobalStyle({
     color: colors.MINE_SHAFT,
     fontSize: StyleConstants.BASE_FONT_SIZE,
   },
+  html: {
+    fontSize: StyleConstants.BASE_FONT_SIZE,
+    color: colors.MINE_SHAFT,
+  },
 });
 
 const GlobalStyles = () => (

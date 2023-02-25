@@ -9,6 +9,16 @@ const SiteMap = {
     link: '/teacher',
     isProtected: true,
   },
+  teacherEvent: {
+    title: 'teacher.event.title',
+    link: '/teacher-event',
+    isProtected: true,
+  },
+  teacherManagement: {
+    title: 'teacher.management.title',
+    link: '/teacher-management',
+    isProtected: true,
+  },
   parentHome: {
     title: 'parent.home.title',
     link: '/parent',

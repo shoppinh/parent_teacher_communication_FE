@@ -6,8 +6,6 @@ interface ButtonProp {
 }
 //test
 export const PButton = styled(ButtonUnstyled)<ButtonProp>`
-  ${tw`rounded-full`}
-
   ${(p) => {
     switch (p.variant) {
       case 'primary':

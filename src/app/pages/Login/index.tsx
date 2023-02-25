@@ -6,6 +6,9 @@ import { useTranslation } from 'react-i18next';
 import BaseLayout from '../../layouts/BaseLayout';
 import LoginForm from '../../containers/Login/LoginForm';
 import { H1 } from '../../../styles/constants/fonts';
+import { PIcon } from 'app/components/PIcon';
+import { PButton } from 'app/components/PButton';
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
   ${tw`container mx-auto `}
@@ -21,25 +24,45 @@ const Wrapper = styled.div`
 `;
 
 const ContentWrapper = styled.div`
-  margin: ${pxToRem(20)}rem ${pxToRem(20)}rem 0 ${pxToRem(20)}rem;
+  margin: ${pxToRem(20)}rem ${pxToRem(40)}rem 0 ${pxToRem(40)}rem;
   background: ${(p) => p.theme.contrastBackground};
 `;
 
 const PageTitle = styled(H1)`
-  ${tw`w-full`}
   font-size: ${pxToRem(18)}rem;
-  margin-bottom: ${pxToRem(10)}rem;
-  background: ${(p) => p.theme.background};
   text-align: center;
+  flex: 1;
+  margin-right: ${pxToRem(40)}rem;
 `;
-
+const PageHeader = styled.div`
+  ${tw`w-full`}
+  background: ${(p) => p.theme.contrastBackground};
+  margin-bottom: ${pxToRem(10)}rem;
+  display: flex;
+`;
+const StyledButton = styled(PButton)`
+  width: 40px;
+  && {
+    background-color: ${(p) => p.theme.contrastBackground};
+  }
+`;
+const StyledIcon = styled(PIcon)`
+  font-size: ${pxToRem(20)}rem;
+  color: ${(p) => p.theme.text};
+`;
 const Login = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
-    <BaseLayout>
+    <BaseLayout title={t('login.title')}>
       <Wrapper>
-        <PageTitle>{t('login.title')}</PageTitle>
+        <PageHeader>
+          <StyledButton type='button' onClick={() => navigate(-1)}>
+            <StyledIcon className='partei-arrow-left' />
+          </StyledButton>
+          <PageTitle>{t('login.title')}</PageTitle>
+        </PageHeader>
         <ContentWrapper>
           <LoginForm />
         </ContentWrapper>

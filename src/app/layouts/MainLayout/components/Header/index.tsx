@@ -1,37 +1,142 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { pxToRem } from '../../../../../styles/theme/utils';
 import { StyleConstants } from '../../../../../styles/constants/style';
 import tw, { styled } from 'twin.macro';
 import { media } from '../../../../../styles';
-import {PButton} from "../../../../components/PButton";
+import { PButton } from '../../../../components/PButton';
+import { PIcon } from 'app/components/PIcon';
+import { useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
 
 interface Props {
   onRightBarClick: () => void;
   onLeftBarClick: () => void;
+  headerTitle: string;
 }
+
+interface NavigationIconProps {
+  isActive?: boolean;
+}
+
 const Container = styled.div`
   height: ${pxToRem(StyleConstants.HEADER_HEIGHT)}rem;
-  background-color: ${(p) => p.theme.backgroundVariant};
+  background-color: ${(p) => p.theme.background};
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
+  border-bottom: ${pxToRem(1)}rem solid ${(p) => p.theme.borderLight};
 `;
-const StyledButton = styled(PButton)`
+const NavigationButton = styled(PButton)`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  && {
+    background-color: ${(p) => p.theme.background};
+  }
+`;
+const MobileStyledButton = styled(NavigationButton)`
   ${tw`p-3`}
-  display: block;
   ${media.md`
     display: none;
   `}
-
 `;
-const Header: React.FC<Props> = ({ onRightBarClick, onLeftBarClick }) => {
+const StyledIcon = styled(PIcon)<NavigationIconProps>`
+  font-size: ${pxToRem(25)}rem;
+  color: ${(p) => (p.isActive ? p.theme.backgroundVariant : p.theme.placeholder)};
+  margin: 0 ${pxToRem(10)}rem;
+`;
+const MenuStyledIcon = styled(PIcon)`
+  font-size: ${pxToRem(20)}rem;
+  color: ${(p) => p.theme.text};
+`;
+const HeaderTitle = styled.p`
+  font-size: ${pxToRem(20)}rem;
+  font-weight: 700;
+`;
+const HeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+const NavigationGroup = styled.div`
+  display: none;
+  margin-top: ${pxToRem(10)}rem;
+  ${media.md`
+    display: block;
+  `}
+`;
+const ButtonGroup = styled.div`
+  display: none;
+  ${media.md`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  `}
+`;
+const DesktopStyledButton = styled(NavigationButton)`
+  display: none;
+  padding-top: ${pxToRem(10)}rem;
+  ${media.md`
+    display: block;
+  `}
+`;
+const Header: React.FC<Props> = ({ onRightBarClick, onLeftBarClick, headerTitle }) => {
+  const teacherNavigationList = useMemo(() => {
+    return [
+      {
+        id: 'teacherHome',
+        url: '/teacher',
+        iconName: 'partei-file-text',
+      },
+      {
+        id: 'teacherEvent',
+        url: '/teacher-event',
+        iconName: 'partei-calendar',
+      },
+      {
+        id: 'teacherManagement',
+        url: '/teacher-management',
+        iconName: 'partei-users',
+      },
+      {
+        id: 'teacherSetting',
+        url: '',
+        iconName: 'partei-cog',
+        action: () => alert('on click success'),
+      },
+    ];
+  }, []);
+  const location = useLocation();
   return (
     <Container>
-      <StyledButton variant='secondary' onClick={onLeftBarClick}>Click me to open left bar</StyledButton>
-      Header
-      <StyledButton variant='secondary' onClick={onRightBarClick}>Click me to open right bar</StyledButton>
+      <HeaderWrapper>
+        <MobileStyledButton onClick={onLeftBarClick}>
+          <MenuStyledIcon className='partei-menu' />
+        </MobileStyledButton>
+        <HeaderTitle>{headerTitle}</HeaderTitle>
+        <MobileStyledButton onClick={onRightBarClick}>
+          <MenuStyledIcon className='partei-bubbles3' />
+        </MobileStyledButton>
+      </HeaderWrapper>
+      <ButtonGroup>
+        <NavigationGroup>
+          {teacherNavigationList.map((navigationItem) =>
+            navigationItem?.action ? (
+              <NavigationButton onClick={navigationItem?.action}>
+                <StyledIcon className={navigationItem.iconName} />
+              </NavigationButton>
+            ) : (
+              <Link to={navigationItem.url}>
+                <StyledIcon
+                  className={navigationItem.iconName}
+                  isActive={navigationItem.url === location.pathname}
+                />
+              </Link>
+            )
+          )}
+        </NavigationGroup>
+        <DesktopStyledButton>
+          <StyledIcon className='partei-bell' />
+        </DesktopStyledButton>
+      </ButtonGroup>
     </Container>
   );
 };

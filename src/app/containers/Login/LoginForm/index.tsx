@@ -13,6 +13,7 @@ import * as yup from 'yup';
 const StyledButton = styled(PButton)`
   margin-bottom: ${pxToRem(20)}rem;
   font: normal bold 16px / ${StyleConstants.BASE_LINE_HEIGHT}px ${StyleConstants.FONT_FAMILY};
+  ${tw`rounded-full w-full p-3`}
 `;
 
 const FormContainer = styled.form`
@@ -36,6 +37,7 @@ const StyledInput = styled(PInput)`
   padding: ${pxToRem(12)}rem ${pxToRem(20)}rem;
   font-size: ${pxToRem(16)}rem;
   line-height: ${pxToRem(24)}rem;
+  width: 100%;
 `;
 const LoginFormContainer = styled.div`
   ${tw`w-full`}

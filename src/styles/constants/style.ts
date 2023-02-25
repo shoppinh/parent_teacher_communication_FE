@@ -8,6 +8,7 @@ export enum StyleConstants {
   BASE_FONT_SIZE = 14,
   BASE_LINE_HEIGHT = 24,
   LEFT_BAR_WIDTH = 300,
+  TAB_HEIGHT = 40,
 }
 
 export const position = {

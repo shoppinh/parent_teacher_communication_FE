@@ -1,6 +1,6 @@
+import FontFaceObserver from 'fontfaceobserver';
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import FontFaceObserver from 'fontfaceobserver';
 
 // Use consistent styling
 // import 'sanitize.css/sanitize.css';
@@ -13,10 +13,9 @@ import { ThemeProvider } from 'styles/theme/ThemeProvider';
 
 // import reportWebVitals from 'reportWebVitals';
 // Initialize languages
-import './locales/i18n';
-import { BrowserRouter } from 'react-router-dom';
-import store from 'store';
 import { createRoot } from 'react-dom/client';
+import store from 'store';
+import './locales/i18n';
 import { GlobalStyle } from './styles';
 
 // Observe loading of Inter (to remove 'Inter', remove the <link> tag in

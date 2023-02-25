@@ -14,8 +14,10 @@ export const Input = styled(InputUnstyled)`
   & input:focus-visible {
     outline: none;
   }
-
-  ${tw`w-full`}
+  width: 100%;
+  & input {
+    width: 100%;
+  }
 `;
 
 const PInput = React.forwardRef<any, React.InputHTMLAttributes<HTMLInputElement>>(

@@ -32,7 +32,7 @@ const lightTheme = {
   iconBorder: colors.CORN,
   iconColor: colors.BRIGHT_SUN,
   border: 'rgba(58,52,51,0.12)',
-  borderLight: 'rgba(58,52,51,0.05)',
+  borderLight: 'rgba(224,224,224)',
   fontFamily: "'Roboto', Helvetica, Arial, sans-serif",
 };
 
@@ -68,7 +68,7 @@ const darkTheme: Theme = {
   iconBorder: colors.CORN,
   iconColor: colors.BRIGHT_SUN,
   border: 'rgba(241,233,231,0.15)',
-  borderLight: 'rgba(241,233,231,0.05)',
+  borderLight: 'rgba(224,224,224)',
   fontFamily: "'Roboto', Helvetica, Arial, sans-serif",
 };
 
