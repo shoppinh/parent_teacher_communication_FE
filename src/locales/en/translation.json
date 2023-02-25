@@ -83,7 +83,7 @@
     "mobileAlreadyExists": "Mobile already exists, you can login with this number.",
     "IconfirmThatIam18yearsOfAge": "I confirm that I am 18 years of age"
   },
-  "home": {
+  "landing": {
     "title": "Home",
     "areYouMoreThan18YearsOld": "Are you more than 18 years old?",
     "ihaveReadAndAcceptTheTCAndPP": "I have read and accept the <1>Terms & Conditions</1> and <3>Privacy Policy.</3>",
@@ -92,6 +92,17 @@
     "umenuLogo": "MuaNgay Logo",
     "gotit": "Got it",
     "outletInDifferentCity": "Hello! Our outlet offers delivery in {{city}} only"
+  },
+  "teacher": {
+    "home": {
+      "title": "Teacher Home"
+    },
+    "event": {
+      "title": "Teacher Event"
+    },
+    "management": {
+      "title": "Teacher Management"
+    }
   },
   "localizationConfig": {
     "title": "Switch Language",

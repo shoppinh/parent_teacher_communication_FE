@@ -28,6 +28,9 @@ const StyledButton = styled(PButton)`
   && {
     background-color: ${(p) => p.theme.backgroundVariant};
   }
+
+  padding: ${pxToRem(10)}rem;
+  ${tw`rounded-full w-full`}
 `;
 
 const ContentWrapper = styled.div`
@@ -39,7 +42,7 @@ const Landing = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   return (
-    <BaseLayout>
+    <BaseLayout title={t('landing.title')}>
       <Wrapper>
         <ContentWrapper>
           <img src={Logo} alt='Logo' />

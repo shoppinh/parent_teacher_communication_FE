@@ -333,18 +333,3 @@ export enum DeliveryStatus {
 
 export { SiteMap };
 
-export enum GTM_CLASSNAME {
-  ADD_TO_CART_BTN = 'AddtoCartButton__span',
-  BELL_ICON = 'umni-bell-icon',
-  CART_ICON = 'umni-cart-icon',
-  NOTE_FIELD = 'note-field',
-  NAVIGATION_MENU_LINK = 'navigation-menu-link',
-  SEARCH_BAR = 'search-bar',
-  PRODUCT_DETAIL = 'product-detail',
-}
-
-export enum ZALO_MINI_APP_ACTION {
-  MUANGAY_EPAY_OPEN = 'MUANGAY_EPAY_OPEN',
-  MUANGAY_ZALOPAY_OPEN = 'MUANGAY_ZALOPAY_OPEN',
-  MUANGAY_READY = 'READY',
-}

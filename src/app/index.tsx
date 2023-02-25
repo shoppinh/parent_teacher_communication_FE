@@ -1,17 +1,14 @@
-import React from 'react';
-import { FontStyle, GlobalStyle } from '../styles';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { CustomIconStyle } from '../styles/font-styles';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import SiteMap from '../utils/sitemap';
-import { RoleBaseProtectedRoute } from './routes';
-import { ConstantRoles } from '../utils/constants';
-import TeacherHomePage from './pages/TeacherHomePage';
-import Login from './pages/Login';
 import Landing from './pages/Landing';
+import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import Register from './pages/Register';
+import TeacherHome from './pages/TeacherHome';
+import TeacherEvent from './pages/TeacherEvent';
+import TeacherManagement from './pages/TeacherManagement';
 
 export function App() {
   const { i18n } = useTranslation();
@@ -25,22 +22,11 @@ export function App() {
         <meta name='description' content='ParTe' />
         <link rel='dns-prefetch' href='https://www.googletagmanager.com' />
         <link rel='preconnect' href={process.env.REACT_APP_API_URL} />
-        {/* <meta http-equiv="Content-Security-Policy" content="default-src 'self' *.muangay-vn.com *.googletagmanager.com  *.google-analytics.com *.gstatic.com *.gravatar.com *.googleapis.com *.google.com data: gap: 'unsafe-inline' 'unsafe-eval'; base-uri 'self';"></meta> */}
       </Helmet>
       <Routes>
-        {/*<Route*/}
-        {/*  path={SiteMap.parentHome.link}*/}
-        {/*  element={*/}
-        {/*    <RoleBaseProtectedRoute*/}
-        {/*      unAuthenticatedRedirectTo={SiteMap.landing.link}*/}
-        {/*      role={ConstantRoles.PARENT}*/}
-        {/*      unAuthorizedRedirectTo={SiteMap.login.link}*/}
-        {/*    >*/}
-        {/*      <TeacherHomePage />*/}
-        {/*    </RoleBaseProtectedRoute>*/}
-        {/*  }*/}
-        {/*/>*/}
-        <Route path={SiteMap.teacherHome.link} element={<TeacherHomePage />} />
+        <Route path={SiteMap.teacherHome.link} element={<TeacherHome />} />
+        <Route path={SiteMap.teacherEvent.link} element={<TeacherEvent />} />
+        <Route path={SiteMap.teacherManagement.link} element={<TeacherManagement />} />
         <Route path={SiteMap.login.link} element={<Login />} />
         <Route path={SiteMap.landing.link} element={<Landing />} />
         <Route path={SiteMap.register.link} element={<Register />} />
