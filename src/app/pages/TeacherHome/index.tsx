@@ -12,11 +12,14 @@ import tw, { styled } from 'twin.macro';
 import { PButton } from '../../components/PButton';
 import { pxToRem } from '../../../styles/theme/utils';
 import { StyleConstants } from '../../../styles/constants/style';
+import FeedList from '../../containers/TeacherHomePage/FeedList';
 
 const TabsWrapper = styled.div`
   display: flex;
+  ${tw`p-2`}
   justify-content: space-between;
   height: ${pxToRem(StyleConstants.TAB_HEIGHT)}rem;
+  background-color: ${(p) => p.theme.background};
 `;
 const StyledTabsList = styled(TabsListUnstyled)``;
 const StyledTab = styled(TabUnstyled)`
@@ -56,7 +59,9 @@ const TeacherHomePage = () => {
           <StyledButton>Create</StyledButton>
         </TabsWrapper>
         <TabPaneContent>
-          <TabPanelUnstyled value={0}>1 page</TabPanelUnstyled>
+          <TabPanelUnstyled value={0}>
+            <FeedList />
+          </TabPanelUnstyled>
           <TabPanelUnstyled value={1}>2 page</TabPanelUnstyled>
           <TabPanelUnstyled value={2}>3 page</TabPanelUnstyled>
           <TabPanelUnstyled value={3}>4 page</TabPanelUnstyled>

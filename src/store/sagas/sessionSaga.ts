@@ -115,7 +115,7 @@ export function* doLogout({ payload }: any) {
 
 const ParseUserData = (data: any): User => {
   return {
-    id: data.id,
+    _id: data._id,
     email: data.email,
     userName: data.email,
     firstName: data.firstName,

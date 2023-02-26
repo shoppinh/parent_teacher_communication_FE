@@ -4,6 +4,7 @@ import tw, { styled } from 'twin.macro';
 interface ButtonProp {
   variant?: 'primary' | 'secondary';
 }
+
 //test
 export const PButton = styled(ButtonUnstyled)<ButtonProp>`
   ${(p) => {
@@ -13,7 +14,7 @@ export const PButton = styled(ButtonUnstyled)<ButtonProp>`
       case 'secondary':
         return tw`bg-white text-blue-500`;
       default:
-        return tw`bg-blue-500 text-white`;
+        return `background-color: ${p.theme.background}; color: ${p.theme.text};`;
     }
   }}
 `;

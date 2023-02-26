@@ -99,7 +99,7 @@ export const responseInterceptor = async (response: AxiosResponse) => {
           sessionActions.doLogout({
             token: sessionAuth?.accessToken || '',
             fcmToken: sessionAuth?.fcmToken || '',
-            userId: sessionAuth?.user?.data?.id || 0,
+            userId: sessionAuth?.user?.data?._id || '',
           })
         );
       }

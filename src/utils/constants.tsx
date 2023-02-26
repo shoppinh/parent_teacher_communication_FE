@@ -67,7 +67,7 @@ export const PAGING_SHOWING_ITEM = 3;
 
 export enum queryString {
   menuGUID = 'menuGUID',
-  orderGUID = 'orderGUID',
+  classId = 'classId',
   product = 'product',
   section = 'section',
   returnUrl = 'returnUrl',
@@ -332,4 +332,3 @@ export enum DeliveryStatus {
 }
 
 export { SiteMap };
-

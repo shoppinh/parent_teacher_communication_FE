@@ -17,9 +17,10 @@ interface Props {
 }
 
 const Center = styled.div`
-  ${tw`flex-1 p-2`}
+  ${tw`flex-1`}
   height: 100%;
   overflow: auto;
+  background-color: ${(p) => p.theme.backBackground};
 `;
 const MainContent = styled.div`
   ${tw`flex-1`}
