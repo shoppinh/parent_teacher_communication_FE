@@ -24,7 +24,7 @@ export interface AuthUserPayload {
 export interface LogoutQuery {
   token?: string;
   fcmToken?: string;
-  userId?: number;
+  userId?: string;
 }
 
 export interface SessionState {

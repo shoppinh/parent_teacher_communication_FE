@@ -13,7 +13,7 @@ import { registerActions as actions } from 'store/slices/register';
 import { RegisterPayload } from 'types/Register';
 
 interface RegisterDataRespose {
-  id: number;
+  _id: string;
   roleId: string;
   userName: string;
   mobilePhone: string;
@@ -42,7 +42,7 @@ export function* registerSaga() {
 
 const ParseRegister = (response: RegisterDataRespose): RegisterPayload => ({
   user: {
-    id: response.id,
+    _id: response._id,
     userName: response.userName,
     roleId: response.roleId,
     mobilePhone: response.mobilePhone,

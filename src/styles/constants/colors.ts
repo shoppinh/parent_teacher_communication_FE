@@ -32,4 +32,5 @@ export const colors = {
   BONJOUR: '#E5E2E2',
   DODGER_BLUE: '#3B82F6',
   ATHENS_GRAY: '#F0F2F4',
+  WHITE_SMOKE: '#edeef3',
 };
