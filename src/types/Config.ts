@@ -24,7 +24,7 @@ export interface ConfigPayload {
 }
 export interface LanguageQuery {
   accessToken: string;
-  consumerId: number;
+  userId: string;
   langCode: string;
 }
 

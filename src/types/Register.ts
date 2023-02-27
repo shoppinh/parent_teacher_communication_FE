@@ -3,7 +3,7 @@ import { User } from './User';
 
 export interface RegisterPayload {
   user: User | null;
-  forgotUserId?: number;
+  forgotUserId?: string;
   forgotMobilePhone?: string;
   codeExpiredTime?: number;
   isVerified?: boolean;
@@ -23,24 +23,24 @@ export interface RegisterQuery {
 }
 
 export interface VerifyQuery {
-  userId: number;
+  userId: string;
   code: string;
 }
 
 export interface DeviceTokenQuery {
-  consumerId: number;
+  userId: string;
   fcmToken: string;
   oldFcmToken: string;
   token: string;
 }
 
 export interface ResendCodeQuery {
-  consumerId: number;
+  userId: string;
   actionType: actionTypes;
 }
 
 export interface SetPasswordQuery {
-  consumerId: number;
+  userId: string;
   password: string;
   repassword: string;
 }
@@ -50,7 +50,7 @@ export interface ForgotQuery {
 }
 
 export interface ForgotPayload {
-  forgotUserId: number;
+  forgotUserId: string;
   forgotMobilePhone: string;
   codeExpiredTime?: number;
 }

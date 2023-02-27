@@ -1,34 +1,13 @@
 import { call } from 'redux-saga/effects';
 import * as api from './index';
-import {
-  DeviceTokenQuery,
-  ForgotQuery,
-  RegisterQuery,
-  ResendCodeQuery,
-  SetPasswordQuery,
-  VerifyQuery,
-} from 'types/Register';
+import { DeviceTokenQuery, RegisterQuery } from 'types/Register';
 import { AuthQuery, LogoutQuery, RefreshTokenQuery } from 'types/Session';
 import { LanguageQuery } from 'types/Config';
 import { ConversationDetailQuery, ConversationRoomQuery } from 'types/Conversation';
-import { FileQuery, MenuImportQuery } from 'types/Admin/Import';
-import {
-  ActiveOutletPartnerQuery,
-  DeactivateOutletPartnerQuery,
-  FetchMenuPartnerQuery,
-  MenuExportQuery,
-  MenusOutletQuery,
-  ProductNotesQuery,
-  ZNSQuery,
-} from 'types/Admin/Menu';
-import { OutletListQuery } from 'types/Admin/Outlet';
+import { TeacherDetailQuery } from '../../types/Teacher';
 
 export function* apiLogin(query: AuthQuery) {
   return yield call(api.login, query);
-}
-
-export function* apiAdminLogin(query: AuthQuery) {
-  return yield call(api.adminLogin, query);
 }
 
 export function* apiLogout(query: LogoutQuery) {
@@ -43,29 +22,29 @@ export function* apiRegister(query: RegisterQuery) {
   return yield call(api.register, query);
 }
 
-export function* apiVerifyCode(query: VerifyQuery) {
-  return yield call(api.verifyCode, query);
-}
+// export function* apiVerifyCode(query: VerifyQuery) {
+//   return yield call(api.verifyCode, query);
+// }
+//
+// export function* apiResendCode(query: ResendCodeQuery) {
+//   return yield call(api.reSendCode, query);
+// }
+//
+// export function* apiSetPassword(query: SetPasswordQuery) {
+//   return yield call(api.setPassword, query);
+// }
 
-export function* apiResendCode(query: ResendCodeQuery) {
-  return yield call(api.reSendCode, query);
-}
+// export function* apiForgotPassword(query: ForgotQuery) {
+//   return yield call(api.forgotPassword, query);
+// }
+//
+// export function* apiForgotVerifyCode(query: VerifyQuery) {
+//   return yield call(api.forgotVerifyCode, query);
+// }
 
-export function* apiSetPassword(query: SetPasswordQuery) {
-  return yield call(api.setPassword, query);
-}
-
-export function* apiForgotPassword(query: ForgotQuery) {
-  return yield call(api.forgotPassword, query);
-}
-
-export function* apiForgotVerifyCode(query: VerifyQuery) {
-  return yield call(api.forgotVerifyCode, query);
-}
-
-export function* apiForgotSetPassword(query: SetPasswordQuery) {
-  return yield call(api.forgotSetPassword, query);
-}
+// export function* apiForgotSetPassword(query: SetPasswordQuery) {
+//   return yield call(api.forgotSetPassword, query);
+// }
 
 export function* apiRegisterDeviceToken(query: DeviceTokenQuery) {
   return yield call(api.registerDeviceToken, query);
@@ -93,54 +72,6 @@ export function* apiUpdateLanguage(query: LanguageQuery) {
 
 // Admin Helper
 
-export function* apiDoUploadExcelMenuFile(query: FileQuery) {
-  return yield call(api.uploadExcelMenuFile, query);
-}
-
-export function* apiDoUploadImageMenuFile(query: FileQuery) {
-  return yield call(api.uploadImageMenuFile, query);
-}
-
-export function* apiAdminMenuImport(query: MenuImportQuery) {
-  return yield call(api.adminMenuImport, query);
-}
-
-export function* apiDoFetchOutletList(query: OutletListQuery) {
-  return yield call(api.fetchOutletList, query);
-}
-
-export function* apiDoFetchMenusOutlet(query: MenusOutletQuery) {
-  return yield call(api.fetchMenusOutlet, query);
-}
-
-export function* apiGetAllThirdParty(query: MenusOutletQuery) {
-  return yield call(api.getAllThirdParty, query);
-}
-
-export function* apiGetExportDataMenu(query: MenuExportQuery) {
-  return yield call(api.getExportDataMenu, query);
-}
-
-export function* apiDoActiveOutletPartner(query: ActiveOutletPartnerQuery) {
-  return yield call(api.doActiveOutletPartner, query);
-}
-
-export function* apiDoDeactivateOutletPartner(query: DeactivateOutletPartnerQuery) {
-  return yield call(api.doDeactivateOutletPartner, query);
-}
-
-export function* apiDoFetchMenuPartnerData(query: FetchMenuPartnerQuery) {
-  return yield call(api.doFetchMenuPartnerData, query);
-}
-
-export function* apiDoFetchOutlet(query: MenusOutletQuery) {
-  return yield call(api.fetchOutletDetail, query);
-}
-
-export function* apiDoEnableProductNotes(query: ProductNotesQuery) {
-  return yield call(api.doEnableProductNotes, query);
-}
-
-export function* apiDoEnableZNS(query: ZNSQuery) {
-  return yield call(api.doEnableZNS, query);
+export function* apiFetchTeacherDetail(query: TeacherDetailQuery) {
+  return yield call(api.fetchTeacherDetail, query);
 }
