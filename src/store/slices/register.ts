@@ -19,7 +19,7 @@ import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 export const initialState: RegisterState = {
   data: {
     user: null,
-    forgotUserId: NaN,
+    forgotUserId: '',
     isVerified: false,
     isRegisterSuccess: false,
     isSentReSend: false,

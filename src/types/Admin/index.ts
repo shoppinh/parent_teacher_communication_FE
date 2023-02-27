@@ -1,7 +1,3 @@
-import { AdminImportSuccess } from './Import';
-import { AdminMenuState } from './Menu';
-import { AdminOutlet, AdminOutletState } from './Outlet';
-
 export interface AdminState {
   data: AdminData;
   error?: AdminError | null;
@@ -27,19 +23,10 @@ export interface Partners {
 }
 
 export interface AdminData {
-  outlets: AdminOutletState;
-  menus: AdminMenuState;
-  outletTemp?: AdminOutlet;
-  import: {
-    success?: boolean;
-    data: AdminImportSuccess;
-  };
   config: {
     partners?: Partners[];
   };
-  session: {
-    currentDataMenuUrl?: string;
-  };
+  session: {};
 }
 
 export enum AdminErrorType {

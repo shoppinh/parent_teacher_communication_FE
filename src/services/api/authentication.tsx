@@ -4,11 +4,11 @@ import { AuthQuery, LogoutQuery, RefreshTokenQuery } from 'types/Session';
 
 export const login = async (query: AuthQuery) => {
   const params = {
-    mobilePhone: query.username,
+    username: query.username,
     password: query.password,
   };
 
-  return new apiClient('').post(APIs.consumer.login, params);
+  return new apiClient('').post(APIs.user.login, params);
 };
 
 export const logout = async (query: LogoutQuery) => {
@@ -18,7 +18,7 @@ export const logout = async (query: LogoutQuery) => {
     userId: query.userId,
   };
 
-  return new apiClient(query.token).post(APIs.consumer.logout, params);
+  return new apiClient(query.token).post(APIs.user.logout, params);
 };
 
 export const refreshToken = async (query: RefreshTokenQuery) => {
@@ -28,12 +28,10 @@ export const refreshToken = async (query: RefreshTokenQuery) => {
   };
 
   // Admin role Id = 1
-  if (query.roleId && query.roleId === 1) {
-    return new apiClient('').post(APIs.admin.refreshToken, params);
-  }
-  return new apiClient('').post(APIs.consumer.refreshToken, params);
+
+  return new apiClient('').post(APIs.user.refreshToken, params);
 };
 
 export const getUserInfo = async (query: AuthQuery) => {
-  return new apiClient('').get(APIs.consumer.info + query.username);
+  return new apiClient('').get(APIs.user.info + query.username);
 };

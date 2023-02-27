@@ -1,6 +1,5 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import {
-  apiAdminLogin,
   apiGetCountUnreadRoom,
   apiGetUserInfo,
   apiLogin,
@@ -15,15 +14,26 @@ import { _FORCE_REFRESH_KEY, PREVIOUS_STORAGE_KEY } from 'utils/constants';
 import i18next from 'i18next';
 
 interface LoginDataRespose {
-  token: string;
+  accessToken: string;
   refreshToken: string;
-  user: User;
+  userId: string;
+  mobilePhone: string;
+  username: string;
+  email: string;
+  role: string;
+  firstname: string;
+  lastname: string;
+  tokenType: string;
+  expiresIn: number;
+  expiresDate: string;
+  isActive: boolean;
+  lastLoggedIn: string;
+  avatar: string;
 }
 
 export function* sessionSaga() {
   yield all([
     takeLatest(actions.doLogin.type, doLogin),
-    takeLatest(actions.doAdminLogin.type, doAdminLogin),
     takeLatest(actions.doLogout.type, doLogout),
     takeLatest(actions.doRegisterDeviceToken.type, doRegisterDeviceToken),
     takeLatest(actions.doRefreshToken.type, doRefreshToken),
@@ -32,17 +42,28 @@ export function* sessionSaga() {
 }
 
 const ParseLogin = (
-  phone: string,
+  username: string,
   rememberMe: boolean,
   response: LoginDataRespose
 ): AuthPayLoad => ({
-  phoneNumber: phone,
-  accessToken: response.token,
+  phoneNumber: response.mobilePhone,
+  accessToken: response.accessToken,
   refreshToken: response.refreshToken,
   rememberMe: rememberMe,
-  lastLogin: response.token === '' ? '' : new Date().toISOString(),
+  lastLogin: response.accessToken === '' ? '' : new Date().toISOString(),
   user: {
-    data: response.user,
+    data: {
+      _id: response.userId,
+      userName: response.username,
+      firstName: response.firstname,
+      lastName: response.lastname,
+      email: response.email,
+      mobilePhone: response.mobilePhone,
+      isActive: response.isActive,
+      roleId: response.role,
+      lastLogin: new Date(response.lastLoggedIn),
+      avatar: response.avatar,
+    },
   },
 });
 
@@ -50,7 +71,7 @@ export function* doLogin({ payload }: any) {
   try {
     const response = yield call(apiLogin, payload);
     if (response.data && response.data.status) {
-      const authData = ParseLogin(payload.phone, payload.rememberMe, response.data.data);
+      const authData = ParseLogin(payload.username, payload.rememberMe, response.data.data);
       const userData = authData?.user;
       if (userData?.data?.userSettings && userData?.data?.userSettings.lang) {
         i18next.changeLanguage(userData?.data?.userSettings.lang);
@@ -60,34 +81,6 @@ export function* doLogin({ payload }: any) {
       setTimeout(() => {
         localStorage.setItem(_FORCE_REFRESH_KEY, 'true');
       }, 1500);
-    } else {
-      yield put(actions.Error(response.data.error));
-    }
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-export function* doAdminLogin({ payload }: any) {
-  try {
-    const response = yield call(apiAdminLogin, payload);
-    if (response.data && response.data.status) {
-      const authData = ParseLogin(payload.phone, payload.rememberMe, response.data.data);
-      const userData = authData?.user;
-      if (userData?.data?.roleId && parseInt(userData?.data?.roleId) === 1) {
-        yield put(actions.updateAuth(authData));
-        localStorage.setItem(PREVIOUS_STORAGE_KEY, JSON.stringify(authData));
-        setTimeout(() => {
-          localStorage.setItem(_FORCE_REFRESH_KEY, 'true');
-        }, 1500);
-      } else {
-        yield put(
-          actions.Error({
-            code: 111,
-            message: i18next.t('admin.youDontHavePermissionToAccess') as string,
-          })
-        );
-      }
     } else {
       yield put(actions.Error(response.data.error));
     }

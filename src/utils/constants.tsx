@@ -195,7 +195,7 @@ export enum Pattern {
 export enum ConstantRoles {
   SUPER_USER = 'SUPER_USER',
   TEACHER = 'TEACHER',
-  PARENT = 'TEACHER',
+  PARENT = 'PARENT',
 }
 
 export enum actionTypes {

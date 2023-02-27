@@ -1,6 +1,6 @@
 import React from 'react';
 import InputUnstyled from '@mui/base/InputUnstyled';
-import tw, { styled } from 'twin.macro';
+import { styled } from 'twin.macro';
 import { colors } from '../../../styles/constants/colors';
 import { pxToRem } from '../../../styles/theme/utils';
 

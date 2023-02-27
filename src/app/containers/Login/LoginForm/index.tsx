@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { PButton } from '../../../components/PButton';
 import { pxToRem } from '../../../../styles/theme/utils';
 import { StyleConstants } from '../../../../styles/constants/style';
@@ -9,6 +9,12 @@ import { useForm } from 'react-hook-form';
 import { AuthQuery } from '../../../../types/Session';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useSessionSlice } from '../../../../store/slices/session';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAuthError, getAuthLoading, getUser } from '../../../../store/selectors/session';
+import { useNavigate } from 'react-router-dom';
+import sitemap from '../../../../utils/sitemap';
+import { ConstantRoles } from '../../../../utils/constants';
 
 const StyledButton = styled(PButton)`
   margin-bottom: ${pxToRem(20)}rem;
@@ -57,7 +63,7 @@ const LoginForm = () => {
   const {
     handleSubmit,
     register,
-
+    getValues,
     formState: { errors, isDirty },
   } = useForm<AuthQuery>({
     defaultValues: {
@@ -65,10 +71,37 @@ const LoginForm = () => {
     },
     resolver: yupResolver(schema),
   });
-
-  const onSubmit = (data: AuthQuery) => {
-    console.log(data);
-  };
+  const { actions: sessionActions } = useSessionSlice();
+  const dispatch = useDispatch();
+  const authLoading = useSelector(getAuthLoading);
+  const authError = useSelector(getAuthError);
+  const user = useSelector(getUser);
+  console.log('roleId', user?.roleId);
+  const [isFormSent, setIsFormSent] = React.useState(false);
+  const navigate = useNavigate();
+  const onSubmit = useCallback(
+    (data: AuthQuery) => {
+      dispatch(sessionActions.doLogin(data));
+      setIsFormSent(true);
+    },
+    [dispatch, sessionActions]
+  );
+  useEffect(() => {
+    if (isFormSent && !authLoading) {
+      setIsFormSent(false);
+      if (authError) {
+        alert('Login failed');
+      } else {
+        if (user?.roleId === ConstantRoles.TEACHER) {
+          navigate(sitemap.teacherHome.link);
+        } else if (user?.roleId === ConstantRoles.PARENT) {
+          navigate(sitemap.parentHome.link);
+        } else {
+          navigate(sitemap.adminHome.link);
+        }
+      }
+    }
+  }, [authError, authLoading, isFormSent, navigate, user?.roleId]);
   return (
     <LoginFormContainer>
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
@@ -79,14 +112,14 @@ const LoginForm = () => {
         </InputContainer>
         <InputContainer>
           <InputLabel>{t('form.password')}</InputLabel>
-          <StyledInput {...register('password')} />
+          <StyledInput {...register('password')} type='password' />
           {errors.password && <Required>{errors.password.message}</Required>}
         </InputContainer>
+        <StyledButton type='submit' disabled={!isDirty} variant='primary'>
+          {t('login.login')}
+        </StyledButton>
+        <StyledButton variant='secondary'>{t('login.forgotPassword')}</StyledButton>
       </FormContainer>
-      <StyledButton type='submit' disabled={!isDirty}>
-        {t('login.login')}
-      </StyledButton>
-      <StyledButton variant='secondary'>{t('login.forgotPassword')}</StyledButton>
     </LoginFormContainer>
   );
 };
