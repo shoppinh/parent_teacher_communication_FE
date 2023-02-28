@@ -11,4 +11,6 @@ export const getConversationDetailState = (roomId: number) => {
   });
 };
 
+export const getCurrentRoomId = createSelector([selectDomain], (state) => state?.currentRoomId);
+
 // export const get

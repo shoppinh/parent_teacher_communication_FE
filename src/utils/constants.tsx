@@ -67,6 +67,7 @@ export const PAGING_SHOWING_ITEM = 3;
 
 export enum queryString {
   menuGUID = 'menuGUID',
+  roomId = 'roomId',
   classId = 'classId',
   product = 'product',
   section = 'section',

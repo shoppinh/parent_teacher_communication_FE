@@ -76,7 +76,6 @@ const LoginForm = () => {
   const authLoading = useSelector(getAuthLoading);
   const authError = useSelector(getAuthError);
   const user = useSelector(getUser);
-  console.log('roleId', user?.roleId);
   const [isFormSent, setIsFormSent] = React.useState(false);
   const navigate = useNavigate();
   const onSubmit = useCallback(

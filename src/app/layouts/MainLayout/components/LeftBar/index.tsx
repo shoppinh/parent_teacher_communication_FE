@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from 'twin.macro';
 import { StyleConstants } from '../../../../../styles/constants/style';
 import { pxToRem } from '../../../../../styles/theme/utils';
@@ -6,6 +6,12 @@ import { media } from '../../../../../styles';
 import Logo from '../../../../../assets/images/app-logo.png';
 import { PIcon } from '../../../../components/PIcon';
 import { PButton } from '../../../../components/PButton';
+import { PModal } from '../../../../components/PModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSessionSlice } from '../../../../../store/slices/session';
+import { getAccessToken, getFcmToken, getUser } from '../../../../../store/selectors/session';
+import { AuthPayLoad } from '../../../../../types/Session';
+import { PREVIOUS_STORAGE_KEY } from '../../../../../utils/constants';
 
 const Container = styled.div`
   width: ${pxToRem(StyleConstants.LEFT_BAR_WIDTH)}rem;
@@ -50,9 +56,22 @@ const ActionButton = styled(PButton)`
   && {
     background-color: ${(p) => p.theme.contrastBackground};
   }
+
   color: ${(p) => p.theme.text};
 `;
 const LeftBar = () => {
+  const [isShowOptionModal, setIsShowOptionModal] = useState(false);
+  const dispatch = useDispatch();
+  const { actions: sessionActions } = useSessionSlice();
+  const currentUser = useSelector(getUser);
+  const currentAccessToken = useSelector(getAccessToken);
+  const previousAuthStorage = localStorage.getItem(PREVIOUS_STORAGE_KEY);
+  const previousAuth = JSON.parse(
+    previousAuthStorage && previousAuthStorage !== '' ? previousAuthStorage : '{}'
+  ) as AuthPayLoad;
+  const handleCloseModal = () => {
+    setIsShowOptionModal(false);
+  };
   return (
     <Container>
       <ContentWrapper>
@@ -75,7 +94,7 @@ const LeftBar = () => {
             <ActionTitle>Class/Group</ActionTitle>
           </ActionItem>
           <ActionItem>
-            <ActionButton>
+            <ActionButton onClick={() => setIsShowOptionModal(true)}>
               <ActionIcon className='partei-cog' />
             </ActionButton>
             <ActionTitle>Settings</ActionTitle>
@@ -88,6 +107,23 @@ const LeftBar = () => {
           </ActionItem>
         </ActionGroup>
       </BottomMenu>
+      <PModal open={isShowOptionModal} onClose={handleCloseModal}>
+        <PButton
+          onClick={() => {
+            if (previousAuth.accessToken && previousAuth.accessToken !== '') {
+              dispatch(
+                sessionActions.doLogout({
+                  userId: previousAuth.user?.data?._id,
+                  fcmToken: previousAuth.fcmToken,
+                  token: previousAuth.accessToken,
+                })
+              );
+            }
+          }}
+        >
+          Click here to logout
+        </PButton>
+      </PModal>
     </Container>
   );
 };

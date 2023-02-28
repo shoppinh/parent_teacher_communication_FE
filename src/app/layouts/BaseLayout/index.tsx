@@ -1,6 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import tw, { styled } from 'twin.macro';
+import PToast from '../../components/PToast';
+import { Firebase } from '../FireBase';
 
 interface Props {
   children?: React.ReactNode;
@@ -21,6 +23,8 @@ const BaseLayout: React.FC<Props> = ({ children, title }) => {
         <meta name='og:title' content={title} />
       </Helmet>
       <Container>{!!children && children}</Container>
+      <PToast newestOnTop={true} />
+      {'serviceWorker' in navigator && <Firebase />}
     </>
   );
 };

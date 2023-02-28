@@ -1,7 +1,7 @@
 export interface ConversationDetailQuery {
   token: string;
   mobilePhone: string;
-  roomId: number;
+  roomId: string;
 }
 
 export interface ConversationRoomQuery {
@@ -13,7 +13,7 @@ export interface ConversationRoomQuery {
 }
 
 export interface ConversationUnreadPayload {
-  roomId: number;
+  roomId: string;
   countUnread: string;
   roleId?: number;
   userId?: number;
@@ -22,7 +22,7 @@ export interface ConversationUnreadPayload {
 export interface ConversationMesssages {
   messages: MessageItem[];
   mobilePhone: string;
-  roomId: number;
+  roomId: string;
 }
 
 export interface MessageItem {
@@ -32,7 +32,7 @@ export interface MessageItem {
   id?: number;
   isRead: boolean;
   mobilePhone: string;
-  roomId: number;
+  roomId: string;
   updatedAt?: Date;
   userId: number;
   userName: string;
@@ -50,6 +50,7 @@ export interface ConversationState {
       countUnread?: number;
     };
   };
+  currentRoomId?: string;
   loading: boolean;
   error: any;
 }
