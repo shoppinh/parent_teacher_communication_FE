@@ -120,11 +120,11 @@ const Header: React.FC<Props> = ({ onRightBarClick, onLeftBarClick, headerTitle 
         <NavigationGroup>
           {teacherNavigationList.map((navigationItem) =>
             navigationItem?.action ? (
-              <NavigationButton onClick={navigationItem?.action}>
+              <NavigationButton onClick={navigationItem?.action} key={navigationItem.id}>
                 <StyledIcon className={navigationItem.iconName} />
               </NavigationButton>
             ) : (
-              <Link to={navigationItem.url}>
+              <Link to={navigationItem.url} key={navigationItem.id}>
                 <StyledIcon
                   className={navigationItem.iconName}
                   isActive={navigationItem.url === location.pathname}

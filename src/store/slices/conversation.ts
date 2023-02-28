@@ -28,7 +28,7 @@ const slice = createSlice({
       state.loading = true;
     },
     loadedMessageList(state, action: PayloadAction<ConversationMesssages>) {
-      if (action?.payload.roomId && !isNaN(action?.payload.roomId)) {
+      if (action?.payload.roomId ) {
         state.data = {
           ...state.data,
           ...{
@@ -68,7 +68,7 @@ const slice = createSlice({
     //   state.loading = false;
     // },
     addMessageList(state, action?: PayloadAction<MessageItem>) {
-      if (action?.payload.roomId && !isNaN(action?.payload.roomId)) {
+      if (action?.payload.roomId ) {
         const createTimestamp = Date.parse(new Date(action?.payload.createdAt).toISOString());
         state.data = {
           ...state.data,
