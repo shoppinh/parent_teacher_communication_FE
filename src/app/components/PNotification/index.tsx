@@ -1,7 +1,9 @@
 import React from 'react';
-
-const PNotification = () => {
-  return <div>This is a notification</div>;
+interface Props {
+  content?: string;
+}
+const PNotification: React.FC<Props> = ({ content }) => {
+  return <div>{content && content}</div>;
 };
 
 export default PNotification;

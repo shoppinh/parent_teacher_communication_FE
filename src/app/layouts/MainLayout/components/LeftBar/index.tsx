@@ -12,6 +12,7 @@ import { useSessionSlice } from '../../../../../store/slices/session';
 import { getAccessToken, getFcmToken, getUser } from '../../../../../store/selectors/session';
 import { AuthPayLoad } from '../../../../../types/Session';
 import { PREVIOUS_STORAGE_KEY } from '../../../../../utils/constants';
+import { useConversationSlice } from '../../../../../store/slices/conversation';
 
 const Container = styled.div`
   width: ${pxToRem(StyleConstants.LEFT_BAR_WIDTH)}rem;
@@ -63,6 +64,7 @@ const LeftBar = () => {
   const [isShowOptionModal, setIsShowOptionModal] = useState(false);
   const dispatch = useDispatch();
   const { actions: sessionActions } = useSessionSlice();
+  const { actions: conversationActions } = useConversationSlice();
   const currentUser = useSelector(getUser);
   const currentAccessToken = useSelector(getAccessToken);
   const previousAuthStorage = localStorage.getItem(PREVIOUS_STORAGE_KEY);
@@ -88,7 +90,23 @@ const LeftBar = () => {
             <ActionTitle>Invite Member</ActionTitle>
           </ActionItem>
           <ActionItem>
-            <ActionButton>
+            <ActionButton
+              onClick={() => {
+                dispatch(
+                  conversationActions.sendTestMessage({
+                    fcmToken:
+                      'dtr4E-KXdJZngvlJ1MT4YM:APA91bH3o8y0MbA2j3LqSFYX825sfQ5KuUOSXK671o-_NXUZZ7tPgys-v5VMN0IejIGaQdfYPz4SX7JnVCLJAoeVWkm1fsLRPhkE5sRPIkyp5Q9pommvygVlwmAU0wjENm_7fTwy2VFd',
+                    notification: {
+                      title: 'message title',
+                      body: 'hello world',
+                    },
+                    data: {
+                      username: 'kien.mac',
+                    },
+                  })
+                );
+              }}
+            >
               <ActionIcon className='partei-users' />
             </ActionButton>
             <ActionTitle>Class/Group</ActionTitle>

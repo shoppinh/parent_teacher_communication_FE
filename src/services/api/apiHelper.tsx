@@ -3,7 +3,7 @@ import * as api from './index';
 import { DeviceTokenQuery, RegisterQuery } from 'types/Register';
 import { AuthQuery, LogoutQuery, RefreshTokenQuery } from 'types/Session';
 import { LanguageQuery } from 'types/Config';
-import { ConversationDetailQuery, ConversationRoomQuery } from 'types/Conversation';
+import {ConversationDetailQuery, ConversationRoomQuery, PushNotificationQuery} from 'types/Conversation';
 import { TeacherDetailQuery } from '../../types/Teacher';
 
 export function* apiLogin(query: AuthQuery) {
@@ -60,6 +60,10 @@ export function* apiGetUserInfo(query: AuthQuery) {
 
 export function* apiGetConversationDetail(query: ConversationDetailQuery) {
   return yield call(api.getConversationDetail, query);
+}
+
+export function* apiSendPushNotification(query: PushNotificationQuery) {
+  return yield call(api.sendPushNotification, query);
 }
 
 export function* apiGetCountUnreadRoom(query: ConversationRoomQuery) {

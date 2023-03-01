@@ -86,5 +86,6 @@ export const APIs = {
     getConversationUnreadUser: '/api/message/count/unread/user/{mobilePhone}/{roleId}',
     getConversationUnreadRoom:
       '/api/message/count/unread/room/{fromMobilePhone}/{fromRoleId}/{toMobilePhone}/{toRoleId}',
+    sendPushNotification: '/api/push-notification/send-push-notification',
   },
 };

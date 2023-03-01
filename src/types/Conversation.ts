@@ -4,6 +4,18 @@ export interface ConversationDetailQuery {
   roomId: string;
 }
 
+export interface PushNotificationQuery {
+  token: string;
+  data: {
+    [key: string]: string;
+  };
+  body: {
+    title?: string;
+    body?: string;
+    imageUrl?: string;
+  };
+}
+
 export interface ConversationRoomQuery {
   token: string;
   fromMobilePhone: string;
