@@ -1,9 +1,12 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { apiGetConversationDetail } from 'services/api/apiHelper';
+import { apiGetConversationDetail, apiSendPushNotification } from 'services/api/apiHelper';
 import { conversationActions as actions } from 'store/slices/conversation';
 
 export function* conversationSaga() {
-  yield all([takeLatest(actions.loadMessageList.type, getConversationDetail)]);
+  yield all([
+    takeLatest(actions.loadMessageList.type, getConversationDetail),
+    takeLatest(actions.sendTestMessage.type, sendTestMessage),
+  ]);
 }
 
 const ParseMessageData = (data) => {
@@ -36,6 +39,18 @@ export function* getConversationDetail({ payload }: any) {
           messages: ParseMessageData(response.data.data),
         })
       );
+    } else {
+      yield put(actions.Error(response.data.error));
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+export function* sendTestMessage({ payload }: any) {
+  try {
+    const response = yield call(apiSendPushNotification, payload);
+    if (response.data && response.data.status) {
+      yield put(actions.sendTestMessageSuccess());
     } else {
       yield put(actions.Error(response.data.error));
     }

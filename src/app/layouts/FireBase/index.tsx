@@ -59,11 +59,7 @@ export const Firebase = () => {
         if (isMount) setHasDeviceToken(value);
       };
       getDeviceToken(onSetHasDeviceToken).then((token) => {
-        console.log('token', token);
-        console.log('fcmToken', fcmToken);
-
         if (token !== fcmToken) {
-          console.log("true");
           dispatch(
             sessionActions.doRegisterDeviceToken({
               fcmToken: `${token}`,
@@ -73,6 +69,20 @@ export const Firebase = () => {
             })
           );
         }
+        setNotification({
+          body: '',
+          fromUserId: '',
+          menuGUID: '',
+          mobilePhone: '',
+          orderId: '',
+          orderStatus: '',
+          phone: '',
+          previousOrderStatus: '',
+          roleId: '',
+          roomId: '',
+          type: '',
+          userName: '',
+        });
       });
     }
     return () => {
@@ -90,7 +100,6 @@ export const Firebase = () => {
 
   onMessageListener()
     .then((payload) => {
-      // console.log(`Notification received: ${JSON.stringify(payload)}`);
       if (isMobileView(width)) {
         setShowNotification(true);
         setNotification({
@@ -126,16 +135,17 @@ export const Firebase = () => {
         //   />,
         //   dialogOption.notified
         // );
-        toast.info(<PNotification />, dialogOption.notified);
+        toast.info(<PNotification content={JSON.stringify(payload)} />, dialogOption.notified);
+        setShowNotification(!showNotification)
       }
-      if (payload.data.type === 'TWO_WAY_MESSAGING_TYPE') {
-        dispatch(
-          sessionActions.updateCountUnreadRoom({
-            roomId: payload.data.roomId || '',
-            countUnread: `${(countUnreadMessage?.messageCountUnread || 0) + 1}`,
-          })
-        );
-      }
+      // if (payload.data.type === 'TWO_WAY_MESSAGING_TYPE') {
+      //   dispatch(
+      //     sessionActions.updateCountUnreadRoom({
+      //       roomId: payload.data.roomId || '',
+      //       countUnread: `${(countUnreadMessage?.messageCountUnread || 0) + 1}`,
+      //     })
+      //   );
+      // }
     })
     .catch((err) => console.log('Notification failed: ', err));
 
@@ -161,7 +171,7 @@ export const Firebase = () => {
           {/*  menuGUID={notification.menuGUID}*/}
           {/*  fromUserId={notification.fromUserId}*/}
           {/*/>*/}
-          <PNotification />
+          <PNotification content={JSON.stringify(notification.body)} />
         </PModal>
       )}
     </>

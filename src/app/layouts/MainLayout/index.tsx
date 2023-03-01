@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import { Helmet } from 'react-helmet-async';
 import tw, { styled } from 'twin.macro';
 import { StyleConstants } from '../../../styles/constants/style';
 import { PDrawer } from '../../components/PDrawer';
@@ -8,6 +7,7 @@ import LeftBar from './components/LeftBar';
 import RightBar from './components/RightBar';
 import { media } from '../../../styles';
 import { pxToRem } from '../../../styles/theme/utils';
+import BaseLayout from '../BaseLayout';
 
 interface Props {
   children?: React.ReactNode;
@@ -62,11 +62,7 @@ const MainLayout: React.FC<Props> = ({ children, headerTitle, title }) => {
     setRightBarOpen(!rightBarOpen);
   }, [rightBarOpen]);
   return (
-    <>
-      <Helmet>
-        <title>{title}</title>
-        <meta name='og:title' content={title} />
-      </Helmet>
+    <BaseLayout title={title}>
       <Container>
         <LeftBar />
         <MainContent>
@@ -103,7 +99,7 @@ const MainLayout: React.FC<Props> = ({ children, headerTitle, title }) => {
         )}
       </Container>
       <NavigationBottomBar />
-    </>
+    </BaseLayout>
   );
 };
 
