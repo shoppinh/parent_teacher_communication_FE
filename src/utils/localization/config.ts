@@ -18,4 +18,6 @@ export const WEEKSTARTDATE = {
   'vi-VN': DEFAULT_START_DATE,
 };
 
+export const DEFAULT_DATE_TEMPLATE = 'DD/MM/YYYY';
+
 export const MOBILE_PHONE_PATTERN = '((^(0){1})(3|5|7|8|9))+([0-9]{8})';

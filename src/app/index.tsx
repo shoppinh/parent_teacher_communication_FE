@@ -12,6 +12,7 @@ import TeacherEvent from './pages/TeacherEvent';
 import TeacherManagement from './pages/TeacherManagement';
 import { RoleBaseProtectedRoute } from './routes';
 import { ConstantRoles } from '../utils/constants';
+import ParentHomePage from './pages/ParentHome';
 
 export function App() {
   const { i18n } = useTranslation();
@@ -27,6 +28,8 @@ export function App() {
         <link rel='preconnect' href={process.env.REACT_APP_API_URL} />
       </Helmet>
       <Routes>
+        <Route path={SiteMap.landing.link} element={<Landing />} />
+        <Route path={SiteMap.register.link} element={<Register />} />
         <Route
           path={SiteMap.teacherHome.link}
           element={
@@ -42,8 +45,18 @@ export function App() {
         <Route path={SiteMap.teacherEvent.link} element={<TeacherEvent />} />
         <Route path={SiteMap.teacherManagement.link} element={<TeacherManagement />} />
         <Route path={SiteMap.login.link} element={<Login />} />
-        <Route path={SiteMap.landing.link} element={<Landing />} />
-        <Route path={SiteMap.register.link} element={<Register />} />
+        <Route
+          path={SiteMap.parentHome.link}
+          element={
+            <RoleBaseProtectedRoute
+              unAuthenticatedRedirectTo={sitemap.login.link}
+              role={ConstantRoles.PARENT}
+              unAuthorizedRedirectTo={sitemap.landing.link}
+            >
+              <ParentHomePage />
+            </RoleBaseProtectedRoute>
+          }
+        />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </BrowserRouter>

@@ -1,7 +1,9 @@
+import { User } from './User';
+
 export interface ConversationDetailQuery {
   token: string;
   mobilePhone: string;
-  roomId: string;
+  roomId: number;
 }
 
 export interface PushNotificationQuery {
@@ -25,7 +27,7 @@ export interface ConversationRoomQuery {
 }
 
 export interface ConversationUnreadPayload {
-  roomId: string;
+  roomId: number;
   countUnread: string;
   roleId?: number;
   userId?: number;
@@ -34,19 +36,29 @@ export interface ConversationUnreadPayload {
 export interface ConversationMesssages {
   messages: MessageItem[];
   mobilePhone: string;
-  roomId: string;
+  roomId: number;
+}
+
+export interface ConversationListQuery {
+  mobilePhone: string;
+  roleId: string;
+  token: string;
+  offset?: number;
+  limit?: number;
+  orderBy?: string;
+  orderDesc?: string;
 }
 
 export interface MessageItem {
   content: string;
   contentType: string;
   createdAt: Date;
-  id?: number;
+  id?: string;
   isRead: boolean;
   mobilePhone: string;
-  roomId: string;
+  roomId: number;
   updatedAt?: Date;
-  userId: number;
+  userId: string;
   userName: string;
   roleId: number;
 }
@@ -62,7 +74,11 @@ export interface ConversationState {
       countUnread?: number;
     };
   };
-  currentRoomId?: string;
+  conversationList?: {
+    [key: number]: Conversation;
+  };
+  currentRoomId?: number;
+  currentToUser?: User;
   loading: boolean;
   error: any;
 }
@@ -70,6 +86,27 @@ export interface ConversationState {
 export interface ConversationError {
   code: ConversationErrorType | null;
   message?: string;
+}
+
+export interface Conversation {
+  fromUserName: string;
+  fromMobilePhone: string;
+  fromRoleId: number;
+  fromUserUniqueId: string;
+  toUserName: string;
+  toMobilePhone: string;
+  toRoleId: number;
+  toUserUniqueId: string;
+  lastTimeMessage: string;
+  latestMessage: string;
+  latestMessageContentType: string;
+  id: number;
+  roomId: number;
+  userId: number;
+  latestMessageId: number;
+  countUnread: number;
+  role: number;
+  toUserId: number;
 }
 
 export enum ConversationErrorType {

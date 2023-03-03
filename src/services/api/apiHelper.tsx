@@ -3,7 +3,12 @@ import * as api from './index';
 import { DeviceTokenQuery, RegisterQuery } from 'types/Register';
 import { AuthQuery, LogoutQuery, RefreshTokenQuery } from 'types/Session';
 import { LanguageQuery } from 'types/Config';
-import {ConversationDetailQuery, ConversationRoomQuery, PushNotificationQuery} from 'types/Conversation';
+import {
+  ConversationDetailQuery,
+  ConversationListQuery,
+  ConversationRoomQuery,
+  PushNotificationQuery,
+} from 'types/Conversation';
 import { TeacherDetailQuery } from '../../types/Teacher';
 
 export function* apiLogin(query: AuthQuery) {
@@ -60,6 +65,10 @@ export function* apiGetUserInfo(query: AuthQuery) {
 
 export function* apiGetConversationDetail(query: ConversationDetailQuery) {
   return yield call(api.getConversationDetail, query);
+}
+
+export function* apiGetConversationList(query: ConversationListQuery) {
+  return yield call(api.getConversationListOfUser, query);
 }
 
 export function* apiSendPushNotification(query: PushNotificationQuery) {

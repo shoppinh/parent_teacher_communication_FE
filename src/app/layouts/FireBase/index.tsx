@@ -10,7 +10,7 @@ import {
 import { useSessionSlice } from 'store/slices/session';
 import { dialogOption, queryString } from 'utils/constants';
 import { getDeviceToken, onMessageListener } from 'utils/firebase/firebase';
-import { isMobileView } from 'utils/helpers';
+import { isMobileView, mapNumberRoleToString } from 'utils/helpers';
 
 import { PModal } from '../../components/PModal';
 import { getCurrentRoomId } from '../../../store/selectors/conversation';
@@ -32,24 +32,19 @@ export const Firebase = () => {
 
   const { width } = useWindowSize();
 
-  const roomId = queryRoomId ? queryRoomId : currentRoomId;
-  const countUnreadMessage = useSelector(getSessionCountUnread(roomId || ''));
+  const roomId = queryRoomId ? parseInt(queryRoomId) : currentRoomId;
+  const countUnreadMessage = useSelector(getSessionCountUnread(roomId || NaN));
 
   const [hasDeviceToken, setHasDeviceToken] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [notification, setNotification] = useState({
     type: '',
     body: '',
-    phone: '',
-    orderId: '',
-    orderStatus: '',
-    previousOrderStatus: '',
     mobilePhone: '',
-    menuGUID: '',
     fromUserId: '',
-    roleId: '',
+    roleId: NaN,
     userName: '',
-    roomId: '',
+    roomId: NaN,
   });
 
   useEffect(() => {
@@ -69,34 +64,12 @@ export const Firebase = () => {
             })
           );
         }
-        setNotification({
-          body: '',
-          fromUserId: '',
-          menuGUID: '',
-          mobilePhone: '',
-          orderId: '',
-          orderStatus: '',
-          phone: '',
-          previousOrderStatus: '',
-          roleId: '',
-          roomId: '',
-          type: '',
-          userName: '',
-        });
       });
     }
     return () => {
       isMount = false;
     };
-  }, [
-    currentAccessToken,
-    currentUser?._id,
-    dispatch,
-    fcmToken,
-    hasDeviceToken,
-    setHasDeviceToken,
-    sessionActions,
-  ]);
+  }, [currentAccessToken, currentUser?._id, dispatch, fcmToken, hasDeviceToken, sessionActions]);
 
   onMessageListener()
     .then((payload) => {
@@ -105,47 +78,36 @@ export const Firebase = () => {
         setNotification({
           type: payload.data.type,
           body: payload.notification?.body || payload.data?.body,
-          phone: payload.data.mobilePhone,
-          orderId: payload.data.orderId,
-          orderStatus: payload.data.orderStatus,
-          previousOrderStatus: payload.data.previousOrderStatus,
           mobilePhone: payload.data.mobilePhone,
           roleId: payload.data.roleId,
           roomId: payload.data.roomId,
           userName: payload.data.userName,
           fromUserId: payload.data.fromUserId,
-          menuGUID: payload.data.menuGUID,
         });
       } else {
         toast.dismiss();
-        // toast.info(
-        //   <Notification
-        //     type={payload.data.type}
-        //     body={payload.notification?.body || payload.data?.body}
-        //     phone={payload.data.mobilePhone}
-        //     orderId={payload.data.orderId}
-        //     orderStatus={payload.data.orderStatus}
-        //     previousOrderStatus={payload.data.previousOrderStatus}
-        //     mobilePhone={payload.data.mobilePhone}
-        //     roleId={payload.data.roleId}
-        //     roomId={payload.data.roomId}
-        //     userName={payload.data.userName}
-        //     menuGUID={payload.data.menuGUID}
-        //     fromUserId={payload.data.fromUserId}
-        //   />,
-        //   dialogOption.notified
-        // );
-        toast.info(<PNotification content={JSON.stringify(payload)} />, dialogOption.notified);
-        setShowNotification(!showNotification)
+        toast.info(
+          <PNotification
+            type={payload.data.type}
+            body={payload.notification?.body || payload.data?.body}
+            mobilePhone={payload.data.mobilePhone}
+            roleId={mapNumberRoleToString(payload.data.roleId)}
+            roomId={payload.data.roomId}
+            userName={payload.data.userName}
+            fromUserId={payload.data.fromUserId}
+          />,
+          dialogOption.notified
+        );
+        setShowNotification(!showNotification);
       }
-      // if (payload.data.type === 'TWO_WAY_MESSAGING_TYPE') {
-      //   dispatch(
-      //     sessionActions.updateCountUnreadRoom({
-      //       roomId: payload.data.roomId || '',
-      //       countUnread: `${(countUnreadMessage?.messageCountUnread || 0) + 1}`,
-      //     })
-      //   );
-      // }
+      if (payload.data.type === 'TWO_WAY_MESSAGING_TYPE') {
+        dispatch(
+          sessionActions.updateCountUnreadRoom({
+            roomId: payload.data.roomId || NaN,
+            countUnread: `${(countUnreadMessage?.messageCountUnread || 0) + 1}`,
+          })
+        );
+      }
     })
     .catch((err) => console.log('Notification failed: ', err));
 
@@ -157,21 +119,15 @@ export const Firebase = () => {
     <>
       {hasDeviceToken && isMobileView(width) && (
         <PModal open={showNotification} onClose={onCloseNotification}>
-          {/*<Notification*/}
-          {/*  type={notification.type}*/}
-          {/*  body={notification.body}*/}
-          {/*  phone={notification.phone}*/}
-          {/*  orderId={notification.orderId}*/}
-          {/*  orderStatus={notification.orderStatus}*/}
-          {/*  previousOrderStatus={notification.previousOrderStatus}*/}
-          {/*  mobilePhone={notification.mobilePhone}*/}
-          {/*  roleId={notification.roleId}*/}
-          {/*  roomId={notification.roomId}*/}
-          {/*  userName={notification.userName}*/}
-          {/*  menuGUID={notification.menuGUID}*/}
-          {/*  fromUserId={notification.fromUserId}*/}
-          {/*/>*/}
-          <PNotification content={JSON.stringify(notification.body)} />
+          <PNotification
+            type={notification.type}
+            body={notification.body}
+            mobilePhone={notification.mobilePhone}
+            roleId={mapNumberRoleToString(notification.roleId)}
+            roomId={notification.roomId}
+            userName={notification.userName}
+            fromUserId={notification.fromUserId}
+          />
         </PModal>
       )}
     </>

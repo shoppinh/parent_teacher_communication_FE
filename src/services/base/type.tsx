@@ -20,7 +20,6 @@ export const APIs = {
     platformSetting: '/api/user/platform/setting',
     languageUpdate: 'api/user/language/update',
 
-
     // registerVerifyCode: 'api/user/register/verifyCode',
     // registerSetPassword: '/api/user/register/setPassword',
     // registerReSendCode: 'api/user/register/resendCode',
