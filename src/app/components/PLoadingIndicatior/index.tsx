@@ -1,7 +1,5 @@
-import React from 'react';
-import { styled } from 'twin.macro';
 import { keyframes } from 'styled-components';
-import { colors } from '../../../styles/constants/colors';
+import { styled } from 'twin.macro';
 import { pxToRem } from '../../../styles/theme/utils';
 
 const LoadingWrapper = styled.div`

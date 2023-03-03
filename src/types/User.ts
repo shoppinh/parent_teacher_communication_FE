@@ -1,8 +1,10 @@
+import { ConstantRoles } from 'utils/constants';
+
 export interface User {
   _id: string;
   email?: string;
   avatar?: string;
-  userName: string;
+  userName?: string;
   firstName?: string;
   lastName?: string;
   fullName?: string;

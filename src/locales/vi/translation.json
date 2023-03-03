@@ -95,5 +95,16 @@
     "en": "Tiếng Anh",
     "selectLanguage": "Chọn ngôn ngữ",
     "language": "Ngôn ngữ"
+  },
+  "conversation": {
+    "title": "Trò chuyện",
+    "chatWithOutlet": "Chat với cửa hàng",
+    "sendMesssage": "Gửi tin nhắn...",
+    "youreOffline": "Bạn đang ngoại tuyến",
+    "orderNumber": "Đơn hàng #{{number}}",
+    "messageFromOutlet": "Tin nhắn từ chủ cửa hàng",
+    "connectionIssue": "Lỗi kết nối",
+    "today": "Hôm nay",
+    "yesterday": "Hôm qua"
   }
 }

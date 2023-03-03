@@ -25,7 +25,7 @@ export const getRefreshToken = createSelector(
 
 export const getAuthError = createSelector([selectDomain], (state) => state.error);
 
-export const getSessionCountUnread = (roomId: string) => {
+export const getSessionCountUnread = (roomId: number) => {
   return createSelector([selectDomain], (state) => {
     if (state.data.auth?.user?.notifications) {
       return state.data.auth?.user?.notifications[roomId];

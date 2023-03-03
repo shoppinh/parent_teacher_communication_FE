@@ -110,5 +110,16 @@
     "en": "English",
     "selectLanguage": "Select Language",
     "language": "Language"
+  },
+  "conversation": {
+    "title": "Chat with outlet",
+    "chatWithOutlet": "Chat with outlet",
+    "sendMesssage": "Send messsage...",
+    "youreOffline": "You're offline",
+    "orderNumber": "Order #{{number}}",
+    "messageFromOutlet": "Message from the outlet",
+    "connectionIssue": "Connection issue",
+    "today": "Today",
+    "yesterday": "Yesterday"
   }
 }

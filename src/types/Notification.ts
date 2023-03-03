@@ -14,8 +14,8 @@ export interface Data {
   orderId: string;
   orderStatus: string;
   previousOrderStatus: string;
-  roleId: string;
-  roomId: string;
+  roleId: number;
+  roomId: number;
   userName: string;
   menuGUID: string;
   fromUserId: string;

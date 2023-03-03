@@ -1,5 +1,6 @@
 import React, { useLayoutEffect } from 'react';
 import { sizes } from 'styles/media';
+import { ConstantRoles } from './constants';
 
 import { currencyList, DEFAULT_LOCALE } from './localization/config';
 
@@ -219,4 +220,30 @@ export const formatBytes = (bytes, decimals = 2) => {
   const i = Math.floor(Math.log(bytes) / Math.log(k));
 
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+};
+
+export const mapStringRoleToNumber = (role: ConstantRoles | undefined | string) => {
+  switch (role) {
+    case ConstantRoles.SUPER_USER:
+      return 1;
+    case ConstantRoles.PARENT:
+      return 3;
+    case ConstantRoles.TEACHER:
+      return 2;
+    default:
+      return 3;
+  }
+};
+
+export const mapNumberRoleToString = (role: number | undefined) => {
+  switch (role) {
+    case 1:
+      return ConstantRoles.SUPER_USER;
+    case 2:
+      return ConstantRoles.TEACHER;
+    case 3:
+      return ConstantRoles.PARENT;
+    default:
+      return ConstantRoles.PARENT;
+  }
 };

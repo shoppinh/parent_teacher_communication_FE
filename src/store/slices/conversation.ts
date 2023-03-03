@@ -2,14 +2,17 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { loadState } from 'store/localStorage';
 import {
+  Conversation,
   ConversationDetailQuery,
   ConversationError,
+  ConversationListQuery,
   ConversationMesssages,
   ConversationState,
   MessageItem,
 } from 'types/Conversation';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { conversationSaga } from 'store/sagas/conversationSaga';
+import { User } from 'types/User';
 
 const conversationCache = loadState()?.conversation;
 
@@ -44,8 +47,28 @@ const slice = createSlice({
             },
           },
         };
+        state.currentRoomId = action?.payload.roomId;
       }
       state.loading = false;
+    },
+    loadConversationList(state, action: PayloadAction<ConversationListQuery>) {
+      state.error = null;
+      state.loading = true;
+    },
+    loadedConversationList(state, action: PayloadAction<Conversation[]>) {
+      state.conversationList = action?.payload.reduce((prev, curr) => {
+        return {
+          ...prev,
+          [curr.id]: curr,
+        };
+      }, {});
+      state.loading = false;
+    },
+    updateToCurrentUser(state, action: PayloadAction<User>) {
+      state.currentToUser = action?.payload;
+    },
+    updateCurrentRoomId(state, action: PayloadAction<number>) {
+      state.currentRoomId = action?.payload;
     },
     // getCountUnreadRoom(state, action?: PayloadAction<ConversationRoomQuery>) {
     //   state.error = null;
@@ -67,7 +90,7 @@ const slice = createSlice({
     //   }
     //   state.loading = false;
     // },
-    addMessageList(state, action?: PayloadAction<MessageItem>) {
+    addMessageList(state, action: PayloadAction<MessageItem>) {
       if (action?.payload.roomId) {
         const createTimestamp = Date.parse(new Date(action?.payload.createdAt).toISOString());
         state.data = {

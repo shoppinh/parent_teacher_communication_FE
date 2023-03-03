@@ -1,6 +1,11 @@
 import apiClient from 'services/base/apiClient';
 import { APIs } from 'services/base/type';
-import {ConversationDetailQuery, ConversationRoomQuery, PushNotificationQuery} from 'types/Conversation';
+import {
+  ConversationDetailQuery,
+  ConversationListQuery,
+  ConversationRoomQuery,
+  PushNotificationQuery,
+} from 'types/Conversation';
 
 const messageGatewayHost = process.env.REACT_APP_API_CONVERSATION_URL || '';
 
@@ -21,6 +26,15 @@ export const getCountUnreadRoom = async (query: ConversationRoomQuery) => {
   return new apiClient(query.token).get(endPoint);
 };
 
+export const getConversationListOfUser = async (query: ConversationListQuery) => {
+  const replaceQuery = APIs.message.getConversationList.replace(
+    '{mobilePhone}/{roleId}',
+    `${query.mobilePhone}/${query.roleId}`
+  );
+  const endPoint = `${messageGatewayHost}${replaceQuery}`;
+  return new apiClient(query.token).get(endPoint);
+};
+
 export const sendPushNotification = async (query: PushNotificationQuery) => {
   return new apiClient('').post(APIs.message.sendPushNotification, query);
-}
+};
