@@ -1,18 +1,25 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import MainLayout from '../../layouts/MainLayout';
 import {
+  MenuItemUnstyled,
+  menuItemUnstyledClasses,
+  MenuUnstyled,
+  MenuUnstyledActions,
+  PopperUnstyled,
   TabPanelUnstyled,
   TabsListUnstyled,
   TabsUnstyled,
   TabUnstyled,
   tabUnstyledClasses,
 } from '@mui/base';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import MainLayout from '../../layouts/MainLayout';
+
 import tw, { styled } from 'twin.macro';
-import { PButton } from '../../components/PButton';
-import { pxToRem } from '../../../styles/theme/utils';
 import { StyleConstants } from '../../../styles/constants/style';
+import { pxToRem } from '../../../styles/theme/utils';
+import { PButton } from '../../components/PButton';
 import FeedList from '../../containers/TeacherHomePage/FeedList';
+import PEditor from 'app/components/PEditor';
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -42,8 +49,108 @@ const StyledButton = styled(PButton)`
 const TabPaneContent = styled.div`
   ${tw`p-3`}
 `;
+
+const StyledListbox = styled.ul(
+  ({ theme }) => `
+  font-family: IBM Plex Sans, sans-serif;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+  padding: 6px;
+  margin: 12px 0;
+  min-width: 200px;
+  border-radius: 12px;
+  overflow: auto;
+  outline: 0px;
+  background: #fff;
+  border: 1px solid ${theme.borderLight};
+  color: ${theme.text};
+  box-shadow: 0px 4px 30px ${theme.text};
+  `
+);
+
+const StyledMenuItem = styled(MenuItemUnstyled)(
+  ({ theme }) => `
+  list-style: none;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: default;
+  user-select: none;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  &.${menuItemUnstyledClasses.focusVisible} {
+    outline: 3px solid ${theme.backgroundVariant};
+    background-color: ${theme.background};
+    color: ${theme.text};
+  }
+
+  &.${menuItemUnstyledClasses.disabled} {
+    color: ${theme.text};
+  }
+
+  &:hover:not(.${menuItemUnstyledClasses.disabled}) {
+    background-color: ${theme.backgroundVariant};
+    color: ${theme.text};
+  }
+  `
+);
+
+const Popper = styled(PopperUnstyled)`
+  z-index: 3;
+`;
+
 const TeacherHomePage = () => {
   const { t } = useTranslation();
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+  const isOpen = Boolean(anchorEl);
+  const buttonRef = React.useRef<HTMLButtonElement>(null);
+  const menuActions = React.useRef<MenuUnstyledActions>(null);
+  const preventReopen = React.useRef(false);
+
+  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (preventReopen.current) {
+      event.preventDefault();
+      preventReopen.current = false;
+      return;
+    }
+
+    if (isOpen) {
+      setAnchorEl(null);
+    } else {
+      setAnchorEl(event.currentTarget);
+    }
+  };
+
+  const handleButtonMouseDown = () => {
+    if (isOpen) {
+      // Prevents the menu from reopening right after closing
+      // when clicking the button.
+      preventReopen.current = true;
+    }
+  };
+
+  const handleButtonKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      setAnchorEl(event.currentTarget);
+      if (event.key === 'ArrowUp') {
+        menuActions.current?.highlightLastItem();
+      }
+    }
+  };
+  const close = () => {
+    setAnchorEl(null);
+    buttonRef.current!.focus();
+  };
+
+  const createHandleMenuClick = (menuItem: string) => {
+    return () => {
+      console.log(`Clicked on ${menuItem}`);
+      close();
+    };
+  };
   return (
     <MainLayout title={t('teacher.home.title')} headerTitle={t('teacher.home.title')}>
       <TabsUnstyled defaultValue={0}>
@@ -56,7 +163,19 @@ const TeacherHomePage = () => {
             <StyledTab>Signups</StyledTab>
             <StyledTab>Reports</StyledTab>
           </StyledTabsList>
-          <StyledButton>Create</StyledButton>
+          <StyledButton
+            type='button'
+            variant='primary'
+            onClick={handleButtonClick}
+            onKeyDown={handleButtonKeyDown}
+            onMouseDown={handleButtonMouseDown}
+            ref={buttonRef}
+            aria-controls={isOpen ? 'simple-menu' : undefined}
+            aria-expanded={isOpen || undefined}
+            aria-haspopup='menu'
+          >
+            Create
+          </StyledButton>
         </TabsWrapper>
         <TabPaneContent>
           <TabPanelUnstyled value={0}>
@@ -69,6 +188,19 @@ const TeacherHomePage = () => {
           <TabPanelUnstyled value={5}>6 page</TabPanelUnstyled>
         </TabPaneContent>
       </TabsUnstyled>
+      <MenuUnstyled
+        actions={menuActions}
+        open={isOpen}
+        onClose={close}
+        anchorEl={anchorEl}
+        slots={{ root: Popper, listbox: StyledListbox }}
+        slotProps={{ listbox: { id: 'simple-menu' } }}
+      >
+        <StyledMenuItem onClick={createHandleMenuClick('Profile')}>Profile</StyledMenuItem>
+        <StyledMenuItem onClick={createHandleMenuClick('My account')}>My account</StyledMenuItem>
+        <StyledMenuItem onClick={createHandleMenuClick('Log out')}>Log out</StyledMenuItem>
+      </MenuUnstyled>
+      <PEditor />
     </MainLayout>
   );
 };

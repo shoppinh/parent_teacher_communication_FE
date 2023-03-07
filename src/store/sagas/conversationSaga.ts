@@ -22,7 +22,6 @@ const ParseMessageData = (data) => {
       createdAt: item.createdAt,
       id: item.id,
       isRead: item.isRead,
-      menuGUID: item.menuGUID,
       mobilePhone: item.mobilePhone,
       roomId: item.roomId,
       roleId: item.roleId,
