@@ -143,7 +143,9 @@ const RightBar = () => {
   return (
     <Container>
       <ButtonWrapper>
-        <StyledButton onClick={handleNewMessage}>New Message</StyledButton>
+        <StyledButton onClick={handleNewMessage} variant='primary'>
+          New Message
+        </StyledButton>
       </ButtonWrapper>
       <MessageList>
         {currentUserConversationList &&

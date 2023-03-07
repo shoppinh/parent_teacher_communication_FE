@@ -45,7 +45,7 @@ const TabPaneContent = styled.div`
 const ParentHomePage = () => {
   const { t } = useTranslation();
   return (
-    <MainLayout title={t('teacher.home.title')} headerTitle={t('teacher.home.title')}>
+    <MainLayout title={t('parent.home.title')} headerTitle={t('parent.home.title')}>
       <TabsUnstyled defaultValue={0}>
         <TabsWrapper>
           <StyledTabsList>
@@ -56,7 +56,7 @@ const ParentHomePage = () => {
             <StyledTab>Signups</StyledTab>
             <StyledTab>Reports</StyledTab>
           </StyledTabsList>
-          <StyledButton>Create</StyledButton>
+          <StyledButton variant='primary'>Create</StyledButton>
         </TabsWrapper>
         <TabPaneContent>
           <TabPanelUnstyled value={0}>
