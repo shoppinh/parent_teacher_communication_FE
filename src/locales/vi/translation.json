@@ -65,6 +65,13 @@
   "logout": {
     "title": "Đăng xuất"
   },
+  "form": {
+    "emailOrPhone": "Email hoặc số điện thoại",
+    "password": "Mật khẩu",
+    "title": "Tiêu đề",
+    "content": "Nội dung",
+    "description": "Mô tả"
+  },
   "register": {
     "title": "Tạo tài khoản",
     "createAccount": "Tạo tài khoản",
@@ -88,6 +95,17 @@
     "umenuLogo": "MuaNgay Logo",
     "gotit": "Đã hiểu",
     "outletInDifferentCity": "Xin chào! Cửa hàng của chúng tôi chỉ giao hàng trong {{city}}"
+  },
+  "teacher": {
+    "home": {
+      "title": "Trang chủ giáo viên"
+    },
+    "event": {
+      "title": "Sự kiện"
+    },
+    "management": {
+      "title": "Quản lý"
+    }
   },
   "localizationConfig": {
     "title": "Đổi ngôn ngữ",

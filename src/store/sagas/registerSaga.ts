@@ -34,7 +34,7 @@ export function* registerSaga() {
 const ParseRegister = (response: RegisterDataRespose): RegisterPayload => ({
   user: {
     _id: response._id,
-    userName: response.userName,
+    username: response.userName,
     roleId: response.roleId,
     mobilePhone: response.mobilePhone,
   },

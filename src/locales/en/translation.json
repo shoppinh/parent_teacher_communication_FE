@@ -64,7 +64,10 @@
   },
   "form": {
     "emailOrPhone": "Email or phone number",
-    "password": "Password"
+    "password": "Password",
+    "title": "Title",
+    "content": "Content",
+    "description": "Description"
   },
   "logout": {
     "title": "Logout"
@@ -102,6 +105,11 @@
     },
     "management": {
       "title": "Teacher Management"
+    }
+  },
+  "post": {
+    "addPost": {
+      "title": "Add Post"
     }
   },
   "localizationConfig": {

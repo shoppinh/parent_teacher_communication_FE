@@ -1,7 +1,4 @@
 import { call } from 'redux-saga/effects';
-import * as api from './index';
-import { DeviceTokenQuery, RegisterQuery } from 'types/Register';
-import { AuthQuery, LogoutQuery, RefreshTokenQuery } from 'types/Session';
 import { LanguageQuery } from 'types/Config';
 import {
   ConversationDetailQuery,
@@ -9,7 +6,17 @@ import {
   ConversationRoomQuery,
   PushNotificationQuery,
 } from 'types/Conversation';
+import {
+  PostDetailTokenQuery,
+  PostListByClassQuery,
+  PostListTokenQuery,
+  PostTokenQuery,
+  UpdatePostTokenQuery,
+} from 'types/Post';
+import { DeviceTokenQuery, RegisterQuery } from 'types/Register';
+import { AuthQuery, LogoutQuery, RefreshTokenQuery } from 'types/Session';
 import { TeacherDetailQuery } from '../../types/Teacher';
+import * as api from './index';
 
 export function* apiLogin(query: AuthQuery) {
   return yield call(api.login, query);
@@ -87,4 +94,29 @@ export function* apiUpdateLanguage(query: LanguageQuery) {
 
 export function* apiFetchTeacherDetail(query: TeacherDetailQuery) {
   return yield call(api.fetchTeacherDetail, query);
+}
+
+//Post
+export function* apiGetPostList(query: PostListTokenQuery) {
+  return yield call(api.getPostList, query);
+}
+
+export function* apiGetPostListByClass(query: PostListByClassQuery) {
+  return yield call(api.getPostListByClass, query);
+}
+
+export function* apiAddPost(query: PostTokenQuery) {
+  return yield call(api.addPost, query);
+}
+
+export function* getPostDetail(query: PostDetailTokenQuery) {
+  return yield call(api.getPostDetail, query);
+}
+
+export function* updatePost(query: UpdatePostTokenQuery) {
+  return yield call(api.updatePost, query);
+}
+
+export function* apiDeletePost(query: PostDetailTokenQuery) {
+  return yield call(api.deletePost, query);
 }
