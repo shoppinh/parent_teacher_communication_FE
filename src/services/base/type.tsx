@@ -79,6 +79,14 @@ export const APIs = {
       getAllTeacherAssignment: '/api/admin/teacher-assignment/list',
     },
   },
+  post: {
+    addPost: '/api/post/add-post',
+    getAllPost: '/api/post/list',
+    getPostDetail: '/api/post/{postId}',
+    updatePost: '/api/post/{postId}',
+    deletePost: '/api/post/{postId}',
+    getPostListByClass: '/api/post/class-post-list/{classId}',
+  },
   message: {
     getConversationList: '/api/message/get-conversation/{mobilePhone}/{roleId}',
     getConversationDetail: '/api/message/get-conversation/detail/{roomId}',

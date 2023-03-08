@@ -54,7 +54,7 @@ const ParseLogin = (
   user: {
     data: {
       _id: response.userId,
-      userName: response.username,
+      username: response.username,
       firstName: response.firstname,
       lastName: response.lastname,
       email: response.email,
@@ -110,7 +110,7 @@ const ParseUserData = (data: any): User => {
   return {
     _id: data._id,
     email: data.email,
-    userName: data.email,
+    username: data.email,
     firstName: data.firstName,
     lastName: data.lastName,
     fullName: data.fullName,

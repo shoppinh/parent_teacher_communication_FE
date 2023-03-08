@@ -19,7 +19,8 @@ import { StyleConstants } from '../../../styles/constants/style';
 import { pxToRem } from '../../../styles/theme/utils';
 import { PButton } from '../../components/PButton';
 import FeedList from '../../containers/TeacherHomePage/FeedList';
-import PEditor from 'app/components/PEditor';
+import { PEditor } from 'app/components/PEditor/loadable';
+import { PModal } from 'app/components/PModal';
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -108,6 +109,13 @@ const TeacherHomePage = () => {
   const buttonRef = React.useRef<HTMLButtonElement>(null);
   const menuActions = React.useRef<MenuUnstyledActions>(null);
   const preventReopen = React.useRef(false);
+  const [isPostModalOpen, setIsPostModalOpen] = React.useState(false);
+
+  const handleClosePostModal = () => {
+    setIsPostModalOpen(false);
+  };
+
+  const handleSubmitPost = (content: string) => {};
 
   const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (preventReopen.current) {
@@ -146,16 +154,31 @@ const TeacherHomePage = () => {
   };
 
   const createHandleMenuClick = (menuItem: string) => {
-    return () => {
-      console.log(`Clicked on ${menuItem}`);
-      close();
-    };
+    switch (menuItem) {
+      case 'post':
+        return () => {
+          setIsPostModalOpen(true);
+          console.log('post is activated');
+          close();
+        };
+        break;
+      case 'event':
+        return () => {
+          close();
+          console.log('event is activated');
+        };
+        break;
+      default:
+        return () => close();
+        break;
+    }
   };
   return (
     <MainLayout title={t('teacher.home.title')} headerTitle={t('teacher.home.title')}>
       <TabsUnstyled defaultValue={0}>
         <TabsWrapper>
           <StyledTabsList>
+            <StyledTab>Welcome page</StyledTab>
             <StyledTab>Feed</StyledTab>
             <StyledTab>Interactions</StyledTab>
             <StyledTab>Assignments</StyledTab>
@@ -178,14 +201,14 @@ const TeacherHomePage = () => {
           </StyledButton>
         </TabsWrapper>
         <TabPaneContent>
-          <TabPanelUnstyled value={0}>
+          <TabPanelUnstyled value={0}>Welcome</TabPanelUnstyled>
+          <TabPanelUnstyled value={1}>
             <FeedList />
           </TabPanelUnstyled>
-          <TabPanelUnstyled value={1}>2 page</TabPanelUnstyled>
-          <TabPanelUnstyled value={2}>3 page</TabPanelUnstyled>
-          <TabPanelUnstyled value={3}>4 page</TabPanelUnstyled>
-          <TabPanelUnstyled value={4}>5 page</TabPanelUnstyled>
-          <TabPanelUnstyled value={5}>6 page</TabPanelUnstyled>
+          <TabPanelUnstyled value={2}>2 page</TabPanelUnstyled>
+          <TabPanelUnstyled value={3}>3 page</TabPanelUnstyled>
+          <TabPanelUnstyled value={4}>4 page</TabPanelUnstyled>
+          <TabPanelUnstyled value={5}>5 page</TabPanelUnstyled>
         </TabPaneContent>
       </TabsUnstyled>
       <MenuUnstyled
@@ -196,11 +219,13 @@ const TeacherHomePage = () => {
         slots={{ root: Popper, listbox: StyledListbox }}
         slotProps={{ listbox: { id: 'simple-menu' } }}
       >
-        <StyledMenuItem onClick={createHandleMenuClick('Profile')}>Profile</StyledMenuItem>
-        <StyledMenuItem onClick={createHandleMenuClick('My account')}>My account</StyledMenuItem>
-        <StyledMenuItem onClick={createHandleMenuClick('Log out')}>Log out</StyledMenuItem>
+        <StyledMenuItem onClick={createHandleMenuClick('post')}>Post</StyledMenuItem>
+        <StyledMenuItem onClick={createHandleMenuClick('event')}>Event</StyledMenuItem>
+        <StyledMenuItem onClick={createHandleMenuClick('timesheet')}>Time Sheet</StyledMenuItem>
       </MenuUnstyled>
-      <PEditor />
+      <PModal open={isPostModalOpen} onClose={handleClosePostModal}>
+        <PEditor handleClose={handleClosePostModal} handleSubmitForm={handleSubmitPost} />
+      </PModal>
     </MainLayout>
   );
 };

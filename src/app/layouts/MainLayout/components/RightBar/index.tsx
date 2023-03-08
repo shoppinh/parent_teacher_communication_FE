@@ -171,7 +171,7 @@ const RightBar = () => {
           token={currentAccessToken}
           refreshToken={currentRefreshToken}
           fromUserPhone={currentUser?.mobilePhone || ''}
-          fromUserName={currentUser?.userName}
+          fromUserName={currentUser?.username}
           toUserPhone={conversationToUserData?.mobilePhone || '0397273869'}
           fromUserRole={mapStringRoleToNumber(currentUser?.roleId)}
           toUserRole={

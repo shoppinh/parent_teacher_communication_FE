@@ -11,6 +11,10 @@ export interface AuthTokenQuery {
   token: string;
 }
 
+export interface OnlyTokenQuery {
+  token: string;
+}
+
 export interface RefreshTokenQuery {
   refreshToken: string;
   token: string;

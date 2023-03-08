@@ -6,6 +6,7 @@ import { SystemState } from './System';
 import { RegisterState } from './Register';
 import { ConversationState } from './Conversation';
 import { AdminState } from './Admin';
+import { PostState } from './Post';
 
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
@@ -24,6 +25,7 @@ export interface RootState {
   register?: RegisterState;
   conversation?: ConversationState;
   admin?: AdminState;
+  post?: PostState;
 
   // [INSERT NEW REDUCER KEY ABOVE] < Needed for generating containers seamlessly
 }

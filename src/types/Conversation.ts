@@ -83,10 +83,7 @@ export interface ConversationState {
   error: any;
 }
 
-export interface ConversationError {
-  code: ConversationErrorType | null;
-  message?: string;
-}
+
 
 export interface Conversation {
   fromUserName: string;
@@ -109,6 +106,10 @@ export interface Conversation {
   toUserId: number;
 }
 
+export interface ConversationError {
+  code: ConversationErrorType | null;
+  message?: string;
+}
 export enum ConversationErrorType {
   RESPONSE_ERROR = 400,
 }
