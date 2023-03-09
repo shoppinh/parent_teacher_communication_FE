@@ -25,6 +25,7 @@ const lightTheme = {
   contrastBackground: colors.ATHENS_GRAY,
   backBackground: colors.WHITE_SMOKE,
   buttonBackgroundVariant: colors.ALABASTER,
+  backgroundSelected: colors.BLACK_SMOKE,
   statusBadgeNew: colors.GALLERY,
   statusBadgeInProgress: colors.SERENADE,
   statusBadgeCompleted: colors.HINT_OF_GREEN,
@@ -59,6 +60,8 @@ const darkTheme: Theme = {
   textSecondary: 'rgba(241,233,231,0.6)',
   background: colors.WHITE,
   backgroundVariant: colors.DODGER_BLUE,
+  backgroundSelected: colors.BLACK_SMOKE,
+
   contrastBackground: colors.ATHENS_GRAY,
   backBackground: colors.WHITE_SMOKE,
   buttonBackgroundVariant: colors.ALABASTER,

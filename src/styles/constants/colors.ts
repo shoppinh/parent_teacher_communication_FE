@@ -33,4 +33,6 @@ export const colors = {
   DODGER_BLUE: '#3B82F6',
   ATHENS_GRAY: '#F0F2F4',
   WHITE_SMOKE: '#edeef3',
+  BLACK_SMOKE: '#e4e5ed',
+
 };

@@ -110,12 +110,14 @@ const TeacherHomePage = () => {
   const menuActions = React.useRef<MenuUnstyledActions>(null);
   const preventReopen = React.useRef(false);
   const [isPostModalOpen, setIsPostModalOpen] = React.useState(false);
-
+  const [isRefreshFeedList, setIsRefreshFeedList] = React.useState(false);
   const handleClosePostModal = () => {
     setIsPostModalOpen(false);
   };
 
-  const handleSubmitPost = (content: string) => {};
+  const handleTriggerRefreshFeedList = (isRefresh: boolean) => {
+    setIsRefreshFeedList(isRefresh);
+  };
 
   const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (preventReopen.current) {
@@ -203,7 +205,7 @@ const TeacherHomePage = () => {
         <TabPaneContent>
           <TabPanelUnstyled value={0}>Welcome</TabPanelUnstyled>
           <TabPanelUnstyled value={1}>
-            <FeedList />
+            <FeedList setIsRefreshFeedList={setIsRefreshFeedList} isRefresh={isRefreshFeedList} />
           </TabPanelUnstyled>
           <TabPanelUnstyled value={2}>2 page</TabPanelUnstyled>
           <TabPanelUnstyled value={3}>3 page</TabPanelUnstyled>
@@ -224,7 +226,10 @@ const TeacherHomePage = () => {
         <StyledMenuItem onClick={createHandleMenuClick('timesheet')}>Time Sheet</StyledMenuItem>
       </MenuUnstyled>
       <PModal open={isPostModalOpen} onClose={handleClosePostModal}>
-        <PEditor handleClose={handleClosePostModal} handleSubmitForm={handleSubmitPost} />
+        <PEditor
+          handleClose={handleClosePostModal}
+          triggerRefreshFeedList={handleTriggerRefreshFeedList}
+        />
       </PModal>
     </MainLayout>
   );

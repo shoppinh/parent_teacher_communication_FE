@@ -25,6 +25,18 @@ const slice = createSlice({
       state.loading = true;
       state.error = null;
     },
+    addPost(state, action) {
+      state.loading = true;
+      state.error = null;
+    },
+    addPostSuccess(state, action) {
+      state.loading = false;
+      state.error = null;
+    },
+    addPostError(state, action) {
+      state.loading = false;
+      state.error = action.payload;
+    },
     loadPostListSuccess(state, action) {
       state.data.posts = action.payload;
       state.loading = false;
@@ -32,6 +44,10 @@ const slice = createSlice({
     },
     loadPostListError(state, action) {
       state.loading = false;
+      state.data.posts = {
+        data: [],
+        total: 0,
+      };
       state.error = action.payload;
     },
   },

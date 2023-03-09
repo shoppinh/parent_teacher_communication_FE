@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from 'twin.macro';
 import { StyleConstants } from '../../../../../styles/constants/style';
 import { pxToRem } from '../../../../../styles/theme/utils';
@@ -9,10 +9,17 @@ import { PButton } from '../../../../components/PButton';
 import { PModal } from '../../../../components/PModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSessionSlice } from '../../../../../store/slices/session';
-import { getAccessToken, getFcmToken, getUser } from '../../../../../store/selectors/session';
+import { getAccessToken } from '../../../../../store/selectors/session';
 import { AuthPayLoad } from '../../../../../types/Session';
-import { PREVIOUS_STORAGE_KEY } from '../../../../../utils/constants';
-import { useConversationSlice } from '../../../../../store/slices/conversation';
+import { PREVIOUS_STORAGE_KEY, queryString } from '../../../../../utils/constants';
+import { useClassSlice } from '../../../../../store/slices/class';
+import { getClassList } from '../../../../../store/selectors/class';
+import { useLocation } from 'react-router';
+import { useNavigate } from 'react-router-dom';
+
+interface ClassRowProps {
+  isActive: boolean;
+}
 
 const Container = styled.div`
   width: ${pxToRem(StyleConstants.LEFT_BAR_WIDTH)}rem;
@@ -60,12 +67,33 @@ const ActionButton = styled(PButton)`
 
   color: ${(p) => p.theme.text};
 `;
+
+const ClassListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ClassRowItem = styled.div<ClassRowProps>`
+  padding: 6px 15px;
+  text-align: start;
+  ${(p) =>
+    p.isActive &&
+    `border-left: 4px solid ${p.theme.backgroundVariant}; background-color: ${p.theme.backgroundSelected};`}
+  cursor: pointer;
+  margin: 5px;
+  font: 700 ${pxToRem(14)}rem / ${pxToRem(20)}rem ${(p) => p.theme.fontFamily};
+`;
+
+const schoolId = '5f9f1b0b0b9d2c0017b0f1a1';
 const LeftBar = () => {
   const [isShowOptionModal, setIsShowOptionModal] = useState(false);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const classId = queryParams.get(queryString.classId);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { actions: sessionActions } = useSessionSlice();
-  const { actions: conversationActions } = useConversationSlice();
-  const currentUser = useSelector(getUser);
+  const { actions: classActions } = useClassSlice();
   const currentAccessToken = useSelector(getAccessToken);
   const previousAuthStorage = localStorage.getItem(PREVIOUS_STORAGE_KEY);
   const previousAuth = JSON.parse(
@@ -74,12 +102,51 @@ const LeftBar = () => {
   const handleCloseModal = () => {
     setIsShowOptionModal(false);
   };
+
+  const classList = useSelector(getClassList);
+
+  useEffect(() => {
+    if (currentAccessToken) {
+      dispatch(classActions.loadClassList({ token: currentAccessToken }));
+    }
+  }, [classActions, currentAccessToken, dispatch]);
+
   return (
     <Container>
       <ContentWrapper>
         <ImageWrapper>
           <img src={Logo} alt='Logo' width='50%' />
         </ImageWrapper>
+        <ClassListContainer>
+          <ClassRowItem
+            isActive={classId ? classId === schoolId : false}
+            onClick={() =>
+              navigate({
+                pathname: location.pathname,
+                search: `?${queryString.classId}=${schoolId}`,
+              })
+            }
+            key={schoolId}
+          >
+            General
+          </ClassRowItem>
+          {classList?.data?.map((item) => {
+            return (
+              <ClassRowItem
+                isActive={classId ? item._id === classId : false}
+                onClick={() =>
+                  navigate({
+                    pathname: location.pathname,
+                    search: `?${queryString.classId}=${item._id}`,
+                  })
+                }
+                key={item._id}
+              >
+                {item.name}
+              </ClassRowItem>
+            );
+          })}
+        </ClassListContainer>
       </ContentWrapper>
       <BottomMenu>
         <ActionGroup>
@@ -90,23 +157,7 @@ const LeftBar = () => {
             <ActionTitle>Invite Member</ActionTitle>
           </ActionItem>
           <ActionItem>
-            <ActionButton
-              onClick={() => {
-                dispatch(
-                  conversationActions.sendTestMessage({
-                    fcmToken:
-                      'dtr4E-KXdJZngvlJ1MT4YM:APA91bH3o8y0MbA2j3LqSFYX825sfQ5KuUOSXK671o-_NXUZZ7tPgys-v5VMN0IejIGaQdfYPz4SX7JnVCLJAoeVWkm1fsLRPhkE5sRPIkyp5Q9pommvygVlwmAU0wjENm_7fTwy2VFd',
-                    notification: {
-                      title: 'message title',
-                      body: 'hello world',
-                    },
-                    data: {
-                      username: 'kien.mac',
-                    },
-                  })
-                );
-              }}
-            >
+            <ActionButton>
               <ActionIcon className='partei-users' />
             </ActionButton>
             <ActionTitle>Class/Group</ActionTitle>

@@ -234,6 +234,7 @@ export const dialogOption = {
   },
 };
 
+
 export const notFoundType = {
   noSection: 'noSection',
   deactiveMenu: 'deactiveMenu',
