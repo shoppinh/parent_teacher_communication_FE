@@ -5,12 +5,17 @@ import AvatarPlaceholder from '../../../../../assets/images/person-placeholder.p
 import tw, { styled } from 'twin.macro';
 import { PIcon } from '../../../../components/PIcon';
 import { Comment } from '../../../../../types/Comment';
+import { User } from '../../../../../types/User';
+import PInput from "../../../../components/PInput";
 interface Props {
   postContent: string;
-  authorName: string;
-  authorAvatar: string;
+  author: User;
   postTitle: string;
   commentList: Comment[];
+}
+
+interface AvatarProps {
+  src: string;
 }
 
 const Container = styled.div`
@@ -25,8 +30,8 @@ const AuthorSection = styled.div`
     background-color: ${(p) => p.theme.background};
   }
 `;
-const Avatar = styled.img`
-  background-image: url(${AvatarPlaceholder});
+const Avatar = styled.img<AvatarProps>`
+  background-image: url(${(p) => p.src});
   background-size: cover;
   background-position: center center;
   width: 40px;
@@ -78,7 +83,9 @@ const AvatarWrapper = styled.div`
 const AvatarCommentWrapper = styled.div`
   margin-right: ${pxToRem(12)}rem;
 `;
-const PostItem: React.FC<Props> = ({ authorName, postTitle, commentList, postContent }) => {
+const CommentInputSeciton = styled.div`
+`
+const PostItem: React.FC<Props> = ({ author, postTitle, commentList, postContent }) => {
   const [isShowCommentSection, setIsShowCommentSection] = useState(false);
   const handleShowCommentSection = useCallback(() => {
     setIsShowCommentSection(!isShowCommentSection);
@@ -87,14 +94,14 @@ const PostItem: React.FC<Props> = ({ authorName, postTitle, commentList, postCon
     <Container>
       <AuthorSection>
         <AvatarWrapper>
-          <Avatar />
+          <Avatar src={author?.avatar || AvatarPlaceholder} />
         </AvatarWrapper>
         <PostTitleWrapper>
-          <AuthorTitle>{authorName}</AuthorTitle>
+          <AuthorTitle>{author.username}</AuthorTitle>
           <Description>{postTitle}</Description>
         </PostTitleWrapper>
       </AuthorSection>
-      <PostContent>{postContent}</PostContent>
+      <PostContent dangerouslySetInnerHTML={{ __html: postContent }} />
       <ReactionGroup>
         <ReactionActionItem>
           <PButton>
@@ -114,14 +121,17 @@ const PostItem: React.FC<Props> = ({ authorName, postTitle, commentList, postCon
           {commentList.map((comment) => (
             <CommentItem>
               <AvatarCommentWrapper>
-                <Avatar />
+                <Avatar src={comment?.userId?.avatar || AvatarPlaceholder} />
               </AvatarCommentWrapper>
               <CommentContent>
-                <AuthorTitle>{comment.author.fullName}</AuthorTitle>
+                <AuthorTitle>{comment?.userId?.username}</AuthorTitle>
                 <Description>{comment.content}</Description>
               </CommentContent>
             </CommentItem>
           ))}
+          <CommentInputSeciton>
+            <PInput placeholder='Write a comment...' />
+          </CommentInputSeciton>
         </CommentSection>
       )}
     </Container>

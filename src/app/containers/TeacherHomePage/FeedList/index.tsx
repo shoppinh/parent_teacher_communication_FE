@@ -1,5 +1,5 @@
 import { PLoadingIndicator } from 'app/components/PLoadingIndicatior';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { getPostList, getPostLoading } from 'store/selectors/post';
@@ -7,87 +7,28 @@ import { getAccessToken } from 'store/selectors/session';
 import { usePostSlice } from 'store/slices/post';
 import { styled } from 'twin.macro';
 import PostItem from './PostItem';
+import {queryString} from "../../../../utils/constants";
 
 const Container = styled.div``;
 
-const FeedList = () => {
-  //   {
-  //     _id: '1',
-  //     content: 'hello world',
-  //     title: 'hello world',
-  //     author: {
-  //       _id: '1',
-  //       fullName: 'Kien mAc',
-  //       userName: 'kienneik',
-  //       mobilePhone: '0397273869',
-  //       avatar: 'test-image',
-  //     },
-  //     comments: [
-  //       {
-  //         _id: '1',
-  //         content: 'hello world',
-  //         author: {
-  //           _id: '2',
-  //           fullName: 'Kien mAc 2',
-  //           userName: 'kienneik',
-  //           mobilePhone: '0397273869',
-  //         },
-  //       },
-  //       {
-  //         _id: '2',
-  //         content: 'hello world',
-  //         author: {
-  //           _id: '2',
-  //           fullName: 'Kien mAc 2',
-  //           userName: 'kienneik',
-  //           mobilePhone: '0397273869',
-  //         },
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     _id: '2',
-  //     content: 'hello world',
-  //     title: 'hello world',
-  //     author: {
-  //       _id: '1',
-  //       fullName: 'Kien mAc',
-  //       userName: 'kienneik',
-  //       mobilePhone: '0397273869',
-  //       avatar: 'test-image',
-  //     },
-  //     comments: [
-  //       {
-  //         _id: '1',
-  //         content: 'hello world',
-  //         author: {
-  //           _id: '2',
-  //           fullName: 'Kien mAc 2',
-  //           userName: 'kienneik',
-  //           mobilePhone: '0397273869',
-  //         },
-  //       },
-  //       {
-  //         _id: '2',
-  //         content: 'hello world',
-  //         author: {
-  //           _id: '2',
-  //           fullName: 'Kien mAc 2',
-  //           userName: 'kienneik',
-  //           mobilePhone: '0397273869',
-  //         },
-  //       },
-  //     ],
-  //   },
-  // ];
+interface Props {
+  isRefresh: boolean;
+  setIsRefreshFeedList: (isRefresh: boolean) => void;
+}
 
+const FeedList: React.FC<Props> = ({ isRefresh, setIsRefreshFeedList }) => {
   const { actions: postActions } = usePostSlice();
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
-  const classId = searchParams.get('classId');
+  const classId = searchParams.get(queryString.classId);
   const currentAccessToken = useSelector(getAccessToken);
   const postList = useSelector(getPostList);
   const postLoading = useSelector(getPostLoading);
+
+  // const handleGetPostList = useCallback(() => {
+  //   if (classId && currentAccessToken) {
+  //   }
+  // }, [classId, currentAccessToken, dispatch, postActions]);
 
   useEffect(() => {
     if (classId && currentAccessToken) {
@@ -95,21 +36,29 @@ const FeedList = () => {
     }
   }, [classId, currentAccessToken, dispatch, postActions]);
 
+  useEffect(() => {
+    if (isRefresh && classId && currentAccessToken) {
+      dispatch(postActions.loadPostListByClass({ token: currentAccessToken, classId }));
+      setIsRefreshFeedList(false);
+    }
+  }, [classId, currentAccessToken, dispatch, isRefresh, postActions, setIsRefreshFeedList]);
+
   return (
     <Container>
       {postLoading ? (
         <PLoadingIndicator />
-      ) : (
+      ) : postList?.data?.length ? (
         postList?.data?.map((post) => (
           <PostItem
             postContent={post.content}
-            authorName={post.author?.fullName || post.author?.username || 'Unknown'}
-            authorAvatar={'test-image'}
+            author={post.author}
             postTitle={post.title}
             commentList={post.comments}
             key={post._id}
           />
         ))
+      ) : (
+        <p>No post</p>
       )}
     </Container>
   );

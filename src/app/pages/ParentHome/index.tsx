@@ -60,7 +60,7 @@ const ParentHomePage = () => {
         </TabsWrapper>
         <TabPaneContent>
           <TabPanelUnstyled value={0}>
-            <FeedList />
+            {/*<FeedList />*/}
           </TabPanelUnstyled>
           <TabPanelUnstyled value={1}>2 page</TabPanelUnstyled>
           <TabPanelUnstyled value={2}>3 page</TabPanelUnstyled>

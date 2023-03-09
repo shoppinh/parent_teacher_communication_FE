@@ -87,6 +87,9 @@ export const APIs = {
     deletePost: '/api/post/{postId}',
     getPostListByClass: '/api/post/class-post-list/{classId}',
   },
+  class: {
+    getClassListByRole: '/api/class/list-by-role'
+  },
   message: {
     getConversationList: '/api/message/get-conversation/{mobilePhone}/{roleId}',
     getConversationDetail: '/api/message/get-conversation/detail/{roomId}',

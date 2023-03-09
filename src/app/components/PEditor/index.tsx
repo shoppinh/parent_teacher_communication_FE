@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import tw, { styled } from 'twin.macro';
 import { PButton } from '../PButton';
@@ -10,8 +10,13 @@ import { useTranslation } from 'react-i18next';
 import PInput from '../PInput';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getAccessToken } from 'store/selectors/session';
+import { postActions, usePostSlice } from '../../../store/slices/post';
+import { useQuery } from '../../../utils/hook';
+import { queryString } from '../../../utils/constants';
+import { getPostError, getPostLoading } from '../../../store/selectors/post';
+import { toast } from 'react-toastify';
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -67,14 +72,15 @@ const ModalTitle = styled.p`
 
 interface Props {
   handleClose: () => void;
-  handleSubmitForm: (content: string) => void;
   postValue?: string;
+  triggerRefreshFeedList: (isRefresh: boolean) => void;
 }
+
 const schema = yup.object({
   title: yup.string().required('Title cannot be empty').strict(true),
 });
 
-const PEditor: React.FC<Props> = ({ handleClose, handleSubmitForm, postValue }) => {
+const PEditor: React.FC<Props> = ({ handleClose, postValue, triggerRefreshFeedList }) => {
   const editorRef = useRef<any>(null);
   const {
     handleSubmit,
@@ -82,26 +88,51 @@ const PEditor: React.FC<Props> = ({ handleClose, handleSubmitForm, postValue }) 
     getValues,
     formState: { errors, isDirty },
   } = useForm<PostQuery>({
-    defaultValues: {},
+    defaultValues: {
+      type: 'PUBLIC',
+    },
     resolver: yupResolver(schema),
   });
   const { t } = useTranslation();
   const currentAccessToken = useSelector(getAccessToken);
+  const postLoading = useSelector(getPostLoading);
+  const postError = useSelector(getPostError);
+  const dispatch = useDispatch();
+  const { actions: postActions } = usePostSlice();
+  const classId = useQuery().get(queryString.classId);
+  const [isFormSent, setIsFormSent] = useState(false);
 
   const handleSubmitPost = useCallback(
     (value: PostQuery) => {
-      console.log('🚀 ~ file: index.tsx:84 ~ handleSubmitPost ~ value:', value);
-      if (currentAccessToken) {
+      if (currentAccessToken && classId) {
         const payload: PostTokenQuery = {
           ...value,
           content: editorRef.current.getContent(),
           token: currentAccessToken,
+          classId,
         };
-        // dispatch(postSaga.addPost(payload))
+        dispatch(postActions.addPost(payload));
+        setIsFormSent(true);
       }
     },
-    [currentAccessToken]
+    [classId, currentAccessToken, dispatch, postActions]
   );
+
+  useEffect(() => {
+    if (isFormSent && !postLoading && !postError) {
+      toast('Post successfully');
+      triggerRefreshFeedList(true);
+      handleClose();
+      setIsFormSent(false);
+    } else if (isFormSent && postError) {
+      toast.error('Post failed');
+      setIsFormSent(false);
+    }
+  }, [handleClose, isFormSent, postError, postLoading, triggerRefreshFeedList]);
+
+  // useEffect(() => {
+  //
+  // }, [isFormSent, postError]);
 
   const example_image_upload_handler = (blobInfo, progress) =>
     new Promise<string>((resolve, reject) => {
@@ -166,6 +197,11 @@ const PEditor: React.FC<Props> = ({ handleClose, handleSubmitForm, postValue }) 
           <InputLabel>{t('form.description')}</InputLabel>
           <StyledInput {...register('description')} />
           {errors.description && <Required>{errors.description.message}</Required>}
+        </InputContainer>
+        <InputContainer>
+          <InputLabel>{t('form.type')}</InputLabel>
+          <StyledInput {...register('type')} />
+          {errors.type && <Required>{errors.type.message}</Required>}
         </InputContainer>
         <Editor
           apiKey={process.env.REACT_APP_TINY_MCE_API_KEY}

@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAuthError, getAuthLoading, getUser } from '../../../../store/selectors/session';
 import { useNavigate } from 'react-router-dom';
 import sitemap from '../../../../utils/sitemap';
-import { ConstantRoles } from '../../../../utils/constants';
+import {ConstantRoles, queryString} from '../../../../utils/constants';
 
 const StyledButton = styled(PButton)`
   margin-bottom: ${pxToRem(20)}rem;
@@ -56,6 +56,7 @@ const schema = yup.object({
     .strict(true),
   password: yup.string().required('Password cannot be empty'),
 });
+const schoolId = '5f9f1b0b0b9d2c0017b0f1a1';
 
 const LoginForm = () => {
   const { t } = useTranslation();
@@ -92,7 +93,10 @@ const LoginForm = () => {
         alert('Login failed');
       } else {
         if (user?.roleId === ConstantRoles.TEACHER) {
-          navigate(sitemap.teacherHome.link);
+          navigate({
+            pathname: sitemap.teacherHome.link,
+            search: `?${queryString.classId}=${schoolId}`,
+          });
         } else if (user?.roleId === ConstantRoles.PARENT) {
           navigate(sitemap.parentHome.link);
         } else {

@@ -22,10 +22,12 @@ export interface PostQuery {
   description?: string;
   coverImg?: string;
   attachments?: string[];
+  type?: string;
 }
 
 export interface PostTokenQuery extends PostQuery {
   token: string;
+  classId: string;
 }
 
 export interface PostListTokenQuery {
