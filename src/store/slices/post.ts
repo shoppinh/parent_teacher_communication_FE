@@ -4,11 +4,25 @@ import { postSaga } from 'store/sagas/postSaga';
 import { PostListByClassQuery, PostState } from 'types/Post';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
+import { AddCommentTokenRequest, Comment } from '../../types/Comment';
 
 const postCache = loadState()?.post;
 
 export const initialState: PostState = {
-  data: { ...postCache?.data },
+  data: {
+    ...(postCache?.data || {
+      posts: {
+        data: [],
+        total: 0,
+      },
+      currentPost: {},
+      comment: {
+        loading: false,
+        error: null,
+        data: {},
+      },
+    }),
+  },
   error: null,
   loading: false,
 };
@@ -49,6 +63,33 @@ const slice = createSlice({
         total: 0,
       };
       state.error = action.payload;
+    },
+    addPostComment(state, action: PayloadAction<AddCommentTokenRequest>) {
+      state.data.comment.loading = true;
+      state.data.comment.error = null;
+    },
+    addPostCommentSuccess(state, action: PayloadAction<Comment>) {
+      state.data.comment.loading = false;
+      state.data.comment.error = null;
+      state.data = {
+        ...state.data,
+        posts: {
+          ...state.data.posts,
+          data: state.data.posts.data.map((post) => {
+            if (post._id === action.payload.postId) {
+              return {
+                ...post,
+                comments: [...post.comments, action.payload],
+              };
+            }
+            return post;
+          }),
+        },
+      };
+    },
+    addPostCommentError(state, action) {
+      state.data.comment.loading = false;
+      state.data.comment.error = action.payload;
     },
   },
 });

@@ -7,6 +7,7 @@ import {
   PostTokenQuery,
   UpdatePostTokenQuery,
 } from 'types/Post';
+import { AddCommentTokenRequest } from '../../types/Comment';
 
 export const getPostList = async (query: PostListTokenQuery) => {
   const { token, ...rest } = query;
@@ -40,4 +41,9 @@ export const deletePost = async (query: PostDetailTokenQuery) => {
   const { token, postId, ...rest } = query;
   const replaceQuery = APIs.post.deletePost.replace('{postId}', `${postId}`);
   return new apiClient(token).delete(replaceQuery, rest);
+};
+// Comment
+export const addPostComment = async (query: AddCommentTokenRequest) => {
+  const { token, ...rest } = query;
+  return new apiClient(token).post(APIs.comment.addComment, rest);
 };

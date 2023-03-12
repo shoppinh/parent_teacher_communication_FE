@@ -17,4 +17,5 @@ export {
   getPostDetail,
   updatePost,
   deletePost,
+  addPostComment
 } from './post';

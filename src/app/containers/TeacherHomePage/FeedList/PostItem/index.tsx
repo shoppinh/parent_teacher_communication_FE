@@ -4,14 +4,16 @@ import { pxToRem } from '../../../../../styles/theme/utils';
 import AvatarPlaceholder from '../../../../../assets/images/person-placeholder.png';
 import tw, { styled } from 'twin.macro';
 import { PIcon } from '../../../../components/PIcon';
-import { Comment } from '../../../../../types/Comment';
+import { AddCommentTokenRequest, Comment } from '../../../../../types/Comment';
 import { User } from '../../../../../types/User';
-import PInput from "../../../../components/PInput";
+import PInput from '../../../../components/PInput';
+import { Post } from '../../../../../types/Post';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAccessToken, getUser } from '../../../../../store/selectors/session';
+import { usePostSlice } from '../../../../../store/slices/post';
 interface Props {
-  postContent: string;
-  author: User;
-  postTitle: string;
-  commentList: Comment[];
+  data: Post;
 }
 
 interface AvatarProps {
@@ -83,25 +85,52 @@ const AvatarWrapper = styled.div`
 const AvatarCommentWrapper = styled.div`
   margin-right: ${pxToRem(12)}rem;
 `;
-const CommentInputSeciton = styled.div`
-`
-const PostItem: React.FC<Props> = ({ author, postTitle, commentList, postContent }) => {
+const CommentInputSection = styled.div``;
+const FormContainer = styled.form`
+  ${tw`w-full`}
+  margin-bottom: ${pxToRem(20)}rem;
+`;
+const PostItem: React.FC<Props> = ({ data: postData }) => {
   const [isShowCommentSection, setIsShowCommentSection] = useState(false);
+  const currentAccessToken = useSelector(getAccessToken);
   const handleShowCommentSection = useCallback(() => {
     setIsShowCommentSection(!isShowCommentSection);
   }, [isShowCommentSection]);
+  const dispatch = useDispatch();
+  const { actions: postActions } = usePostSlice();
+
+  const { register, handleSubmit, reset } = useForm<{ commentContent: string }>({
+    defaultValues: {
+      commentContent: '',
+    },
+  });
+  const submitComment = useCallback(
+    (data: { commentContent: string }) => {
+      if (currentAccessToken) {
+        const payload: AddCommentTokenRequest = {
+          content: data.commentContent,
+          postId: postData._id,
+          token: currentAccessToken,
+        };
+        dispatch(postActions.addPostComment(payload));
+        reset();
+      }
+    },
+    [currentAccessToken, dispatch, postActions, postData._id, reset]
+  );
+
   return (
     <Container>
       <AuthorSection>
         <AvatarWrapper>
-          <Avatar src={author?.avatar || AvatarPlaceholder} />
+          <Avatar src={postData?.author?.avatar || AvatarPlaceholder} />
         </AvatarWrapper>
         <PostTitleWrapper>
-          <AuthorTitle>{author.username}</AuthorTitle>
-          <Description>{postTitle}</Description>
+          <AuthorTitle>{postData?.author.username}</AuthorTitle>
+          <Description>{postData?.title}</Description>
         </PostTitleWrapper>
       </AuthorSection>
-      <PostContent dangerouslySetInnerHTML={{ __html: postContent }} />
+      <PostContent dangerouslySetInnerHTML={{ __html: postData?.content }} />
       <ReactionGroup>
         <ReactionActionItem>
           <PButton>
@@ -118,7 +147,7 @@ const PostItem: React.FC<Props> = ({ author, postTitle, commentList, postContent
       </ReactionGroup>
       {isShowCommentSection && (
         <CommentSection>
-          {commentList.map((comment) => (
+          {postData?.comments?.map((comment) => (
             <CommentItem>
               <AvatarCommentWrapper>
                 <Avatar src={comment?.userId?.avatar || AvatarPlaceholder} />
@@ -129,9 +158,12 @@ const PostItem: React.FC<Props> = ({ author, postTitle, commentList, postContent
               </CommentContent>
             </CommentItem>
           ))}
-          <CommentInputSeciton>
-            <PInput placeholder='Write a comment...' />
-          </CommentInputSeciton>
+          <CommentInputSection>
+            <FormContainer onSubmit={handleSubmit(submitComment)}>
+              <PInput placeholder='Write a comment...' {...register('commentContent')} />
+              <input type='submit' hidden />
+            </FormContainer>
+          </CommentInputSection>
         </CommentSection>
       )}
     </Container>

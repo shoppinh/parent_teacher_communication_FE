@@ -18,6 +18,7 @@ import { AuthQuery, LogoutQuery, RefreshTokenQuery } from 'types/Session';
 import { TeacherDetailQuery } from '../../types/Teacher';
 import * as api from './index';
 import {ClassListTokenQuery} from "../../types/Class";
+import {AddCommentTokenRequest} from "../../types/Comment";
 
 export function* apiLogin(query: AuthQuery) {
   return yield call(api.login, query);
@@ -120,6 +121,10 @@ export function* updatePost(query: UpdatePostTokenQuery) {
 
 export function* apiDeletePost(query: PostDetailTokenQuery) {
   return yield call(api.deletePost, query);
+}
+
+export function* apiAddPostComment(query: AddCommentTokenRequest) {
+  return yield call(api.addPostComment, query);
 }
 // Class
 
