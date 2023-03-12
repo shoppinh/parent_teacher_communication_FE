@@ -62,6 +62,11 @@ export interface PostState {
       data: Post[];
     };
     currentPost: Post;
+    comment: {
+      data: Comment;
+      loading: boolean;
+      error: PostError | null;
+    };
   };
   loading: boolean;
   error: PostError | null;

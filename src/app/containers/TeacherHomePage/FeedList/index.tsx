@@ -50,10 +50,7 @@ const FeedList: React.FC<Props> = ({ isRefresh, setIsRefreshFeedList }) => {
       ) : postList?.data?.length ? (
         postList?.data?.map((post) => (
           <PostItem
-            postContent={post.content}
-            author={post.author}
-            postTitle={post.title}
-            commentList={post.comments}
+              data={post}
             key={post._id}
           />
         ))
