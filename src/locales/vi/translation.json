@@ -70,7 +70,8 @@
     "password": "Mật khẩu",
     "title": "Tiêu đề",
     "content": "Nội dung",
-    "description": "Mô tả"
+    "description": "Mô tả",
+    "type": "Loại"
   },
   "register": {
     "title": "Tạo tài khoản",
@@ -124,5 +125,30 @@
     "connectionIssue": "Lỗi kết nối",
     "today": "Hôm nay",
     "yesterday": "Hôm qua"
+  },
+  "post": {
+    "addPost": {
+      "title": "Thêm bài viết"
+    }
+  },
+  "parent": {
+    "home": {
+      "title": "Trang chủ phụ huynh"
+    },
+    "event": {
+      "title": "Sự kiện"
+    },
+    "management": {
+      "title": "Quản lý"
+    }
+  },
+  "tab": {
+    "welcome": "Chào mừng",
+    "newsFeed": "Bảng tin",
+    "results": "Kết quả",
+    "assignments": "Bài tập",
+    "interactions": "Tương tác",
+    "portfolios": "Hồ sơ",
+    "reports": "Báo cáo"
   }
 }

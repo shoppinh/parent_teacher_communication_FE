@@ -98,7 +98,10 @@ const LoginForm = () => {
             search: `?${queryString.classId}=${schoolId}`,
           });
         } else if (user?.roleId === ConstantRoles.PARENT) {
-          navigate(sitemap.parentHome.link);
+          navigate({
+            pathname: sitemap.parentHome.link,
+            search: `?${queryString.classId}=${schoolId}`,
+          });
         } else {
           navigate(sitemap.adminHome.link);
         }

@@ -1,7 +1,13 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { loadState } from 'store/localStorage';
 import { postSaga } from 'store/sagas/postSaga';
-import { PostListByClassQuery, PostState } from 'types/Post';
+import {
+  PostDetailTokenQuery,
+  PostListByClassQuery,
+  PostState,
+  PostTokenQuery,
+  UpdatePostTokenQuery,
+} from 'types/Post';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { AddCommentTokenRequest, Comment } from '../../types/Comment';
@@ -21,6 +27,10 @@ export const initialState: PostState = {
         error: null,
         data: {},
       },
+      addOrUpdatePost: {
+        loading: false,
+        error: null,
+      },
     }),
   },
   error: null,
@@ -39,17 +49,41 @@ const slice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    addPost(state, action) {
-      state.loading = true;
-      state.error = null;
+    addPost(state, action: PayloadAction<PostTokenQuery>) {
+      state.data.addOrUpdatePost.loading = true;
+      state.data.addOrUpdatePost.error = null;
     },
     addPostSuccess(state, action) {
-      state.loading = false;
-      state.error = null;
+      state.data.addOrUpdatePost.loading = false;
+      state.data.addOrUpdatePost.error = null;
     },
     addPostError(state, action) {
-      state.loading = false;
-      state.error = action.payload;
+      state.data.addOrUpdatePost.loading = false;
+      state.data.addOrUpdatePost.error = action.payload;
+    },
+    updatePost(state, action: PayloadAction<UpdatePostTokenQuery>) {
+      state.data.addOrUpdatePost.loading = true;
+      state.data.addOrUpdatePost.error = null;
+    },
+    updatePostSuccess(state, action) {
+      state.data.addOrUpdatePost.loading = false;
+      state.data.addOrUpdatePost.error = null;
+    },
+    updatePostError(state, action) {
+      state.data.addOrUpdatePost.loading = false;
+      state.data.addOrUpdatePost.error = action.payload;
+    },
+    deletePost(state, action: PayloadAction<PostDetailTokenQuery>) {
+      state.data.addOrUpdatePost.loading = true;
+      state.data.addOrUpdatePost.error = null;
+    },
+    deletePostSuccess(state, action) {
+      state.data.addOrUpdatePost.loading = false;
+      state.data.addOrUpdatePost.error = null;
+    },
+    deletePostError(state, action) {
+      state.data.addOrUpdatePost.loading = false;
+      state.data.addOrUpdatePost.error = action.payload;
     },
     loadPostListSuccess(state, action) {
       state.data.posts = action.payload;
@@ -68,7 +102,7 @@ const slice = createSlice({
       state.data.comment.loading = true;
       state.data.comment.error = null;
     },
-    addPostCommentSuccess(state, action: PayloadAction<Comment>) {
+    addPostCommentSuccess(state, action: PayloadAction<{ list: Comment[]; postId: string }>) {
       state.data.comment.loading = false;
       state.data.comment.error = null;
       state.data = {
@@ -79,7 +113,7 @@ const slice = createSlice({
             if (post._id === action.payload.postId) {
               return {
                 ...post,
-                comments: [...post.comments, action.payload],
+                comments: action.payload.list,
               };
             }
             return post;

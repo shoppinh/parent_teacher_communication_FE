@@ -7,6 +7,9 @@ import { PButton } from '../../../../components/PButton';
 import { PIcon } from 'app/components/PIcon';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { getUser } from '../../../../../store/selectors/session';
+import { ConstantRoles } from '../../../../../utils/constants';
 
 interface Props {
   onRightBarClick: () => void;
@@ -79,31 +82,58 @@ const DesktopStyledButton = styled(NavigationButton)`
   `}
 `;
 const Header: React.FC<Props> = ({ onRightBarClick, onLeftBarClick, headerTitle }) => {
-  const teacherNavigationList = useMemo(() => {
-    return [
-      {
-        id: 'teacherHome',
-        url: '/teacher',
-        iconName: 'partei-file-text',
-      },
-      {
-        id: 'teacherEvent',
-        url: '/teacher-event',
-        iconName: 'partei-calendar',
-      },
-      {
-        id: 'teacherManagement',
-        url: '/teacher-management',
-        iconName: 'partei-users',
-      },
-      {
-        id: 'teacherSetting',
-        url: '',
-        iconName: 'partei-cog',
-        action: () => alert('on click success'),
-      },
-    ];
-  }, []);
+  const currentUser = useSelector(getUser);
+  const navigationList = useMemo(() => {
+    if (currentUser?.roleId === ConstantRoles.TEACHER)
+      return [
+        {
+          id: 'teacherHome',
+          url: '/teacher',
+          iconName: 'partei-file-text',
+        },
+        {
+          id: 'teacherEvent',
+          url: '/teacher-event',
+          iconName: 'partei-calendar',
+        },
+        {
+          id: 'teacherManagement',
+          url: '/teacher-management',
+          iconName: 'partei-users',
+        },
+        {
+          id: 'teacherSetting',
+          url: '',
+          iconName: 'partei-cog',
+          action: () => alert('on click success'),
+        },
+      ];
+    else if (currentUser?.roleId === ConstantRoles.PARENT)
+      return [
+        {
+          id: 'parentHome',
+          url: '/parent',
+          iconName: 'partei-file-text',
+        },
+        {
+          id: 'parentEvent',
+          url: '/parent-event',
+          iconName: 'partei-calendar',
+        },
+        {
+          id: 'parentManagement',
+          url: '/parent-management',
+          iconName: 'partei-users',
+        },
+        {
+          id: 'teacherSetting',
+          url: '',
+          iconName: 'partei-cog',
+          action: () => alert('on click success'),
+        },
+      ];
+    else return [];
+  }, [currentUser?.roleId]);
   const location = useLocation();
   return (
     <Container>
@@ -118,7 +148,7 @@ const Header: React.FC<Props> = ({ onRightBarClick, onLeftBarClick, headerTitle 
       </HeaderWrapper>
       <ButtonGroup>
         <NavigationGroup>
-          {teacherNavigationList.map((navigationItem) =>
+          {navigationList.map((navigationItem) =>
             navigationItem?.action ? (
               <NavigationButton onClick={navigationItem?.action} key={navigationItem.id}>
                 <StyledIcon className={navigationItem.iconName} />

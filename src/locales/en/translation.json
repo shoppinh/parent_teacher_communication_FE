@@ -107,6 +107,17 @@
       "title": "Teacher Management"
     }
   },
+  "parent": {
+    "home": {
+      "title": "Parent Home"
+    },
+    "event": {
+      "title": "Parent Event"
+    },
+    "management": {
+      "title": "Parent Management"
+    }
+  },
   "post": {
     "addPost": {
       "title": "Add Post"
@@ -129,5 +140,14 @@
     "connectionIssue": "Connection issue",
     "today": "Today",
     "yesterday": "Yesterday"
+  },
+  "tab": {
+    "welcome": "Welcome",
+    "newsFeed": "News Feed",
+    "results": "Results",
+    "assignments": "Assignments",
+    "interactions": "Interactions",
+    "portfolios": "Portfolios",
+    "reports": "Reports"
   }
 }

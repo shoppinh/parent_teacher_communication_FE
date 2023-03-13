@@ -7,16 +7,17 @@ import { getAccessToken } from 'store/selectors/session';
 import { usePostSlice } from 'store/slices/post';
 import { styled } from 'twin.macro';
 import PostItem from './PostItem';
-import {queryString} from "../../../../utils/constants";
+import { queryString } from '../../../../utils/constants';
 
 const Container = styled.div``;
 
 interface Props {
   isRefresh: boolean;
   setIsRefreshFeedList: (isRefresh: boolean) => void;
+  triggerRefreshFeedList: (isRefresh: boolean) => void;
 }
 
-const FeedList: React.FC<Props> = ({ isRefresh, setIsRefreshFeedList }) => {
+const FeedList: React.FC<Props> = ({ isRefresh, setIsRefreshFeedList, triggerRefreshFeedList }) => {
   const { actions: postActions } = usePostSlice();
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
@@ -48,12 +49,7 @@ const FeedList: React.FC<Props> = ({ isRefresh, setIsRefreshFeedList }) => {
       {postLoading ? (
         <PLoadingIndicator />
       ) : postList?.data?.length ? (
-        postList?.data?.map((post) => (
-          <PostItem
-              data={post}
-            key={post._id}
-          />
-        ))
+        postList?.data?.map((post) => <PostItem data={post} key={post._id} triggerRefreshFeedList={triggerRefreshFeedList} />)
       ) : (
         <p>No post</p>
       )}

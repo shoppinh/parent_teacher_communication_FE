@@ -2,8 +2,10 @@ import { all, call, put, takeLatest } from 'redux-saga/effects';
 import {
   apiAddPost,
   apiAddPostComment,
+  apiDeletePost,
   apiGetPostList,
   apiGetPostListByClass,
+  apiUpdatePost,
 } from 'services/api/apiHelper';
 import { postActions as actions } from 'store/slices/post';
 export function* postSaga() {
@@ -12,6 +14,8 @@ export function* postSaga() {
     takeLatest(actions.loadPostListByClass.type, getPostListByClass),
     takeLatest(actions.addPost.type, addPost),
     takeLatest(actions.addPostComment.type, addPostComment),
+    takeLatest(actions.updatePost.type, updatePost),
+    takeLatest(actions.deletePost.type, deletePost),
   ]);
 }
 
@@ -61,6 +65,32 @@ export function* addPostComment({ payload }: any) {
       yield put(actions.addPostCommentSuccess(response.data.data));
     } else {
       yield put(actions.addPostCommentError(response.data.error));
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* updatePost({ payload }: any) {
+  try {
+    const response = yield call(apiUpdatePost, payload);
+    if (response.data && response.data.status) {
+      yield put(actions.updatePostSuccess(response.data.data));
+    } else {
+      yield put(actions.updatePostError(response.data.error));
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* deletePost({ payload }: any) {
+  try {
+    const response = yield call(apiDeletePost, payload);
+    if (response.data && response.data.status) {
+      yield put(actions.deletePostSuccess(response.data.data));
+    } else {
+      yield put(actions.deletePostError(response.data.error));
     }
   } catch (err) {
     console.log(err);

@@ -3,7 +3,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import tw, { styled } from 'twin.macro';
 import { PButton } from '../PButton';
 import { PIcon } from '../PIcon';
-import { PostQuery, PostTokenQuery } from 'types/Post';
+import { Post, PostQuery, PostTokenQuery, UpdatePostTokenQuery } from 'types/Post';
 import { useForm } from 'react-hook-form';
 import { pxToRem } from 'styles/theme/utils';
 import { useTranslation } from 'react-i18next';
@@ -12,10 +12,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAccessToken } from 'store/selectors/session';
-import { postActions, usePostSlice } from '../../../store/slices/post';
+import { usePostSlice } from '../../../store/slices/post';
 import { useQuery } from '../../../utils/hook';
 import { queryString } from '../../../utils/constants';
-import { getPostError, getPostLoading } from '../../../store/selectors/post';
+import { getPostUpdateOrAddError, getPostUpdateOrAddLoading } from '../../../store/selectors/post';
 import { toast } from 'react-toastify';
 
 const Wrapper = styled.div`
@@ -72,15 +72,21 @@ const ModalTitle = styled.p`
 
 interface Props {
   handleClose: () => void;
-  postValue?: string;
+  postData?: Post;
   triggerRefreshFeedList: (isRefresh: boolean) => void;
+  type: 'edit' | 'create';
 }
 
 const schema = yup.object({
   title: yup.string().required('Title cannot be empty').strict(true),
 });
 
-const PEditor: React.FC<Props> = ({ handleClose, postValue, triggerRefreshFeedList }) => {
+const PEditor: React.FC<Props> = ({
+  handleClose,
+  postData,
+  triggerRefreshFeedList,
+  type = 'edit',
+}) => {
   const editorRef = useRef<any>(null);
   const {
     handleSubmit,
@@ -90,13 +96,15 @@ const PEditor: React.FC<Props> = ({ handleClose, postValue, triggerRefreshFeedLi
   } = useForm<PostQuery>({
     defaultValues: {
       type: 'PUBLIC',
+      title: postData?.title || '',
+      description: postData?.description || '',
     },
     resolver: yupResolver(schema),
   });
   const { t } = useTranslation();
   const currentAccessToken = useSelector(getAccessToken);
-  const postLoading = useSelector(getPostLoading);
-  const postError = useSelector(getPostError);
+  const postLoading = useSelector(getPostUpdateOrAddLoading);
+  const postError = useSelector(getPostUpdateOrAddError);
   const dispatch = useDispatch();
   const { actions: postActions } = usePostSlice();
   const classId = useQuery().get(queryString.classId);
@@ -104,18 +112,28 @@ const PEditor: React.FC<Props> = ({ handleClose, postValue, triggerRefreshFeedLi
 
   const handleSubmitPost = useCallback(
     (value: PostQuery) => {
-      if (currentAccessToken && classId) {
-        const payload: PostTokenQuery = {
-          ...value,
-          content: editorRef.current.getContent(),
-          token: currentAccessToken,
-          classId,
-        };
-        dispatch(postActions.addPost(payload));
+      if (currentAccessToken) {
+        if (type === 'edit' && postData) {
+          const payload: UpdatePostTokenQuery = {
+            ...value,
+            content: editorRef.current.getContent(),
+            token: currentAccessToken,
+            postId: postData._id,
+          };
+          dispatch(postActions.updatePost(payload));
+        } else if (type === 'create' && classId) {
+          const payload: PostTokenQuery = {
+            ...value,
+            content: editorRef.current.getContent(),
+            token: currentAccessToken,
+            classId,
+          };
+          dispatch(postActions.addPost(payload));
+        }
         setIsFormSent(true);
       }
     },
-    [classId, currentAccessToken, dispatch, postActions]
+    [classId, currentAccessToken, dispatch, postActions, postData, type]
   );
 
   useEffect(() => {
@@ -125,7 +143,7 @@ const PEditor: React.FC<Props> = ({ handleClose, postValue, triggerRefreshFeedLi
       handleClose();
       setIsFormSent(false);
     } else if (isFormSent && postError) {
-      toast.error('Post failed');
+      toast.error(postError.message);
       setIsFormSent(false);
     }
   }, [handleClose, isFormSent, postError, postLoading, triggerRefreshFeedList]);
@@ -206,7 +224,7 @@ const PEditor: React.FC<Props> = ({ handleClose, postValue, triggerRefreshFeedLi
         <Editor
           apiKey={process.env.REACT_APP_TINY_MCE_API_KEY}
           onInit={(evt, editor) => (editorRef.current = editor)}
-          initialValue='<p>This is the initial content of the editor.</p>'
+          initialValue={postData?.content || '<p>This is the initial content of the editor.</p>'}
           init={{
             height: 600,
             menubar: true,
@@ -258,6 +276,7 @@ const PEditor: React.FC<Props> = ({ handleClose, postValue, triggerRefreshFeedLi
             },
             images_upload_handler: example_image_upload_handler,
           }}
+          value={postData && postData.content}
         />
         <StyledButton type='submit' variant={'primary'}>
           Save

@@ -180,13 +180,12 @@ const TeacherHomePage = () => {
       <TabsUnstyled defaultValue={0}>
         <TabsWrapper>
           <StyledTabsList>
-            <StyledTab>Welcome page</StyledTab>
-            <StyledTab>Feed</StyledTab>
-            <StyledTab>Interactions</StyledTab>
-            <StyledTab>Assignments</StyledTab>
-            <StyledTab>Portfolios</StyledTab>
-            <StyledTab>Signups</StyledTab>
-            <StyledTab>Reports</StyledTab>
+            <StyledTab>{t('tab.welcome')}</StyledTab>
+            <StyledTab>{t('tab.newsFeed')}</StyledTab>
+            <StyledTab>{t('tab.interactions')}</StyledTab>
+            <StyledTab>{t('tab.assignments')}</StyledTab>
+            <StyledTab>{t('tab.portfolios')}</StyledTab>
+            <StyledTab>{t('tab.reports')}</StyledTab>
           </StyledTabsList>
           <StyledButton
             type='button'
@@ -205,12 +204,11 @@ const TeacherHomePage = () => {
         <TabPaneContent>
           <TabPanelUnstyled value={0}>Welcome</TabPanelUnstyled>
           <TabPanelUnstyled value={1}>
-            <FeedList setIsRefreshFeedList={setIsRefreshFeedList} isRefresh={isRefreshFeedList} />
+            <FeedList setIsRefreshFeedList={setIsRefreshFeedList} isRefresh={isRefreshFeedList} triggerRefreshFeedList={handleTriggerRefreshFeedList} />
           </TabPanelUnstyled>
           <TabPanelUnstyled value={2}>2 page</TabPanelUnstyled>
           <TabPanelUnstyled value={3}>3 page</TabPanelUnstyled>
           <TabPanelUnstyled value={4}>4 page</TabPanelUnstyled>
-          <TabPanelUnstyled value={5}>5 page</TabPanelUnstyled>
         </TabPaneContent>
       </TabsUnstyled>
       <MenuUnstyled
@@ -229,6 +227,7 @@ const TeacherHomePage = () => {
         <PEditor
           handleClose={handleClosePostModal}
           triggerRefreshFeedList={handleTriggerRefreshFeedList}
+          type='create'
         />
       </PModal>
     </MainLayout>
