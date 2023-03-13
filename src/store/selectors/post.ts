@@ -8,3 +8,5 @@ export const getPostError = createSelector([selectDomain], (state) => state.erro
 export const getPostLoading = createSelector([selectDomain], (state) => state.loading);
 export const getPosts = createSelector([selectDomain], (state) => state.data.posts);
 export const getPostList = createSelector([selectDomain], (state) => state.data.posts);
+export const getPostUpdateOrAddLoading = createSelector([selectDomain], (state) => state.data.addOrUpdatePost.loading);
+export const getPostUpdateOrAddError = createSelector([selectDomain], (state) => state.data.addOrUpdatePost.error);

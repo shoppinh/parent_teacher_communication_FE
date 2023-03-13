@@ -55,6 +55,7 @@ export interface PostListByClassQuery extends PostListTokenQuery {
   classId: string;
 }
 
+
 export interface PostState {
   data: {
     posts: {
@@ -64,6 +65,10 @@ export interface PostState {
     currentPost: Post;
     comment: {
       data: Comment;
+      loading: boolean;
+      error: PostError | null;
+    };
+    addOrUpdatePost: {
       loading: boolean;
       error: PostError | null;
     };

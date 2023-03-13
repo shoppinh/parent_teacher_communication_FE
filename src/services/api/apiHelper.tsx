@@ -115,7 +115,7 @@ export function* getPostDetail(query: PostDetailTokenQuery) {
   return yield call(api.getPostDetail, query);
 }
 
-export function* updatePost(query: UpdatePostTokenQuery) {
+export function* apiUpdatePost(query: UpdatePostTokenQuery) {
   return yield call(api.updatePost, query);
 }
 

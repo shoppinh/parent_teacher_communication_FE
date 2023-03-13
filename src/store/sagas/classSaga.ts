@@ -7,14 +7,23 @@ export function* classSaga() {
 }
 
 export function mapClassList(data: any) {
-  return data.map((item: any) => {
-    return {
-      _id: item.class._id,
-      name: item.class.name,
-      createdAt: item.class.createdAt,
-      updatedAt: item.class.updatedAt,
-    };
-  });
+  return data
+    .filter((item, index) => {
+      return (
+        index ===
+        data.findIndex((obj) => {
+          return JSON.stringify(obj) === JSON.stringify(item);
+        })
+      );
+    })
+    .map((item: any) => {
+      return {
+        _id: item.class._id,
+        name: item.class.name,
+        createdAt: item.class.createdAt,
+        updatedAt: item.class.updatedAt,
+      };
+    });
 }
 
 export function* getClassListByRole({ payload }: any) {

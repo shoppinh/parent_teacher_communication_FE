@@ -12,8 +12,13 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAccessToken, getUser } from '../../../../../store/selectors/session';
 import { usePostSlice } from '../../../../../store/slices/post';
+import { PEditor } from '../../../../components/PEditor/loadable';
+import { PModal } from '../../../../components/PModal';
+import { ConstantRoles } from '../../../../../utils/constants';
+import PostDeleteModal from "../PostDeleteModal";
 interface Props {
   data: Post;
+  triggerRefreshFeedList: (isRefresh: boolean) => void;
 }
 
 interface AvatarProps {
@@ -31,6 +36,7 @@ const AuthorSection = styled.div`
   &:hover {
     background-color: ${(p) => p.theme.background};
   }
+  justify-content: space-between;
 `;
 const Avatar = styled.img<AvatarProps>`
   background-image: url(${(p) => p.src});
@@ -90,14 +96,30 @@ const FormContainer = styled.form`
   ${tw`w-full`}
   margin-bottom: ${pxToRem(20)}rem;
 `;
-const PostItem: React.FC<Props> = ({ data: postData }) => {
+const ActionGroup = styled.div``;
+const ActionButton = styled(PButton)``;
+const TitleSection = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const PostItem: React.FC<Props> = ({ data: postData, triggerRefreshFeedList }) => {
   const [isShowCommentSection, setIsShowCommentSection] = useState(false);
+  const [isPostModalOpen, setIsPostModalOpen] = React.useState(false);
+  const [isDeleteModal, setIsDeleteModal] = React.useState(false);
   const currentAccessToken = useSelector(getAccessToken);
+  const currentUser = useSelector(getUser);
   const handleShowCommentSection = useCallback(() => {
     setIsShowCommentSection(!isShowCommentSection);
   }, [isShowCommentSection]);
   const dispatch = useDispatch();
   const { actions: postActions } = usePostSlice();
+  const handleClosePostModal = () => {
+    setIsPostModalOpen(false);
+  };
+  const handleCloseDeleteModal = () => {
+    setIsDeleteModal(false);
+  };
 
   const { register, handleSubmit, reset } = useForm<{ commentContent: string }>({
     defaultValues: {
@@ -119,16 +141,47 @@ const PostItem: React.FC<Props> = ({ data: postData }) => {
     [currentAccessToken, dispatch, postActions, postData._id, reset]
   );
 
+  const handleEditPost = () => {
+    setIsPostModalOpen(true);
+  };
+  const handleDeletePost = () => {
+    setIsDeleteModal(true);
+  };
+
+  const handleDeletePostConfirm = () => {
+    if (currentAccessToken) {
+      dispatch(
+        postActions.deletePost({
+          postId: postData._id,
+          token: currentAccessToken,
+        })
+      );
+    }
+  };
+
   return (
     <Container>
       <AuthorSection>
-        <AvatarWrapper>
-          <Avatar src={postData?.author?.avatar || AvatarPlaceholder} />
-        </AvatarWrapper>
-        <PostTitleWrapper>
-          <AuthorTitle>{postData?.author.username}</AuthorTitle>
-          <Description>{postData?.title}</Description>
-        </PostTitleWrapper>
+        <TitleSection>
+          <AvatarWrapper>
+            <Avatar src={postData?.author?.avatar || AvatarPlaceholder} />
+          </AvatarWrapper>
+          <PostTitleWrapper>
+            <AuthorTitle>{postData?.author.username}</AuthorTitle>
+            <Description>{postData?.title}</Description>
+          </PostTitleWrapper>
+        </TitleSection>
+
+        {currentUser?.roleId === ConstantRoles.TEACHER && (
+          <ActionGroup>
+            <ActionButton onClick={handleEditPost}>
+              <StyledIcon className='partei-pencil' />
+            </ActionButton>
+            <ActionButton onClick={handleDeletePost}>
+              <StyledIcon className='partei-bin' />
+            </ActionButton>
+          </ActionGroup>
+        )}
       </AuthorSection>
       <PostContent dangerouslySetInnerHTML={{ __html: postData?.content }} />
       <ReactionGroup>
@@ -166,6 +219,23 @@ const PostItem: React.FC<Props> = ({ data: postData }) => {
           </CommentInputSection>
         </CommentSection>
       )}
+
+      <PModal open={isPostModalOpen} onClose={handleClosePostModal}>
+        <PEditor
+          handleClose={handleClosePostModal}
+          triggerRefreshFeedList={triggerRefreshFeedList}
+          postData={postData}
+          type='edit'
+        />
+      </PModal>
+      <PModal open={isDeleteModal} onClose={handleCloseDeleteModal}>
+        <PostDeleteModal
+          handleClose={handleCloseDeleteModal}
+          handleConfirm={handleDeletePostConfirm}
+          triggerRefreshFeedList={triggerRefreshFeedList}
+
+        />
+      </PModal>
     </Container>
   );
 };
