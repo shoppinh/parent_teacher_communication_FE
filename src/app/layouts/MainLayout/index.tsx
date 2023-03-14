@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import tw, { styled } from 'twin.macro';
 import { StyleConstants } from '../../../styles/constants/style';
 import { PDrawer } from '../../components/PDrawer';
@@ -8,6 +8,9 @@ import RightBar from './components/RightBar';
 import { media } from '../../../styles';
 import { pxToRem } from '../../../styles/theme/utils';
 import BaseLayout from '../BaseLayout';
+import { useConfigSlice } from '../../../store/slices/config';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAccessToken } from '../../../store/selectors/session';
 
 interface Props {
   children?: React.ReactNode;
@@ -61,6 +64,7 @@ const MainLayout: React.FC<Props> = ({ children, headerTitle, title }) => {
   const onRightBarClick = useCallback(() => {
     setRightBarOpen(!rightBarOpen);
   }, [rightBarOpen]);
+
   return (
     <BaseLayout title={title}>
       <Container>

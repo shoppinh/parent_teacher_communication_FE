@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAccessToken } from 'store/selectors/session';
 import { usePostSlice } from '../../../store/slices/post';
 import { useQuery } from '../../../utils/hook';
-import { queryString } from '../../../utils/constants';
+import { ConstantPostType, queryString } from '../../../utils/constants';
 import { getPostUpdateOrAddError, getPostUpdateOrAddLoading } from '../../../store/selectors/post';
 import { toast } from 'react-toastify';
 
@@ -91,11 +91,10 @@ const PEditor: React.FC<Props> = ({
   const {
     handleSubmit,
     register,
-    getValues,
-    formState: { errors, isDirty },
+    formState: { errors },
   } = useForm<PostQuery>({
     defaultValues: {
-      type: 'PUBLIC',
+      type: ConstantPostType.PUBLIC,
       title: postData?.title || '',
       description: postData?.description || '',
     },
@@ -138,7 +137,7 @@ const PEditor: React.FC<Props> = ({
 
   useEffect(() => {
     if (isFormSent && !postLoading && !postError) {
-      toast('Post successfully');
+      toast(t('post.createSuccess'));
       triggerRefreshFeedList(true);
       handleClose();
       setIsFormSent(false);
@@ -146,11 +145,7 @@ const PEditor: React.FC<Props> = ({
       toast.error(postError.message);
       setIsFormSent(false);
     }
-  }, [handleClose, isFormSent, postError, postLoading, triggerRefreshFeedList]);
-
-  // useEffect(() => {
-  //
-  // }, [isFormSent, postError]);
+  }, [handleClose, isFormSent, postError, postLoading, t, triggerRefreshFeedList]);
 
   const example_image_upload_handler = (blobInfo, progress) =>
     new Promise<string>((resolve, reject) => {
@@ -196,7 +191,9 @@ const PEditor: React.FC<Props> = ({
   return (
     <Wrapper>
       <ActionGroup>
-        <ModalTitle>{t('post.addPost.title')}</ModalTitle>
+        <ModalTitle>
+          {type === 'edit' ? t('post.editPost.title') : t('post.addPost.title')}
+        </ModalTitle>
         <PButton onClick={() => handleClose()}>
           <StyledIcon className='partei-cross' />
         </PButton>

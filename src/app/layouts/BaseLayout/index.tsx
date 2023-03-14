@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import tw, { styled } from 'twin.macro';
 import PToast from '../../components/PToast';
 import { Firebase } from '../FireBase';
+import { useDispatch, useSelector } from 'react-redux';
+import { useConfigSlice } from '../../../store/slices/config';
+import { getSystemSettings } from '../../../store/selectors/config';
 
 interface Props {
   children?: React.ReactNode;
@@ -16,6 +19,14 @@ const Container = styled.div`
 `;
 
 const BaseLayout: React.FC<Props> = ({ children, title }) => {
+  const { actions: configActions } = useConfigSlice();
+  const systemSettings = useSelector(getSystemSettings);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!systemSettings) {
+      dispatch(configActions.loadSystemSetting());
+    }
+  }, [configActions, dispatch, systemSettings]);
   return (
     <>
       <Helmet>

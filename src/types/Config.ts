@@ -1,3 +1,5 @@
+import { Class } from './Class';
+
 export interface ConfigState {
   data: ConfigPayload;
   error?: ConfigError | null;
@@ -21,6 +23,11 @@ export interface ConfigPayload {
   // landingPage?: LandingPageConfig;
   lastUpdated?: string | null;
   languages?: LanguageItem[];
+  systemSettings?: SystemSetting;
+}
+
+export interface SystemSetting {
+  schoolInfo: Class;
 }
 export interface LanguageQuery {
   accessToken: string;

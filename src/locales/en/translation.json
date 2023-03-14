@@ -96,6 +96,17 @@
     "gotit": "Got it",
     "outletInDifferentCity": "Hello! Our outlet offers delivery in {{city}} only"
   },
+  "admin": {
+    "home": {
+      "title": "Admin Home"
+    },
+    "event": {
+      "title": "Admin Event"
+    },
+    "management": {
+      "title": "Admin Management"
+    }
+  },
   "teacher": {
     "home": {
       "title": "Teacher Home"
@@ -121,7 +132,14 @@
   "post": {
     "addPost": {
       "title": "Add Post"
-    }
+    },
+    "editPost": {
+      "title": "Edit Post"
+    },
+    "writeSomething": "Write something...",
+    "like": "Like",
+    "comment": "Comment",
+    "createSuccess": "Create success"
   },
   "localizationConfig": {
     "title": "Switch Language",

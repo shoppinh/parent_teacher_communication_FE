@@ -101,4 +101,7 @@ export const APIs = {
       '/api/message/count/unread/room/{fromMobilePhone}/{fromRoleId}/{toMobilePhone}/{toRoleId}',
     sendPushNotification: '/api/push-notification/send-push-notification',
   },
+  settings: {
+    getSettings: '/api/settings/get-settings',
+  },
 };

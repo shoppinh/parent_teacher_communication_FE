@@ -17,8 +17,8 @@ import { DeviceTokenQuery, RegisterQuery } from 'types/Register';
 import { AuthQuery, LogoutQuery, RefreshTokenQuery } from 'types/Session';
 import { TeacherDetailQuery } from '../../types/Teacher';
 import * as api from './index';
-import {ClassListTokenQuery} from "../../types/Class";
-import {AddCommentTokenRequest} from "../../types/Comment";
+import { ClassListTokenQuery } from '../../types/Class';
+import { AddCommentTokenRequest } from '../../types/Comment';
 
 export function* apiLogin(query: AuthQuery) {
   return yield call(api.login, query);
@@ -92,6 +92,10 @@ export function* apiUpdateLanguage(query: LanguageQuery) {
   return yield call(api.updateLanguage, query);
 }
 
+export function* apiGetSystemSettings() {
+  return yield call(api.getSystemSettings);
+}
+
 // Admin Helper
 
 export function* apiFetchTeacherDetail(query: TeacherDetailQuery) {
@@ -129,5 +133,5 @@ export function* apiAddPostComment(query: AddCommentTokenRequest) {
 // Class
 
 export function* apiGetClassListByRole(query: ClassListTokenQuery) {
-    return yield call(api.getClassListByRole, query);
+  return yield call(api.getClassListByRole, query);
 }

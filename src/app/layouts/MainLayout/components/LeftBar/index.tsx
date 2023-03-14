@@ -9,13 +9,14 @@ import { PButton } from '../../../../components/PButton';
 import { PModal } from '../../../../components/PModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSessionSlice } from '../../../../../store/slices/session';
-import { getAccessToken } from '../../../../../store/selectors/session';
+import { getAccessToken, getUser } from '../../../../../store/selectors/session';
 import { AuthPayLoad } from '../../../../../types/Session';
 import { PREVIOUS_STORAGE_KEY, queryString } from '../../../../../utils/constants';
 import { useClassSlice } from '../../../../../store/slices/class';
 import { getClassList } from '../../../../../store/selectors/class';
 import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
+import { getSystemSettings } from '../../../../../store/selectors/config';
 
 interface ClassRowProps {
   isActive: boolean;
@@ -84,7 +85,6 @@ const ClassRowItem = styled.div<ClassRowProps>`
   font: 700 ${pxToRem(14)}rem / ${pxToRem(20)}rem ${(p) => p.theme.fontFamily};
 `;
 
-const schoolId = '5f9f1b0b0b9d2c0017b0f1a1';
 const LeftBar = () => {
   const [isShowOptionModal, setIsShowOptionModal] = useState(false);
   const location = useLocation();
@@ -95,6 +95,8 @@ const LeftBar = () => {
   const { actions: sessionActions } = useSessionSlice();
   const { actions: classActions } = useClassSlice();
   const currentAccessToken = useSelector(getAccessToken);
+  const currentUser = useSelector(getUser);
+  const systemSettings = useSelector(getSystemSettings);
   const previousAuthStorage = localStorage.getItem(PREVIOUS_STORAGE_KEY);
   const previousAuth = JSON.parse(
     previousAuthStorage && previousAuthStorage !== '' ? previousAuthStorage : '{}'
@@ -102,14 +104,12 @@ const LeftBar = () => {
   const handleCloseModal = () => {
     setIsShowOptionModal(false);
   };
-
   const classList = useSelector(getClassList);
-
   useEffect(() => {
-    if (currentAccessToken) {
-      dispatch(classActions.loadClassList({ token: currentAccessToken }));
+    if (currentAccessToken && currentUser?.roleId) {
+      dispatch(classActions.loadClassList({ token: currentAccessToken, role: currentUser.roleId }));
     }
-  }, [classActions, currentAccessToken, dispatch]);
+  }, [classActions, currentAccessToken, currentUser?.roleId, dispatch]);
 
   return (
     <Container>
@@ -119,16 +119,16 @@ const LeftBar = () => {
         </ImageWrapper>
         <ClassListContainer>
           <ClassRowItem
-            isActive={classId ? classId === schoolId : false}
+            isActive={classId ? classId === systemSettings?.schoolInfo?._id : false}
             onClick={() =>
               navigate({
                 pathname: location.pathname,
-                search: `?${queryString.classId}=${schoolId}`,
+                search: `?${queryString.classId}=${systemSettings?.schoolInfo?._id}`,
               })
             }
-            key={schoolId}
+            key={systemSettings?.schoolInfo?._id}
           >
-            General
+            {systemSettings?.schoolInfo?.name}
           </ClassRowItem>
           {classList?.data?.map((item) => {
             return (

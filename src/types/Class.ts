@@ -1,10 +1,14 @@
+import {ConstantRoles} from "../utils/constants";
+
 export interface Class {
   _id: string;
   name: string;
+  isSchoolClass: boolean;
 }
 
 export interface ClassListTokenQuery {
   token: string;
+  role: string;
 }
 
 export interface ClassState {
