@@ -13,3 +13,7 @@ export const updateLanguage = async (query: LanguageQuery) => {
   };
   return new apiClient(query?.accessToken || '').post(APIs.user.languageUpdate, payload);
 };
+
+export const getSystemSettings = async () => {
+  return new apiClient('').get(APIs.settings.getSettings);
+};

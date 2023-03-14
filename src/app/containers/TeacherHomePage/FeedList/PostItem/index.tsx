@@ -15,7 +15,8 @@ import { usePostSlice } from '../../../../../store/slices/post';
 import { PEditor } from '../../../../components/PEditor/loadable';
 import { PModal } from '../../../../components/PModal';
 import { ConstantRoles } from '../../../../../utils/constants';
-import PostDeleteModal from "../PostDeleteModal";
+import PostDeleteModal from '../PostDeleteModal';
+import { useTranslation } from 'react-i18next';
 interface Props {
   data: Post;
   triggerRefreshFeedList: (isRefresh: boolean) => void;
@@ -104,6 +105,7 @@ const TitleSection = styled.div`
 `;
 
 const PostItem: React.FC<Props> = ({ data: postData, triggerRefreshFeedList }) => {
+  const { t } = useTranslation();
   const [isShowCommentSection, setIsShowCommentSection] = useState(false);
   const [isPostModalOpen, setIsPostModalOpen] = React.useState(false);
   const [isDeleteModal, setIsDeleteModal] = React.useState(false);
@@ -172,7 +174,7 @@ const PostItem: React.FC<Props> = ({ data: postData, triggerRefreshFeedList }) =
           </PostTitleWrapper>
         </TitleSection>
 
-        {currentUser?.roleId === ConstantRoles.TEACHER && (
+        {currentUser?._id === postData.author._id && (
           <ActionGroup>
             <ActionButton onClick={handleEditPost}>
               <StyledIcon className='partei-pencil' />
@@ -188,13 +190,13 @@ const PostItem: React.FC<Props> = ({ data: postData, triggerRefreshFeedList }) =
         <ReactionActionItem>
           <PButton>
             <StyledIcon className='partei-heart' />
-            Like
+            {t('post.like')}
           </PButton>
         </ReactionActionItem>
         <ReactionActionItem>
           <PButton onClick={handleShowCommentSection}>
             <StyledIcon className='partei-bubble2' />
-            Comment
+            {t('post.comment')}
           </PButton>
         </ReactionActionItem>
       </ReactionGroup>
@@ -213,7 +215,10 @@ const PostItem: React.FC<Props> = ({ data: postData, triggerRefreshFeedList }) =
           ))}
           <CommentInputSection>
             <FormContainer onSubmit={handleSubmit(submitComment)}>
-              <PInput placeholder='Write a comment...' {...register('commentContent')} />
+              <PInput
+                placeholder={t('post.writeSomething') as string}
+                {...register('commentContent')}
+              />
               <input type='submit' hidden />
             </FormContainer>
           </CommentInputSection>
@@ -233,7 +238,6 @@ const PostItem: React.FC<Props> = ({ data: postData, triggerRefreshFeedList }) =
           handleClose={handleCloseDeleteModal}
           handleConfirm={handleDeletePostConfirm}
           triggerRefreshFeedList={triggerRefreshFeedList}
-
         />
       </PModal>
     </Container>

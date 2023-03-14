@@ -132,7 +132,25 @@ const Header: React.FC<Props> = ({ onRightBarClick, onLeftBarClick, headerTitle 
           action: () => alert('on click success'),
         },
       ];
-    else return [];
+    else
+      return [
+        {
+          id: 'adminHome',
+          url: '/admin',
+          iconName: 'partei-file-text',
+        },
+        {
+          id: 'adminManagement',
+          url: '/admin-management',
+          iconName: 'partei-users',
+        },
+        {
+          id: 'adminSetting',
+          url: '',
+          iconName: 'partei-cog',
+          action: () => alert('on click success'),
+        },
+      ];
   }, [currentUser?.roleId]);
   const location = useLocation();
   return (

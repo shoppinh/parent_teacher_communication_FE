@@ -1,6 +1,6 @@
 export { login, logout, getUserInfo, refreshToken } from './authentication';
 export { register, registerDeviceToken } from './register';
-export { getPlatformSetting, updateLanguage } from './config';
+export { getPlatformSetting, updateLanguage, getSystemSettings } from './config';
 export { getClassListByRole } from './class';
 export {
   getConversationDetail,
@@ -17,5 +17,5 @@ export {
   getPostDetail,
   updatePost,
   deletePost,
-  addPostComment
+  addPostComment,
 } from './post';

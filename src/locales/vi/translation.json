@@ -129,6 +129,24 @@
   "post": {
     "addPost": {
       "title": "Thêm bài viết"
+    },
+    "editPost": {
+      "title": "Sửa bài viết"
+    },
+    "writeSomething": "Viết gì đó...",
+    "like": "Thích",
+    "comment": "Bình luận",
+    "createSuccess": "Tạo bài viết thành công"
+  },
+  "admin": {
+    "home": {
+      "title": "Trang chủ admin"
+    },
+    "event": {
+      "title": "Sự kiện"
+    },
+    "management": {
+      "title": "Quản lý"
     }
   },
   "parent": {

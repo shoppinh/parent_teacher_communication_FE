@@ -1,7 +1,13 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { loadState } from 'store/localStorage';
-import { ConfigError, ConfigPayload, ConfigState, LanguageQuery } from 'types/Config';
+import {
+  ConfigError,
+  ConfigPayload,
+  ConfigState,
+  LanguageQuery,
+  SystemSetting,
+} from 'types/Config';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { configSaga } from 'store/sagas/configSaga';
 
@@ -33,6 +39,16 @@ const slice = createSlice({
     doUpdateLanguage(state, action: PayloadAction<LanguageQuery>) {
       state.error = null;
     },
+    loadSystemSetting(state) {
+      state.error = null;
+      state.loading = true;
+    },
+    loadedSystemSetting(state, action: PayloadAction<SystemSetting>) {
+      state.data.systemSettings = action.payload;
+      state.data.lastUpdated = new Date().toISOString();
+      state.loading = false;
+    },
+
     Error(state, action: PayloadAction<ConfigError>) {
       state.error = action.payload;
       state.loading = false;

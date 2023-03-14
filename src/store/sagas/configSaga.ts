@@ -1,11 +1,16 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { apiGetPlatformSetting, apiUpdateLanguage } from 'services/api/apiHelper';
+import {
+  apiGetPlatformSetting,
+  apiGetSystemSettings,
+  apiUpdateLanguage,
+} from 'services/api/apiHelper';
 import { configActions as actions } from 'store/slices/config';
 
 export function* configSaga() {
   yield all([
     takeLatest(actions.loadPlatformSetting.type, getPlatformSetting),
     takeLatest(actions.doUpdateLanguage.type, doUpdateLanguage),
+    takeLatest(actions.loadSystemSetting.type, getSystemSettings),
   ]);
 }
 
@@ -62,6 +67,19 @@ export function* doUpdateLanguage({ payload }: any) {
     const response = yield call(apiUpdateLanguage, payload);
     if (response.data && response.data.status) {
       // yield put(actions.loadedPlatformSetting(ParsePlatformSetting(response.data.data)));
+    } else {
+      yield put(actions.Error(response.data.error));
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* getSystemSettings() {
+  try {
+    const response = yield call(apiGetSystemSettings);
+    if (response.data && response.data.status) {
+      yield put(actions.loadedSystemSetting(response.data.data));
     } else {
       yield put(actions.Error(response.data.error));
     }

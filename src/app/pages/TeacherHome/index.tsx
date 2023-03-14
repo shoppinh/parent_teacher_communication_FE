@@ -163,16 +163,15 @@ const TeacherHomePage = () => {
           console.log('post is activated');
           close();
         };
-        break;
+
       case 'event':
         return () => {
           close();
           console.log('event is activated');
         };
-        break;
+
       default:
         return () => close();
-        break;
     }
   };
   return (
@@ -204,7 +203,11 @@ const TeacherHomePage = () => {
         <TabPaneContent>
           <TabPanelUnstyled value={0}>Welcome</TabPanelUnstyled>
           <TabPanelUnstyled value={1}>
-            <FeedList setIsRefreshFeedList={setIsRefreshFeedList} isRefresh={isRefreshFeedList} triggerRefreshFeedList={handleTriggerRefreshFeedList} />
+            <FeedList
+              setIsRefreshFeedList={setIsRefreshFeedList}
+              isRefresh={isRefreshFeedList}
+              triggerRefreshFeedList={handleTriggerRefreshFeedList}
+            />
           </TabPanelUnstyled>
           <TabPanelUnstyled value={2}>2 page</TabPanelUnstyled>
           <TabPanelUnstyled value={3}>3 page</TabPanelUnstyled>

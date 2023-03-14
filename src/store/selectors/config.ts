@@ -16,3 +16,7 @@ export const getConfigLastUpdated = createSelector(
 );
 
 export const getConfigLanguage = createSelector([selectDomain], (state) => state.data.languages);
+export const getSystemSettings = createSelector(
+  [selectDomain],
+  (state) => state.data.systemSettings
+);

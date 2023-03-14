@@ -1,6 +1,9 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { apiGetClassListByRole } from 'services/api/apiHelper';
 import { classActions as actions } from 'store/slices/class';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { ClassListTokenQuery } from '../../types/Class';
+import { ConstantRoles } from '../../utils/constants';
 
 export function* classSaga() {
   yield all([takeLatest(actions.loadClassList.type, getClassListByRole)]);
@@ -26,16 +29,26 @@ export function mapClassList(data: any) {
     });
 }
 
-export function* getClassListByRole({ payload }: any) {
+export function* getClassListByRole({ payload }: PayloadAction<ClassListTokenQuery>) {
+  const { role } = payload;
   try {
     const response = yield call(apiGetClassListByRole, payload);
     if (response.data && response.data.status) {
-      yield put(
-        actions.loadClassListSuccess({
-          data: mapClassList(response.data.data.data),
-          total: response.data.data.total,
-        })
-      );
+      if (role === ConstantRoles.SUPER_USER) {
+        yield put(
+          actions.loadClassListSuccess({
+            data: response.data.data.data,
+            total: response.data.data.total,
+          })
+        );
+      } else {
+        yield put(
+          actions.loadClassListSuccess({
+            data: mapClassList(response.data.data.data),
+            total: response.data.data.total,
+          })
+        );
+      }
     } else {
       yield put(actions.loadClassListError(response.data.error));
     }
