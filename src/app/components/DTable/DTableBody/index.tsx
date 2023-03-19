@@ -12,6 +12,10 @@ const StyledTableData = styled.td`
   }
 `;
 
+const StyledBody = styled.tbody`
+  background-color: ${(p) => p.theme.background};
+`
+
 interface TableBodyProps {
   tableData: any[];
   columns: ColumnProps[];
@@ -20,7 +24,7 @@ interface TableBodyProps {
 
 const TableBody: React.FC<TableBodyProps> = ({ tableData, columns, dataKey = '' }) => {
   return (
-    <tbody>
+    <StyledBody>
       {tableData.map((data, index) => {
         return (
           <tr key={data._id || data?.[dataKey] || index}>
@@ -35,7 +39,7 @@ const TableBody: React.FC<TableBodyProps> = ({ tableData, columns, dataKey = '' 
           </tr>
         );
       })}
-    </tbody>
+    </StyledBody>
   );
 };
 

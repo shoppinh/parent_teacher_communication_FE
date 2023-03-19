@@ -2,11 +2,14 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAccessToken } from '../../../../store/selectors/session';
 import { useProgressSlice } from '../../../../store/slices/progress';
-import { Progress, ProgressListTokenQuery } from '../../../../types/Progress';
+import {
+  Progress,
+  ProgressListByStudentTokenQuery,
+  ProgressListTokenQuery,
+} from '../../../../types/Progress';
 import { useQuery } from '../../../../utils/hook';
 import { queryString, ROWS_PER_PAGE } from '../../../../utils/constants';
 import {
-  getCurrentProgress,
   getProgressList,
   getProgressLoading,
 } from '../../../../store/selectors/progress';
@@ -18,10 +21,10 @@ import { paginate } from '../../../../utils/helpers';
 import { pxToRem } from '../../../../styles/theme/utils';
 import { PIcon } from '../../../components/PIcon';
 import { PModal } from '../../../components/PModal';
-import AssignMarkModal from './AssignMarkModal';
 import { PButton } from '../../../components/PButton';
-import RemoveMarkModal from './RemoveMarkModal';
 import { useTranslation } from 'react-i18next';
+import { getStudentList } from '../../../../store/selectors/student';
+import { PSelection } from '../../../components/PSelection';
 
 const Container = styled.div``;
 
@@ -30,50 +33,42 @@ const StyledIcon = styled(PIcon)`
 `;
 const ActionGroup = styled.span`
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  margin-bottom: ${pxToRem(10)}rem;
+`;
+const StyledPSelection = styled(PSelection)`
+  min-width: ${pxToRem(200)}rem;
+`;
+const TableTitle = styled.div`
+  font-size: ${pxToRem(20)}rem;
+  font-weight: 700;
+  margin-bottom: ${pxToRem(10)}rem;
 `;
 
-interface Props {
-  isRefresh: boolean;
-  triggerRefreshProgressList: () => void;
-  setIsRefreshProgressList: (isRefresh: boolean) => void;
-}
-
-const InteractionList: React.FC<Props> = ({
-  triggerRefreshProgressList,
-  setIsRefreshProgressList,
-  isRefresh,
-}) => {
+const InteractionList: React.FC = () => {
   const currentAccessToken = useSelector(getAccessToken);
-  const classId = useQuery().get(queryString.classId);
   const [isAssignMarkModalOpen, setIsAssignMarkModalOpen] = useState(false);
-  const [isRemoveMarkModalOpen, setIsRemoveMarkModalOpen] = useState(false);
-  const [progressIdToRemove, setProgressIdToRemove] = useState<string>('');
+  const [studentId, setStudentId] = useState<string>('');
+  const studentList = useSelector(getStudentList);
+  const classId = useQuery().get(queryString.classId);
   const { actions: progressActions } = useProgressSlice();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const currentProgress = useSelector(getCurrentProgress);
   const progressLoading = useSelector(getProgressLoading);
   const handleFetchProgressList = useCallback(() => {
-    if (currentAccessToken && classId) {
-      const currentYear = new Date().getFullYear();
-      const currentSemester = new Date().getMonth() < 5 ? 1 : 2;
-      const payload: ProgressListTokenQuery = {
+    if (currentAccessToken && studentId) {
+      const payload: ProgressListByStudentTokenQuery = {
         token: currentAccessToken,
-        classId,
-        semester: currentSemester,
-        year: currentYear,
+        studentId,
       };
-      dispatch(progressActions.loadProgressList(payload));
+      dispatch(progressActions.loadProgressListByStudent(payload));
     }
-  }, [classId, currentAccessToken, dispatch, progressActions]);
+  }, [currentAccessToken, dispatch, progressActions, studentId]);
 
   const handleCloseAssignMarkModal = useCallback(() => {
     setIsAssignMarkModalOpen(false);
   }, []);
-  const handleCloseRemoveMarkModal = useCallback(() => {
-    setIsRemoveMarkModalOpen(false);
-  }, []);
+
   const handleOpenAssignMarkModal = useCallback(
     (progressId: string) => {
       if (currentAccessToken) {
@@ -83,22 +78,6 @@ const InteractionList: React.FC<Props> = ({
     },
     [currentAccessToken, dispatch, progressActions]
   );
-
-  const handleOpenRemoveMarkModal = useCallback((assignId: string) => {
-    setIsRemoveMarkModalOpen(true);
-    setProgressIdToRemove(assignId);
-  }, []);
-
-  const handleRemoveMark = useCallback(() => {
-    if (currentAccessToken && progressIdToRemove) {
-      dispatch(
-        progressActions.removeProgress({
-          token: currentAccessToken,
-          progressId: progressIdToRemove,
-        })
-      );
-    }
-  }, [currentAccessToken, dispatch, progressActions, progressIdToRemove]);
 
   const columns: ColumnProps[] = useMemo(() => {
     return [
@@ -151,10 +130,7 @@ const InteractionList: React.FC<Props> = ({
         render: (item: Progress) => (
           <ActionGroup>
             <PButton onClick={() => handleOpenAssignMarkModal(item._id)}>
-              <StyledIcon className='partei-pencil' />
-            </PButton>
-            <PButton onClick={() => handleOpenRemoveMarkModal(item._id)}>
-              <StyledIcon className='partei-bin' />
+              <StyledIcon className='partei-eye' />
             </PButton>
           </ActionGroup>
         ),
@@ -164,7 +140,7 @@ const InteractionList: React.FC<Props> = ({
         },
       },
     ];
-  }, [handleOpenAssignMarkModal, handleOpenRemoveMarkModal]);
+  }, [handleOpenAssignMarkModal, t]);
 
   const progressListData = useSelector(getProgressList);
 
@@ -180,42 +156,58 @@ const InteractionList: React.FC<Props> = ({
     }
     return [];
   }, [currentPage, progressListData.data]);
+  const renderedStudentList = useMemo(() => {
+    if (studentList && classId) {
+      return studentList.filter((student) => student.classId === classId);
+    }
+    return [];
+  }, [classId, studentList]);
 
   useEffect(() => {
-    if (isRefresh) {
-      handleFetchProgressList();
-      setIsRefreshProgressList(false);
-    } else {
-      handleFetchProgressList();
+    handleFetchProgressList();
+  }, [handleFetchProgressList]);
+
+  useEffect(() => {
+    if (classId) {
+      setStudentId('');
     }
-  }, [handleFetchProgressList, isRefresh, setIsRefreshProgressList]);
+  }, [classId]);
+
   return (
     <Container>
-      <DTable
-        columns={columns}
-        tableData={renderedData}
-        paginationRange={paginationRange}
-        handleSorting={() => {}}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalItems={progressListData.totalItem}
-        rowsPerPage={ROWS_PER_PAGE}
-        isLoading={progressLoading}
-      />
+      <ActionGroup>
+        <StyledPSelection
+          onChange={(e) => {
+            setStudentId(e.target.value);
+          }}
+        >
+          <option value=''>{t('common.pleaseSelectChildren')}</option>
+          {renderedStudentList?.map((student) => {
+            return (
+              <option key={student._id} value={student._id}>
+                {student.name}
+              </option>
+            );
+          })}
+        </StyledPSelection>
+      </ActionGroup>
+      <TableTitle>Bảng điểm của học sinh</TableTitle>
+      {studentId && (
+        <DTable
+          columns={columns}
+          tableData={renderedData}
+          paginationRange={paginationRange}
+          handleSorting={() => {}}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalItems={progressListData.totalItem}
+          rowsPerPage={ROWS_PER_PAGE}
+          isLoading={progressLoading}
+        />
+      )}
+
       <PModal open={isAssignMarkModalOpen} onClose={handleCloseAssignMarkModal}>
-        <AssignMarkModal
-          value={currentProgress}
-          type='update'
-          handleClose={handleCloseAssignMarkModal}
-          triggerRefreshProgressList={triggerRefreshProgressList}
-        />
-      </PModal>
-      <PModal open={isRemoveMarkModalOpen} onClose={handleCloseRemoveMarkModal}>
-        <RemoveMarkModal
-          handleConfirm={handleRemoveMark}
-          handleClose={handleCloseRemoveMarkModal}
-          triggerRefreshProgressList={triggerRefreshProgressList}
-        />
+        <div>View Detail Modal</div>
       </PModal>
     </Container>
   );

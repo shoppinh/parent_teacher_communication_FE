@@ -79,7 +79,10 @@
     "semester": "Học kỳ",
     "year": "Năm học",
     "add": "Thêm",
-    "save": "Lưu"
+    "save": "Lưu",
+    "student": "Học sinh",
+    "subject": "Môn học",
+    "assessment": "Đánh giá"
   },
   "register": {
     "title": "Tạo tài khoản",
@@ -192,5 +195,31 @@
     "editProgress": {
       "title": "Chỉnh sửa điểm và đánh giá"
     }
+  },
+  "common": {
+    "noDataToShow": "Không có dữ liệu để hiển thị",
+    "create": "Tạo",
+    "logout": "Đăng xuất",
+    "settings": "Cài đặt",
+    "inviteMember": "Mời thành viên",
+    "classGroup": "Lớp học/nhóm",
+    "support": "Hỗ trợ",
+    "contactAdmin": "Liên hệ quản trị viên",
+    "pleaseSelectChildren": "Vui lòng chọn học sinh"
+  },
+  "table": {
+    "next": "Tiếp theo",
+    "previous": "Trước",
+    "studentName": "Tên học sinh",
+    "studentId": "ID học sinh",
+    "subjectName": "Tên môn học",
+    "frequentMark": "Điểm thường xuyên",
+    "middleExamMark": "Điểm giữa kỳ",
+    "finalExamMark": "Điểm cuối kỳ",
+    "averageMark": "Điểm trung bình",
+    "semester": "Học kỳ",
+    "year": "Năm học",
+    "action": "Hành động",
+    "assessment": "Đánh giá"
   }
 }

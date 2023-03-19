@@ -10,7 +10,7 @@ import {
   TabUnstyled,
   tabUnstyledClasses,
 } from '@mui/base';
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import MainLayout from '../../layouts/MainLayout';
 
@@ -21,10 +21,14 @@ import { PButton } from '../../components/PButton';
 import FeedList from '../../containers/TeacherHomePage/FeedList';
 import { PEditor } from 'app/components/PEditor/loadable';
 import { PModal } from 'app/components/PModal';
-import { getUser } from 'store/selectors/session';
-import { useSelector } from 'react-redux';
+import { getAccessToken, getUser } from 'store/selectors/session';
+import { useDispatch, useSelector } from 'react-redux';
 import InteractionList from '../../containers/TeacherHomePage/InteractionsList';
 import AssignMarkModal from '../../containers/TeacherHomePage/InteractionsList/AssignMarkModal';
+import { useStudentSlice } from '../../../store/slices/student';
+import { useQuery } from '../../../utils/hook';
+import { queryString } from '../../../utils/constants';
+import { useTeacherSlice } from '../../../store/slices/teacher';
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -53,6 +57,8 @@ const StyledButton = styled(PButton)`
 `;
 const TabPaneContent = styled.div`
   ${tw`p-3`}
+  overflow: auto;
+  height: calc(100% - ${pxToRem(StyleConstants.TAB_HEIGHT)}rem);
 `;
 
 const StyledListbox = styled.ul(
@@ -97,7 +103,7 @@ const StyledMenuItem = styled(MenuItemUnstyled)(
 
   &:hover:not(.${menuItemUnstyledClasses.disabled}) {
     background-color: ${theme.backgroundVariant};
-    color: ${theme.text};
+    color: ${theme.background};
   }
   `
 );
@@ -105,7 +111,9 @@ const StyledMenuItem = styled(MenuItemUnstyled)(
 const Popper = styled(PopperUnstyled)`
   z-index: 3;
 `;
-
+const StyledTabs = styled(TabsUnstyled)`
+  height: 100%;
+`;
 const TeacherHomePage = () => {
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
@@ -118,6 +126,32 @@ const TeacherHomePage = () => {
   const [isRefreshFeedList, setIsRefreshFeedList] = React.useState(false);
   const [isRefreshProgressList, setIsRefreshProgressList] = React.useState(false);
   const currentUser = useSelector(getUser);
+  const currentAccessToken = useSelector(getAccessToken);
+  const { actions: studentActions } = useStudentSlice();
+  const { actions: teacherActions } = useTeacherSlice();
+  const dispatch = useDispatch();
+  const classId = useQuery().get(queryString.classId);
+  const handleFetchStudentList = useCallback(() => {
+    if (currentAccessToken && classId) {
+      dispatch(
+        studentActions.loadStudentList({
+          classId,
+          token: currentAccessToken,
+        })
+      );
+    }
+  }, [classId, currentAccessToken, dispatch, studentActions]);
+
+  const handleFetchTeacherAssignmentDetail = useCallback(() => {
+    if (currentAccessToken && classId) {
+      dispatch(
+        teacherActions.loadTeacherAssignmentDetail({
+          classId,
+          token: currentAccessToken,
+        })
+      );
+    }
+  }, [classId, currentAccessToken, dispatch, teacherActions]);
   const handleClosePostModal = () => {
     setIsPostModalOpen(false);
   };
@@ -186,9 +220,18 @@ const TeacherHomePage = () => {
         return () => close();
     }
   };
+
+  useEffect(() => {
+    handleFetchStudentList();
+  }, [handleFetchStudentList]);
+
+  useEffect(() => {
+    handleFetchTeacherAssignmentDetail();
+  }, [handleFetchTeacherAssignmentDetail]);
+
   return (
     <MainLayout title={t('teacher.home.title')} headerTitle={t('teacher.home.title')}>
-      <TabsUnstyled defaultValue={0}>
+      <StyledTabs defaultValue={0}>
         <TabsWrapper>
           <StyledTabsList>
             <StyledTab>{t('tab.welcome')}</StyledTab>
@@ -209,7 +252,7 @@ const TeacherHomePage = () => {
             aria-expanded={isOpen || undefined}
             aria-haspopup='menu'
           >
-            Create
+            {t('common.create')}
           </StyledButton>
         </TabsWrapper>
         <TabPaneContent>
@@ -231,7 +274,7 @@ const TeacherHomePage = () => {
           <TabPanelUnstyled value={3}>3 page</TabPanelUnstyled>
           <TabPanelUnstyled value={4}>4 page</TabPanelUnstyled>
         </TabPaneContent>
-      </TabsUnstyled>
+      </StyledTabs>
       <MenuUnstyled
         actions={menuActions}
         open={isOpen}

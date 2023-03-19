@@ -1,5 +1,3 @@
-import {ConstantRoles} from "../utils/constants";
-
 export interface Class {
   _id: string;
   name: string;

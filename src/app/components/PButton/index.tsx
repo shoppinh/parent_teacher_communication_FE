@@ -3,6 +3,7 @@ import tw, { styled } from 'twin.macro';
 
 interface ButtonProp {
   variant?: 'primary' | 'secondary';
+  isHidden?: boolean;
 }
 
 //test
@@ -17,4 +18,5 @@ export const PButton = styled(ButtonUnstyled)<ButtonProp>`
         return `background-color: ${p.theme.background}; color: ${p.theme.text};`;
     }
   }}
+  ${(p) => p.isHidden && tw`hidden`}
 `;

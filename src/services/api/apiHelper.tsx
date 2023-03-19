@@ -14,17 +14,19 @@ import {
   UpdatePostTokenQuery,
 } from 'types/Post';
 import { DeviceTokenQuery, RegisterQuery } from 'types/Register';
-import { AuthQuery, LogoutQuery, RefreshTokenQuery } from 'types/Session';
+import {AuthQuery, LogoutQuery, OnlyTokenQuery, RefreshTokenQuery} from 'types/Session';
 import { TeacherDetailQuery } from '../../types/Teacher';
 import * as api from './index';
 import { ClassListTokenQuery } from '../../types/Class';
 import { AddCommentTokenRequest } from '../../types/Comment';
 import {
   AddProgressTokenQuery,
-  ProgressDetailTokenQuery,
+  ProgressDetailTokenQuery, ProgressListByStudentTokenQuery,
   ProgressListTokenQuery,
   UpdateProgressTokenQuery,
 } from '../../types/Progress';
+import {StudentListByClassTokenQuery} from "../../types/Student";
+import {TeacherAssignmentDetailTokenQuery} from "../../types/TeacherAssignment";
 
 export function* apiLogin(query: AuthQuery) {
   return yield call(api.login, query);
@@ -147,7 +149,9 @@ export function* apiGetClassListByRole(query: ClassListTokenQuery) {
 export function* apiGetProgressListByClass(query: ProgressListTokenQuery) {
   return yield call(api.getProgressListByClass, query);
 }
-
+export function* apiGetProgressListByStudent(query: ProgressListByStudentTokenQuery) {
+  return yield call(api.getProgressListByStudent, query);
+}
 export function* apiGetProgressDetail(query: ProgressDetailTokenQuery) {
   return yield call(api.getProgressDetail, query);
 }
@@ -162,4 +166,18 @@ export function* apiUpdateProgress(query: UpdateProgressTokenQuery) {
 
 export function* apiAddProgress(query: AddProgressTokenQuery) {
   return yield call(api.addProgress, query);
+}
+// Student
+
+export function* apiGetStudentListByClass(query: StudentListByClassTokenQuery) {
+  return yield call(api.getStudentListByClass, query);
+}
+
+export function* apGetStudentListByParent(query: OnlyTokenQuery) {
+  return yield call(api.getStudentListByParent, query);
+}
+// Teacher
+
+export function* apiGetTeacherAssignmentByClassAndTeacher(query: TeacherAssignmentDetailTokenQuery) {
+  return yield call(api.getTeacherAssignmentByClassAndTeacher, query);
 }

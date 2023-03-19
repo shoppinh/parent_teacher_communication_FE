@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { styled } from 'twin.macro';
+import tw, { styled } from 'twin.macro';
 import { StyleConstants } from '../../../../../styles/constants/style';
 import { pxToRem } from '../../../../../styles/theme/utils';
 import { media } from '../../../../../styles';
@@ -17,6 +17,7 @@ import { getClassList } from '../../../../../store/selectors/class';
 import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { getSystemSettings } from '../../../../../store/selectors/config';
+import {useTranslation} from "react-i18next";
 
 interface ClassRowProps {
   isActive: boolean;
@@ -84,6 +85,28 @@ const ClassRowItem = styled.div<ClassRowProps>`
   margin: 5px;
   font: 700 ${pxToRem(14)}rem / ${pxToRem(20)}rem ${(p) => p.theme.fontFamily};
 `;
+const SettingModal = styled.div`
+  width: 50vw;
+  height: 70vh;
+  background-color: ${(p) => p.theme.background};
+  border-radius: 10px;
+`;
+const SettingModalHeader = styled.div`
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: ${pxToRem(20)}rem;
+  font-weight: 700;
+`;
+const SettingModalBody = styled.div``;
+const SettingModalContainer = styled.div`
+  ${tw`container mx-auto`}
+  padding: 0 40px;
+`;
+const StyledButton = styled(PButton)`
+  margin-bottom: ${pxToRem(20)}rem;
+  font: normal bold 16px / ${StyleConstants.BASE_LINE_HEIGHT}px ${StyleConstants.FONT_FAMILY};
+  ${tw`rounded-full w-full p-3`}
+`;
 
 const LeftBar = () => {
   const [isShowOptionModal, setIsShowOptionModal] = useState(false);
@@ -104,6 +127,7 @@ const LeftBar = () => {
   const handleCloseModal = () => {
     setIsShowOptionModal(false);
   };
+  const { t } = useTranslation();
   const classList = useSelector(getClassList);
   useEffect(() => {
     if (currentAccessToken && currentUser?.roleId) {
@@ -154,44 +178,52 @@ const LeftBar = () => {
             <ActionButton>
               <ActionIcon className='partei-user-plus' />
             </ActionButton>
-            <ActionTitle>Invite Member</ActionTitle>
+            <ActionTitle>{t("common.inviteMember")}</ActionTitle>
           </ActionItem>
           <ActionItem>
             <ActionButton>
               <ActionIcon className='partei-users' />
             </ActionButton>
-            <ActionTitle>Class/Group</ActionTitle>
+            <ActionTitle>{t("common.classGroup")}</ActionTitle>
           </ActionItem>
           <ActionItem>
             <ActionButton onClick={() => setIsShowOptionModal(true)}>
               <ActionIcon className='partei-cog' />
             </ActionButton>
-            <ActionTitle>Settings</ActionTitle>
+            <ActionTitle>{t("common.settings")}</ActionTitle>
           </ActionItem>
           <ActionItem>
             <ActionButton>
               <ActionIcon className='partei-question' />
             </ActionButton>
-            <ActionTitle>Support</ActionTitle>
+            <ActionTitle>{t("common.support")}</ActionTitle>
           </ActionItem>
         </ActionGroup>
       </BottomMenu>
       <PModal open={isShowOptionModal} onClose={handleCloseModal}>
-        <PButton
-          onClick={() => {
-            if (previousAuth.accessToken && previousAuth.accessToken !== '') {
-              dispatch(
-                sessionActions.doLogout({
-                  userId: previousAuth.user?.data?._id,
-                  fcmToken: previousAuth.fcmToken,
-                  token: previousAuth.accessToken,
-                })
-              );
-            }
-          }}
-        >
-          Click here to logout
-        </PButton>
+        <SettingModal>
+          <SettingModalContainer>
+            <SettingModalHeader>{t('common.settings')}</SettingModalHeader>
+            <SettingModalBody>
+              <StyledButton
+                variant='primary'
+                onClick={() => {
+                  if (previousAuth.accessToken && previousAuth.accessToken !== '') {
+                    dispatch(
+                      sessionActions.doLogout({
+                        userId: previousAuth.user?.data?._id,
+                        fcmToken: previousAuth.fcmToken,
+                        token: previousAuth.accessToken,
+                      })
+                    );
+                  }
+                }}
+              >
+                {t('common.logout')}
+              </StyledButton>
+            </SettingModalBody>
+          </SettingModalContainer>
+        </SettingModal>
       </PModal>
     </Container>
   );

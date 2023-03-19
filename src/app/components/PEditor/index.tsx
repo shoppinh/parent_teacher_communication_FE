@@ -23,6 +23,7 @@ const Wrapper = styled.div`
   background-color: ${(p) => p.theme.background};
   max-height: 100vh;
   overflow-y: auto;
+  width: 80vw;
 `;
 
 const StyledButton = styled(PButton)`
@@ -187,6 +188,11 @@ const PEditor: React.FC<Props> = ({
 
       xhr.send(formData);
     });
+
+  useEffect(() => {
+    if (postData) editorRef?.current?.setContent(postData.content || '');
+  }, [postData]);
+
   return (
     <Wrapper>
       <ActionGroup>
@@ -272,7 +278,7 @@ const PEditor: React.FC<Props> = ({
             },
             images_upload_handler: example_image_upload_handler,
           }}
-          value={postData && postData.content}
+          // value={postData && postData.content}
         />
         <StyledButton type='submit' variant={'primary'}>
           Save
