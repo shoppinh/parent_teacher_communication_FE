@@ -8,6 +8,7 @@ import { ConversationState } from './Conversation';
 import { AdminState } from './Admin';
 import { PostState } from './Post';
 import {ClassState} from "./Class";
+import {ProgressState} from "./Progress";
 
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
@@ -27,8 +28,8 @@ export interface RootState {
   conversation?: ConversationState;
   admin?: AdminState;
   post?: PostState;
-
   class?: ClassState;
+  progress?: ProgressState;
 
   // [INSERT NEW REDUCER KEY ABOVE] < Needed for generating containers seamlessly
 }

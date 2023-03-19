@@ -10,15 +10,20 @@ interface Props {
   currentRole?: number;
 }
 
+interface MessageRowProps {
+  isOther?: boolean;
+}
+
 interface BubbleType {
   isOther?: boolean;
 }
 
-const MessageRow = styled.div`
+const MessageRow = styled.div<MessageRowProps>`
   display: flex;
   width: 100%;
   flex-direction: row;
   margin: 10px 0;
+  justify-content: ${(p) => (p.isOther ? 'flex-start' : 'flex-end')};
 `;
 
 const Bubble = styled.div<BubbleType>`
@@ -62,13 +67,7 @@ const SpanContent = styled.span`
 
 const Message: React.FC<Props> = ({ message, currentPhone, currentRole }) => {
   return (
-    <MessageRow
-      className={
-        message.mobilePhone === currentPhone && message.roleId === currentRole
-          ? 'justify-content-end'
-          : ''
-      }
-    >
+    <MessageRow isOther={message.mobilePhone === currentPhone && message.roleId === currentRole}>
       {message.contentType === 'date' && <DateText>{message.content}</DateText>}
       {message.contentType === 'text' && (
         <Bubble isOther={message.mobilePhone !== currentPhone || message.roleId !== currentRole}>

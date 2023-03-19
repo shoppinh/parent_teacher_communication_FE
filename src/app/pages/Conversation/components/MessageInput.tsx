@@ -16,7 +16,7 @@ const MessageInputWrapper = styled.div`
   align-items: center;
   background: ${(p) => p.theme.background};
   border-radius: 50rem;
-  padding: 12px 20px;
+  padding: 6px 20px;
   margin: 10px 1rem 22px;
 `;
 
@@ -116,7 +116,7 @@ const MessageInput: React.FC<Props> = ({
             sendMessage();
           }}
         >
-          <PIcon className='umni-send' />
+          <PIcon className='partei-arrow-right2' />
         </SendButton>
       </MessageInputWrapper>
     </form>

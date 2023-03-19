@@ -34,5 +34,5 @@ export const colors = {
   ATHENS_GRAY: '#F0F2F4',
   WHITE_SMOKE: '#edeef3',
   BLACK_SMOKE: '#e4e5ed',
-
+  SILVER2: '#C9C9C9',
 };

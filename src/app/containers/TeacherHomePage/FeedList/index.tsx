@@ -1,27 +1,26 @@
 import { PLoadingIndicator } from 'app/components/PLoadingIndicatior';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
 import { getPostList, getPostLoading } from 'store/selectors/post';
 import { getAccessToken } from 'store/selectors/session';
 import { usePostSlice } from 'store/slices/post';
 import { styled } from 'twin.macro';
 import PostItem from './PostItem';
 import { queryString } from '../../../../utils/constants';
+import { useQuery } from '../../../../utils/hook';
 
 const Container = styled.div``;
 
 interface Props {
   isRefresh: boolean;
   setIsRefreshFeedList: (isRefresh: boolean) => void;
-  triggerRefreshFeedList: (isRefresh: boolean) => void;
+  triggerRefreshFeedList: () => void;
 }
 
 const FeedList: React.FC<Props> = ({ isRefresh, setIsRefreshFeedList, triggerRefreshFeedList }) => {
   const { actions: postActions } = usePostSlice();
-  const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
-  const classId = searchParams.get(queryString.classId);
+  const classId = useQuery().get(queryString.classId);
   const currentAccessToken = useSelector(getAccessToken);
   const postList = useSelector(getPostList);
   const postLoading = useSelector(getPostLoading);
@@ -32,15 +31,11 @@ const FeedList: React.FC<Props> = ({ isRefresh, setIsRefreshFeedList, triggerRef
   // }, [classId, currentAccessToken, dispatch, postActions]);
 
   useEffect(() => {
-    if (classId && currentAccessToken) {
-      dispatch(postActions.loadPostListByClass({ token: currentAccessToken, classId }));
-    }
-  }, [classId, currentAccessToken, dispatch, postActions]);
-
-  useEffect(() => {
     if (isRefresh && classId && currentAccessToken) {
       dispatch(postActions.loadPostListByClass({ token: currentAccessToken, classId }));
       setIsRefreshFeedList(false);
+    } else if (classId && currentAccessToken) {
+      dispatch(postActions.loadPostListByClass({ token: currentAccessToken, classId }));
     }
   }, [classId, currentAccessToken, dispatch, isRefresh, postActions, setIsRefreshFeedList]);
 
@@ -49,7 +44,9 @@ const FeedList: React.FC<Props> = ({ isRefresh, setIsRefreshFeedList, triggerRef
       {postLoading ? (
         <PLoadingIndicator />
       ) : postList?.data?.length ? (
-        postList?.data?.map((post) => <PostItem data={post} key={post._id} triggerRefreshFeedList={triggerRefreshFeedList} />)
+        postList?.data?.map((post) => (
+          <PostItem data={post} key={post._id} triggerRefreshFeedList={triggerRefreshFeedList} />
+        ))
       ) : (
         <p>No post</p>
       )}

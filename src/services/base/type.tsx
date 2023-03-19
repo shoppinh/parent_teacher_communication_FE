@@ -93,6 +93,38 @@ export const APIs = {
   class: {
     getClassListByRole: '/api/class/list-by-role',
   },
+  teacher: {
+    profile: '/api/teacher/profile',
+    progress: {
+      getProgressListByClass: '/api/teacher/progress-tracking-list-by-class/{classId}',
+      addProgress: '/api/teacher/progress-tracking',
+      updateProgress: '/api/teacher/progress-tracking/{progressId}',
+      removeProgress: '/api/teacher/progress-tracking/{progressId}',
+    },
+    leaveForm: {
+      updateLeaveForm: '/api/teacher/leave-form/{formId}',
+    },
+    assignStudent: '/api/teacher/assign-student',
+    removeStudent: '/api/teacher/remove-student',
+  },
+  student: {
+    progress: {
+      getProgressDetail: '/api/student/progress-tracking/{progressId}', //Parent and teacher use this
+      getProgressListByStudent: '/api/student/progress-tracking-list-by-student/{studentId}', // Parent use this
+    },
+    leaveForm: {
+      getLeaveFormListByClass: '/api/student/leave-form-list-by-class/{classId}', // Teacher uses this
+      getLeaveFormDetail: '/api/student/leave-form/{leaveFormId}', //Parent and teacher use this
+      getLeaveFormListByStudent: '/api/student/leave-form-list-by-student/{studentId}', // Parent uses this
+    },
+    updateStudent: '/api/student/{studentId}', // Parent update their student/parent
+    deleteStudent: '/api/student/{studentId}', // Parent delete their student/children
+    getStudentDetail: '/api/student/{studentId}', // Teacher and parent can access
+    addStudent: '/api/student/', // Parent uses this to add new child
+    getAllStudent: '/api/student/list', // Parent uses this to get all child
+    getAllStudentByParent: '/api/student/list-by-parent/{parentId}', // Teacher uses this
+    getAllStudentByClass: '/api/student/list-by-class/{classId}', // Parent and teacher  uses this
+  },
   message: {
     getConversationList: '/api/message/get-conversation/{mobilePhone}/{roleId}',
     getConversationDetail: '/api/message/get-conversation/detail/{roomId}',

@@ -1,4 +1,5 @@
 import { User } from './User';
+import {ConstantRolesNumber} from "../utils/constants";
 
 export interface ConversationDetailQuery {
   token: string;
@@ -112,4 +113,10 @@ export interface ConversationError {
 }
 export enum ConversationErrorType {
   RESPONSE_ERROR = 400,
+}
+
+export interface NewConversationPayload {
+  roleId: string;
+  mobilePhone: string;
+  _id: string;
 }

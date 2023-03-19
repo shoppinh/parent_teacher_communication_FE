@@ -19,3 +19,11 @@ export {
   deletePost,
   addPostComment,
 } from './post';
+
+export {
+  getProgressListByClass,
+  getProgressDetail,
+  removeProgress,
+  updateProgress,
+  addProgress,
+} from './progress';

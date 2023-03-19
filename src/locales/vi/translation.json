@@ -71,7 +71,15 @@
     "title": "Tiêu đề",
     "content": "Nội dung",
     "description": "Mô tả",
-    "type": "Loại"
+    "type": "Loại",
+    "frequentMark": "Điểm thường xuyên",
+    "middleExamMark": "Điểm giữa kỳ",
+    "finalExamMark": "Điểm cuối kỳ",
+    "averageMark": "Điểm trung bình",
+    "semester": "Học kỳ",
+    "year": "Năm học",
+    "add": "Thêm",
+    "save": "Lưu"
   },
   "register": {
     "title": "Tạo tài khoản",
@@ -167,6 +175,22 @@
     "assignments": "Bài tập",
     "interactions": "Tương tác",
     "portfolios": "Hồ sơ",
-    "reports": "Báo cáo"
+    "reports": "Báo cáo",
+    "message": "Tin nhắn",
+    "user": "Người dùng",
+    "trackingAndAssessment": "Theo dõi và đánh giá"
+  },
+  "menu": {
+    "post": "Bài viết",
+    "markAndAssessment": "Điểm và đánh giá"
+  },
+  "progress": {
+    "addProgress": {
+      "title": "Thêm điểm và đánh giá",
+      "addSuccess": "Thêm điểm và đánh giá thành công"
+    },
+    "editProgress": {
+      "title": "Chỉnh sửa điểm và đánh giá"
+    }
   }
 }
