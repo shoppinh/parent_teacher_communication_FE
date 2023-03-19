@@ -75,7 +75,10 @@
     "semester": "Semester",
     "year": "Year",
     "add": "Add",
-    "save": "Save"
+    "save": "Save",
+    "student": "Student",
+    "subject": "Subject",
+    "assessment": "Assessment"
   },
   "logout": {
     "title": "Logout"
@@ -191,5 +194,32 @@
     "editProgress": {
       "title": "Edit Mark & Assessment"
     }
+  },
+  "common": {
+    "noDataToShow": "No data to show",
+    "create": "Create",
+    "logout": "Logout",
+    "settings": "Settings",
+    "inviteMember": "Invite member",
+    "classGroup": "Class/Group",
+    "support": "Support",
+    "contactAdmin": "Contact Admin",
+    "pleaseSelectChildren": "Please select children"
+  },
+  "table": {
+    "next": "Next",
+    "previous": "Previous",
+    "studentName": "Student Name",
+    "studentId": "Student ID",
+    "subjectName": "Subject Name",
+    "frequentMark": "Frequent mark",
+    "middleExamMark": "Middle exam mark",
+    "finalExamMark": "Final exam mark",
+    "averageMark": "Average mark",
+    "semester": "Semester",
+    "year": "Year",
+    "action": "Action",
+    "assessment": "Assessment"
+
   }
 }

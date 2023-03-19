@@ -10,7 +10,7 @@ import {
   TabUnstyled,
   tabUnstyledClasses,
 } from '@mui/base';
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import MainLayout from '../../layouts/MainLayout';
 
@@ -18,6 +18,11 @@ import tw, { styled } from 'twin.macro';
 import { StyleConstants } from '../../../styles/constants/style';
 import { pxToRem } from '../../../styles/theme/utils';
 import FeedList from '../../containers/TeacherHomePage/FeedList';
+import WelcomePage from '../../containers/ParentHome/WelcomePage';
+import InteractionList from '../../containers/ParentHome/InteractionList';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAccessToken } from '../../../store/selectors/session';
+import { useStudentSlice } from '../../../store/slices/student';
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -46,6 +51,11 @@ const StyledTab = styled(TabUnstyled)`
 // `;
 const TabPaneContent = styled.div`
   ${tw`p-3`}
+  overflow: auto;
+  height: calc(100% - ${pxToRem(StyleConstants.TAB_HEIGHT)}rem);
+`;
+const StyledTabs = styled(TabsUnstyled)`
+  height: 100%;
 `;
 
 const ParentHomePage = () => {
@@ -57,6 +67,20 @@ const ParentHomePage = () => {
   // const preventReopen = React.useRef(false);
   // const [isPostModalOpen, setIsPostModalOpen] = React.useState(false);
   const [isRefreshFeedList, setIsRefreshFeedList] = React.useState(false);
+  const dispatch = useDispatch();
+  const currentAccessToken = useSelector(getAccessToken);
+  const { actions: studentActions } = useStudentSlice();
+
+  const handleFetchStudentList = useCallback(() => {
+    if (currentAccessToken) {
+      dispatch(studentActions.loadStudentListForParent({ token: currentAccessToken }));
+    }
+  }, [currentAccessToken, dispatch, studentActions]);
+
+  useEffect(() => {
+    handleFetchStudentList();
+  }, [handleFetchStudentList]);
+
   // const handleClosePostModal = () => {
   //   setIsPostModalOpen(false);
   // };
@@ -123,7 +147,7 @@ const ParentHomePage = () => {
   // };
   return (
     <MainLayout title={t('parent.home.title')} headerTitle={t('parent.home.title')}>
-      <TabsUnstyled defaultValue={0}>
+      <StyledTabs defaultValue={0}>
         <TabsWrapper>
           <StyledTabsList>
             <StyledTab>{t('tab.welcome')}</StyledTab>
@@ -147,16 +171,24 @@ const ParentHomePage = () => {
           {/*</StyledButton>*/}
         </TabsWrapper>
         <TabPaneContent>
-          <TabPanelUnstyled value={0}>Welcome to ParTe</TabPanelUnstyled>
-          <TabPanelUnstyled value={1}>
-            <FeedList setIsRefreshFeedList={setIsRefreshFeedList} isRefresh={isRefreshFeedList} triggerRefreshFeedList={handleTriggerRefreshFeedList} />
+          <TabPanelUnstyled value={0}>
+            <WelcomePage />
           </TabPanelUnstyled>
-          <TabPanelUnstyled value={2}>2 page</TabPanelUnstyled>
+          <TabPanelUnstyled value={1}>
+            <FeedList
+              setIsRefreshFeedList={setIsRefreshFeedList}
+              isRefresh={isRefreshFeedList}
+              triggerRefreshFeedList={handleTriggerRefreshFeedList}
+            />
+          </TabPanelUnstyled>
+          <TabPanelUnstyled value={2}>
+            <InteractionList />
+          </TabPanelUnstyled>
           <TabPanelUnstyled value={3}>3 page</TabPanelUnstyled>
           <TabPanelUnstyled value={4}>4 page</TabPanelUnstyled>
           <TabPanelUnstyled value={5}>5 page</TabPanelUnstyled>
         </TabPaneContent>
-      </TabsUnstyled>
+      </StyledTabs>
       {/*<MenuUnstyled*/}
       {/*  actions={menuActions}*/}
       {/*  open={isOpen}*/}

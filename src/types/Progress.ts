@@ -1,5 +1,6 @@
 import { Subject } from './subject';
 import { Student } from './Student';
+import {Class} from "./Class";
 
 export interface Progress {
   _id: string;
@@ -14,6 +15,8 @@ export interface Progress {
   year: number;
   subject: Subject;
   student: Student;
+  class: Class;
+  note: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -49,6 +52,15 @@ export interface ProgressListTokenQuery {
   order?: string;
 }
 
+export interface ProgressListByStudentTokenQuery {
+  token: string;
+  studentId: string;
+  semester?: number;
+  year?: number;
+  sort?: string;
+  order?: string;
+}
+
 export interface ProgressDetailTokenQuery {
   progressId: string;
   token: string;
@@ -73,4 +85,5 @@ export interface ProgressDetailPayload {
   classId: string;
   semester: number;
   year: number;
+  note: string
 }

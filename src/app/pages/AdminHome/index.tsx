@@ -49,9 +49,7 @@ const StyledButton = styled(PButton)`
   font-size: ${pxToRem(16)}rem;
   padding: 0 ${pxToRem(25)}rem;
 `;
-const TabPaneContent = styled.div`
-  ${tw`p-3`}
-`;
+
 
 const StyledListbox = styled.ul(
   ({ theme }) => `
@@ -62,7 +60,6 @@ const StyledListbox = styled.ul(
   margin: 12px 0;
   min-width: 200px;
   border-radius: 12px;
-  overflow: auto;
   outline: 0px;
   background: #fff;
   border: 1px solid ${theme.borderLight};
@@ -95,7 +92,7 @@ const StyledMenuItem = styled(MenuItemUnstyled)(
 
   &:hover:not(.${menuItemUnstyledClasses.disabled}) {
     background-color: ${theme.backgroundVariant};
-    color: ${theme.text};
+    color: ${theme.background};
   }
   `
 );
@@ -103,6 +100,14 @@ const StyledMenuItem = styled(MenuItemUnstyled)(
 const Popper = styled(PopperUnstyled)`
   z-index: 3;
 `;
+const TabPaneContent = styled.div`
+  ${tw`p-3`}
+  overflow: auto;
+  height: calc(100% - ${pxToRem(StyleConstants.TAB_HEIGHT)}rem);
+`;
+const StyledTabs = styled(TabsUnstyled)`
+  height: 100%;
+`
 
 const AdminHome = () => {
   const { t } = useTranslation();
@@ -180,7 +185,7 @@ const AdminHome = () => {
   };
   return (
     <MainLayout title={t('admin.home.title')} headerTitle={t('admin.home.title')}>
-      <TabsUnstyled defaultValue={0}>
+      <StyledTabs defaultValue={0}>
         <TabsWrapper>
           <StyledTabsList>
             <StyledTab>{t('tab.welcome')}</StyledTab>
@@ -201,7 +206,7 @@ const AdminHome = () => {
             aria-expanded={isOpen || undefined}
             aria-haspopup='menu'
           >
-            Create
+            {t('common.create')}
           </StyledButton>
         </TabsWrapper>
         <TabPaneContent>
@@ -217,7 +222,7 @@ const AdminHome = () => {
           <TabPanelUnstyled value={3}>3 page</TabPanelUnstyled>
           <TabPanelUnstyled value={4}>4 page</TabPanelUnstyled>
         </TabPaneContent>
-      </TabsUnstyled>
+      </StyledTabs>
       <MenuUnstyled
         actions={menuActions}
         open={isOpen}

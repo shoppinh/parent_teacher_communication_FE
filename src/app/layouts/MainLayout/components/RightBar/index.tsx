@@ -259,7 +259,7 @@ const RightBar = () => {
     <Container>
       <ButtonWrapper>
         <StyledButton onClick={() => handleOpenNewConversation(AdminContact)} variant='primary'>
-          Contact Admin
+          {t('common.contactAdmin')}
         </StyledButton>
       </ButtonWrapper>
 

@@ -5,7 +5,11 @@ import { useProgressSlice } from '../../../../store/slices/progress';
 import { Progress, ProgressListTokenQuery } from '../../../../types/Progress';
 import { useQuery } from '../../../../utils/hook';
 import { queryString, ROWS_PER_PAGE } from '../../../../utils/constants';
-import {getCurrentProgress, getProgressList, getProgressLoading} from '../../../../store/selectors/progress';
+import {
+  getCurrentProgress,
+  getProgressList,
+  getProgressLoading,
+} from '../../../../store/selectors/progress';
 import { styled } from 'twin.macro';
 import DTable from '../../../components/DTable';
 import { ColumnProps } from '../../../components/DTable/DTableHead';
@@ -17,6 +21,7 @@ import { PModal } from '../../../components/PModal';
 import AssignMarkModal from './AssignMarkModal';
 import { PButton } from '../../../components/PButton';
 import RemoveMarkModal from './RemoveMarkModal';
+import { useTranslation } from 'react-i18next';
 
 const Container = styled.div``;
 
@@ -43,8 +48,10 @@ const InteractionList: React.FC<Props> = ({
   const classId = useQuery().get(queryString.classId);
   const [isAssignMarkModalOpen, setIsAssignMarkModalOpen] = useState(false);
   const [isRemoveMarkModalOpen, setIsRemoveMarkModalOpen] = useState(false);
+  const [progressIdToRemove, setProgressIdToRemove] = useState<string>('');
   const { actions: progressActions } = useProgressSlice();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const currentProgress = useSelector(getCurrentProgress);
   const progressLoading = useSelector(getProgressLoading);
   const handleFetchProgressList = useCallback(() => {
@@ -79,60 +86,67 @@ const InteractionList: React.FC<Props> = ({
 
   const handleOpenRemoveMarkModal = useCallback((assignId: string) => {
     setIsRemoveMarkModalOpen(true);
+    setProgressIdToRemove(assignId);
   }, []);
 
-  const handleRemoveMark = useCallback(
-    (progressId: string) => {
-      if (currentAccessToken) {
-        dispatch(progressActions.removeProgress({ token: currentAccessToken, progressId }));
-      }
-    },
-    [currentAccessToken, dispatch, progressActions]
-  );
+  const handleRemoveMark = useCallback(() => {
+    if (currentAccessToken && progressIdToRemove) {
+      dispatch(
+        progressActions.removeProgress({
+          token: currentAccessToken,
+          progressId: progressIdToRemove,
+        })
+      );
+    }
+  }, [currentAccessToken, dispatch, progressActions, progressIdToRemove]);
 
   const columns: ColumnProps[] = useMemo(() => {
     return [
       {
-        label: 'Student Name',
+        label: t('table.studentName'),
         accessor: 'studentName',
         render: (item: Progress) => item.student.name,
       },
       {
-        label: 'Student ID',
+        label: t('table.studentId'),
         accessor: 'studentId',
         render: (item: Progress) => item.student._id,
       },
       {
-        label: 'Subject Name',
+        label: t('table.subjectName'),
         accessor: 'subjectName',
         render: (item: Progress) => item.subject.name,
       },
       {
-        label: 'Frequent Mark',
+        label: t('table.frequentMark'),
         accessor: 'frequentMark',
       },
       {
-        label: 'Middle Exam Mark',
+        label: t('table.middleExamMark'),
         accessor: 'middleExamMark',
       },
       {
-        label: 'Final Exam Mark',
+        label: t('table.finalExamMark'),
         accessor: 'finalExamMark',
       },
       {
-        label: 'Average Mark',
+        label: t('table.averageMark'),
         accessor: 'averageMark',
       },
       {
-        label: 'Semester',
+        label: t('table.semester'),
         accessor: 'semester',
       },
       {
-        label: 'Year',
+        label: t('table.year'),
         accessor: 'year',
       },
       {
-        label: 'Action',
+        label: t('table.assessment'),
+        accessor: 'note',
+      },
+      {
+        label: t('table.action'),
         accessor: 'action',
         render: (item: Progress) => (
           <ActionGroup>
@@ -197,7 +211,11 @@ const InteractionList: React.FC<Props> = ({
         />
       </PModal>
       <PModal open={isRemoveMarkModalOpen} onClose={handleCloseRemoveMarkModal}>
-        <RemoveMarkModal />
+        <RemoveMarkModal
+          handleConfirm={handleRemoveMark}
+          handleClose={handleCloseRemoveMarkModal}
+          triggerRefreshProgressList={triggerRefreshProgressList}
+        />
       </PModal>
     </Container>
   );

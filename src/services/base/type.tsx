@@ -106,7 +106,11 @@ export const APIs = {
     },
     assignStudent: '/api/teacher/assign-student',
     removeStudent: '/api/teacher/remove-student',
+    teacherAssignment: {
+      getTeacherAssignmentByClassAndTeacher: '/api/teacher/teacher-assignment-detail/{classId}',
+    },
   },
+
   student: {
     progress: {
       getProgressDetail: '/api/student/progress-tracking/{progressId}', //Parent and teacher use this

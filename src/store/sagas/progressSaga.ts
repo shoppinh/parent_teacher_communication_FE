@@ -4,16 +4,18 @@ import {
   apiAddProgress,
   apiGetProgressDetail,
   apiGetProgressListByClass,
+  apiGetProgressListByStudent,
   apiRemoveProgress,
   apiUpdateProgress,
 } from '../../services/api/apiHelper';
 import { PayloadAction } from '@reduxjs/toolkit';
 import {
   AddProgressTokenQuery,
-  ProgressDetailTokenQuery,
+  ProgressDetailTokenQuery, ProgressListByStudentTokenQuery,
   ProgressListTokenQuery,
   UpdateProgressTokenQuery,
 } from '../../types/Progress';
+import { OnlyTokenQuery } from '../../types/Session';
 
 export function* progressSaga() {
   yield all([
@@ -22,12 +24,24 @@ export function* progressSaga() {
     takeLatest(actions.removeProgress.type, removeProgress),
     takeLatest(actions.addProgress.type, addProgress),
     takeLatest(actions.updateProgress.type, updateProgress),
+    takeLatest(actions.loadProgressListByStudent.type, getProgressListByStudent),
   ]);
 }
 
 export function* getProgressListByClass({ payload }: PayloadAction<ProgressListTokenQuery>) {
   try {
     const response = yield call(apiGetProgressListByClass, payload);
+    if (response.data && response.data.status) {
+      yield put(actions.loadedProgressListSuccess(response.data.data));
+    } else yield put(actions.loadProgressFailed(response.data.error));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* getProgressListByStudent({ payload }: PayloadAction<ProgressListByStudentTokenQuery>) {
+  try {
+    const response = yield call(apiGetProgressListByStudent, payload);
     if (response.data && response.data.status) {
       yield put(actions.loadedProgressListSuccess(response.data.data));
     } else yield put(actions.loadProgressFailed(response.data.error));

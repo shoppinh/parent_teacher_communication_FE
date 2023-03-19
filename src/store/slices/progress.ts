@@ -2,12 +2,11 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { loadState } from 'store/localStorage';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
-import { classSaga } from '../sagas/classSaga';
 import {
   AddProgressTokenQuery,
   Progress,
   ProgressDetailTokenQuery,
-  ProgressError,
+  ProgressError, ProgressListByStudentTokenQuery,
   ProgressListPayload,
   ProgressListTokenQuery,
   ProgressState,
@@ -21,7 +20,7 @@ export const initialState: ProgressState = {
   data: { ...progressCache?.data },
   error: null,
   loading: false,
-    currentProgressLoading: false,
+  currentProgressLoading: false,
 };
 
 const slice = createSlice({
@@ -41,6 +40,10 @@ const slice = createSlice({
     loadProgressFailed(state, action: PayloadAction<ProgressError>) {
       state.loading = false;
       state.error = action.payload;
+    },
+    loadProgressListByStudent(state, action: PayloadAction<ProgressListByStudentTokenQuery>) {
+      state.loading = true;
+      state.error = null;
     },
     loadProgressDetail(state, action: PayloadAction<ProgressDetailTokenQuery>) {
       state.currentProgressLoading = true;

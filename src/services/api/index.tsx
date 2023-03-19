@@ -27,3 +27,6 @@ export {
   updateProgress,
   addProgress,
 } from './progress';
+
+export { getStudentListByClass } from './student';
+export { getTeacherAssignmentByClassAndTeacher, getStudentListByParent, getProgressListByStudent } from './teacherAssignment';

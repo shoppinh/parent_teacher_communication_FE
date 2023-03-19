@@ -8,11 +8,20 @@ import { pxToRem } from '../../../../../styles/theme/utils';
 import PInput from '../../../../components/PInput';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import {getCurrentProgressLoading, getProgressError, getProgressLoading} from '../../../../../store/selectors/progress';
+import {
+  getCurrentProgressLoading,
+  getProgressError,
+  getProgressLoading,
+} from '../../../../../store/selectors/progress';
 import { PLoadingIndicator } from '../../../../components/PLoadingIndicatior';
 import { useProgressSlice } from '../../../../../store/slices/progress';
 import { getAccessToken } from '../../../../../store/selectors/session';
 import { toast } from 'react-toastify';
+import { PSelection } from '../../../../components/PSelection';
+import { getStudentList } from '../../../../../store/selectors/student';
+import { useQuery } from '../../../../../utils/hook';
+import { queryString } from '../../../../../utils/constants';
+import { getTeacherAssignmentDetail } from '../../../../../store/selectors/teacher';
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -66,6 +75,9 @@ const ModalTitle = styled.p`
   font-size: 20px;
   font-weight: bold;
 `;
+const StyledSelection = styled(PSelection)`
+  ${tw`w-full`}
+`;
 
 interface Props {
   value: Progress | null;
@@ -84,6 +96,7 @@ const AssignMarkModal: React.FC<Props> = ({
     register,
     reset,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<ProgressDetailPayload>();
 
@@ -94,7 +107,10 @@ const AssignMarkModal: React.FC<Props> = ({
   const currentProgressLoading = useSelector(getCurrentProgressLoading);
   const progressLoading = useSelector(getProgressLoading);
   const progressError = useSelector(getProgressError);
+  const studentList = useSelector(getStudentList);
   const [isFormSent, setIsFormSent] = React.useState(false);
+  const classId = useQuery().get(queryString.classId);
+  const teacherAssignmentDetail = useSelector(getTeacherAssignmentDetail);
   const handleSubmitAssignment = useCallback(
     (data: ProgressDetailPayload) => {
       if (currentAccessToken) {
@@ -107,18 +123,21 @@ const AssignMarkModal: React.FC<Props> = ({
             })
           );
         }
-        if (type === 'assign') {
+        if (type === 'assign' && classId) {
           dispatch(
             progressActions.addProgress({
               token: currentAccessToken,
-              payload: data,
+              payload: {
+                ...data,
+                classId: classId,
+              },
             })
           );
         }
         setIsFormSent(true);
       }
     },
-    [currentAccessToken, dispatch, progressActions, type, value?._id]
+    [classId, currentAccessToken, dispatch, progressActions, type, value?._id]
   );
   useEffect(() => {
     if (isFormSent && !progressLoading && !progressError) {
@@ -137,6 +156,12 @@ const AssignMarkModal: React.FC<Props> = ({
       reset(rest);
     }
   }, [reset, value]);
+
+  useEffect(() => {
+    if (teacherAssignmentDetail) {
+      setValue('subjectId', teacherAssignmentDetail.subjectId._id);
+    }
+  }, [setValue, teacherAssignmentDetail]);
   return (
     <Wrapper>
       {currentProgressLoading ? (
@@ -156,34 +181,53 @@ const AssignMarkModal: React.FC<Props> = ({
 
           <FormContainer onSubmit={handleSubmit(handleSubmitAssignment)}>
             <InputContainer>
+              <InputLabel>{t('form.student')}</InputLabel>
+              <StyledSelection {...register('studentId')}>
+                {studentList?.map((item) => (
+                  <option key={item._id} value={item._id}>
+                    {item.name}
+                  </option>
+                ))}
+              </StyledSelection>
+            </InputContainer>
+            <InputContainer>
               <InputLabel>{t('form.frequentMark')}</InputLabel>
-              <StyledInput {...register('frequentMark')} />
+              <StyledInput {...register('frequentMark', { valueAsNumber: true })} />
               {errors.frequentMark && <Required>{errors.frequentMark.message}</Required>}
             </InputContainer>
             <InputContainer>
+              <InputLabel>{t('form.subject')}</InputLabel>
+              <StyledInput value={teacherAssignmentDetail?.subjectId?.name} disabled />
+            </InputContainer>
+            <InputContainer>
               <InputLabel>{t('form.middleExamMark')}</InputLabel>
-              <StyledInput {...register('middleExamMark')} />
+              <StyledInput {...register('middleExamMark', { valueAsNumber: true })} />
               {errors.middleExamMark && <Required>{errors.middleExamMark.message}</Required>}
             </InputContainer>
             <InputContainer>
               <InputLabel>{t('form.finalExamMark')}</InputLabel>
-              <StyledInput {...register('finalExamMark')} />
+              <StyledInput {...register('finalExamMark', { valueAsNumber: true })} />
               {errors.finalExamMark && <Required>{errors.finalExamMark.message}</Required>}
             </InputContainer>
             <InputContainer>
               <InputLabel>{t('form.averageMark')}</InputLabel>
-              <StyledInput {...register('averageMark')} />
+              <StyledInput {...register('averageMark', { valueAsNumber: true })} />
               {errors.averageMark && <Required>{errors.averageMark.message}</Required>}
             </InputContainer>
             <InputContainer>
               <InputLabel>{t('form.semester')}</InputLabel>
-              <StyledInput {...register('semester')} />
+              <StyledInput {...register('semester', { valueAsNumber: true })} />
               {errors.semester && <Required>{errors.semester.message}</Required>}
             </InputContainer>
             <InputContainer>
               <InputLabel>{t('form.year')}</InputLabel>
-              <StyledInput {...register('year')} />
+              <StyledInput {...register('year', { valueAsNumber: true })} />
               {errors.year && <Required>{errors.year.message}</Required>}
+            </InputContainer>
+            <InputContainer>
+              <InputLabel>{t('form.assessment')}</InputLabel>
+              <StyledInput {...register('note')} />
+              {errors.note && <Required>{errors.note.message}</Required>}
             </InputContainer>
             <StyledButton type='submit' variant={'primary'}>
               {type === 'update' ? t('form.save') : t('form.add')}
