@@ -61,8 +61,8 @@ const ParentHomePage = () => {
   //   setIsPostModalOpen(false);
   // };
   //
-  const handleTriggerRefreshFeedList = (isRefresh: boolean) => {
-    setIsRefreshFeedList(isRefresh);
+  const handleTriggerRefreshFeedList = () => {
+    setIsRefreshFeedList(true);
   };
   //
   // const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {

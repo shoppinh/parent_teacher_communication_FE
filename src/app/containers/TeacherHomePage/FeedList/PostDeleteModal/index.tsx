@@ -9,13 +9,24 @@ import { usePostSlice } from '../../../../../store/slices/post';
 import { useQuery } from '../../../../../utils/hook';
 import { queryString } from '../../../../../utils/constants';
 import { toast } from 'react-toastify';
+import {PButton} from "../../../../components/PButton";
 interface Props {
   handleClose: () => void;
   handleConfirm: () => void;
-  triggerRefreshFeedList: (isRefresh: boolean) => void;
+  triggerRefreshFeedList: () => void;
 }
 
 const Wrapper = styled.div``;
+const ConfirmTitle = styled.h1`
+    text-align: center;
+  
+`
+
+const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+`
 const PostDeleteModal: React.FC<Props> = ({
   handleClose,
   handleConfirm,
@@ -28,7 +39,7 @@ const PostDeleteModal: React.FC<Props> = ({
   useEffect(() => {
     if (isFormSent && !postLoading && !postError) {
       toast('Delete successfully');
-      triggerRefreshFeedList(true);
+      triggerRefreshFeedList();
       handleClose();
       setIsFormSent(false);
     } else if (isFormSent && postError) {
@@ -39,18 +50,18 @@ const PostDeleteModal: React.FC<Props> = ({
   }, [handleClose, isFormSent, postError, postLoading, triggerRefreshFeedList]);
   return (
     <Wrapper>
-      <div>Do you want to delete ?</div>
-      <div>
-        <button onClick={handleClose}>Cancel</button>
-        <button
+      <ConfirmTitle>Do you want to delete ?</ConfirmTitle>
+      <ButtonGroup>
+        <PButton onClick={handleClose}>Cancel</PButton>
+        <PButton
           onClick={() => {
             handleConfirm();
             setIsFormSent(true);
           }}
         >
           Confirm
-        </button>
-      </div>
+        </PButton>
+      </ButtonGroup>
     </Wrapper>
   );
 };

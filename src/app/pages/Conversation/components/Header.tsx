@@ -94,9 +94,9 @@ const Header: React.FC<Props> = ({ message = '', toPhone, onClose, onClickPhone 
         <PIcon className='partei-cancel' />
       </CloseButton>
       <Title>{t('conversation.title')}</Title>
-      <CallArchor href={`tel:${toPhone}`} onClick={onClickPhone}>
-        <PIcon className='partei-phone' />
-      </CallArchor>
+      {/*<CallArchor href={`tel:${toPhone}`} onClick={onClickPhone}>*/}
+      {/*  <PIcon className='partei-phone' />*/}
+      {/*</CallArchor>*/}
       {message !== '' && <Alert>{message}</Alert>}
     </Heading>
   );

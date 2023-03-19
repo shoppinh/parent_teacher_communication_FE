@@ -19,7 +19,7 @@ import PostDeleteModal from '../PostDeleteModal';
 import { useTranslation } from 'react-i18next';
 interface Props {
   data: Post;
-  triggerRefreshFeedList: (isRefresh: boolean) => void;
+  triggerRefreshFeedList: () => void;
 }
 
 interface AvatarProps {

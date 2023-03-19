@@ -21,6 +21,8 @@ import { PButton } from '../../components/PButton';
 import FeedList from '../../containers/TeacherHomePage/FeedList';
 import { PEditor } from 'app/components/PEditor/loadable';
 import { PModal } from 'app/components/PModal';
+import { useSelector } from 'react-redux';
+import { getUser } from 'store/selectors/session';
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -111,12 +113,14 @@ const AdminHome = () => {
   const preventReopen = React.useRef(false);
   const [isPostModalOpen, setIsPostModalOpen] = React.useState(false);
   const [isRefreshFeedList, setIsRefreshFeedList] = React.useState(false);
+  const currentUser = useSelector(getUser);
+
   const handleClosePostModal = () => {
     setIsPostModalOpen(false);
   };
 
-  const handleTriggerRefreshFeedList = (isRefresh: boolean) => {
-    setIsRefreshFeedList(isRefresh);
+  const handleTriggerRefreshFeedList = () => {
+    setIsRefreshFeedList(true);
   };
 
   const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -201,7 +205,7 @@ const AdminHome = () => {
           </StyledButton>
         </TabsWrapper>
         <TabPaneContent>
-          <TabPanelUnstyled value={0}>Welcome</TabPanelUnstyled>
+          <TabPanelUnstyled value={0}>Welcome {currentUser?.username}</TabPanelUnstyled>
           <TabPanelUnstyled value={1}>
             <FeedList
               setIsRefreshFeedList={setIsRefreshFeedList}

@@ -36,6 +36,8 @@ const lightTheme = {
   border: 'rgba(58,52,51,0.12)',
   borderLight: 'rgba(224,224,224)',
   fontFamily: "'Roboto', Helvetica, Arial, sans-serif",
+  backgroundLowOpacityTable: 'rgba(255, 255, 255, 0.5)',
+  tableBorder: colors.SILVER2,
 };
 
 const darkTheme: Theme = {
@@ -75,6 +77,8 @@ const darkTheme: Theme = {
   border: 'rgba(241,233,231,0.15)',
   borderLight: 'rgba(224,224,224)',
   fontFamily: "'Roboto', Helvetica, Arial, sans-serif",
+  backgroundLowOpacityTable: 'rgba(255, 255, 255, 0.5)',
+  tableBorder: colors.SILVER2,
 };
 
 export type Theme = typeof lightTheme;

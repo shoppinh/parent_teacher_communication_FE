@@ -21,6 +21,10 @@ import { PButton } from '../../components/PButton';
 import FeedList from '../../containers/TeacherHomePage/FeedList';
 import { PEditor } from 'app/components/PEditor/loadable';
 import { PModal } from 'app/components/PModal';
+import { getUser } from 'store/selectors/session';
+import { useSelector } from 'react-redux';
+import InteractionList from '../../containers/TeacherHomePage/InteractionsList';
+import AssignMarkModal from '../../containers/TeacherHomePage/InteractionsList/AssignMarkModal';
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -110,13 +114,22 @@ const TeacherHomePage = () => {
   const menuActions = React.useRef<MenuUnstyledActions>(null);
   const preventReopen = React.useRef(false);
   const [isPostModalOpen, setIsPostModalOpen] = React.useState(false);
+  const [isAssignMarkModalOpen, setIsAssignMarkModalOpen] = React.useState(false);
   const [isRefreshFeedList, setIsRefreshFeedList] = React.useState(false);
+  const [isRefreshProgressList, setIsRefreshProgressList] = React.useState(false);
+  const currentUser = useSelector(getUser);
   const handleClosePostModal = () => {
     setIsPostModalOpen(false);
   };
+  const handleCloseAssignMarkModal = () => {
+    setIsAssignMarkModalOpen(false);
+  };
 
-  const handleTriggerRefreshFeedList = (isRefresh: boolean) => {
-    setIsRefreshFeedList(isRefresh);
+  const handleTriggerRefreshFeedList = () => {
+    setIsRefreshFeedList(true);
+  };
+  const handleTriggerRefreshProgressList = () => {
+    setIsRefreshProgressList(true);
   };
 
   const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -160,14 +173,13 @@ const TeacherHomePage = () => {
       case 'post':
         return () => {
           setIsPostModalOpen(true);
-          console.log('post is activated');
           close();
         };
 
-      case 'event':
+      case 'progress':
         return () => {
+          setIsAssignMarkModalOpen(true);
           close();
-          console.log('event is activated');
         };
 
       default:
@@ -181,7 +193,7 @@ const TeacherHomePage = () => {
           <StyledTabsList>
             <StyledTab>{t('tab.welcome')}</StyledTab>
             <StyledTab>{t('tab.newsFeed')}</StyledTab>
-            <StyledTab>{t('tab.interactions')}</StyledTab>
+            <StyledTab>{t('tab.trackingAndAssessment')}</StyledTab>
             <StyledTab>{t('tab.assignments')}</StyledTab>
             <StyledTab>{t('tab.portfolios')}</StyledTab>
             <StyledTab>{t('tab.reports')}</StyledTab>
@@ -201,7 +213,7 @@ const TeacherHomePage = () => {
           </StyledButton>
         </TabsWrapper>
         <TabPaneContent>
-          <TabPanelUnstyled value={0}>Welcome</TabPanelUnstyled>
+          <TabPanelUnstyled value={0}>Welcome {currentUser?.username}</TabPanelUnstyled>
           <TabPanelUnstyled value={1}>
             <FeedList
               setIsRefreshFeedList={setIsRefreshFeedList}
@@ -209,7 +221,13 @@ const TeacherHomePage = () => {
               triggerRefreshFeedList={handleTriggerRefreshFeedList}
             />
           </TabPanelUnstyled>
-          <TabPanelUnstyled value={2}>2 page</TabPanelUnstyled>
+          <TabPanelUnstyled value={2}>
+            <InteractionList
+              isRefresh={isRefreshProgressList}
+              triggerRefreshProgressList={handleTriggerRefreshProgressList}
+              setIsRefreshProgressList={setIsRefreshProgressList}
+            />
+          </TabPanelUnstyled>
           <TabPanelUnstyled value={3}>3 page</TabPanelUnstyled>
           <TabPanelUnstyled value={4}>4 page</TabPanelUnstyled>
         </TabPaneContent>
@@ -222,8 +240,10 @@ const TeacherHomePage = () => {
         slots={{ root: Popper, listbox: StyledListbox }}
         slotProps={{ listbox: { id: 'simple-menu' } }}
       >
-        <StyledMenuItem onClick={createHandleMenuClick('post')}>Post</StyledMenuItem>
-        <StyledMenuItem onClick={createHandleMenuClick('event')}>Event</StyledMenuItem>
+        <StyledMenuItem onClick={createHandleMenuClick('post')}>{t('menu.post')}</StyledMenuItem>
+        <StyledMenuItem onClick={createHandleMenuClick('progress')}>
+          {t('menu.markAndAssessment')}
+        </StyledMenuItem>
         <StyledMenuItem onClick={createHandleMenuClick('timesheet')}>Time Sheet</StyledMenuItem>
       </MenuUnstyled>
       <PModal open={isPostModalOpen} onClose={handleClosePostModal}>
@@ -231,6 +251,14 @@ const TeacherHomePage = () => {
           handleClose={handleClosePostModal}
           triggerRefreshFeedList={handleTriggerRefreshFeedList}
           type='create'
+        />
+      </PModal>
+      <PModal open={isAssignMarkModalOpen} onClose={handleCloseAssignMarkModal}>
+        <AssignMarkModal
+          value={null}
+          type='assign'
+          handleClose={handleCloseAssignMarkModal}
+          triggerRefreshProgressList={handleTriggerRefreshProgressList}
         />
       </PModal>
     </MainLayout>

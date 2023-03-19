@@ -56,7 +56,7 @@ const slice = createSlice({
       state.loading = true;
     },
     loadedConversationList(state, action: PayloadAction<Conversation[]>) {
-      state.conversationList = action?.payload.reduce((prev, curr) => {
+      state.conversationList = action?.payload?.reduce((prev, curr) => {
         return {
           ...prev,
           [curr.id]: curr,

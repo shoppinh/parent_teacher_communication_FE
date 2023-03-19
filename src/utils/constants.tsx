@@ -1,4 +1,5 @@
 import SiteMap from './sitemap';
+import { NewConversationPayload } from '../types/Conversation';
 
 export const TOAST_DEFAULT_TIME = 2000;
 
@@ -57,6 +58,12 @@ export enum ConstantRoles {
   PARENT = 'PARENT',
 }
 
+export enum ConstantRolesNumber {
+  SUPER_USER = 1,
+  TEACHER = 2,
+  PARENT = 3,
+}
+
 export enum actionTypes {
   TYPE_REGISTER = 'TYPE_REGISTER',
   TYPE_CHECKOUT = 'TYPE_CHECKOUT',
@@ -88,5 +95,14 @@ export const ConstantPostType = {
   PUBLIC: 'PUBLIC',
   PRIVATE: 'PRIVATE',
 };
+
+export const AdminContact: NewConversationPayload = {
+  roleId: ConstantRolesNumber.SUPER_USER.toString(),
+  mobilePhone: '0397273869',
+  _id: 'admin',
+};
+
+export type SORT_TYPE = 'asc' | 'desc' | -1 | 1;
+export const ROWS_PER_PAGE = 10;
 
 export { SiteMap };

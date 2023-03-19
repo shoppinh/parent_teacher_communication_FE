@@ -1,7 +1,7 @@
 import { PModal } from 'app/components/PModal';
 import { Conversation } from 'app/pages/Conversation';
 import AvatarPlaceholder from 'assets/images/person-placeholder.png';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getConversationList,
@@ -10,14 +10,27 @@ import {
 } from 'store/selectors/conversation';
 import { getAccessToken, getRefreshToken, getUser } from 'store/selectors/session';
 import { useConversationSlice } from 'store/slices/conversation';
-import { styled } from 'twin.macro';
-import { ConversationListQuery } from 'types/Conversation';
-import { ConstantRoles } from 'utils/constants';
+import tw, { styled } from 'twin.macro';
+import { ConversationListQuery, NewConversationPayload } from 'types/Conversation';
+import { AdminContact } from 'utils/constants';
 import { mapStringRoleToNumber } from 'utils/helpers';
 import { media } from '../../../../../styles';
 import { StyleConstants } from '../../../../../styles/constants/style';
 import { pxToRem } from '../../../../../styles/theme/utils';
 import { PButton } from '../../../../components/PButton';
+import { Conversation as ConversationType } from '../../../../../types/Conversation';
+import NewMessageModal from '../../../../containers/Conversation/NewMessageModal';
+import {
+  TabPanelUnstyled,
+  TabsListUnstyled,
+  TabsUnstyled,
+  TabUnstyled,
+  tabUnstyledClasses,
+} from '@mui/base';
+import FeedList from '../../../../containers/TeacherHomePage/FeedList';
+import { getUserList } from '../../../../../store/selectors/config';
+import { useTranslation } from 'react-i18next';
+import { User } from '../../../../../types/User';
 
 const Container = styled.div`
   width: ${pxToRem(StyleConstants.LEFT_BAR_WIDTH)}rem;
@@ -28,14 +41,17 @@ const Container = styled.div`
     display: block;
   `}
 `;
-const MessageList = styled.div`
+const ItemList = styled.div`
   display: flex;
   flex-direction: column;
+  height: 80vh;
+  overflow-y: auto;
 `;
 const MessageItem = styled.div`
   padding: ${pxToRem(15)}rem;
   display: flex;
   cursor: pointer;
+  position: relative;
   &:hover {
     background-color: ${(p) => p.theme.contrastBackground};
   }
@@ -67,32 +83,132 @@ const StyledButton = styled(PButton)`
 const ButtonWrapper = styled.div`
   text-align: right;
   border-bottom: 1px solid ${(p) => p.theme.borderLight};
+  height: ${pxToRem(StyleConstants.TAB_HEIGHT)}rem;
+`;
+
+const UnreadCount = styled.div`
+  width: ${pxToRem(20)}rem;
+  height: ${pxToRem(20)}rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: ${(p) => p.theme.danger};
+  color: ${(p) => p.theme.background};
+  position: absolute;
+  top: ${pxToRem(10)}rem;
+  right: ${pxToRem(10)}rem;
+`;
+const StyledTabsList = styled(TabsListUnstyled)``;
+const StyledTab = styled(TabUnstyled)`
+  ${tw`p-2`}
+  color: ${(p) => p.theme.placeholder};
+  font-weight: bold;
+  font-size: ${pxToRem(16)}rem;
+
+  &.${tabUnstyledClasses.selected} {
+    color: ${(p) => p.theme.text};
+    border-bottom: 3px solid ${(p) => p.theme.backgroundVariant};
+  }
+`;
+const TabsWrapper = styled.div`
+  display: flex;
+  ${tw`p-2`}
+  justify-content: space-between;
+  height: ${pxToRem(StyleConstants.TAB_HEIGHT)}rem;
+  background-color: ${(p) => p.theme.background};
+`;
+
+const TabPaneContent = styled.div`
+  ${tw`p-3`}
+`;
+const StyledTabs = styled(TabsUnstyled)`
+  height: calc(100% - ${pxToRem(StyleConstants.TAB_HEIGHT)}rem);
+  overflow-y: auto;
 `;
 interface MessageProp {
-  handleOpenConversation: () => void;
+  handleOpenConversation: (
+    toUserRole: string,
+    toUserPhone: string,
+    toUserId: string,
+    roomId: number
+  ) => void;
+  data: ConversationType;
 }
 
-const Message: React.FC<MessageProp> = ({ handleOpenConversation }) => {
+interface UserItemProp {
+  handleOpenConversation: (data: NewConversationPayload) => void;
+  data: User;
+}
+
+const Message: React.FC<MessageProp> = ({ handleOpenConversation = () => {}, data }) => {
   return (
-    <MessageItem onClick={handleOpenConversation}>
+    <MessageItem
+      onClick={() =>
+        handleOpenConversation(
+          data.toRoleId.toString(),
+          data.toMobilePhone,
+          data.toUserUniqueId,
+          data.roomId
+        )
+      }
+    >
       <Avatar />
       <MessageContentWrapper>
-        <MessageTo>Junior KienneiK</MessageTo>
-        <MessageContent>You are sexy</MessageContent>
+        <MessageTo>{data.toUserName}</MessageTo>
+        <MessageContent>{data.latestMessage}</MessageContent>
+      </MessageContentWrapper>
+      {data.countUnread > 0 && <UnreadCount>{data.countUnread}</UnreadCount>}
+    </MessageItem>
+  );
+};
+const UserItem: React.FC<UserItemProp> = ({ handleOpenConversation = () => {}, data }) => {
+  return (
+    <MessageItem
+      onClick={() =>
+        handleOpenConversation({
+          roleId: data.roleId,
+          mobilePhone: data.mobilePhone,
+          _id: data._id,
+        })
+      }
+    >
+      <Avatar src={data.avatar} />
+      <MessageContentWrapper>
+        <MessageTo>{data.username}</MessageTo>
       </MessageContentWrapper>
     </MessageItem>
   );
 };
 const RightBar = () => {
   const [showConversation, setShowConversation] = useState(false);
+  const [showNewMessageModal, setShowNewMessageModal] = useState(false);
+  const { t } = useTranslation();
   const { actions: conversationActions } = useConversationSlice();
   const currentAccessToken = useSelector(getAccessToken);
   const currentRefreshToken = useSelector(getRefreshToken);
   const currentUser = useSelector(getUser);
   const currentUserConversationList = useSelector(getConversationList);
   const dispatch = useDispatch();
-  const handleCloseConversation = () => {
+  const handleCloseConversation = useCallback(() => {
     setShowConversation(false);
+    if (currentAccessToken) {
+      const payload: ConversationListQuery = {
+        mobilePhone: currentUser?.mobilePhone || '',
+        roleId: mapStringRoleToNumber(currentUser?.roleId).toString() || '',
+        token: currentAccessToken,
+      };
+      dispatch(conversationActions.loadConversationList(payload));
+    }
+  }, [
+    conversationActions,
+    currentAccessToken,
+    currentUser?.mobilePhone,
+    currentUser?.roleId,
+    dispatch,
+  ]);
+  const handleNewMessage = () => {
+    setShowNewMessageModal(true);
   };
   const conversationToUserData = useSelector(getCurrentToUser) || {
     roleId: 1,
@@ -114,16 +230,15 @@ const RightBar = () => {
     },
     [conversationActions, dispatch]
   );
-  const handleNewMessage = useCallback(() => {
-    setShowConversation(true);
-    dispatch(
-      conversationActions.updateToCurrentUser({
-        roleId: '2',
-        mobilePhone: '0397273812',
-        _id: 'admin',
-      })
-    );
-  }, [conversationActions, dispatch]);
+  const handleOpenNewConversation = useCallback(
+    (newConversationPayload: NewConversationPayload) => {
+      setShowConversation(true);
+      dispatch(conversationActions.updateToCurrentUser(newConversationPayload));
+    },
+    [conversationActions, dispatch]
+  );
+  const userList = useSelector(getUserList);
+
   useEffect(() => {
     if (currentAccessToken) {
       const payload: ConversationListQuery = {
@@ -143,28 +258,50 @@ const RightBar = () => {
   return (
     <Container>
       <ButtonWrapper>
-        <StyledButton onClick={handleNewMessage} variant='primary'>
-          New Message
+        <StyledButton onClick={() => handleOpenNewConversation(AdminContact)} variant='primary'>
+          Contact Admin
         </StyledButton>
       </ButtonWrapper>
-      <MessageList>
-        {currentUserConversationList &&
-          Object.values(currentUserConversationList).map((conversation) => {
-            return (
-              <Message
-                handleOpenConversation={() =>
-                  handleOpenConversation(
-                    conversation.toRoleId.toString(),
-                    conversation.toMobilePhone,
-                    conversation.toUserUniqueId,
-                    conversation.roomId
-                  )
-                }
-                key={conversation.id}
-              />
-            );
-          })}
-      </MessageList>
+
+      <StyledTabs defaultValue={0}>
+        <TabsWrapper>
+          <StyledTabsList>
+            <StyledTab>{t('tab.message')}</StyledTab>
+            <StyledTab>{t('tab.user')}</StyledTab>
+          </StyledTabsList>
+        </TabsWrapper>
+        <TabPaneContent>
+          <TabPanelUnstyled value={0}>
+            <ItemList>
+              {currentUserConversationList &&
+                Object.values(currentUserConversationList).map((conversation) => {
+                  return (
+                    <Message
+                      handleOpenConversation={handleOpenConversation}
+                      key={conversation.id}
+                      data={conversation}
+                    />
+                  );
+                })}
+            </ItemList>
+          </TabPanelUnstyled>
+          <TabPanelUnstyled value={1}>
+            <ItemList>
+              {userList &&
+                userList
+                  .filter((item) => item._id !== currentUser?._id)
+                  .map((user) => (
+                    <UserItem
+                      data={user}
+                      handleOpenConversation={handleOpenNewConversation}
+                      key={user._id}
+                    />
+                  ))}
+            </ItemList>
+          </TabPanelUnstyled>
+        </TabPaneContent>
+      </StyledTabs>
+
       <PModal open={showConversation} onClose={handleCloseConversation}>
         <Conversation
           roomId={currentRoomId}
@@ -181,6 +318,9 @@ const RightBar = () => {
             setShowConversation(false);
           }}
         />
+      </PModal>
+      <PModal open={showNewMessageModal} onClose={() => setShowNewMessageModal(false)}>
+        <NewMessageModal onClose={() => setShowNewMessageModal(false)} />
       </PModal>
     </Container>
   );

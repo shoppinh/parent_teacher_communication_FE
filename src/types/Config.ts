@@ -1,4 +1,5 @@
 import { Class } from './Class';
+import {User} from "./User";
 
 export interface ConfigState {
   data: ConfigPayload;
@@ -28,6 +29,7 @@ export interface ConfigPayload {
 
 export interface SystemSetting {
   schoolInfo: Class;
+  userList: User[];
 }
 export interface LanguageQuery {
   accessToken: string;

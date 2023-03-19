@@ -9,7 +9,7 @@ export interface User {
   lastName?: string;
   fullName?: string;
   mobilePhone: string;
-  roleId?: string;
+  roleId: string;
   lastLogin?: Date;
   createdAt?: Date;
   updatedAt?: Date;

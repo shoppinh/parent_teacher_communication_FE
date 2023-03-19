@@ -14,6 +14,7 @@ import OutletPhoneModal from 'app/components/PhoneModal';
 import debounce from 'lodash.debounce';
 import { useConversationSlice } from 'store/slices/conversation';
 import { useSessionSlice } from 'store/slices/session';
+import {pxToRem} from "../../../styles/theme/utils";
 
 interface Props {
   roomId: number;
@@ -32,13 +33,17 @@ const socketGatewayHost = process.env.REACT_APP_API_CONVERSATION_URL || '';
 
 const ConversationContainer = styled.div`
   background: ${(p) => p.theme.backgroundVariant};
-  height: 100%;
+  height: 90%;
+  width: 50vw;
+  border-radius: 1rem;
+  margin: ${pxToRem(10)}rem 0;
 `;
 
 const MessageWrapper = styled.div`
   display: flex;
-  height: 100%;
+  height: 100vh;
   flex-direction: column;
+  width: 100%;
 `;
 
 const LoadingWrapper = styled.div`

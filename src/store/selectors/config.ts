@@ -20,3 +20,5 @@ export const getSystemSettings = createSelector(
   [selectDomain],
   (state) => state.data.systemSettings
 );
+export const getSchoolInfo = createSelector([selectDomain], (state) => state?.data?.systemSettings?.schoolInfo);
+export const getUserList = createSelector([selectDomain], (state) => state?.data?.systemSettings?.userList);

@@ -19,6 +19,12 @@ import { TeacherDetailQuery } from '../../types/Teacher';
 import * as api from './index';
 import { ClassListTokenQuery } from '../../types/Class';
 import { AddCommentTokenRequest } from '../../types/Comment';
+import {
+  AddProgressTokenQuery,
+  ProgressDetailTokenQuery,
+  ProgressListTokenQuery,
+  UpdateProgressTokenQuery,
+} from '../../types/Progress';
 
 export function* apiLogin(query: AuthQuery) {
   return yield call(api.login, query);
@@ -134,4 +140,26 @@ export function* apiAddPostComment(query: AddCommentTokenRequest) {
 
 export function* apiGetClassListByRole(query: ClassListTokenQuery) {
   return yield call(api.getClassListByRole, query);
+}
+
+// Progress
+
+export function* apiGetProgressListByClass(query: ProgressListTokenQuery) {
+  return yield call(api.getProgressListByClass, query);
+}
+
+export function* apiGetProgressDetail(query: ProgressDetailTokenQuery) {
+  return yield call(api.getProgressDetail, query);
+}
+
+export function* apiRemoveProgress(query: ProgressDetailTokenQuery) {
+  return yield call(api.removeProgress, query);
+}
+
+export function* apiUpdateProgress(query: UpdateProgressTokenQuery) {
+  return yield call(api.updateProgress, query);
+}
+
+export function* apiAddProgress(query: AddProgressTokenQuery) {
+  return yield call(api.addProgress, query);
 }

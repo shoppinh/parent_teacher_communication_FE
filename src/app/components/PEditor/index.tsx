@@ -73,7 +73,7 @@ const ModalTitle = styled.p`
 interface Props {
   handleClose: () => void;
   postData?: Post;
-  triggerRefreshFeedList: (isRefresh: boolean) => void;
+  triggerRefreshFeedList: () => void;
   type: 'edit' | 'create';
 }
 
@@ -138,7 +138,7 @@ const PEditor: React.FC<Props> = ({
   useEffect(() => {
     if (isFormSent && !postLoading && !postError) {
       toast(t('post.createSuccess'));
-      triggerRefreshFeedList(true);
+      triggerRefreshFeedList();
       handleClose();
       setIsFormSent(false);
     } else if (isFormSent && postError) {
@@ -169,7 +169,6 @@ const PEditor: React.FC<Props> = ({
         }
 
         const json = JSON.parse(xhr.responseText);
-        console.log('🚀 ~ file: index.tsx:46 ~ PEditor ~ xhr.responseText:', xhr.responseText);
 
         if (!json || typeof json.url != 'string') {
           reject('Invalid JSON: ' + xhr.responseText);
