@@ -13,7 +13,7 @@ import { useConversationSlice } from 'store/slices/conversation';
 import tw, { styled } from 'twin.macro';
 import { ConversationListQuery, NewConversationPayload } from 'types/Conversation';
 import { AdminContact } from 'utils/constants';
-import { mapStringRoleToNumber } from 'utils/helpers';
+import { mapNumberRoleToString, mapStringRoleToNumber } from 'utils/helpers';
 import { media } from '../../../../../styles';
 import { StyleConstants } from '../../../../../styles/constants/style';
 import { pxToRem } from '../../../../../styles/theme/utils';
@@ -81,9 +81,11 @@ const StyledButton = styled(PButton)`
   font-weight: 700;
 `;
 const ButtonWrapper = styled.div`
-  text-align: right;
   border-bottom: 1px solid ${(p) => p.theme.borderLight};
   height: ${pxToRem(StyleConstants.TAB_HEIGHT)}rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 const UnreadCount = styled.div`
@@ -142,6 +144,7 @@ interface UserItemProp {
 }
 
 const Message: React.FC<MessageProp> = ({ handleOpenConversation = () => {}, data }) => {
+  const { t } = useTranslation();
   return (
     <MessageItem
       onClick={() =>
@@ -155,7 +158,9 @@ const Message: React.FC<MessageProp> = ({ handleOpenConversation = () => {}, dat
     >
       <Avatar />
       <MessageContentWrapper>
-        <MessageTo>{data.toUserName}</MessageTo>
+        <MessageTo>{`${data.toUserName} (${t(
+          `role.${mapNumberRoleToString(data.toRoleId)}`
+        )})`}</MessageTo>
         <MessageContent>{data.latestMessage}</MessageContent>
       </MessageContentWrapper>
       {data.countUnread > 0 && <UnreadCount>{data.countUnread}</UnreadCount>}
@@ -163,11 +168,12 @@ const Message: React.FC<MessageProp> = ({ handleOpenConversation = () => {}, dat
   );
 };
 const UserItem: React.FC<UserItemProp> = ({ handleOpenConversation = () => {}, data }) => {
+  const { t } = useTranslation();
   return (
     <MessageItem
       onClick={() =>
         handleOpenConversation({
-          roleId: data.roleId,
+          roleId: mapStringRoleToNumber(data.roleId).toString(),
           mobilePhone: data.mobilePhone,
           _id: data._id,
         })
@@ -175,7 +181,11 @@ const UserItem: React.FC<UserItemProp> = ({ handleOpenConversation = () => {}, d
     >
       <Avatar src={data.avatar} />
       <MessageContentWrapper>
-        <MessageTo>{data.username}</MessageTo>
+        <MessageTo>
+          {data.firstname && data.lastname
+            ? `${data.firstname} ${data.lastname} (${t(`role.${data.roleId}`)})`
+            : `${data.username} (${t(`role.${data.roleId}`)})`}
+        </MessageTo>
       </MessageContentWrapper>
     </MessageItem>
   );

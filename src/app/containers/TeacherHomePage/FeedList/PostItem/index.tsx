@@ -17,6 +17,11 @@ import { PModal } from '../../../../components/PModal';
 import { ConstantRoles } from '../../../../../utils/constants';
 import PostDeleteModal from '../PostDeleteModal';
 import { useTranslation } from 'react-i18next';
+import { formatDateWithLocale } from '../../../../../utils/dateHelpers/formatDate';
+import {
+  DEFAULT_LOCALE,
+  DETAIL_POST_DATE_TEMPLATE,
+} from '../../../../../utils/localization/config';
 interface Props {
   data: Post;
   triggerRefreshFeedList: () => void;
@@ -57,8 +62,13 @@ const Description = styled.p`
   color: ${(p) => p.theme.placeholder};
 `;
 const PostTitleWrapper = styled.div``;
+const PostTitle = styled.h1`
+  font-size: ${pxToRem(20)}rem;
+  font-weight: bold;
+  padding: ${pxToRem(5)}rem ${pxToRem(15)}rem;
+`;
 const PostContent = styled.div`
-  ${tw`p-2`}
+  padding: ${pxToRem(5)}rem ${pxToRem(15)}rem;
 `;
 const CommentSection = styled.div`
   display: flex;
@@ -169,8 +179,19 @@ const PostItem: React.FC<Props> = ({ data: postData, triggerRefreshFeedList }) =
             <Avatar src={postData?.author?.avatar || AvatarPlaceholder} />
           </AvatarWrapper>
           <PostTitleWrapper>
-            <AuthorTitle>{postData?.author.username}</AuthorTitle>
-            <Description>{postData?.title}</Description>
+            <AuthorTitle>
+              {postData?.author?.firstname && postData?.author?.lastname
+                ? postData?.author?.firstname + ' ' + postData?.author?.lastname
+                : postData?.author?.username}
+            </AuthorTitle>
+            <Description>
+              {postData?.author?.roleId === ConstantRoles.TEACHER
+                ? t('post.teacherAuthor', { className: postData?.class?.name })
+                : t('post.adminAuthor')}
+            </Description>
+            <Description>
+              {formatDateWithLocale(postData.createdAt, DEFAULT_LOCALE, DETAIL_POST_DATE_TEMPLATE)}
+            </Description>
           </PostTitleWrapper>
         </TitleSection>
 
@@ -185,6 +206,7 @@ const PostItem: React.FC<Props> = ({ data: postData, triggerRefreshFeedList }) =
           </ActionGroup>
         )}
       </AuthorSection>
+      <PostTitle>{postData?.title}</PostTitle>
       <PostContent dangerouslySetInnerHTML={{ __html: postData?.content }} />
       <ReactionGroup>
         <ReactionActionItem>

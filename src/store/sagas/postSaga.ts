@@ -19,11 +19,28 @@ export function* postSaga() {
   ]);
 }
 
+const mapPostList = (data: any) => {
+  return data?.map((item: any) => {
+    return {
+      ...item,
+      author: {
+        ...item.author,
+        roleId: item.author.role,
+      },
+    };
+  });
+};
+
 export function* getPostList({ payload }: any) {
   try {
     const response = yield call(apiGetPostList, payload);
     if (response.data && response.data.status) {
-      yield put(actions.loadPostListSuccess(response.data.data));
+      yield put(
+        actions.loadPostListSuccess({
+          data: mapPostList(response.data.data.data),
+          total: response.data.data.totalItem,
+        })
+      );
     } else {
       yield put(actions.loadPostListError(response.data.error));
     }
@@ -36,7 +53,12 @@ export function* getPostListByClass({ payload }: any) {
   try {
     const response = yield call(apiGetPostListByClass, payload);
     if (response.data && response.data.status) {
-      yield put(actions.loadPostListSuccess(response.data.data));
+      yield put(
+        actions.loadPostListSuccess({
+          data: mapPostList(response.data.data.data),
+          total: response.data.data.totalItem,
+        })
+      );
     } else {
       yield put(actions.loadPostListError(response.data.error));
     }

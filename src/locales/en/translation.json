@@ -150,7 +150,9 @@
     "writeSomething": "Write something...",
     "like": "Like",
     "comment": "Comment",
-    "createSuccess": "Create success"
+    "createSuccess": "Create success",
+    "teacherAuthor": "Teacher of {{className}}",
+    "adminAuthor": "Admin"
   },
   "localizationConfig": {
     "title": "Switch Language",
@@ -220,6 +222,10 @@
     "year": "Year",
     "action": "Action",
     "assessment": "Assessment"
-
+  },
+  "role": {
+    "SUPER_USER": "Admin",
+    "TEACHER": "Teacher",
+    "PARENT": "Parent"
   }
 }

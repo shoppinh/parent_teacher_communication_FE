@@ -53,6 +53,7 @@ const MenuStyledIcon = styled(PIcon)`
 const HeaderTitle = styled.p`
   font-size: ${pxToRem(20)}rem;
   font-weight: 700;
+  padding-left: ${pxToRem(7)}rem;
 `;
 const HeaderWrapper = styled.div`
   display: flex;
@@ -65,6 +66,7 @@ const NavigationGroup = styled.div`
   ${media.md`
     display: block;
   `}
+  padding: 0 ${pxToRem(7)}rem;
 `;
 const ButtonGroup = styled.div`
   display: none;

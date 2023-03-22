@@ -153,8 +153,10 @@ const ParentHomePage = () => {
             <StyledTab>{t('tab.welcome')}</StyledTab>
             <StyledTab>{t('tab.newsFeed')}</StyledTab>
             <StyledTab>{t('tab.results')}</StyledTab>
-            <StyledTab>{t('tab.assignments')}</StyledTab>
+            {/*<StyledTab>{t('tab.assignments')}</StyledTab>*/}
             <StyledTab>{t('tab.portfolios')}</StyledTab>
+            <StyledTab>{t('tab.classInfo')}</StyledTab>
+
           </StyledTabsList>
           {/*<StyledButton*/}
           {/*  type='button'*/}
@@ -184,8 +186,8 @@ const ParentHomePage = () => {
           <TabPanelUnstyled value={2}>
             <InteractionList />
           </TabPanelUnstyled>
-          <TabPanelUnstyled value={3}>3 page</TabPanelUnstyled>
-          <TabPanelUnstyled value={4}>4 page</TabPanelUnstyled>
+          <TabPanelUnstyled value={3}>ho so</TabPanelUnstyled>
+          <TabPanelUnstyled value={4}>thong tin lop</TabPanelUnstyled>
           <TabPanelUnstyled value={5}>5 page</TabPanelUnstyled>
         </TabPaneContent>
       </StyledTabs>
