@@ -10,6 +10,7 @@ import {
 } from 'types/Config';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { configSaga } from 'store/sagas/configSaga';
+import { parseUserList } from '../sagas/sessionSaga';
 
 const configCache = loadState()?.config;
 
@@ -44,7 +45,10 @@ const slice = createSlice({
       state.loading = true;
     },
     loadedSystemSetting(state, action: PayloadAction<SystemSetting>) {
-      state.data.systemSettings = action.payload;
+      state.data.systemSettings = {
+        ...action.payload,
+        userList: parseUserList(action.payload.userList),
+      };
       state.data.lastUpdated = new Date().toISOString();
       state.loading = false;
     },

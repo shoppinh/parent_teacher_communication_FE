@@ -55,8 +55,8 @@ const ParseLogin = (
     data: {
       _id: response.userId,
       username: response.username,
-      firstName: response.firstname,
-      lastName: response.lastname,
+      firstname: response.firstname,
+      lastname: response.lastname,
       email: response.email,
       mobilePhone: response.mobilePhone,
       isActive: response.isActive,
@@ -106,18 +106,22 @@ export function* doLogout({ payload }: any) {
   }
 }
 
-const ParseUserData = (data: any): User => {
+const parseUserData = (data: any): User => {
   return {
     _id: data._id,
     email: data.email,
-    username: data.email,
-    firstName: data.firstName,
-    lastName: data.lastName,
+    username: data.username,
+    firstname: data.firstname,
+    lastname: data.lastname,
     fullName: data.fullName,
     mobilePhone: data.mobilePhone,
     isActive: data.isActive,
-    roleId: data.roleId,
+    roleId: data.role,
   };
+};
+
+export const parseUserList = (data: any): User[] => {
+  return data.map((item: any) => parseUserData(item));
 };
 
 export function* getUserInfo({ payload }: any) {
@@ -126,7 +130,7 @@ export function* getUserInfo({ payload }: any) {
     if (response.data && response.data.status) {
       yield put(
         actions.updateUserInfo({
-          user: ParseUserData(response.data.data),
+          user: parseUserData(response.data.data),
         })
       );
     } else {
