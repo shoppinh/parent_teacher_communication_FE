@@ -1,12 +1,29 @@
+import { Student, StudentParentIncludedInfo } from './Student';
+import { Teacher } from './Admin/Teacher';
+import { Parent } from './Parent';
+import { TeacherAssignment, TeacherAssignmentForClass } from './TeacherAssignment';
+
 export interface Class {
   _id: string;
   name: string;
   isSchoolClass: boolean;
 }
 
+export interface ClassDetail {
+  classInfo: Class;
+  students: StudentParentIncludedInfo[];
+  teacherAssignments: TeacherAssignmentForClass[];
+  parents: Parent[];
+}
+
 export interface ClassListTokenQuery {
   token: string;
   role: string;
+}
+
+export interface ClassDetailTokenQuery {
+  classId: string;
+  token: string;
 }
 
 export interface ClassState {
@@ -15,7 +32,7 @@ export interface ClassState {
       total: number;
       data: Class[];
     };
-    currentClass: Class;
+    currentClass: ClassDetail;
   };
   loading: boolean;
   error: ClassError | null;

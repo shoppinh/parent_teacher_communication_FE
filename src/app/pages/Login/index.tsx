@@ -12,15 +12,14 @@ import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
   ${tw`container mx-auto `}
-  ${media.md`
-    margin-top: ${pxToRem(20)}rem;
-  `}
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   border-radius: 6px;
   background-color: ${(p) => p.theme.contrastBackground};
-  width: 100%;
+  width: 50%;
   height: 90%;
   overflow: hidden;
+  padding: ${pxToRem(10)}rem;
+
 `;
 
 const ContentWrapper = styled.div`
@@ -29,7 +28,7 @@ const ContentWrapper = styled.div`
 `;
 
 const PageTitle = styled(H1)`
-  font-size: ${pxToRem(18)}rem;
+  font-size: ${pxToRem(22)}rem;
   text-align: center;
   flex: 1;
   margin-right: ${pxToRem(40)}rem;

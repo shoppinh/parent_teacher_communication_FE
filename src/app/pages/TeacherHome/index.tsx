@@ -29,6 +29,7 @@ import { useStudentSlice } from '../../../store/slices/student';
 import { useQuery } from '../../../utils/hook';
 import { queryString } from '../../../utils/constants';
 import { useTeacherSlice } from '../../../store/slices/teacher';
+import ClassInfo from '../../containers/ParentHome/ClassInfo';
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -238,6 +239,7 @@ const TeacherHomePage = () => {
             <StyledTab>{t('tab.newsFeed')}</StyledTab>
             <StyledTab>{t('tab.trackingAndAssessment')}</StyledTab>
             <StyledTab>{t('tab.assignments')}</StyledTab>
+            <StyledTab>{t('tab.classInfo')}</StyledTab>
             <StyledTab>{t('tab.portfolios')}</StyledTab>
             <StyledTab>{t('tab.reports')}</StyledTab>
           </StyledTabsList>
@@ -271,8 +273,10 @@ const TeacherHomePage = () => {
               setIsRefreshProgressList={setIsRefreshProgressList}
             />
           </TabPanelUnstyled>
-          <TabPanelUnstyled value={3}>3 page</TabPanelUnstyled>
-          <TabPanelUnstyled value={4}>4 page</TabPanelUnstyled>
+          <TabPanelUnstyled value={3}>assignement</TabPanelUnstyled>
+          <TabPanelUnstyled value={4}>
+            <ClassInfo />
+          </TabPanelUnstyled>
         </TabPaneContent>
       </StyledTabs>
       <MenuUnstyled

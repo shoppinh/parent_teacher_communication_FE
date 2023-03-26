@@ -4,7 +4,7 @@ import { postSaga } from 'store/sagas/postSaga';
 import { PostListByClassQuery, PostState } from 'types/Post';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
-import {ClassListTokenQuery, ClassState} from '../../types/Class';
+import {ClassDetailTokenQuery, ClassListTokenQuery, ClassState} from '../../types/Class';
 import { classSaga } from '../sagas/classSaga';
 
 const classCache = loadState()?.class;
@@ -30,6 +30,19 @@ const slice = createSlice({
       state.error = null;
     },
     loadClassListError(state, action) {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    loadClassDetail(state, action: PayloadAction<ClassDetailTokenQuery>) {
+      state.loading = true;
+      state.error = null;
+    },
+    loadClassDetailSuccess(state, action) {
+      state.data.currentClass = action.payload;
+      state.loading = false;
+      state.error = null;
+    },
+    loadClassDetailError(state, action) {
       state.loading = false;
       state.error = action.payload;
     },

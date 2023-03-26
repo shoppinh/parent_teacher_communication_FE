@@ -41,6 +41,7 @@ const Container = styled.div`
   ${media.md`
     height: 100vh;
   `}
+  width: 100%;
 `;
 const MobileLeftBar = styled(LeftBar)`
   display: block !important;

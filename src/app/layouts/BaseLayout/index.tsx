@@ -16,6 +16,9 @@ const Container = styled.div`
   ${tw`h-screen`}
   overflow: auto;
   background-color: ${(p) => p.theme.backgroundVariant};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const BaseLayout: React.FC<Props> = ({ children, title }) => {

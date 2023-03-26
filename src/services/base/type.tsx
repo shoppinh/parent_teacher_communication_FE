@@ -92,6 +92,7 @@ export const APIs = {
   },
   class: {
     getClassListByRole: '/api/class/list-by-role',
+    getClassDetail: '/api/class/{classId}',
   },
   teacher: {
     profile: '/api/teacher/profile',

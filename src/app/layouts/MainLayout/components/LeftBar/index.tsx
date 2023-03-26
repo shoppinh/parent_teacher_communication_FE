@@ -17,7 +17,8 @@ import { getClassList } from '../../../../../store/selectors/class';
 import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { getSystemSettings } from '../../../../../store/selectors/config';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from 'react-i18next';
+import ProfileRow from './ProfileRow';
 
 interface ClassRowProps {
   isActive: boolean;
@@ -78,23 +79,29 @@ const ClassListContainer = styled.div`
 const ClassRowItem = styled.div<ClassRowProps>`
   padding: 6px 15px;
   text-align: start;
-  ${(p) =>
-    p.isActive &&
-    `border-left: 4px solid ${p.theme.backgroundVariant}; background-color: ${p.theme.backgroundSelected};`}
+  ${(p) => p.isActive && `background-color: ${p.theme.backgroundSelected};`}
   cursor: pointer;
   margin: 5px;
   font: 700 ${pxToRem(14)}rem / ${pxToRem(20)}rem ${(p) => p.theme.fontFamily};
+  border-left: 4px solid ${(p) => p.theme.backgroundVariant};
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+`;
+const SchoolRowItem = styled(ClassRowItem)`
+  border-left: 4px solid ${(p) => p.theme.danger};
 `;
 const SettingModal = styled.div`
   width: 50vw;
   height: 70vh;
   background-color: ${(p) => p.theme.background};
   border-radius: 10px;
+  padding: ${pxToRem(15)}rem;
 `;
 const SettingModalHeader = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: ${pxToRem(20)}rem;
   text-align: center;
-  font-size: ${pxToRem(20)}rem;
+  font-size: ${pxToRem(22)}rem;
   font-weight: 700;
 `;
 const SettingModalBody = styled.div``;
@@ -107,9 +114,28 @@ const StyledButton = styled(PButton)`
   font: normal bold 16px / ${StyleConstants.BASE_LINE_HEIGHT}px ${StyleConstants.FONT_FAMILY};
   ${tw`rounded-full w-full p-3`}
 `;
-
+const ClassListLabel = styled.div`
+  padding: 0 15px 0 25px;
+  color: ${(p) => p.theme.textContrast};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: ${pxToRem(8)}rem;
+`;
+const ClassListText = styled.p`
+  font: 700 ${pxToRem(16)}rem / ${pxToRem(20)}rem ${(p) => p.theme.fontFamily};
+`;
+const StyledIcon = styled(PIcon)`
+  font-size: ${pxToRem(20)}rem;
+  cursor: pointer;
+`;
+const CategorizedSection = styled.div`
+  margin-bottom: ${pxToRem(15)}rem;
+`;
 const LeftBar = () => {
   const [isShowOptionModal, setIsShowOptionModal] = useState(false);
+  const [isShowClassList, setIsShowClassList] = useState(true);
+  const [isShowSchoolList, setIsShowSchoolList] = useState(true);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const classId = queryParams.get(queryString.classId);
@@ -127,6 +153,12 @@ const LeftBar = () => {
   const handleCloseModal = () => {
     setIsShowOptionModal(false);
   };
+  const toggleShowClassList = () => {
+    setIsShowClassList((prev) => !prev);
+  };
+  const toggleShowSchoolList = () => {
+    setIsShowSchoolList((prev) => !prev);
+  };
   const { t } = useTranslation();
   const classList = useSelector(getClassList);
   useEffect(() => {
@@ -139,38 +171,64 @@ const LeftBar = () => {
     <Container>
       <ContentWrapper>
         <ImageWrapper>
-          <img src={Logo} alt='Logo' width='50%' />
+          <img src={Logo} alt='Logo' width='70%' />
         </ImageWrapper>
-        <ClassListContainer>
-          <ClassRowItem
-            isActive={classId ? classId === systemSettings?.schoolInfo?._id : false}
-            onClick={() =>
-              navigate({
-                pathname: location.pathname,
-                search: `?${queryString.classId}=${systemSettings?.schoolInfo?._id}`,
-              })
-            }
-            key={systemSettings?.schoolInfo?._id}
-          >
-            {systemSettings?.schoolInfo?.name}
-          </ClassRowItem>
-          {classList?.data?.map((item) => {
-            return (
-              <ClassRowItem
-                isActive={classId ? item._id === classId : false}
+        <ProfileRow data={currentUser} />
+
+        <CategorizedSection>
+          <ClassListLabel>
+            <ClassListText>{t('common.schools')}</ClassListText>
+            <StyledIcon
+              className={`partei-circle-${isShowSchoolList ? 'down' : 'up'}`}
+              onClick={toggleShowSchoolList}
+            />
+          </ClassListLabel>
+          {isShowSchoolList && (
+            <ClassListContainer>
+              <SchoolRowItem
+                isActive={classId ? classId === systemSettings?.schoolInfo?._id : false}
                 onClick={() =>
                   navigate({
                     pathname: location.pathname,
-                    search: `?${queryString.classId}=${item._id}`,
+                    search: `?${queryString.classId}=${systemSettings?.schoolInfo?._id}`,
                   })
                 }
-                key={item._id}
+                key={systemSettings?.schoolInfo?._id}
               >
-                {item.name}
-              </ClassRowItem>
-            );
-          })}
-        </ClassListContainer>
+                {systemSettings?.schoolInfo?.name}
+              </SchoolRowItem>
+            </ClassListContainer>
+          )}
+        </CategorizedSection>
+        <CategorizedSection>
+          <ClassListLabel>
+            <ClassListText>{t('common.classes')}</ClassListText>
+            <StyledIcon
+              className={`partei-circle-${isShowClassList ? 'down' : 'up'}`}
+              onClick={toggleShowClassList}
+            />
+          </ClassListLabel>
+          {isShowClassList && (
+            <ClassListContainer>
+              {classList?.data?.map((item) => {
+                return (
+                  <ClassRowItem
+                    isActive={classId ? item._id === classId : false}
+                    onClick={() =>
+                      navigate({
+                        pathname: location.pathname,
+                        search: `?${queryString.classId}=${item._id}`,
+                      })
+                    }
+                    key={item._id}
+                  >
+                    {item.name}
+                  </ClassRowItem>
+                );
+              })}
+            </ClassListContainer>
+          )}
+        </CategorizedSection>
       </ContentWrapper>
       <BottomMenu>
         <ActionGroup>
@@ -178,25 +236,25 @@ const LeftBar = () => {
             <ActionButton>
               <ActionIcon className='partei-user-plus' />
             </ActionButton>
-            <ActionTitle>{t("common.inviteMember")}</ActionTitle>
+            <ActionTitle>{t('common.inviteMember')}</ActionTitle>
           </ActionItem>
-          <ActionItem>
-            <ActionButton>
-              <ActionIcon className='partei-users' />
-            </ActionButton>
-            <ActionTitle>{t("common.classGroup")}</ActionTitle>
-          </ActionItem>
+          {/*<ActionItem>*/}
+          {/*  <ActionButton>*/}
+          {/*    <ActionIcon className='partei-users' />*/}
+          {/*  </ActionButton>*/}
+          {/*  <ActionTitle>{t('common.classGroup')}</ActionTitle>*/}
+          {/*</ActionItem>*/}
           <ActionItem>
             <ActionButton onClick={() => setIsShowOptionModal(true)}>
               <ActionIcon className='partei-cog' />
             </ActionButton>
-            <ActionTitle>{t("common.settings")}</ActionTitle>
+            <ActionTitle>{t('common.settings')}</ActionTitle>
           </ActionItem>
           <ActionItem>
             <ActionButton>
               <ActionIcon className='partei-question' />
             </ActionButton>
-            <ActionTitle>{t("common.support")}</ActionTitle>
+            <ActionTitle>{t('common.support')}</ActionTitle>
           </ActionItem>
         </ActionGroup>
       </BottomMenu>

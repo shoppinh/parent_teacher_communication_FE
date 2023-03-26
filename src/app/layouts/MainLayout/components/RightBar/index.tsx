@@ -83,9 +83,9 @@ const StyledButton = styled(PButton)`
 const ButtonWrapper = styled.div`
   border-bottom: 1px solid ${(p) => p.theme.borderLight};
   height: ${pxToRem(StyleConstants.TAB_HEIGHT)}rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 `;
 
 const UnreadCount = styled.div`

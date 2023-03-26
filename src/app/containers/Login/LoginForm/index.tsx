@@ -35,6 +35,7 @@ const InputLabel = styled.div`
   font-size: ${pxToRem(16)}rem;
   line-height: ${pxToRem(24)}rem;
   color: ${(p) => p.theme.text};
+  margin-bottom: ${pxToRem(5)}rem;
 `;
 const Required = styled.span`
   color: ${(p) => p.theme.danger};
@@ -48,6 +49,9 @@ const StyledInput = styled(PInput)`
 `;
 const LoginFormContainer = styled.div`
   ${tw`w-full`}
+`;
+const ActionGroup = styled.div`
+  margin-top: ${pxToRem(20)}rem;
 `;
 const schema = yup.object({
   username: yup
@@ -126,10 +130,12 @@ const LoginForm = () => {
           <StyledInput {...register('password')} type='password' />
           {errors.password && <Required>{errors.password.message}</Required>}
         </InputContainer>
-        <StyledButton type='submit' disabled={!isDirty} variant='primary'>
-          {t('login.login')}
-        </StyledButton>
-        <StyledButton variant='secondary'>{t('login.forgotPassword')}</StyledButton>
+        <ActionGroup>
+          <StyledButton type='submit' disabled={!isDirty} variant='primary'>
+            {t('login.login')}
+          </StyledButton>
+          <StyledButton variant='secondary'>{t('login.forgotPassword')}</StyledButton>
+        </ActionGroup>
       </FormContainer>
     </LoginFormContainer>
   );

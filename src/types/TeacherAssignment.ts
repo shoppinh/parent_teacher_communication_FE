@@ -1,6 +1,6 @@
 import { Class } from './Class';
 import { Subject } from './subject';
-import {Teacher} from "./Admin/Teacher";
+import { Teacher } from './Admin/Teacher';
 
 export interface TeacherAssignmentDetailTokenQuery {
   classId: string;
@@ -14,4 +14,10 @@ export interface TeacherAssignment {
   isClassAdmin: boolean;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface TeacherAssignmentForClass {
+  _id: string;
+  teacher: Teacher;
+  subject: Subject;
 }

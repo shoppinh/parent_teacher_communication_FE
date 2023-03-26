@@ -41,6 +41,7 @@ const TableContainer = styled.div<TableSettingProps>`
 
 const Wrapper = styled.div`
   position: relative;
+  width: 100%;
 `;
 
 // const EllipsisText = styled.div`

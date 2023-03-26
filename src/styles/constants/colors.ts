@@ -35,4 +35,5 @@ export const colors = {
   WHITE_SMOKE: '#edeef3',
   BLACK_SMOKE: '#e4e5ed',
   SILVER2: '#C9C9C9',
+  SILVER3: '#616161',
 };

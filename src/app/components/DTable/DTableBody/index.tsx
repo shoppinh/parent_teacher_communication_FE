@@ -1,7 +1,7 @@
 import { styled } from 'twin.macro';
 import { ColumnProps } from '../DTableHead';
 import React from 'react';
-import {pxToRem} from "../../../../styles/theme/utils";
+import { pxToRem } from '../../../../styles/theme/utils';
 
 const StyledTableData = styled.td`
   border-bottom: ${pxToRem(1)}rem solid ${(p) => p.theme.tableBorder};
@@ -14,7 +14,7 @@ const StyledTableData = styled.td`
 
 const StyledBody = styled.tbody`
   background-color: ${(p) => p.theme.background};
-`
+`;
 
 interface TableBodyProps {
   tableData: any[];

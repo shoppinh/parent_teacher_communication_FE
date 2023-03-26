@@ -1,9 +1,4 @@
 import {
-  MenuItemUnstyled,
-  menuItemUnstyledClasses,
-  MenuUnstyled,
-  MenuUnstyledActions,
-  PopperUnstyled,
   TabPanelUnstyled,
   TabsListUnstyled,
   TabsUnstyled,
@@ -18,11 +13,12 @@ import tw, { styled } from 'twin.macro';
 import { StyleConstants } from '../../../styles/constants/style';
 import { pxToRem } from '../../../styles/theme/utils';
 import FeedList from '../../containers/TeacherHomePage/FeedList';
-import WelcomePage from '../../containers/ParentHome/WelcomePage';
+import WelcomePage from '../../containers/Welcome';
 import InteractionList from '../../containers/ParentHome/InteractionList';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAccessToken } from '../../../store/selectors/session';
 import { useStudentSlice } from '../../../store/slices/student';
+import ClassInfo from '../../containers/ParentHome/ClassInfo';
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -156,7 +152,6 @@ const ParentHomePage = () => {
             {/*<StyledTab>{t('tab.assignments')}</StyledTab>*/}
             <StyledTab>{t('tab.portfolios')}</StyledTab>
             <StyledTab>{t('tab.classInfo')}</StyledTab>
-
           </StyledTabsList>
           {/*<StyledButton*/}
           {/*  type='button'*/}
@@ -187,7 +182,9 @@ const ParentHomePage = () => {
             <InteractionList />
           </TabPanelUnstyled>
           <TabPanelUnstyled value={3}>ho so</TabPanelUnstyled>
-          <TabPanelUnstyled value={4}>thong tin lop</TabPanelUnstyled>
+          <TabPanelUnstyled value={4}>
+            <ClassInfo />
+          </TabPanelUnstyled>
           <TabPanelUnstyled value={5}>5 page</TabPanelUnstyled>
         </TabPaneContent>
       </StyledTabs>

@@ -2,7 +2,6 @@ import React from 'react';
 import Logo from 'assets/images/app-logo.png';
 import tw, { styled } from 'twin.macro';
 import { pxToRem } from '../../../styles/theme/utils';
-import { media } from '../../../styles';
 import { PButton } from '../../components/PButton';
 import { useTranslation } from 'react-i18next';
 import { StyleConstants } from '../../../styles/constants/style';
@@ -11,17 +10,14 @@ import SiteMap from '../../../utils/sitemap';
 import BaseLayout from '../../layouts/BaseLayout';
 
 const Wrapper = styled.div`
-  ${tw`container mx-auto `}
-  ${media.md`
-    margin-top: ${pxToRem(20)}rem;
-  `}
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   border-radius: 6px;
   background-color: ${(p) => p.theme.background};
-  width: 100%;
+  width: 50%;
+  height: 90%;
 `;
 const StyledButton = styled(PButton)`
-  margin-bottom: ${pxToRem(10)}rem;
+  margin-bottom: ${pxToRem(15)}rem;
   color: ${(p) => p.theme.textOpposition};
   font: normal bold 16px / ${StyleConstants.BASE_LINE_HEIGHT}px ${StyleConstants.FONT_FAMILY};
 
@@ -36,6 +32,16 @@ const StyledButton = styled(PButton)`
 const ContentWrapper = styled.div`
   ${tw`flex flex-col items-center`}
   margin: 0 ${pxToRem(20)}rem;
+
+  height: 100%;
+`;
+
+const StyledImage = styled.img`
+  width: 60%;
+`;
+const ActionGroup = styled.div`
+  width: 100%;
+  margin-top: ${pxToRem(120)}rem;
 `;
 
 const Landing = () => {
@@ -45,14 +51,16 @@ const Landing = () => {
     <BaseLayout title={t('landing.title')}>
       <Wrapper>
         <ContentWrapper>
-          <img src={Logo} alt='Logo' />
-          <StyledButton onClick={() => navigate(SiteMap.login.link)}>
-            {t('login.login')}
-          </StyledButton>
-          <StyledButton onClick={() => navigate(SiteMap.register.link)}>
-            {t('login.register')}
-          </StyledButton>
-          <StyledButton>{t('login.forgotPassword')}</StyledButton>
+          <StyledImage src={Logo} alt='Logo' />
+          <ActionGroup>
+            <StyledButton onClick={() => navigate(SiteMap.login.link)}>
+              {t('login.login')}
+            </StyledButton>
+            <StyledButton onClick={() => navigate(SiteMap.register.link)}>
+              {t('login.register')}
+            </StyledButton>
+            <StyledButton>{t('login.forgotPassword')}</StyledButton>
+          </ActionGroup>
         </ContentWrapper>
       </Wrapper>
     </BaseLayout>
