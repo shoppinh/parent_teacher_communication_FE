@@ -183,7 +183,8 @@
     "reports": "Báo cáo",
     "message": "Tin nhắn",
     "user": "Người dùng",
-    "trackingAndAssessment": "Theo dõi và đánh giá"
+    "trackingAndAssessment": "Theo dõi và đánh giá",
+    "classInfo": "Thông tin lớp"
   },
   "menu": {
     "post": "Bài viết",
@@ -207,7 +208,9 @@
     "classGroup": "Lớp học/nhóm",
     "support": "Hỗ trợ",
     "contactAdmin": "Liên hệ quản trị viên",
-    "pleaseSelectChildren": "Vui lòng chọn học sinh"
+    "pleaseSelectChildren": "Vui lòng chọn học sinh",
+    "schools": "Trường học",
+    "classes": "Lớp học"
   },
   "table": {
     "next": "Tiếp theo",
@@ -222,7 +225,19 @@
     "semester": "Học kỳ",
     "year": "Năm học",
     "action": "Hành động",
-    "assessment": "Đánh giá"
+    "assessment": "Đánh giá",
+    "parentName": "Tên phụ huynh",
+    "email": "Email",
+    "phoneNumber": "Số điện thoại ",
+    "age": "Tuổi",
+    "address": "Địa chỉ",
+    "gender": "Giới tính",
+    "parentAge": "Tuổi phụ huynh",
+    "parentId": "ID phụ huynh",
+    "relationship": "Mối quan hệ với học sinh",
+    "degree": "Trình độ",
+    "assignmentId": "ID phân công",
+    "teacherName": "Tên giáo viên"
   },
   "role": {
     "SUPER_USER": "Ban giám hiệu",

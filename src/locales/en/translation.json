@@ -182,7 +182,8 @@
     "reports": "Reports",
     "message": "Message",
     "user": "Users",
-    "trackingAndAssessment": "Tracking & Assessment"
+    "trackingAndAssessment": "Tracking & Assessment",
+    "classInfo": "Class Info"
   },
   "menu": {
     "post": "Post",
@@ -206,7 +207,9 @@
     "classGroup": "Class/Group",
     "support": "Support",
     "contactAdmin": "Contact Admin",
-    "pleaseSelectChildren": "Please select children"
+    "pleaseSelectChildren": "Please select children",
+    "schools": "Schools",
+    "classes": "Classes"
   },
   "table": {
     "next": "Next",
@@ -221,7 +224,17 @@
     "semester": "Semester",
     "year": "Year",
     "action": "Action",
-    "assessment": "Assessment"
+    "assessment": "Assessment",
+    "parentName": "Parent Name",
+    "email": "Parent Email",
+    "phoneNumber": "Phone Number",
+    "age": "Age",
+    "address": "Address",
+    "parentId": "Parent ID",
+    "relationship": "Parent Relationship",
+    "degree": "Degree",
+    "assignmentId": "Assignment ID",
+    "teacherName": "Teacher Name"
   },
   "role": {
     "SUPER_USER": "Admin",

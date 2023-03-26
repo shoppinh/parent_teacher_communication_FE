@@ -5,5 +5,6 @@ import { RootState } from 'types';
 const selectDomain = (state: RootState) => state.class || initialState;
 export const getClassList = createSelector([selectDomain], (state) => state.data.classes);
 
-export const getClassListLoading = createSelector([selectDomain], (state) => state.loading);
+export const getClassLoading = createSelector([selectDomain], (state) => state.loading);
 export const getClassListError = createSelector([selectDomain], (state) => state.error);
+export const getCurrentClass = createSelector([selectDomain], (state) => state.data.currentClass);

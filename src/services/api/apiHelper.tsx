@@ -17,7 +17,7 @@ import { DeviceTokenQuery, RegisterQuery } from 'types/Register';
 import {AuthQuery, LogoutQuery, OnlyTokenQuery, RefreshTokenQuery} from 'types/Session';
 import { TeacherDetailQuery } from '../../types/Teacher';
 import * as api from './index';
-import { ClassListTokenQuery } from '../../types/Class';
+import {ClassDetailTokenQuery, ClassListTokenQuery} from '../../types/Class';
 import { AddCommentTokenRequest } from '../../types/Comment';
 import {
   AddProgressTokenQuery,
@@ -144,6 +144,9 @@ export function* apiGetClassListByRole(query: ClassListTokenQuery) {
   return yield call(api.getClassListByRole, query);
 }
 
+export function* apiGetClassDetail(query: ClassDetailTokenQuery) {
+  return yield call(api.getClassDetail, query);
+}
 // Progress
 
 export function* apiGetProgressListByClass(query: ProgressListTokenQuery) {

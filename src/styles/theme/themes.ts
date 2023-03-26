@@ -11,6 +11,8 @@ const lightTheme = {
   textActive: colors.GREEN_HAZE,
   textInProgress: colors.TANGERINE,
   textReady: colors.CERULEAN,
+  textContrast: colors.SILVER3,
+
   placeholder: colors.SUVA_GRAY,
   bsPlacehodler: colors.PALE_SKY,
   separating: colors.ALTO,
@@ -52,6 +54,7 @@ const darkTheme: Theme = {
   textInProgress: colors.TANGERINE,
   textReady: colors.CERULEAN,
   textBlur: colors.SILVER,
+  textContrast: colors.SILVER3,
   placeholder: colors.SUVA_GRAY,
   bsPlacehodler: colors.PALE_SKY,
   separating: colors.ALTO,
