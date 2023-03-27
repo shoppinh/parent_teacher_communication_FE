@@ -115,7 +115,7 @@ const Popper = styled(PopperUnstyled)`
 const StyledTabs = styled(TabsUnstyled)`
   height: 100%;
 `;
-const TeacherHomePage = () => {
+const TeacherHomePage: React.FC = () => {
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
   const isOpen = Boolean(anchorEl);

@@ -19,7 +19,6 @@ import { StyleConstants } from '../../../../../styles/constants/style';
 import { pxToRem } from '../../../../../styles/theme/utils';
 import { PButton } from '../../../../components/PButton';
 import { Conversation as ConversationType } from '../../../../../types/Conversation';
-import NewMessageModal from '../../../../containers/Conversation/NewMessageModal';
 import {
   TabPanelUnstyled,
   TabsListUnstyled,
@@ -27,7 +26,6 @@ import {
   TabUnstyled,
   tabUnstyledClasses,
 } from '@mui/base';
-import FeedList from '../../../../containers/TeacherHomePage/FeedList';
 import { getUserList } from '../../../../../store/selectors/config';
 import { useTranslation } from 'react-i18next';
 import { User } from '../../../../../types/User';
@@ -190,9 +188,19 @@ const UserItem: React.FC<UserItemProp> = ({ handleOpenConversation = () => {}, d
     </MessageItem>
   );
 };
-const RightBar = () => {
-  const [showConversation, setShowConversation] = useState(false);
-  const [showNewMessageModal, setShowNewMessageModal] = useState(false);
+interface RighBarProps {
+  handleOpenNewConversation: (newConversationPayload: NewConversationPayload) => void;
+  handleOpenConversation: (
+    toUserRole: string,
+    toUserPhone: string,
+    toUserId: string,
+    roomId: number
+  ) => void;
+}
+const RightBar: React.FC<RighBarProps> = ({
+  handleOpenConversation,
+  handleOpenNewConversation,
+}) => {
   const { t } = useTranslation();
   const { actions: conversationActions } = useConversationSlice();
   const currentAccessToken = useSelector(getAccessToken);
@@ -200,53 +208,7 @@ const RightBar = () => {
   const currentUser = useSelector(getUser);
   const currentUserConversationList = useSelector(getConversationList);
   const dispatch = useDispatch();
-  const handleCloseConversation = useCallback(() => {
-    setShowConversation(false);
-    if (currentAccessToken) {
-      const payload: ConversationListQuery = {
-        mobilePhone: currentUser?.mobilePhone || '',
-        roleId: mapStringRoleToNumber(currentUser?.roleId).toString() || '',
-        token: currentAccessToken,
-      };
-      dispatch(conversationActions.loadConversationList(payload));
-    }
-  }, [
-    conversationActions,
-    currentAccessToken,
-    currentUser?.mobilePhone,
-    currentUser?.roleId,
-    dispatch,
-  ]);
-  const handleNewMessage = () => {
-    setShowNewMessageModal(true);
-  };
-  const conversationToUserData = useSelector(getCurrentToUser) || {
-    roleId: 1,
-    mobilePhone: '0397273869',
-    userName: 'Admin',
-  };
-  const currentRoomId = useSelector(getCurrentRoomId) || NaN;
-  const handleOpenConversation = useCallback(
-    (toUserRole: string, toUserPhone: string, toUserId: string, roomId: number) => {
-      setShowConversation(true);
-      dispatch(
-        conversationActions.updateToCurrentUser({
-          roleId: toUserRole,
-          mobilePhone: toUserPhone,
-          _id: toUserId,
-        })
-      );
-      dispatch(conversationActions.updateCurrentRoomId(roomId));
-    },
-    [conversationActions, dispatch]
-  );
-  const handleOpenNewConversation = useCallback(
-    (newConversationPayload: NewConversationPayload) => {
-      setShowConversation(true);
-      dispatch(conversationActions.updateToCurrentUser(newConversationPayload));
-    },
-    [conversationActions, dispatch]
-  );
+
   const userList = useSelector(getUserList);
 
   useEffect(() => {
@@ -312,26 +274,9 @@ const RightBar = () => {
         </TabPaneContent>
       </StyledTabs>
 
-      <PModal open={showConversation} onClose={handleCloseConversation}>
-        <Conversation
-          roomId={currentRoomId}
-          token={currentAccessToken}
-          refreshToken={currentRefreshToken}
-          fromUserPhone={currentUser?.mobilePhone || ''}
-          fromUserName={currentUser?.username}
-          toUserPhone={conversationToUserData?.mobilePhone || '0397273869'}
-          fromUserRole={mapStringRoleToNumber(currentUser?.roleId)}
-          toUserRole={
-            conversationToUserData?.roleId ? parseInt(conversationToUserData?.roleId.toString()) : 1
-          }
-          onClose={() => {
-            setShowConversation(false);
-          }}
-        />
-      </PModal>
-      <PModal open={showNewMessageModal} onClose={() => setShowNewMessageModal(false)}>
-        <NewMessageModal onClose={() => setShowNewMessageModal(false)} />
-      </PModal>
+      {/*<PModal open={showNewMessageModal} onClose={() => setShowNewMessageModal(false)}>*/}
+      {/*  <NewMessageModal onClose={() => setShowNewMessageModal(false)} />*/}
+      {/*</PModal>*/}
     </Container>
   );
 };

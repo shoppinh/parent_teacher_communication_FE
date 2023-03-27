@@ -26,7 +26,7 @@ const Avatar = styled.img`
   margin-right: ${pxToRem(12)}rem;
 `;
 const Title = styled.span`
-  font-size: ${pxToRem(16)}rem;
+  font-size: ${pxToRem(14)}rem;
   font-weight: bold;
 `;
 const MessageContentWrapper = styled.div``;

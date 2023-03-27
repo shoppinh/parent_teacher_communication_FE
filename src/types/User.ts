@@ -7,9 +7,10 @@ export interface User {
   username?: string;
   firstname?: string;
   lastname?: string;
-  fullName?: string;
+  fullname?: string;
   mobilePhone: string;
   roleId: string;
+  role?: string;
   lastLogin?: Date;
   createdAt?: Date;
   updatedAt?: Date;

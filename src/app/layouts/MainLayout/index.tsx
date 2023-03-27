@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import tw, { styled } from 'twin.macro';
 import { StyleConstants } from '../../../styles/constants/style';
 import { PDrawer } from '../../components/PDrawer';
@@ -10,7 +10,14 @@ import { pxToRem } from '../../../styles/theme/utils';
 import BaseLayout from '../BaseLayout';
 import { useConfigSlice } from '../../../store/slices/config';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAccessToken } from '../../../store/selectors/session';
+import { getAccessToken, getRefreshToken, getUser } from '../../../store/selectors/session';
+import { Conversation } from '../../pages/Conversation';
+import { mapStringRoleToNumber } from '../../../utils/helpers';
+import { PModal } from '../../components/PModal';
+import { ConversationListQuery, NewConversationPayload } from '../../../types/Conversation';
+import { getCurrentRoomId, getCurrentToUser } from '../../../store/selectors/conversation';
+import { useConversationSlice } from '../../../store/slices/conversation';
+import { useConversation } from '../../../utils/hook/useConversation';
 
 interface Props {
   children?: React.ReactNode;
@@ -58,6 +65,20 @@ const NavigationBottomBar = styled.div`
 const MainLayout: React.FC<Props> = ({ children, headerTitle, title }) => {
   const [leftBarOpen, setLeftBarOpen] = React.useState(false);
   const [rightBarOpen, setRightBarOpen] = React.useState(false);
+
+  const {
+    handleOpenConversation,
+    handleOpenNewConversation,
+    showConversation,
+    handleCloseConversation,
+    currentRefreshToken,
+    currentUser,
+    currentAccessToken,
+    setShowConversation,
+    conversationToUserData,
+    currentRoomId,
+  } = useConversation();
+
   const onLeftBarClick = useCallback(() => {
     setLeftBarOpen(!leftBarOpen);
   }, [leftBarOpen]);
@@ -77,7 +98,10 @@ const MainLayout: React.FC<Props> = ({ children, headerTitle, title }) => {
           />
           <CenterWrapper>
             <Center>{!!children && children}</Center>
-            <RightBar />
+            <RightBar
+              handleOpenNewConversation={handleOpenNewConversation}
+              handleOpenConversation={handleOpenConversation}
+            />
           </CenterWrapper>
         </MainContent>
 
@@ -101,6 +125,25 @@ const MainLayout: React.FC<Props> = ({ children, headerTitle, title }) => {
             <MobileLeftBar />
           </PDrawer>
         )}
+        <PModal open={showConversation} onClose={handleCloseConversation}>
+          <Conversation
+            roomId={currentRoomId}
+            token={currentAccessToken}
+            refreshToken={currentRefreshToken}
+            fromUserPhone={currentUser?.mobilePhone || ''}
+            fromUserName={currentUser?.fullname || currentUser?.username}
+            toUserPhone={conversationToUserData?.mobilePhone || '0397273869'}
+            fromUserRole={mapStringRoleToNumber(currentUser?.roleId)}
+            toUserRole={
+              conversationToUserData?.roleId
+                ? parseInt(conversationToUserData?.roleId.toString())
+                : 1
+            }
+            onClose={() => {
+              setShowConversation(false);
+            }}
+          />
+        </PModal>
       </Container>
       <NavigationBottomBar />
     </BaseLayout>

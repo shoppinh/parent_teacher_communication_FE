@@ -244,7 +244,7 @@ export const Conversation: React.FC<Props> = ({
           isRead: false,
           mobilePhone: messages.fromUser.mobilePhone,
           roleId: messages.fromUser.roleId,
-          userName: messages.fromUser.userName,
+          userName: messages.fromUser.fullName || messages.fromUser.userName,
           roomId: messages.roomId,
           userId: messages.fromUser.id,
         };
