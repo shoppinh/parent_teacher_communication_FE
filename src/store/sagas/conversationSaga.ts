@@ -27,8 +27,7 @@ const ParseMessageData = (data) => {
       roleId: item.roleId,
       updatedAt: item.updatedAt,
       userId: item.userId,
-      userName:
-        item?.firstName && item?.lastName ? `${item.firstName} ${item.lastName}` : item.userName,
+      userName: item.fullName || item.userName,
     };
   });
 };

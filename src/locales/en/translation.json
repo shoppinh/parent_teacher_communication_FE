@@ -240,5 +240,10 @@
     "SUPER_USER": "Admin",
     "TEACHER": "Teacher",
     "PARENT": "Parent"
+  },
+  "classInfo": {
+    "title": "Class Info: {{className}}",
+    "parentAndChildrenInfo": "Parent and Children Info",
+    "teacherInfo": "Teacher Info"
   }
 }

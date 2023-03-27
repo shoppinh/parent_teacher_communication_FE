@@ -32,6 +32,7 @@ export function mapClassList(data: any) {
     });
 }
 
+
 export function* getClassListByRole({ payload }: PayloadAction<ClassListTokenQuery>) {
   const { role } = payload;
   try {

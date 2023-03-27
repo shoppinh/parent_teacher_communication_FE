@@ -113,7 +113,7 @@ const parseUserData = (data: any): User => {
     username: data.username,
     firstname: data.firstname,
     lastname: data.lastname,
-    fullName: data.fullName,
+    fullname: data.fullname,
     mobilePhone: data.mobilePhone,
     isActive: data.isActive,
     roleId: data.role,

@@ -1,129 +1,87 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { StudentParentIncludedInfo } from '../../../../../../types/Student';
-import useTable from '../../../../../../utils/hook/useTable';
-import { ROWS_PER_PAGE } from '../../../../../../utils/constants';
-import { paginate } from '../../../../../../utils/helpers';
-import { ColumnProps } from '../../../../../components/DTable/DTableHead';
-import { Progress } from '../../../../../../types/Progress';
 import { useTranslation } from 'react-i18next';
-import DTable from '../../../../../components/DTable';
+import { styled } from 'twin.macro';
+import AvatarPlaceholder from '../../../../../../assets/images/person-placeholder.png';
+import { pxToRem } from '../../../../../../styles/theme/utils';
+import { PLoadingIndicator } from '../../../../../components/PLoadingIndicatior';
+import { PModal } from '../../../../../components/PModal';
+import StudentDetailModal from '../StudentDetailModal';
+import { NewConversationPayload } from '../../../../../../types/Conversation';
+
 interface Props {
   data: StudentParentIncludedInfo[];
   loading: boolean;
+  handleOpenNewConversation: (newConversationPayload: NewConversationPayload) => void;
 }
-const StudentAndParentTableInfo: React.FC<Props> = ({ data, loading }) => {
-  const { t } = useTranslation();
-  const columns: ColumnProps[] = useMemo(() => {
-    return [
-      {
-        label: t('table.studentId'),
-        accessor: '_id',
-        style: {
-          wordBreak: 'break-word',
-          width: '20%',
-        },
-      },
-      {
-        label: t('table.studentName'),
-        accessor: 'name',
-        style: {
-          width: '20%',
-        },
-      },
-      {
-        label: t('table.age'),
-        accessor: 'age',
-        style: {
-          width: '20%',
-        },
-      },
-      {
-        label: t('table.gender'),
-        accessor: 'gender',
-        style: {
-          width: '20%',
-        },
-      },
-      {
-        label: t('table.parentId'),
-        accessor: 'parentId',
-        render: (item: StudentParentIncludedInfo) => item.parentId._id,
-        style: {
-          width: '20%',
-          wordBreak: 'break-word',
-        },
-      },
 
-      {
-        label: t('table.parentName'),
-        accessor: 'parentName',
-        render: (item: StudentParentIncludedInfo) =>
-          item.parentId?.userId?.fullName || item.parentId?.userId?.username,
-        style: {
-          width: '20%',
-        },
-      },
-      {
-        label: t('table.phoneNumber'),
-        accessor: 'parentPhone',
-        render: (item: StudentParentIncludedInfo) => item.parentId?.userId?.mobilePhone,
-        style: {
-          width: '20%',
-        },
-      },
-      {
-        label: t('table.parentAge'),
-        accessor: 'parentAge',
-        render: (item: StudentParentIncludedInfo) => item.parentId.age,
-        style: {
-          width: '20%',
-        },
-      },
-      {
-        label: t('table.address'),
-        accessor: 'parentAddress',
-        render: (item: StudentParentIncludedInfo) => item.parentId.address,
-        style: {
-          width: '20%',
-        },
-      },
-      {
-        label: t('table.relationship'),
-        accessor: 'parentRelationship',
-        render: (item: StudentParentIncludedInfo) => item.relationship,
-        style: {
-          width: '20%',
-        },
-      },
-    ];
-  }, [t]);
-  const { paginationRange, setCurrentPage, currentPage } = useTable(
-    data?.length || 0,
-    columns,
-    ROWS_PER_PAGE,
-    ''
-  );
-  const renderedData = useMemo(() => {
-    if (data) {
-      return paginate(data, currentPage, ROWS_PER_PAGE);
-    }
-    return [];
-  }, [currentPage, data]);
-  return (
-    <DTable
-      columns={columns}
-      tableData={renderedData}
-      paginationRange={paginationRange}
-      handleSorting={() => {}}
-      currentPage={currentPage}
-      setCurrentPage={setCurrentPage}
-      totalItems={data?.length || 0}
-      rowsPerPage={ROWS_PER_PAGE}
-      isLoading={loading}
-      tableSetting={{
-        tableLayout: 'fixed',
-      }}
-    />
+const Container = styled.div``;
+const ItemList = styled.ul`
+  list-style: none;
+  padding: 0;
+`;
+const ItemRow = styled.li`
+  display: flex;
+  align-items: center;
+  background-color: ${(p) => p.theme.background};
+  padding: ${pxToRem(12)}rem;
+  border-bottom: 1px solid ${(p) => p.theme.borderLight};
+  &:hover {
+    background-color: ${(p) => p.theme.contrastBackground};
+    cursor: pointer;
+  }
+`;
+const AvatarBadge = styled.img`
+  background-image: url(${AvatarPlaceholder});
+  background-size: cover;
+  background-position: center center;
+  width: 70px;
+  height: 70px;
+  border-radius: 50px;
+  margin-right: ${pxToRem(12)}rem;
+`;
+const InfoContent = styled.div``;
+const InfoTitle = styled.h3`
+  font: 400 ${pxToRem(14)}rem / ${pxToRem(20)}rem ${(p) => p.theme.fontFamily};
+  color: ${(p) => p.theme.text};
+`;
+const ParentInfo = styled.div`
+  font: 400 ${pxToRem(14)}rem / ${pxToRem(20)}rem ${(p) => p.theme.fontFamily};
+  color: ${(p) => p.theme.textContrast};
+`;
+const StudentAndParentTableInfo: React.FC<Props> = ({ data, loading, handleOpenNewConversation }) => {
+  const { t } = useTranslation();
+  const [selectedItem, setSelectedItem] = React.useState<StudentParentIncludedInfo | null>(null);
+  const [detailModalOpen, setDetailModalOpen] = React.useState<boolean>(false);
+  const handleOpenDetailModal = (item: StudentParentIncludedInfo) => {
+    setSelectedItem(item);
+    setDetailModalOpen(true);
+  };
+  const onSendMessageToParent = (newConversationPayload: NewConversationPayload) => {
+    setDetailModalOpen(false);
+    handleOpenNewConversation(newConversationPayload);
+  };
+  return loading ? (
+    <PLoadingIndicator />
+  ) : (
+    <Container>
+      <ItemList>
+        {data?.map((item, index) => {
+          return (
+            <ItemRow key={index} onClick={() => handleOpenDetailModal(item)}>
+              <AvatarBadge />
+              <InfoContent>
+                <InfoTitle>Học sinh: {item?.name}</InfoTitle>
+                <ParentInfo>Phụ huynh: {item?.parentId?.userId?.fullname}</ParentInfo>
+              </InfoContent>
+            </ItemRow>
+          );
+        })}
+      </ItemList>
+      <PModal open={detailModalOpen} onClose={() => setDetailModalOpen(false)}>
+        <StudentDetailModal data={selectedItem} onSendMessageToParent={onSendMessageToParent} />
+      </PModal>
+    </Container>
   );
 };
 
