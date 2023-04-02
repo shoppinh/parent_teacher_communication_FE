@@ -82,7 +82,11 @@
     "save": "Lưu",
     "student": "Học sinh",
     "subject": "Môn học",
-    "assessment": "Đánh giá"
+    "assessment": "Đánh giá",
+    "name": "Họ và tên",
+    "age": "Tuổi",
+    "gender": "Giới tính",
+    "relationship": "Mối quan hệ"
   },
   "register": {
     "title": "Tạo tài khoản",
@@ -210,7 +214,10 @@
     "contactAdmin": "Liên hệ quản trị viên",
     "pleaseSelectChildren": "Vui lòng chọn học sinh",
     "schools": "Trường học",
-    "classes": "Lớp học"
+    "classes": "Lớp học",
+    "female": "Nữ",
+    "male": "Nam",
+    "update": "Cập nhật"
   },
   "table": {
     "next": "Tiếp theo",

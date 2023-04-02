@@ -1,6 +1,6 @@
-export { login, logout, getUserInfo, refreshToken } from './authentication';
+export { login, logout, getUserProfile, refreshToken } from './authentication';
 export { register, registerDeviceToken } from './register';
-export { getPlatformSetting, updateLanguage, getSystemSettings } from './config';
+export { getPlatformSetting, updateLanguage, getSystemSettings, sendInvitation } from './config';
 export { getClassListByRole, getClassDetail } from './class';
 export {
   getConversationDetail,
@@ -28,5 +28,13 @@ export {
   addProgress,
 } from './progress';
 
-export { getStudentListByClass } from './student';
-export { getTeacherAssignmentByClassAndTeacher, getStudentListByParent, getProgressListByStudent } from './teacherAssignment';
+export {
+  getStudentListByClass,
+  getStudentListByParent,
+  getProgressListByStudent,
+  updateStudent,
+  addStudent,
+  removeStudent,
+} from './student';
+export { getTeacherAssignmentByClassAndTeacher } from './teacherAssignment';
+export { assignStudent, removeStudentFromClass } from './teacher';

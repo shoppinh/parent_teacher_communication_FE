@@ -2,6 +2,7 @@ import { all, call, put, takeLatest } from 'redux-saga/effects';
 import {
   apiGetPlatformSetting,
   apiGetSystemSettings,
+  apiSendInvitation,
   apiUpdateLanguage,
 } from 'services/api/apiHelper';
 import { configActions as actions } from 'store/slices/config';
@@ -11,6 +12,7 @@ export function* configSaga() {
     takeLatest(actions.loadPlatformSetting.type, getPlatformSetting),
     takeLatest(actions.doUpdateLanguage.type, doUpdateLanguage),
     takeLatest(actions.loadSystemSetting.type, getSystemSettings),
+    takeLatest(actions.sendInvitation.type, sendInvitation),
   ]);
 }
 
@@ -82,6 +84,23 @@ export function* getSystemSettings() {
       yield put(actions.loadedSystemSetting(response.data.data));
     } else {
       yield put(actions.Error(response.data.error));
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* sendInvitation({ payload }: any) {
+  try {
+    const response = yield call(apiSendInvitation, payload);
+    if (response.data && response.data.status) {
+      yield put(actions.sentInvitation());
+    } else {
+      yield put(actions.Error(response.data.error));
+      console.log(
+        '🚀 ~ file: configSaga.ts:101 ~ function*sendInvitation ~ response.data.error:',
+        response.data.error
+      );
     }
   } catch (err) {
     console.log(err);

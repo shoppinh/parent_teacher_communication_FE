@@ -106,44 +106,84 @@ const InteractionList: React.FC<Props> = ({
         label: t('table.studentName'),
         accessor: 'studentName',
         render: (item: Progress) => item.student.name,
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.studentId'),
         accessor: 'studentId',
         render: (item: Progress) => item.student._id,
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.subjectName'),
         accessor: 'subjectName',
         render: (item: Progress) => item.subject.name,
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.frequentMark'),
         accessor: 'frequentMark',
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.middleExamMark'),
         accessor: 'middleExamMark',
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.finalExamMark'),
         accessor: 'finalExamMark',
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.averageMark'),
         accessor: 'averageMark',
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.semester'),
         accessor: 'semester',
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.year'),
         accessor: 'year',
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.assessment'),
         accessor: 'note',
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.action'),
@@ -164,7 +204,7 @@ const InteractionList: React.FC<Props> = ({
         },
       },
     ];
-  }, [handleOpenAssignMarkModal, handleOpenRemoveMarkModal]);
+  }, [handleOpenAssignMarkModal, handleOpenRemoveMarkModal, t]);
 
   const progressListData = useSelector(getProgressList);
 
@@ -201,6 +241,9 @@ const InteractionList: React.FC<Props> = ({
         totalItems={progressListData.totalItem}
         rowsPerPage={ROWS_PER_PAGE}
         isLoading={progressLoading}
+        tableSetting={{
+          tableLayout: 'fixed',
+        }}
       />
       <PModal open={isAssignMarkModalOpen} onClose={handleCloseAssignMarkModal}>
         <AssignMarkModal

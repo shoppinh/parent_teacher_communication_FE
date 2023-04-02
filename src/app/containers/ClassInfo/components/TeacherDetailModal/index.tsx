@@ -1,10 +1,10 @@
 import React from 'react';
 import tw, { styled } from 'twin.macro';
-import { pxToRem } from '../../../../../../styles/theme/utils';
-import AvatarPlaceholder from '../../../../../../assets/images/person-placeholder.png';
-import { TeacherAssignmentForClass } from '../../../../../../types/TeacherAssignment';
-import { NewConversationPayload } from '../../../../../../types/Conversation';
-import { mapStringRoleToNumber } from '../../../../../../utils/helpers';
+import { pxToRem } from '../../../../../styles/theme/utils';
+import AvatarPlaceholder from '../../../../../assets/images/person-placeholder.png';
+import { TeacherAssignmentForClass } from '../../../../../types/TeacherAssignment';
+import { NewConversationPayload } from '../../../../../types/Conversation';
+import { mapStringRoleToNumber } from '../../../../../utils/helpers';
 
 interface Props {
   data: TeacherAssignmentForClass | null;

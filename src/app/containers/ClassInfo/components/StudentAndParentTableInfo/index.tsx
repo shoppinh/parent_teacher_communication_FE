@@ -1,13 +1,13 @@
 import React from 'react';
-import { StudentParentIncludedInfo } from '../../../../../../types/Student';
+import { StudentParentIncludedInfo } from '../../../../../types/Student';
 import { useTranslation } from 'react-i18next';
 import { styled } from 'twin.macro';
-import AvatarPlaceholder from '../../../../../../assets/images/person-placeholder.png';
-import { pxToRem } from '../../../../../../styles/theme/utils';
-import { PLoadingIndicator } from '../../../../../components/PLoadingIndicatior';
-import { PModal } from '../../../../../components/PModal';
+import AvatarPlaceholder from '../../../../../assets/images/person-placeholder.png';
+import { pxToRem } from '../../../../../styles/theme/utils';
+import { PLoadingIndicator } from '../../../../components/PLoadingIndicatior';
+import { PModal } from '../../../../components/PModal';
 import StudentDetailModal from '../StudentDetailModal';
-import { NewConversationPayload } from '../../../../../../types/Conversation';
+import { NewConversationPayload } from '../../../../../types/Conversation';
 
 interface Props {
   data: StudentParentIncludedInfo[];
@@ -26,6 +26,7 @@ const ItemRow = styled.li`
   background-color: ${(p) => p.theme.background};
   padding: ${pxToRem(12)}rem;
   border-bottom: 1px solid ${(p) => p.theme.borderLight};
+
   &:hover {
     background-color: ${(p) => p.theme.contrastBackground};
     cursor: pointer;
@@ -49,7 +50,11 @@ const ParentInfo = styled.div`
   font: 400 ${pxToRem(14)}rem / ${pxToRem(20)}rem ${(p) => p.theme.fontFamily};
   color: ${(p) => p.theme.textContrast};
 `;
-const StudentAndParentTableInfo: React.FC<Props> = ({ data, loading, handleOpenNewConversation }) => {
+const StudentAndParentTableInfo: React.FC<Props> = ({
+  data,
+  loading,
+  handleOpenNewConversation,
+}) => {
   const { t } = useTranslation();
   const [selectedItem, setSelectedItem] = React.useState<StudentParentIncludedInfo | null>(null);
   const [detailModalOpen, setDetailModalOpen] = React.useState<boolean>(false);

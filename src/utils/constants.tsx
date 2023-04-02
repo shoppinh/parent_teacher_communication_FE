@@ -105,4 +105,6 @@ export const AdminContact: NewConversationPayload = {
 export type SORT_TYPE = 'asc' | 'desc' | -1 | 1;
 export const ROWS_PER_PAGE = 10;
 
+export const GENDERS = ['female','male']
+
 export { SiteMap };

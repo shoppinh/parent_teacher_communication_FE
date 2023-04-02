@@ -19,6 +19,8 @@ import { useNavigate } from 'react-router-dom';
 import { getSystemSettings } from '../../../../../store/selectors/config';
 import { useTranslation } from 'react-i18next';
 import ProfileRow from './ProfileRow';
+import InvitationModal from './InvitationModal';
+import SettingModal from './SettingModal';
 
 interface ClassRowProps {
   isActive: boolean;
@@ -91,29 +93,7 @@ const ClassRowItem = styled.div<ClassRowProps>`
 const SchoolRowItem = styled(ClassRowItem)`
   border-left: 4px solid ${(p) => p.theme.danger};
 `;
-const SettingModal = styled.div`
-  width: 50vw;
-  height: 70vh;
-  background-color: ${(p) => p.theme.background};
-  border-radius: 10px;
-  padding: ${pxToRem(15)}rem;
-`;
-const SettingModalHeader = styled.div`
-  margin-bottom: ${pxToRem(20)}rem;
-  text-align: center;
-  font-size: ${pxToRem(22)}rem;
-  font-weight: 700;
-`;
-const SettingModalBody = styled.div``;
-const SettingModalContainer = styled.div`
-  ${tw`container mx-auto`}
-  padding: 0 40px;
-`;
-const StyledButton = styled(PButton)`
-  margin-bottom: ${pxToRem(20)}rem;
-  font: normal bold 16px / ${StyleConstants.BASE_LINE_HEIGHT}px ${StyleConstants.FONT_FAMILY};
-  ${tw`rounded-full w-full p-3`}
-`;
+
 const ClassListLabel = styled.div`
   padding: 0 15px 0 25px;
   color: ${(p) => p.theme.textContrast};
@@ -132,26 +112,30 @@ const StyledIcon = styled(PIcon)`
 const CategorizedSection = styled.div`
   margin-bottom: ${pxToRem(15)}rem;
 `;
-const LeftBar = () => {
+
+interface Props {
+  isShowSchoolAndClassList?: boolean;
+}
+const LeftBar: React.FC<Props> = ({ isShowSchoolAndClassList = true }) => {
   const [isShowOptionModal, setIsShowOptionModal] = useState(false);
-  const [isShowClassList, setIsShowClassList] = useState(true);
-  const [isShowSchoolList, setIsShowSchoolList] = useState(true);
+  const [isShowInvitationModal, setIsShowInvitationModal] = useState(false);
+  const [isShowClassList, setIsShowClassList] = useState(isShowSchoolAndClassList);
+  const [isShowSchoolList, setIsShowSchoolList] = useState(isShowSchoolAndClassList);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const classId = queryParams.get(queryString.classId);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { actions: sessionActions } = useSessionSlice();
   const { actions: classActions } = useClassSlice();
   const currentAccessToken = useSelector(getAccessToken);
   const currentUser = useSelector(getUser);
   const systemSettings = useSelector(getSystemSettings);
-  const previousAuthStorage = localStorage.getItem(PREVIOUS_STORAGE_KEY);
-  const previousAuth = JSON.parse(
-    previousAuthStorage && previousAuthStorage !== '' ? previousAuthStorage : '{}'
-  ) as AuthPayLoad;
-  const handleCloseModal = () => {
+
+  const handleCloseSettingModal = () => {
     setIsShowOptionModal(false);
+  };
+  const handleCloseInvitationModal = () => {
+    setIsShowInvitationModal(false);
   };
   const toggleShowClassList = () => {
     setIsShowClassList((prev) => !prev);
@@ -174,76 +158,73 @@ const LeftBar = () => {
           <img src={Logo} alt='Logo' width='70%' />
         </ImageWrapper>
         <ProfileRow data={currentUser} />
-
-        <CategorizedSection>
-          <ClassListLabel>
-            <ClassListText>{t('common.schools')}</ClassListText>
-            <StyledIcon
-              className={`partei-circle-${isShowSchoolList ? 'down' : 'up'}`}
-              onClick={toggleShowSchoolList}
-            />
-          </ClassListLabel>
-          {isShowSchoolList && (
-            <ClassListContainer>
-              <SchoolRowItem
-                isActive={classId ? classId === systemSettings?.schoolInfo?._id : false}
-                onClick={() =>
-                  navigate({
-                    pathname: location.pathname,
-                    search: `?${queryString.classId}=${systemSettings?.schoolInfo?._id}`,
-                  })
-                }
-                key={systemSettings?.schoolInfo?._id}
-              >
-                {systemSettings?.schoolInfo?.name}
-              </SchoolRowItem>
-            </ClassListContainer>
-          )}
-        </CategorizedSection>
-        <CategorizedSection>
-          <ClassListLabel>
-            <ClassListText>{t('common.classes')}</ClassListText>
-            <StyledIcon
-              className={`partei-circle-${isShowClassList ? 'down' : 'up'}`}
-              onClick={toggleShowClassList}
-            />
-          </ClassListLabel>
-          {isShowClassList && (
-            <ClassListContainer>
-              {classList?.data?.map((item) => {
-                return (
-                  <ClassRowItem
-                    isActive={classId ? item._id === classId : false}
+        {isShowSchoolAndClassList && (
+          <>
+            <CategorizedSection>
+              <ClassListLabel>
+                <ClassListText>{t('common.schools')}</ClassListText>
+                <StyledIcon
+                  className={`partei-circle-${isShowSchoolList ? 'down' : 'up'}`}
+                  onClick={toggleShowSchoolList}
+                />
+              </ClassListLabel>
+              {isShowSchoolList && (
+                <ClassListContainer>
+                  <SchoolRowItem
+                    isActive={classId ? classId === systemSettings?.schoolInfo?._id : false}
                     onClick={() =>
                       navigate({
                         pathname: location.pathname,
-                        search: `?${queryString.classId}=${item._id}`,
+                        search: `?${queryString.classId}=${systemSettings?.schoolInfo?._id}`,
                       })
                     }
-                    key={item._id}
+                    key={systemSettings?.schoolInfo?._id}
                   >
-                    {item.name}
-                  </ClassRowItem>
-                );
-              })}
-            </ClassListContainer>
-          )}
-        </CategorizedSection>
+                    {systemSettings?.schoolInfo?.name}
+                  </SchoolRowItem>
+                </ClassListContainer>
+              )}
+            </CategorizedSection>
+            <CategorizedSection>
+              <ClassListLabel>
+                <ClassListText>{t('common.classes')}</ClassListText>
+                <StyledIcon
+                  className={`partei-circle-${isShowClassList ? 'down' : 'up'}`}
+                  onClick={toggleShowClassList}
+                />
+              </ClassListLabel>
+              {isShowClassList && (
+                <ClassListContainer>
+                  {classList?.data?.map((item) => {
+                    return (
+                      <ClassRowItem
+                        isActive={classId ? item._id === classId : false}
+                        onClick={() =>
+                          navigate({
+                            pathname: location.pathname,
+                            search: `?${queryString.classId}=${item._id}`,
+                          })
+                        }
+                        key={item._id}
+                      >
+                        {item.name}
+                      </ClassRowItem>
+                    );
+                  })}
+                </ClassListContainer>
+              )}
+            </CategorizedSection>
+          </>
+        )}
       </ContentWrapper>
       <BottomMenu>
         <ActionGroup>
           <ActionItem>
-            <ActionButton>
+            <ActionButton onClick={() => setIsShowInvitationModal(true)}>
               <ActionIcon className='partei-user-plus' />
             </ActionButton>
             <ActionTitle>{t('common.inviteMember')}</ActionTitle>
           </ActionItem>
-          {/*<ActionItem>*/}
-          {/*  <ActionButton>*/}
-          {/*    <ActionIcon className='partei-users' />*/}
-          {/*  </ActionButton>*/}
-          {/*  <ActionTitle>{t('common.classGroup')}</ActionTitle>*/}
-          {/*</ActionItem>*/}
           <ActionItem>
             <ActionButton onClick={() => setIsShowOptionModal(true)}>
               <ActionIcon className='partei-cog' />
@@ -258,30 +239,11 @@ const LeftBar = () => {
           </ActionItem>
         </ActionGroup>
       </BottomMenu>
-      <PModal open={isShowOptionModal} onClose={handleCloseModal}>
-        <SettingModal>
-          <SettingModalContainer>
-            <SettingModalHeader>{t('common.settings')}</SettingModalHeader>
-            <SettingModalBody>
-              <StyledButton
-                variant='primary'
-                onClick={() => {
-                  if (previousAuth.accessToken && previousAuth.accessToken !== '') {
-                    dispatch(
-                      sessionActions.doLogout({
-                        userId: previousAuth.user?.data?._id,
-                        fcmToken: previousAuth.fcmToken,
-                        token: previousAuth.accessToken,
-                      })
-                    );
-                  }
-                }}
-              >
-                {t('common.logout')}
-              </StyledButton>
-            </SettingModalBody>
-          </SettingModalContainer>
-        </SettingModal>
+      <PModal open={isShowOptionModal} onClose={handleCloseSettingModal}>
+        <SettingModal onClose={handleCloseSettingModal} />
+      </PModal>
+      <PModal open={isShowInvitationModal} onClose={handleCloseInvitationModal}>
+        <InvitationModal onClose={handleCloseInvitationModal} />
       </PModal>
     </Container>
   );

@@ -16,7 +16,6 @@ const slice = createSlice({
       state.data = {
         ...state.data,
         ...action.payload,
-
       };
     },
   },

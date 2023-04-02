@@ -5,6 +5,7 @@ import {
   ConfigError,
   ConfigPayload,
   ConfigState,
+  InvitationQuery,
   LanguageQuery,
   SystemSetting,
 } from 'types/Config';
@@ -52,10 +53,21 @@ const slice = createSlice({
       state.data.lastUpdated = new Date().toISOString();
       state.loading = false;
     },
+    sendInvitation(state, action: PayloadAction<InvitationQuery>) {
+      state.error = null;
+      state.loading = true;
+    },
+    sentInvitation(state) {
+      state.loading = false;
+    },
 
     Error(state, action: PayloadAction<ConfigError>) {
       state.error = action.payload;
       state.loading = false;
+    },
+    reset(state) {
+      state.data = initialState.data;
+      state.error = initialState.error;
     },
   },
 });

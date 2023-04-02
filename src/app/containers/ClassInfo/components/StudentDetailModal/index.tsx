@@ -1,11 +1,13 @@
 import React from 'react';
-import { StudentParentIncludedInfo } from '../../../../../../types/Student';
+import { StudentParentIncludedInfo } from '../../../../../types/Student';
 import tw, { styled } from 'twin.macro';
-import { pxToRem } from '../../../../../../styles/theme/utils';
-import AvatarPlaceholder from '../../../../../../assets/images/person-placeholder.png';
-import { colors } from '../../../../../../styles/constants/colors';
-import { NewConversationPayload } from '../../../../../../types/Conversation';
-import { mapStringRoleToNumber } from '../../../../../../utils/helpers';
+import { pxToRem } from '../../../../../styles/theme/utils';
+import AvatarPlaceholder from '../../../../../assets/images/person-placeholder.png';
+import { NewConversationPayload } from '../../../../../types/Conversation';
+import { mapStringRoleToNumber } from '../../../../../utils/helpers';
+import { useSelector } from 'react-redux';
+import { getUser } from 'store/selectors/session';
+import { ConstantRoles } from 'utils/constants';
 interface Props {
   data: StudentParentIncludedInfo | null;
   onSendMessageToParent?: (newConversationPayload: NewConversationPayload) => void;
@@ -56,6 +58,7 @@ const ActionItem = styled.div`
   padding: 5px 10px;
   font-weight: 700;
   cursor: pointer;
+  margin-bottom: ${pxToRem(10)}rem;
 `;
 const InfoContainer = styled.div`
   color: ${(p) => p.theme.text};
@@ -71,6 +74,7 @@ const SectionContainer = styled.div`
   gap: 10px;
 `;
 const StudentDetailModal: React.FC<Props> = ({ data, onSendMessageToParent }) => {
+  const currentUser = useSelector(getUser);
   return (
     <Container>
       <AvatarSection>
@@ -89,6 +93,9 @@ const StudentDetailModal: React.FC<Props> = ({ data, onSendMessageToParent }) =>
             >
               Message to parent
             </ActionItem>
+            {currentUser?.roleId === ConstantRoles.TEACHER && (
+              <ActionItem>Remove this student</ActionItem>
+            )}
           </ActionGroup>
         </SectionContainer>
       </AvatarSection>

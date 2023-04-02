@@ -3,14 +3,18 @@ import { loadState } from 'store/localStorage';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { studentSaga } from 'store/sagas/studentSaga';
 import {
+  AddStudentQuery,
+  Student,
   StudentListByClassTokenQuery,
   StudentListResponse,
   StudentState,
+  UpdateStudentQuery,
 } from '../../types/Student';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { OnlyTokenQuery } from '../../types/Session';
+import { RemoveStudentQuery } from '../../types/TeacherAssignment';
 
-const studentCache = loadState()?.config;
+const studentCache = loadState()?.student;
 
 export const initialState: StudentState = {
   data: { ...studentCache?.data },
@@ -22,7 +26,7 @@ const slice = createSlice({
   name: 'student',
   initialState,
   reducers: {
-    loadStudentList(state, action: PayloadAction<StudentListByClassTokenQuery>) {
+    loadStudentListByClass(state, action: PayloadAction<StudentListByClassTokenQuery>) {
       state.error = null;
       state.loading = true;
     },
@@ -32,13 +36,40 @@ const slice = createSlice({
       state.data.totalItem = totalItem;
       state.data.data = data;
     },
-    loadedStudentListFail(state, action) {
+    Error(state, action) {
       state.loading = false;
       state.error = action.payload;
     },
     loadStudentListForParent(state, action: PayloadAction<OnlyTokenQuery>) {
       state.error = null;
       state.loading = true;
+    },
+    updateStudent(state, action: PayloadAction<UpdateStudentQuery>) {
+      state.loading = true;
+      state.error = null;
+    },
+    updateStudentSuccess(state, action: PayloadAction<Student>) {
+      state.loading = false;
+      state.data = {
+        ...state.data,
+        currentStudent: action.payload,
+      };
+    },
+    addStudent(state, action: PayloadAction<AddStudentQuery>) {
+      state.loading = true;
+      state.error = null;
+    },
+    addStudentSuccess(state, action: PayloadAction<Student>) {
+      state.loading = false;
+      state.data = {
+        ...state.data,
+        data: [...state.data.data, action.payload],
+        totalItem: state.data.totalItem + 1,
+      };
+    },
+    removeStudent(state, action: PayloadAction<RemoveStudentQuery>) {},
+    removeStudentSuccess(state) {
+      state.loading = false;
     },
   },
 });

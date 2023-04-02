@@ -9,10 +9,7 @@ import {
 } from '../../../../types/Progress';
 import { useQuery } from '../../../../utils/hook';
 import { queryString, ROWS_PER_PAGE } from '../../../../utils/constants';
-import {
-  getProgressList,
-  getProgressLoading,
-} from '../../../../store/selectors/progress';
+import { getProgressList, getProgressLoading } from '../../../../store/selectors/progress';
 import { styled } from 'twin.macro';
 import DTable from '../../../components/DTable';
 import { ColumnProps } from '../../../components/DTable/DTableHead';
@@ -33,7 +30,7 @@ const StyledIcon = styled(PIcon)`
 `;
 const ActionGroup = styled.span`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-bottom: ${pxToRem(10)}rem;
 `;
 const StyledPSelection = styled(PSelection)`
@@ -43,6 +40,7 @@ const TableTitle = styled.div`
   font-size: ${pxToRem(20)}rem;
   font-weight: 700;
   margin-bottom: ${pxToRem(10)}rem;
+  padding: 0 ${pxToRem(10)}rem;
 `;
 
 const InteractionList: React.FC = () => {
@@ -50,7 +48,7 @@ const InteractionList: React.FC = () => {
   const [isAssignMarkModalOpen, setIsAssignMarkModalOpen] = useState(false);
   const [studentId, setStudentId] = useState<string>('');
   const studentList = useSelector(getStudentList);
-  const classId = useQuery().get(queryString.classId);
+  // const classId = useQuery().get(queryString.classId);
   const { actions: progressActions } = useProgressSlice();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -85,44 +83,84 @@ const InteractionList: React.FC = () => {
         label: t('table.studentName'),
         accessor: 'studentName',
         render: (item: Progress) => item.student.name,
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.studentId'),
         accessor: 'studentId',
         render: (item: Progress) => item.student._id,
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.subjectName'),
         accessor: 'subjectName',
         render: (item: Progress) => item.subject.name,
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.frequentMark'),
         accessor: 'frequentMark',
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.middleExamMark'),
         accessor: 'middleExamMark',
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.finalExamMark'),
         accessor: 'finalExamMark',
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.averageMark'),
         accessor: 'averageMark',
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.semester'),
         accessor: 'semester',
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.year'),
         accessor: 'year',
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.assessment'),
         accessor: 'note',
+        style: {
+          width: '20%',
+          wordBreak: 'break-word',
+        },
       },
       {
         label: t('table.action'),
@@ -156,33 +194,34 @@ const InteractionList: React.FC = () => {
     }
     return [];
   }, [currentPage, progressListData.data]);
-  const renderedStudentList = useMemo(() => {
-    if (studentList && classId) {
-      return studentList.filter((student) => student.classId === classId);
-    }
-    return [];
-  }, [classId, studentList]);
+  // const renderedStudentList = useMemo(() => {
+  //   if (studentList && classId) {
+  //     return studentList.filter((student) => student.classId === classId);
+  //   }
+  //   return [];
+  // }, [classId, studentList]);
 
   useEffect(() => {
     handleFetchProgressList();
   }, [handleFetchProgressList]);
 
-  useEffect(() => {
-    if (classId) {
-      setStudentId('');
-    }
-  }, [classId]);
+  // useEffect(() => {
+  //   if (classId) {
+  //     setStudentId('');
+  //   }
+  // }, [classId]);
 
   return (
     <Container>
       <ActionGroup>
+        <TableTitle>Bảng điểm của học sinh</TableTitle>
         <StyledPSelection
           onChange={(e) => {
             setStudentId(e.target.value);
           }}
         >
           <option value=''>{t('common.pleaseSelectChildren')}</option>
-          {renderedStudentList?.map((student) => {
+          {studentList?.map((student) => {
             return (
               <option key={student._id} value={student._id}>
                 {student.name}
@@ -191,7 +230,7 @@ const InteractionList: React.FC = () => {
           })}
         </StyledPSelection>
       </ActionGroup>
-      <TableTitle>Bảng điểm của học sinh</TableTitle>
+
       {studentId && (
         <DTable
           columns={columns}

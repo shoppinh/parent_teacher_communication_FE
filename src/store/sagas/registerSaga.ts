@@ -1,5 +1,5 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { apiGetUserInfo, apiRegister } from 'services/api/apiHelper';
+import { apiGetUserProfile, apiRegister } from 'services/api/apiHelper';
 import { registerActions as actions } from 'store/slices/register';
 import { RegisterPayload } from 'types/Register';
 
@@ -105,7 +105,7 @@ const ParseVerify = (response: VerifyDataResponse): RegisterPayload => ({
 
 export function* checkAccountExists({ payload }: any) {
   try {
-    const response = yield call(apiGetUserInfo, payload);
+    const response = yield call(apiGetUserProfile, payload);
     if (response.data && response.data.status) {
       yield put(
         actions.checkedIsAccountExists({

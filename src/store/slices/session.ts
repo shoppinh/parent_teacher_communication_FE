@@ -8,7 +8,8 @@ import {
   AuthPayLoad,
   AuthQuery,
   AuthUserPayload,
-  LogoutQuery,
+  LogoutQuery, OnlyTokenQuery,
+  Profile,
   RefreshTokenQuery,
   SessionError,
   SessionState,
@@ -55,6 +56,18 @@ const slice = createSlice({
       state.error = null;
       state.data.auth = { isLogout: false };
       state.loading = true;
+    },
+    doGetUserProfile(state, action: PayloadAction<OnlyTokenQuery>) {
+      state.error = null;
+      state.loading = true;
+    },
+    doGetUserProfileSuccess(state, action: PayloadAction<Profile>) {
+      state.error = null;
+      state.data = {
+        ...state.data,
+        profile: action.payload,
+      };
+      state.loading = false;
     },
     doRefreshToken(state, action: PayloadAction<RefreshTokenQuery>) {
       state.error = null;

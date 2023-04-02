@@ -6,10 +6,10 @@ import { media } from '../../../../../styles';
 import { PButton } from '../../../../components/PButton';
 import { PIcon } from 'app/components/PIcon';
 import { useLocation } from 'react-router';
-import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getUser } from '../../../../../store/selectors/session';
 import { ConstantRoles } from '../../../../../utils/constants';
+import { Link } from 'react-router-dom';
 
 interface Props {
   onRightBarClick: () => void;

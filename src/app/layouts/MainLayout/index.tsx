@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import tw, { styled } from 'twin.macro';
 import { StyleConstants } from '../../../styles/constants/style';
 import { PDrawer } from '../../components/PDrawer';
@@ -8,22 +8,19 @@ import RightBar from './components/RightBar';
 import { media } from '../../../styles';
 import { pxToRem } from '../../../styles/theme/utils';
 import BaseLayout from '../BaseLayout';
-import { useConfigSlice } from '../../../store/slices/config';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAccessToken, getRefreshToken, getUser } from '../../../store/selectors/session';
+import { useDispatch } from 'react-redux';
 import { Conversation } from '../../pages/Conversation';
 import { mapStringRoleToNumber } from '../../../utils/helpers';
 import { PModal } from '../../components/PModal';
-import { ConversationListQuery, NewConversationPayload } from '../../../types/Conversation';
-import { getCurrentRoomId, getCurrentToUser } from '../../../store/selectors/conversation';
-import { useConversationSlice } from '../../../store/slices/conversation';
 import { useConversation } from '../../../utils/hook/useConversation';
+import { useSessionSlice } from '../../../store/slices/session';
 
 interface Props {
   children?: React.ReactNode;
   headerTitle: string;
   title: string;
   description?: string;
+  isShowSchoolAndClassList?: boolean;
 }
 
 const Center = styled.div`
@@ -62,7 +59,7 @@ const NavigationBottomBar = styled.div`
   `}
 `;
 
-const MainLayout: React.FC<Props> = ({ children, headerTitle, title }) => {
+const MainLayout: React.FC<Props> = ({ children, headerTitle, title, isShowSchoolAndClassList }) => {
   const [leftBarOpen, setLeftBarOpen] = React.useState(false);
   const [rightBarOpen, setRightBarOpen] = React.useState(false);
 
@@ -79,6 +76,9 @@ const MainLayout: React.FC<Props> = ({ children, headerTitle, title }) => {
     currentRoomId,
   } = useConversation();
 
+  const { actions: sessionActions } = useSessionSlice();
+  const dispatch = useDispatch();
+
   const onLeftBarClick = useCallback(() => {
     setLeftBarOpen(!leftBarOpen);
   }, [leftBarOpen]);
@@ -86,10 +86,16 @@ const MainLayout: React.FC<Props> = ({ children, headerTitle, title }) => {
     setRightBarOpen(!rightBarOpen);
   }, [rightBarOpen]);
 
+  useEffect(() => {
+    if (currentAccessToken) {
+      dispatch(sessionActions.doGetUserProfile({ token: currentAccessToken }));
+    }
+  }, [currentAccessToken, dispatch, sessionActions]);
+
   return (
     <BaseLayout title={title}>
       <Container>
-        <LeftBar />
+        <LeftBar isShowSchoolAndClassList={isShowSchoolAndClassList} />
         <MainContent>
           <Header
             onLeftBarClick={onLeftBarClick}
@@ -112,7 +118,7 @@ const MainLayout: React.FC<Props> = ({ children, headerTitle, title }) => {
             open={leftBarOpen}
             onClose={() => setLeftBarOpen(false)}
           >
-            <MobileLeftBar />
+            <MobileLeftBar isShowSchoolAndClassList={isShowSchoolAndClassList} />
           </PDrawer>
         )}
         {rightBarOpen && (
@@ -122,7 +128,7 @@ const MainLayout: React.FC<Props> = ({ children, headerTitle, title }) => {
             open={rightBarOpen}
             onClose={() => setRightBarOpen(false)}
           >
-            <MobileLeftBar />
+            <MobileLeftBar isShowSchoolAndClassList={isShowSchoolAndClassList} />
           </PDrawer>
         )}
         <PModal open={showConversation} onClose={handleCloseConversation}>

@@ -29,7 +29,9 @@ import { useStudentSlice } from '../../../store/slices/student';
 import { useQuery } from '../../../utils/hook';
 import { queryString } from '../../../utils/constants';
 import { useTeacherSlice } from '../../../store/slices/teacher';
-import ClassInfo from '../../containers/ParentHome/ClassInfo';
+import ClassInfo from '../../containers/ClassInfo';
+import { getCurrentClass } from '../../../store/selectors/class';
+import {useClassSlice} from "../../../store/slices/class";
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -130,12 +132,14 @@ const TeacherHomePage: React.FC = () => {
   const currentAccessToken = useSelector(getAccessToken);
   const { actions: studentActions } = useStudentSlice();
   const { actions: teacherActions } = useTeacherSlice();
-  const dispatch = useDispatch();
+  const { actions: classActions } = useClassSlice();
   const classId = useQuery().get(queryString.classId);
+  const currentClass = useSelector(getCurrentClass);
+  const dispatch = useDispatch();
   const handleFetchStudentList = useCallback(() => {
     if (currentAccessToken && classId) {
       dispatch(
-        studentActions.loadStudentList({
+        studentActions.loadStudentListByClass({
           classId,
           token: currentAccessToken,
         })
@@ -200,7 +204,7 @@ const TeacherHomePage: React.FC = () => {
   };
   const close = () => {
     setAnchorEl(null);
-    buttonRef.current!.focus();
+    buttonRef.current?.focus();
   };
 
   const createHandleMenuClick = (menuItem: string) => {
@@ -230,6 +234,17 @@ const TeacherHomePage: React.FC = () => {
     handleFetchTeacherAssignmentDetail();
   }, [handleFetchTeacherAssignmentDetail]);
 
+  useEffect(() => {
+    if (classId && currentAccessToken) {
+      dispatch(
+        classActions.loadClassDetail({
+          classId,
+          token: currentAccessToken,
+        })
+      );
+    }
+  }, [classActions, classId, currentAccessToken, dispatch, studentActions]);
+
   return (
     <MainLayout title={t('teacher.home.title')} headerTitle={t('teacher.home.title')}>
       <StyledTabs defaultValue={0}>
@@ -239,9 +254,7 @@ const TeacherHomePage: React.FC = () => {
             <StyledTab>{t('tab.newsFeed')}</StyledTab>
             <StyledTab>{t('tab.trackingAndAssessment')}</StyledTab>
             <StyledTab>{t('tab.assignments')}</StyledTab>
-            <StyledTab>{t('tab.classInfo')}</StyledTab>
-            <StyledTab>{t('tab.portfolios')}</StyledTab>
-            <StyledTab>{t('tab.reports')}</StyledTab>
+            {!currentClass?.classInfo?.isSchoolClass && <StyledTab>{t('tab.classInfo')}</StyledTab>}
           </StyledTabsList>
           <StyledButton
             type='button'

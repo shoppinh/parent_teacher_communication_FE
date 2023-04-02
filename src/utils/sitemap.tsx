@@ -24,6 +24,16 @@ const SiteMap = {
     link: '/parent',
     isProtected: true,
   },
+  parentEvent: {
+    title: 'parent.event.title',
+    link: '/parent-event',
+    isProtected: true,
+  },
+  parentManagement: {
+    title: 'parent.management.title',
+    link: '/parent-management',
+    isProtected: true,
+  },
   adminHome: {
     title: 'admin.home.title',
     link: '/admin',

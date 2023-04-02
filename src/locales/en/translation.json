@@ -78,7 +78,11 @@
     "save": "Save",
     "student": "Student",
     "subject": "Subject",
-    "assessment": "Assessment"
+    "assessment": "Assessment",
+    "name": "Name",
+    "age": "Age",
+    "gender": "Gender",
+    "relationship": "Relationship"
   },
   "logout": {
     "title": "Logout"
@@ -209,7 +213,10 @@
     "contactAdmin": "Contact Admin",
     "pleaseSelectChildren": "Please select children",
     "schools": "Schools",
-    "classes": "Classes"
+    "classes": "Classes",
+    "female": "Female",
+    "male": "Male",
+    "update": "Update"
   },
   "table": {
     "next": "Next",
