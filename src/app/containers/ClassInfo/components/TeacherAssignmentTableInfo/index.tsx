@@ -1,14 +1,13 @@
 import React from 'react';
-import { StudentParentIncludedInfo } from '../../../../../../types/Student';
 import { useTranslation } from 'react-i18next';
 import { styled } from 'twin.macro';
-import AvatarPlaceholder from '../../../../../../assets/images/person-placeholder.png';
-import { pxToRem } from '../../../../../../styles/theme/utils';
-import { PLoadingIndicator } from '../../../../../components/PLoadingIndicatior';
-import { TeacherAssignmentForClass } from '../../../../../../types/TeacherAssignment';
-import { PModal } from '../../../../../components/PModal';
+import AvatarPlaceholder from '../../../../../assets/images/person-placeholder.png';
+import { pxToRem } from '../../../../../styles/theme/utils';
+import { PLoadingIndicator } from '../../../../components/PLoadingIndicatior';
+import { TeacherAssignmentForClass } from '../../../../../types/TeacherAssignment';
+import { PModal } from '../../../../components/PModal';
 import TeacherDetailModal from '../TeacherDetailModal';
-import { NewConversationPayload } from '../../../../../../types/Conversation';
+import { NewConversationPayload } from '../../../../../types/Conversation';
 
 interface Props {
   data: TeacherAssignmentForClass[];
@@ -81,7 +80,7 @@ const TeacherAssignmentTableInfo: React.FC<Props> = ({
         })}
       </ItemList>
       <PModal open={detailModalOpen} onClose={() => setDetailModalOpen(false)}>
-        <TeacherDetailModal data={selectedItem} onSendMessageToTeacher={onSendMessageToTeacher}/>
+        <TeacherDetailModal data={selectedItem} onSendMessageToTeacher={onSendMessageToTeacher} />
       </PModal>
     </Container>
   );

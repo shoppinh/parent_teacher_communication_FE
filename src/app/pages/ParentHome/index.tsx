@@ -1,24 +1,23 @@
-import {
-  TabPanelUnstyled,
-  TabsListUnstyled,
-  TabsUnstyled,
-  TabUnstyled,
-  tabUnstyledClasses,
-} from '@mui/base';
-import React, { useCallback, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import {TabPanelUnstyled, TabsListUnstyled, TabsUnstyled, TabUnstyled, tabUnstyledClasses,} from '@mui/base';
+import React, {useCallback, useEffect} from 'react';
+import {useTranslation} from 'react-i18next';
 import MainLayout from '../../layouts/MainLayout';
 
-import tw, { styled } from 'twin.macro';
-import { StyleConstants } from '../../../styles/constants/style';
-import { pxToRem } from '../../../styles/theme/utils';
+import tw, {styled} from 'twin.macro';
+import {StyleConstants} from '../../../styles/constants/style';
+import {pxToRem} from '../../../styles/theme/utils';
 import FeedList from '../../containers/TeacherHomePage/FeedList';
 import WelcomePage from '../../containers/Welcome';
-import InteractionList from '../../containers/ParentHome/InteractionList';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAccessToken } from '../../../store/selectors/session';
-import { useStudentSlice } from '../../../store/slices/student';
-import ClassInfo from '../../containers/ParentHome/ClassInfo';
+import {useDispatch, useSelector} from 'react-redux';
+import {getAccessToken} from '../../../store/selectors/session';
+import {useStudentSlice} from '../../../store/slices/student';
+import ClassInfo from '../../containers/ClassInfo';
+import {useQuery} from '../../../utils/hook';
+import {queryString} from '../../../utils/constants';
+import {useClassSlice} from '../../../store/slices/class';
+import {getCurrentClass} from '../../../store/selectors/class';
+import {getSchoolInfo} from '../../../store/selectors/config';
+import {useNavigate} from "react-router-dom";
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -56,17 +55,14 @@ const StyledTabs = styled(TabsUnstyled)`
 
 const ParentHomePage = () => {
   const { t } = useTranslation();
-  // const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
-  // const isOpen = Boolean(anchorEl);
-  // const buttonRef = React.useRef<HTMLButtonElement>(null);
-  // const menuActions = React.useRef<MenuUnstyledActions>(null);
-  // const preventReopen = React.useRef(false);
-  // const [isPostModalOpen, setIsPostModalOpen] = React.useState(false);
   const [isRefreshFeedList, setIsRefreshFeedList] = React.useState(false);
   const dispatch = useDispatch();
   const currentAccessToken = useSelector(getAccessToken);
   const { actions: studentActions } = useStudentSlice();
-
+  const { actions: classActions } = useClassSlice();
+  const classId = useQuery().get(queryString.classId);
+  const currentClass = useSelector(getCurrentClass);
+  const schoolInfo = useSelector(getSchoolInfo);
   const handleFetchStudentList = useCallback(() => {
     if (currentAccessToken) {
       dispatch(studentActions.loadStudentListForParent({ token: currentAccessToken }));
@@ -76,71 +72,32 @@ const ParentHomePage = () => {
   useEffect(() => {
     handleFetchStudentList();
   }, [handleFetchStudentList]);
+  // get current class info
 
-  // const handleClosePostModal = () => {
-  //   setIsPostModalOpen(false);
-  // };
-  //
+  useEffect(() => {
+    if (classId && currentAccessToken) {
+      dispatch(
+        classActions.loadClassDetail({
+          classId,
+          token: currentAccessToken,
+        })
+      );
+    }
+  }, [classActions, classId, currentAccessToken, dispatch, studentActions]);
+
   const handleTriggerRefreshFeedList = () => {
     setIsRefreshFeedList(true);
   };
-  //
-  // const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //   if (preventReopen.current) {
-  //     event.preventDefault();
-  //     preventReopen.current = false;
-  //     return;
-  //   }
-  //
-  //   if (isOpen) {
-  //     setAnchorEl(null);
-  //   } else {
-  //     setAnchorEl(event.currentTarget);
-  //   }
-  // };
-  //
-  // const handleButtonMouseDown = () => {
-  //   if (isOpen) {
-  //     // Prevents the menu from reopening right after closing
-  //     // when clicking the button.
-  //     preventReopen.current = true;
-  //   }
-  // };
-  //
-  // const handleButtonKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-  //   if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-  //     event.preventDefault();
-  //     setAnchorEl(event.currentTarget);
-  //     if (event.key === 'ArrowUp') {
-  //       menuActions.current?.highlightLastItem();
-  //     }
-  //   }
-  // };
-  // const close = () => {
-  //   setAnchorEl(null);
-  //   buttonRef.current!.focus();
-  // };
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!classId) {
+      navigate({
+        pathname: location.pathname,
+        search: `?${queryString.classId}=${schoolInfo?._id}`,
+      });
+    }
+  }, [classId, navigate, schoolInfo?._id]);
 
-  // const createHandleMenuClick = (menuItem: string) => {
-  //   switch (menuItem) {
-  //     case 'post':
-  //       return () => {
-  //         setIsPostModalOpen(true);
-  //         console.log('post is activated');
-  //         close();
-  //       };
-  //       break;
-  //     case 'event':
-  //       return () => {
-  //         close();
-  //         console.log('event is activated');
-  //       };
-  //       break;
-  //     default:
-  //       return () => close();
-  //       break;
-  //   }
-  // };
   return (
     <MainLayout title={t('parent.home.title')} headerTitle={t('parent.home.title')}>
       <StyledTabs defaultValue={0}>
@@ -148,24 +105,8 @@ const ParentHomePage = () => {
           <StyledTabsList>
             <StyledTab>{t('tab.welcome')}</StyledTab>
             <StyledTab>{t('tab.newsFeed')}</StyledTab>
-            <StyledTab>{t('tab.results')}</StyledTab>
-            {/*<StyledTab>{t('tab.assignments')}</StyledTab>*/}
-            <StyledTab>{t('tab.portfolios')}</StyledTab>
-            <StyledTab>{t('tab.classInfo')}</StyledTab>
+            {!currentClass?.classInfo?.isSchoolClass && <StyledTab>{t('tab.classInfo')}</StyledTab>}
           </StyledTabsList>
-          {/*<StyledButton*/}
-          {/*  type='button'*/}
-          {/*  variant='primary'*/}
-          {/*  onClick={handleButtonClick}*/}
-          {/*  onKeyDown={handleButtonKeyDown}*/}
-          {/*  onMouseDown={handleButtonMouseDown}*/}
-          {/*  ref={buttonRef}*/}
-          {/*  aria-controls={isOpen ? 'simple-menu' : undefined}*/}
-          {/*  aria-expanded={isOpen || undefined}*/}
-          {/*  aria-haspopup='menu'*/}
-          {/*>*/}
-          {/*  Create*/}
-          {/*</StyledButton>*/}
         </TabsWrapper>
         <TabPaneContent>
           <TabPanelUnstyled value={0}>
@@ -179,13 +120,8 @@ const ParentHomePage = () => {
             />
           </TabPanelUnstyled>
           <TabPanelUnstyled value={2}>
-            <InteractionList />
-          </TabPanelUnstyled>
-          <TabPanelUnstyled value={3}>ho so</TabPanelUnstyled>
-          <TabPanelUnstyled value={4}>
             <ClassInfo />
           </TabPanelUnstyled>
-          <TabPanelUnstyled value={5}>5 page</TabPanelUnstyled>
         </TabPaneContent>
       </StyledTabs>
       {/*<MenuUnstyled*/}

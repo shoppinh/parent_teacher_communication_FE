@@ -108,6 +108,41 @@ export function configureAppStore() {
         theme: {
           ...store.getState().theme,
         },
+        class: {
+          data: {
+            ...(store.getState().class
+              ? store.getState().class.data
+              : persistedStateCache?.class?.data),
+          },
+        },
+        student: {
+          data: {
+            ...(store.getState().student
+              ? store.getState().student.data
+              : persistedStateCache?.student?.data),
+          },
+        },
+        progress: {
+          data: {
+            ...(store.getState().progress
+              ? store.getState().progress.data
+              : persistedStateCache?.progress?.data),
+          },
+        },
+        conversation: {
+          data: {
+            ...(store.getState().conversation
+              ? store.getState().conversation.data
+              : persistedStateCache?.conversation?.data),
+          },
+        },
+        teacher: {
+          data: {
+            ...(store.getState().teacher
+              ? store.getState().teacher.data
+              : persistedStateCache?.teacher?.data),
+          },
+        },
       });
     }, 1000)
   );

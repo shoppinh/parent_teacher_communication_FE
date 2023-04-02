@@ -37,6 +37,11 @@ export interface LanguageQuery {
   langCode: string;
 }
 
+export interface InvitationQuery {
+  accessToken: string;
+  email: string;
+}
+
 export enum ConfigErrorType {
   RESPONSE_ERROR = 1,
   AUTHENTICATION_FAILED = 400,

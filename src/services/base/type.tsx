@@ -19,6 +19,7 @@ export const APIs = {
     registerDeviceToken: 'api/auth/device-token',
     platformSetting: '/api/user/platform/setting',
     languageUpdate: 'api/user/language/update',
+    sendInvitation: 'api/user/send-invitation',
 
     // registerVerifyCode: 'api/user/register/verifyCode',
     // registerSetPassword: '/api/user/register/setPassword',

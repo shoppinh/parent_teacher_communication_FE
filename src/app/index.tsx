@@ -14,6 +14,8 @@ import { RoleBaseProtectedRoute } from './routes';
 import { ConstantRoles } from '../utils/constants';
 import ParentHomePage from './pages/ParentHome';
 import AdminHome from './pages/AdminHome';
+import ParentEvent from './pages/ParentEvent';
+import ParentManagement from './pages/ParentManagement';
 export function App() {
   const { i18n } = useTranslation();
   return (
@@ -57,6 +59,31 @@ export function App() {
             </RoleBaseProtectedRoute>
           }
         />
+        <Route
+          path={SiteMap.parentEvent.link}
+          element={
+            <RoleBaseProtectedRoute
+              unAuthenticatedRedirectTo={sitemap.login.link}
+              role={ConstantRoles.PARENT}
+              unAuthorizedRedirectTo={sitemap.landing.link}
+            >
+              <ParentEvent />
+            </RoleBaseProtectedRoute>
+          }
+        />
+        <Route
+          path={SiteMap.parentManagement.link}
+          element={
+            <RoleBaseProtectedRoute
+              unAuthenticatedRedirectTo={sitemap.login.link}
+              role={ConstantRoles.PARENT}
+              unAuthorizedRedirectTo={sitemap.landing.link}
+            >
+              <ParentManagement />
+            </RoleBaseProtectedRoute>
+          }
+        />
+
         <Route
           path={SiteMap.adminHome.link}
           element={

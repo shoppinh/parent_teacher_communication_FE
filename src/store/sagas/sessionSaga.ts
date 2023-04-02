@@ -1,7 +1,7 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import {
   apiGetCountUnreadRoom,
-  apiGetUserInfo,
+  apiGetUserProfile,
   apiLogin,
   apiLogout,
   apiRefreshToken,
@@ -38,6 +38,7 @@ export function* sessionSaga() {
     takeLatest(actions.doRegisterDeviceToken.type, doRegisterDeviceToken),
     takeLatest(actions.doRefreshToken.type, doRefreshToken),
     takeLatest(actions.getCountUnreadRoom.type, getCountUnreadRoom),
+    takeLatest(actions.doGetUserProfile.type, getUserProfile),
   ]);
 }
 
@@ -124,15 +125,12 @@ export const parseUserList = (data: any): User[] => {
   return data.map((item: any) => parseUserData(item));
 };
 
-export function* getUserInfo({ payload }: any) {
+export function* getUserProfile({ payload }: any) {
   try {
-    const response = yield call(apiGetUserInfo, payload);
+    const response = yield call(apiGetUserProfile, payload);
+
     if (response.data && response.data.status) {
-      yield put(
-        actions.updateUserInfo({
-          user: parseUserData(response.data.data),
-        })
-      );
+      yield put(actions.doGetUserProfileSuccess(response.data.data));
     } else {
       yield put(actions.Error(response.data.error));
     }

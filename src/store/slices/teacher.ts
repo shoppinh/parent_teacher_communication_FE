@@ -3,9 +3,11 @@ import { loadState } from 'store/localStorage';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 
 import { PayloadAction } from '@reduxjs/toolkit';
-import { TeacherState } from '../../types/Admin/Teacher';
+import { TeacherError, TeacherState } from '../../types/Admin/Teacher';
 import { teacherSaga } from '../sagas/teacherSaga';
 import {
+  AssignStudentQuery,
+  RemoveStudentQuery,
   TeacherAssignment,
   TeacherAssignmentDetailTokenQuery,
 } from '../../types/TeacherAssignment';
@@ -30,9 +32,23 @@ const slice = createSlice({
       state.loading = false;
       state.data.assignment = action.payload;
     },
-    loadedTeacherAssignmentDetailFail(state, action) {
+    Error(state, action: PayloadAction<TeacherError>) {
       state.loading = false;
       state.error = action.payload;
+    },
+    assignStudent(state, action: PayloadAction<AssignStudentQuery>) {
+      state.loading = true;
+      state.error = null;
+    },
+    assignStudentSuccess(state) {
+      state.loading = false;
+    },
+    removeStudent(state, action: PayloadAction<RemoveStudentQuery>) {
+      state.loading = true;
+      state.error = null;
+    },
+    removeStudentSuccess(state) {
+      state.loading = false;
     },
   },
 });

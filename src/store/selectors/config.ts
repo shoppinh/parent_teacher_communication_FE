@@ -20,5 +20,13 @@ export const getSystemSettings = createSelector(
   [selectDomain],
   (state) => state.data.systemSettings
 );
-export const getSchoolInfo = createSelector([selectDomain], (state) => state?.data?.systemSettings?.schoolInfo);
-export const getUserList = createSelector([selectDomain], (state) => state?.data?.systemSettings?.userList);
+export const getSchoolInfo = createSelector(
+  [selectDomain],
+  (state) => state?.data?.systemSettings?.schoolInfo
+);
+export const getUserList = createSelector(
+  [selectDomain],
+  (state) => state?.data?.systemSettings?.userList
+);
+export const getConfigError = createSelector([selectDomain], (state) => state.error);
+export const getConfigLoading = createSelector([selectDomain], (state) => state.loading);

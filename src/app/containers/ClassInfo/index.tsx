@@ -1,19 +1,18 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getClassLoading, getCurrentClass } from '../../../../store/selectors/class';
-import { useQuery } from '../../../../utils/hook';
-import { queryString } from '../../../../utils/constants';
-import { getAccessToken } from '../../../../store/selectors/session';
-import { useClassSlice } from '../../../../store/slices/class';
+import { getClassLoading, getCurrentClass } from '../../../store/selectors/class';
+import { useQuery } from '../../../utils/hook';
+import { queryString } from '../../../utils/constants';
+import { useClassSlice } from '../../../store/slices/class';
 import { styled } from 'twin.macro';
 import StudentAndParentTableInfo from './components/StudentAndParentTableInfo';
 import TeacherAssignmentTableInfo from './components/TeacherAssignmentTableInfo';
-import { pxToRem } from '../../../../styles/theme/utils';
+import { pxToRem } from '../../../styles/theme/utils';
 import { useTranslation } from 'react-i18next';
-import { useConversation } from '../../../../utils/hook/useConversation';
-import { Conversation } from '../../../pages/Conversation';
-import { mapStringRoleToNumber } from '../../../../utils/helpers';
-import { PModal } from '../../../components/PModal';
+import { useConversation } from '../../../utils/hook/useConversation';
+import { Conversation } from '../../pages/Conversation';
+import { mapStringRoleToNumber } from '../../../utils/helpers';
+import { PModal } from '../../components/PModal';
 
 const Container = styled.div``;
 const Section = styled.div`

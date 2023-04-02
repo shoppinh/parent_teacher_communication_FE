@@ -1,5 +1,5 @@
 import { call } from 'redux-saga/effects';
-import { LanguageQuery } from 'types/Config';
+import { InvitationQuery, LanguageQuery } from 'types/Config';
 import {
   ConversationDetailQuery,
   ConversationListQuery,
@@ -14,19 +14,29 @@ import {
   UpdatePostTokenQuery,
 } from 'types/Post';
 import { DeviceTokenQuery, RegisterQuery } from 'types/Register';
-import {AuthQuery, LogoutQuery, OnlyTokenQuery, RefreshTokenQuery} from 'types/Session';
+import { AuthQuery, LogoutQuery, OnlyTokenQuery, RefreshTokenQuery } from 'types/Session';
 import { TeacherDetailQuery } from '../../types/Teacher';
 import * as api from './index';
-import {ClassDetailTokenQuery, ClassListTokenQuery} from '../../types/Class';
+import { ClassDetailTokenQuery, ClassListTokenQuery } from '../../types/Class';
 import { AddCommentTokenRequest } from '../../types/Comment';
 import {
   AddProgressTokenQuery,
-  ProgressDetailTokenQuery, ProgressListByStudentTokenQuery,
+  ProgressDetailTokenQuery,
+  ProgressListByStudentTokenQuery,
   ProgressListTokenQuery,
   UpdateProgressTokenQuery,
 } from '../../types/Progress';
-import {StudentListByClassTokenQuery} from "../../types/Student";
-import {TeacherAssignmentDetailTokenQuery} from "../../types/TeacherAssignment";
+import {
+  AddStudentQuery,
+  StudentDetailTokenQuery,
+  StudentListByClassTokenQuery,
+  UpdateStudentQuery,
+} from '../../types/Student';
+import {
+  AssignStudentQuery,
+  RemoveStudentQuery,
+  TeacherAssignmentDetailTokenQuery,
+} from '../../types/TeacherAssignment';
 
 export function* apiLogin(query: AuthQuery) {
   return yield call(api.login, query);
@@ -42,6 +52,10 @@ export function* apiRefreshToken(query: RefreshTokenQuery) {
 
 export function* apiRegister(query: RegisterQuery) {
   return yield call(api.register, query);
+}
+
+export function* apiSendInvitation(query: InvitationQuery) {
+  return yield call(api.sendInvitation, query);
 }
 
 // export function* apiVerifyCode(query: VerifyQuery) {
@@ -76,8 +90,8 @@ export function* apiGetPlatformSetting() {
   return yield call(api.getPlatformSetting);
 }
 
-export function* apiGetUserInfo(query: AuthQuery) {
-  return yield call(api.getUserInfo, query);
+export function* apiGetUserProfile(query: OnlyTokenQuery) {
+  return yield call(api.getUserProfile, query);
 }
 
 export function* apiGetConversationDetail(query: ConversationDetailQuery) {
@@ -179,8 +193,30 @@ export function* apiGetStudentListByClass(query: StudentListByClassTokenQuery) {
 export function* apGetStudentListByParent(query: OnlyTokenQuery) {
   return yield call(api.getStudentListByParent, query);
 }
+
+export function* apiUpdateStudent(query: UpdateStudentQuery) {
+  return yield call(api.updateStudent, query);
+}
+
+export function* apiAddStudent(query: AddStudentQuery) {
+  return yield call(api.addStudent, query);
+}
+
+export function* apiRemoveStudent(query: StudentDetailTokenQuery) {
+  return yield call(api.removeStudent, query);
+}
 // Teacher
 
-export function* apiGetTeacherAssignmentByClassAndTeacher(query: TeacherAssignmentDetailTokenQuery) {
+export function* apiGetTeacherAssignmentByClassAndTeacher(
+  query: TeacherAssignmentDetailTokenQuery
+) {
   return yield call(api.getTeacherAssignmentByClassAndTeacher, query);
+}
+
+export function* apiAssignStudent(query: AssignStudentQuery) {
+  return yield call(api.assignStudent, query);
+}
+
+export function* apiRemoveStudentFromClass(query: RemoveStudentQuery) {
+  return yield call(api.removeStudentFromClass, query);
 }

@@ -1,4 +1,5 @@
 import { User } from './User';
+import { Student } from './Student';
 
 export interface AuthQuery {
   username: string;
@@ -58,6 +59,8 @@ export interface AuthPayLoad {
 
 export interface SessionPayload {
   auth?: AuthPayLoad;
+  profile?: Profile;
+
 }
 
 export enum SessionErrorType {
@@ -68,4 +71,12 @@ export enum SessionErrorType {
 export interface SessionError {
   code: SessionErrorType | null;
   message?: string;
+}
+export interface Profile extends User {
+  address?: string;
+  degree?: string;
+  job?: string;
+  gender?: string;
+  age?: number;
+  children?: Student[];
 }
