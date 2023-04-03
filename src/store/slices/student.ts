@@ -4,7 +4,7 @@ import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { studentSaga } from 'store/sagas/studentSaga';
 import {
   AddStudentQuery,
-  Student,
+  Student, StudentDetailTokenQuery,
   StudentListByClassTokenQuery,
   StudentListResponse,
   StudentState,
@@ -12,7 +12,7 @@ import {
 } from '../../types/Student';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { OnlyTokenQuery } from '../../types/Session';
-import { RemoveStudentQuery } from '../../types/TeacherAssignment';
+import {AssignOrRemoveStudentQuery} from "../../types/TeacherAssignment";
 
 const studentCache = loadState()?.student;
 
@@ -44,6 +44,22 @@ const slice = createSlice({
       state.error = null;
       state.loading = true;
     },
+    loadUnassignedStudentList(state, action: PayloadAction<OnlyTokenQuery>) {
+      state.error = null;
+      state.loading = true;
+    },
+    loadedUnassignedStudentListSuccess(state, action: PayloadAction<StudentListResponse>) {
+      const { totalItem, data } = action.payload;
+      state.loading = false;
+      state.data = {
+        ...state.data,
+        unassignedStudent: {
+          totalItem,
+          data,
+        },
+      };
+    },
+
     updateStudent(state, action: PayloadAction<UpdateStudentQuery>) {
       state.loading = true;
       state.error = null;
@@ -67,8 +83,18 @@ const slice = createSlice({
         totalItem: state.data.totalItem + 1,
       };
     },
-    removeStudent(state, action: PayloadAction<RemoveStudentQuery>) {},
-    removeStudentSuccess(state) {
+    removeStudentFromParent(state, action: PayloadAction<StudentDetailTokenQuery>) {
+      state.loading = true;
+      state.error = null;
+    },
+    removeStudentFromParentSuccess(state) {
+      state.loading = false;
+    },
+    removeStudentFromClass(state, action: PayloadAction<AssignOrRemoveStudentQuery>) {
+      state.loading = true;
+      state.error = null;
+    },
+    removeStudentFromClassSuccess(state) {
       state.loading = false;
     },
   },

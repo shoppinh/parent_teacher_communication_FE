@@ -22,13 +22,8 @@ export interface TeacherAssignmentForClass {
   subject: Subject;
 }
 
-export interface AssignStudentQuery {
+export interface AssignOrRemoveStudentQuery {
   classId: string;
-  studentId: string;
-  token: string;
-}
-
-export interface RemoveStudentQuery {
   studentId: string;
   token: string;
 }

@@ -11,6 +11,7 @@ import { PLoadingIndicator } from '../../../components/PLoadingIndicatior';
 import AvatarPlaceholder from '../../../../assets/images/person-placeholder.png';
 import { useStudentSlice } from '../../../../store/slices/student';
 import { getAccessToken } from '../../../../store/selectors/session';
+import {useTranslation} from "react-i18next";
 
 const Section = styled.div`
   margin-bottom: ${pxToRem(12)}rem;
@@ -65,6 +66,7 @@ const InfoTitle = styled.h3`
   color: ${(p) => p.theme.text};
 `;
 const Portfolios: React.FC = () => {
+  const { t } = useTranslation();
   const studentList = useSelector(getStudentList);
   const studentListLoading = useSelector(getStudentLoading);
   const { actions: studentActions } = useStudentSlice();
@@ -90,14 +92,14 @@ const Portfolios: React.FC = () => {
     <Container>
       <Section>
         <ActionContainer>
-          <HeaderTitle>Portfolios</HeaderTitle>
+          <HeaderTitle>{t('portfolios.title')}</HeaderTitle>
           <StyledButton variant='primary' onClick={() => handleOpenDetailModal(null)}>
-            Add children
+            {t('portfolios.addChildren.title')}
           </StyledButton>
         </ActionContainer>
       </Section>
       <Section>
-        <SectionTitle>Your children list</SectionTitle>
+        <SectionTitle>{t('portfolios.childrenList')}</SectionTitle>
         <SectionContent>
           <Container>
             {studentListLoading ? (

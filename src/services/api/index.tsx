@@ -34,7 +34,8 @@ export {
   getProgressListByStudent,
   updateStudent,
   addStudent,
-  removeStudent,
+  removeStudentFromParent,
+  getUnassignedStudentList,
 } from './student';
 export { getTeacherAssignmentByClassAndTeacher } from './teacherAssignment';
 export { assignStudent, removeStudentFromClass } from './teacher';

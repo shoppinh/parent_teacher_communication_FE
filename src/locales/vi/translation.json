@@ -86,7 +86,10 @@
     "name": "Họ và tên",
     "age": "Tuổi",
     "gender": "Giới tính",
-    "relationship": "Mối quan hệ"
+    "relationship": "Mối quan hệ",
+    "editChildrenTitle": "Chỉnh sửa thông tin con cái",
+    "addChildrenTitle": "Thêm mới con cái",
+    "assignStudentTitle": "Phân lớp học sinh"
   },
   "register": {
     "title": "Tạo tài khoản",
@@ -154,6 +157,22 @@
     "createSuccess": "Tạo bài viết thành công",
     "teacherAuthor": "Giáo viên của {{className}}",
     "adminAuthor": "Ban giám hiệu"
+  },
+  "portfolios": {
+    "assignStudent": {
+      "title": "Phân lớp học sinh",
+      "assignSuccess": "Phân lớp thành công",
+      "assignFail": "Phân lớp thất bại",
+      "pleaseSelectStudent": "Vui lòng chọn học sinh"
+    },
+    "addChildren": {
+      "title": "Thêm mới con cái",
+      "addSuccess": "Thêm mới thành công",
+      "addFail": "Thêm mới thất bại"
+    },
+    "childrenList": "Danh sách con cái",
+    "studentList": "Danh sách học sinh",
+    "title": "Hồ sơ"
   },
   "admin": {
     "home": {

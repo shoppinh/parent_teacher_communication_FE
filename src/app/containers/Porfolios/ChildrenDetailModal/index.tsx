@@ -21,7 +21,9 @@ interface Props {
   data: Student | null;
   handleRefetchStudentList: () => void;
   onClose: () => void;
+  type?: 'student' | 'children';
 }
+
 const FormContainer = styled.form`
   ${tw`w-full`}
   margin-bottom: ${pxToRem(20)}rem;
@@ -71,7 +73,12 @@ const StyledButton = styled(PButton)`
   font: normal bold 16px / ${StyleConstants.BASE_LINE_HEIGHT}px ${StyleConstants.FONT_FAMILY};
   ${tw`rounded-full w-full p-3`}
 `;
-const ChildrenDetailModal: React.FC<Props> = ({ data, handleRefetchStudentList, onClose }) => {
+const ChildrenDetailModal: React.FC<Props> = ({
+  data,
+  handleRefetchStudentList,
+  onClose,
+  type = 'children',
+}) => {
   const schoolInfo = useSelector(getSchoolInfo);
   const { t } = useTranslation();
   const {
@@ -126,6 +133,30 @@ const ChildrenDetailModal: React.FC<Props> = ({ data, handleRefetchStudentList, 
     },
     [accessToken, data, dispatch, studentActions]
   );
+  const handleRemoveStudentFromClass = useCallback(() => {
+    if (accessToken && data?._id && schoolInfo?._id) {
+      dispatch(
+        studentActions.removeStudentFromClass({
+          studentId: data._id,
+          classId: schoolInfo._id,
+          token: accessToken,
+        })
+      );
+      setIsFormSent(true);
+    }
+  }, [accessToken, schoolInfo?._id, data?._id, dispatch, studentActions]);
+
+  const handleRemoveStudentFromParent = useCallback(() => {
+    if (accessToken && data?._id) {
+      dispatch(
+        studentActions.removeStudentFromParent({
+          studentId: data._id,
+          token: accessToken,
+        })
+      );
+      setIsFormSent(true);
+    }
+  }, [accessToken, data?._id, dispatch, studentActions]);
   useEffect(() => {
     if (data) {
       reset(data);
@@ -146,7 +177,9 @@ const ChildrenDetailModal: React.FC<Props> = ({ data, handleRefetchStudentList, 
 
   return (
     <Container>
-      <FormTitle>{data === null ? 'Thêm mới con cái' : 'Chỉnh sửa thông tin con cái'}</FormTitle>
+      <FormTitle>
+        {data === null ? t('form.addChildrenTitle') : t('form.editChildrenTitle')}
+      </FormTitle>
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
         <InputContainer>
           <InputLabel>{t('form.name')}</InputLabel>
@@ -173,15 +206,27 @@ const ChildrenDetailModal: React.FC<Props> = ({ data, handleRefetchStudentList, 
           </PSelection>
           {errors.gender && <Required>{errors.gender.message}</Required>}
         </InputContainer>
-        <InputContainer>
-          <InputLabel>{t('form.relationship')}</InputLabel>
-          <StyledInput {...register('relationship')} />
-          {errors.relationship && <Required>{errors.relationship.message}</Required>}
-        </InputContainer>
+        {type === 'children' && (
+          <InputContainer>
+            <InputLabel>{t('form.relationship')}</InputLabel>
+            <StyledInput {...register('relationship')} />
+            {errors.relationship && <Required>{errors.relationship.message}</Required>}
+          </InputContainer>
+        )}
+
         <ActionGroup>
           <StyledButton type='submit' variant='primary'>
             {data === null ? t('common.create') : t('common.update')}
           </StyledButton>
+          {type === 'student' ? (
+            <StyledButton type='button' onClick={handleRemoveStudentFromClass} variant='danger'>
+              Remove this student from class
+            </StyledButton>
+          ) : (
+            <StyledButton type='button' onClick={handleRemoveStudentFromParent} variant='danger'>
+              Remove this student from parent
+            </StyledButton>
+          )}
         </ActionGroup>
       </FormContainer>
       <PBackdropLoading isShow={studentLoading} />

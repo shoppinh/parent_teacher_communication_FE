@@ -82,7 +82,10 @@
     "name": "Name",
     "age": "Age",
     "gender": "Gender",
-    "relationship": "Relationship"
+    "relationship": "Relationship",
+    "editChildrenTitle": "Edit Children",
+    "addChildrenTitle": "Add Children",
+    "assignStudentTitle": "Assign Student"
   },
   "logout": {
     "title": "Logout"
@@ -193,7 +196,7 @@
     "post": "Post",
     "markAndAssessment": "Mark & Assessment"
   },
-  "progress" : {
+  "progress": {
     "addProgress": {
       "title": "Add Mark & Assessment",
       "addSuccess": "Add Mark & Assessment success"
@@ -217,6 +220,22 @@
     "female": "Female",
     "male": "Male",
     "update": "Update"
+  },
+  "portfolios": {
+    "assignStudent": {
+      "title": "Assign Student",
+      "assignSuccess": "Assign success",
+      "assignFail": "Assign fail",
+      "pleaseSelectStudent": "Please select student"
+    },
+    "addChildren": {
+      "title": "Add Children",
+      "addSuccess": "Add success",
+      "addFail": "Add fail"
+    },
+    "childrenList": "Children List",
+    "studentList": "Student List",
+    "title": "Portfolios"
   },
   "table": {
     "next": "Next",
