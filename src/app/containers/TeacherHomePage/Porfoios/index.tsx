@@ -1,8 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { pxToRem } from '../../../../styles/theme/utils';
 import { styled } from 'twin.macro';
 import { useDispatch, useSelector } from 'react-redux';
-import { getStudentList, getStudentLoading } from '../../../../store/selectors/student';
+import {
+  getStudentList,
+  getStudentLoading,
+  getUnassignedStudentList,
+} from '../../../../store/selectors/student';
 import { PLoadingIndicator } from '../../../components/PLoadingIndicatior';
 import { PModal } from '../../../components/PModal';
 import ChildrenDetailModal from '../../Porfolios/ChildrenDetailModal';
@@ -13,6 +17,8 @@ import { useStudentSlice } from '../../../../store/slices/student';
 import { getAccessToken } from '../../../../store/selectors/session';
 import { useQuery } from '../../../../utils/hook';
 import { queryString } from '../../../../utils/constants';
+import AssignStudentModal from '../../Porfolios/AssignStudentModal';
+import {useTranslation} from "react-i18next";
 
 const Section = styled.div`
   margin-bottom: ${pxToRem(12)}rem;
@@ -48,6 +54,7 @@ const ItemRow = styled.li`
   background-color: ${(p) => p.theme.background};
   padding: ${pxToRem(12)}rem;
   border-bottom: 1px solid ${(p) => p.theme.borderLight};
+
   &:hover {
     opacity: 0.6;
     cursor: pointer;
@@ -68,6 +75,7 @@ const InfoTitle = styled.h3`
   color: ${(p) => p.theme.text};
 `;
 const Portfolios: React.FC = () => {
+  const { t } = useTranslation();
   const studentList = useSelector(getStudentList);
   const studentListLoading = useSelector(getStudentLoading);
   const { actions: studentActions } = useStudentSlice();
@@ -76,10 +84,17 @@ const Portfolios: React.FC = () => {
   const classId = useQuery().get(queryString.classId);
   const [selectedItem, setSelectedItem] = React.useState<Student | null>(null);
   const [detailModalOpen, setDetailModalOpen] = React.useState<boolean>(false);
+  const [assignStudentModalOpen, setAssignStudentModalOpen] = React.useState<boolean>(false);
   const handleOpenDetailModal = (item: Student | null) => {
     setSelectedItem(item);
     setDetailModalOpen(true);
   };
+
+  const handleOpenAssignStudentModal = () => {
+    setAssignStudentModalOpen(true);
+  };
+
+
   const handleRefetchStudentList = useCallback(() => {
     if (currentAccessToken && classId) {
       dispatch(
@@ -91,18 +106,20 @@ const Portfolios: React.FC = () => {
     }
   }, [classId, currentAccessToken, dispatch, studentActions]);
 
+
+
   return (
     <Container>
       <Section>
         <ActionContainer>
-          <HeaderTitle>Portfolios</HeaderTitle>
-          <StyledButton variant='primary' onClick={() => handleOpenDetailModal(null)}>
-            Add student
+          <HeaderTitle>{t('portfolios.title')}</HeaderTitle>
+          <StyledButton variant='primary' onClick={handleOpenAssignStudentModal}>
+            {t('portfolios.assignStudent.title')}
           </StyledButton>
         </ActionContainer>
       </Section>
       <Section>
-        <SectionTitle>Your student list</SectionTitle>
+        <SectionTitle>{t('portfolios.studentList')}</SectionTitle>
         <SectionContent>
           <Container>
             {studentListLoading ? (
@@ -126,6 +143,13 @@ const Portfolios: React.FC = () => {
                 data={selectedItem}
                 handleRefetchStudentList={handleRefetchStudentList}
                 onClose={() => setDetailModalOpen(false)}
+                type='student'
+              />
+            </PModal>
+            <PModal open={assignStudentModalOpen} onClose={() => setAssignStudentModalOpen(false)}>
+              <AssignStudentModal
+                onClose={() => setAssignStudentModalOpen(false)}
+                handleRefetchStudentList={handleRefetchStudentList}
               />
             </PModal>
           </Container>

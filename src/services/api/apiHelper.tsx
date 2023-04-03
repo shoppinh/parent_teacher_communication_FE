@@ -33,10 +33,10 @@ import {
   UpdateStudentQuery,
 } from '../../types/Student';
 import {
-  AssignStudentQuery,
-  RemoveStudentQuery,
+  AssignOrRemoveStudentQuery,
   TeacherAssignmentDetailTokenQuery,
 } from '../../types/TeacherAssignment';
+import {removeStudentFromParent} from "./student";
 
 export function* apiLogin(query: AuthQuery) {
   return yield call(api.login, query);
@@ -152,6 +152,7 @@ export function* apiDeletePost(query: PostDetailTokenQuery) {
 export function* apiAddPostComment(query: AddCommentTokenRequest) {
   return yield call(api.addPostComment, query);
 }
+
 // Class
 
 export function* apiGetClassListByRole(query: ClassListTokenQuery) {
@@ -161,14 +162,17 @@ export function* apiGetClassListByRole(query: ClassListTokenQuery) {
 export function* apiGetClassDetail(query: ClassDetailTokenQuery) {
   return yield call(api.getClassDetail, query);
 }
+
 // Progress
 
 export function* apiGetProgressListByClass(query: ProgressListTokenQuery) {
   return yield call(api.getProgressListByClass, query);
 }
+
 export function* apiGetProgressListByStudent(query: ProgressListByStudentTokenQuery) {
   return yield call(api.getProgressListByStudent, query);
 }
+
 export function* apiGetProgressDetail(query: ProgressDetailTokenQuery) {
   return yield call(api.getProgressDetail, query);
 }
@@ -184,10 +188,15 @@ export function* apiUpdateProgress(query: UpdateProgressTokenQuery) {
 export function* apiAddProgress(query: AddProgressTokenQuery) {
   return yield call(api.addProgress, query);
 }
+
 // Student
 
 export function* apiGetStudentListByClass(query: StudentListByClassTokenQuery) {
   return yield call(api.getStudentListByClass, query);
+}
+
+export function* apiGetUnassignedStudentList(query: OnlyTokenQuery) {
+  return yield call(api.getUnassignedStudentList, query);
 }
 
 export function* apGetStudentListByParent(query: OnlyTokenQuery) {
@@ -202,9 +211,10 @@ export function* apiAddStudent(query: AddStudentQuery) {
   return yield call(api.addStudent, query);
 }
 
-export function* apiRemoveStudent(query: StudentDetailTokenQuery) {
-  return yield call(api.removeStudent, query);
+export function* apiRemoveStudentFromParent(query: StudentDetailTokenQuery) {
+  return yield call(api.removeStudentFromParent, query);
 }
+
 // Teacher
 
 export function* apiGetTeacherAssignmentByClassAndTeacher(
@@ -213,10 +223,10 @@ export function* apiGetTeacherAssignmentByClassAndTeacher(
   return yield call(api.getTeacherAssignmentByClassAndTeacher, query);
 }
 
-export function* apiAssignStudent(query: AssignStudentQuery) {
+export function* apiAssignStudent(query: AssignOrRemoveStudentQuery) {
   return yield call(api.assignStudent, query);
 }
 
-export function* apiRemoveStudentFromClass(query: RemoveStudentQuery) {
+export function* apiRemoveStudentFromClass(query: AssignOrRemoveStudentQuery) {
   return yield call(api.removeStudentFromClass, query);
 }

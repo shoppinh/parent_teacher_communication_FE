@@ -130,6 +130,7 @@ export const APIs = {
     getAllStudent: '/api/student/list', // Parent uses this to get all child
     getAllStudentByParent: '/api/student/list-by-parent/{parentId}', // Teacher uses this
     getAllStudentByClass: '/api/student/list-by-class/{classId}', // Parent and teacher  uses this
+    getUnassignedStudentList: '/api/student/unassigned-student-list', // Teacher uses this
   },
   message: {
     getConversationList: '/api/message/get-conversation/{mobilePhone}/{roleId}',

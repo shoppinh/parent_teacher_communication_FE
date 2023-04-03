@@ -31,7 +31,8 @@ import { queryString } from '../../../utils/constants';
 import { useTeacherSlice } from '../../../store/slices/teacher';
 import ClassInfo from '../../containers/ClassInfo';
 import { getCurrentClass } from '../../../store/selectors/class';
-import {useClassSlice} from "../../../store/slices/class";
+import { useClassSlice } from '../../../store/slices/class';
+import Portfolios from '../../containers/TeacherHomePage/Porfoios';
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -253,7 +254,7 @@ const TeacherHomePage: React.FC = () => {
             <StyledTab>{t('tab.welcome')}</StyledTab>
             <StyledTab>{t('tab.newsFeed')}</StyledTab>
             <StyledTab>{t('tab.trackingAndAssessment')}</StyledTab>
-            <StyledTab>{t('tab.assignments')}</StyledTab>
+            {!currentClass?.classInfo?.isSchoolClass && <StyledTab>{t('tab.portfolios')}</StyledTab>}
             {!currentClass?.classInfo?.isSchoolClass && <StyledTab>{t('tab.classInfo')}</StyledTab>}
           </StyledTabsList>
           <StyledButton
@@ -286,7 +287,9 @@ const TeacherHomePage: React.FC = () => {
               setIsRefreshProgressList={setIsRefreshProgressList}
             />
           </TabPanelUnstyled>
-          <TabPanelUnstyled value={3}>assignement</TabPanelUnstyled>
+          <TabPanelUnstyled value={3}>
+            <Portfolios />
+          </TabPanelUnstyled>
           <TabPanelUnstyled value={4}>
             <ClassInfo />
           </TabPanelUnstyled>

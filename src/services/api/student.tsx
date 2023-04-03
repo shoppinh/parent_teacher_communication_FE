@@ -30,6 +30,11 @@ export const getProgressListByStudent = async (query: ProgressListByStudentToken
   return new apiClient(token).post(endpoint);
 };
 
+export const getUnassignedStudentList = async (query: OnlyTokenQuery) => {
+  const { token } = query;
+  return new apiClient(token).post(APIs.student.getUnassignedStudentList);
+};
+
 export const addStudent = async (query: AddStudentQuery) => {
   const { token, ...rest } = query;
   return new apiClient(token).post(APIs.student.addStudent, rest);
@@ -41,7 +46,7 @@ export const updateStudent = async (query: UpdateStudentQuery) => {
   return new apiClient(token).put(endpoint, rest);
 };
 
-export const removeStudent = async (query: StudentDetailTokenQuery) => {
+export const removeStudentFromParent = async (query: StudentDetailTokenQuery) => {
   const { token, studentId } = query;
   const endpoint = APIs.student.updateStudent.replace('{studentId}', `${studentId}`);
   return new apiClient(token).delete(endpoint);
