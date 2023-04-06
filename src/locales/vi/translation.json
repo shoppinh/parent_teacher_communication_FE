@@ -89,7 +89,9 @@
     "relationship": "Mối quan hệ",
     "editChildrenTitle": "Chỉnh sửa thông tin con cái",
     "addChildrenTitle": "Thêm mới con cái",
-    "assignStudentTitle": "Phân lớp học sinh"
+    "assignStudentTitle": "Phân lớp học sinh",
+    "sendInvitation": "Gửi lời mời",
+    "email": "Email"
   },
   "register": {
     "title": "Tạo tài khoản",
@@ -236,7 +238,10 @@
     "classes": "Lớp học",
     "female": "Nữ",
     "male": "Nam",
-    "update": "Cập nhật"
+    "update": "Cập nhật",
+    "invitation": "Lời mời",
+    "defaultInputPlaceholder": "Nhập vào đây"
+    
   },
   "table": {
     "next": "Tiếp theo",

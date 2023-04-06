@@ -3,6 +3,7 @@ import InputUnstyled from '@mui/base/InputUnstyled';
 import { styled } from 'twin.macro';
 import { colors } from '../../../styles/constants/colors';
 import { pxToRem } from '../../../styles/theme/utils';
+import { useTranslation } from 'react-i18next';
 
 export const Input = styled(InputUnstyled)`
   padding: ${pxToRem(10)}rem ${pxToRem(10)}rem;
@@ -22,7 +23,16 @@ export const Input = styled(InputUnstyled)`
 
 const PInput = React.forwardRef<any, React.InputHTMLAttributes<HTMLInputElement>>(
   ({ disabled, className, ...rest }, ref) => {
-    return <Input ref={ref} className={className} disabled={disabled} {...rest} />;
+    const { t } = useTranslation();
+    return (
+      <Input
+        ref={ref}
+        className={className}
+        disabled={disabled}
+        placeholder={t('common.defaultInputPlaceholder') as string}
+        {...rest}
+      />
+    );
   }
 );
 

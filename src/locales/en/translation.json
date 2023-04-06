@@ -85,7 +85,9 @@
     "relationship": "Relationship",
     "editChildrenTitle": "Edit Children",
     "addChildrenTitle": "Add Children",
-    "assignStudentTitle": "Assign Student"
+    "assignStudentTitle": "Assign Student",
+    "sendInvitation": "Send Invitation",
+    "email": "Email"
   },
   "logout": {
     "title": "Logout"
@@ -219,7 +221,9 @@
     "classes": "Classes",
     "female": "Female",
     "male": "Male",
-    "update": "Update"
+    "update": "Update",
+    "invitation": "Invitation",
+    "defaultInputPlaceholder": "Please enter"
   },
   "portfolios": {
     "assignStudent": {
