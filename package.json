@@ -4,6 +4,11 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.19.6",
+    "@fullcalendar/core": "6.1.5",
+    "@fullcalendar/daygrid": "6.1.5",
+    "@fullcalendar/interaction": "6.1.5",
+    "@fullcalendar/react": "6.1.5",
+    "@fullcalendar/timegrid": "6.1.5",
     "@hookform/resolvers": "^2.9.10",
     "@mui/base": "5.0.0-alpha.118",
     "@react-spring/web": "^9.5.5",

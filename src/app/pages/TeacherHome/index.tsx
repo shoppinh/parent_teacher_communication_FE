@@ -33,6 +33,8 @@ import ClassInfo from '../../containers/ClassInfo';
 import { getCurrentClass } from '../../../store/selectors/class';
 import { useClassSlice } from '../../../store/slices/class';
 import Portfolios from '../../containers/TeacherHomePage/Porfoios';
+import { getSchoolInfo } from 'store/selectors/config';
+import { useNavigate } from 'react-router-dom';
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -135,6 +137,7 @@ const TeacherHomePage: React.FC = () => {
   const { actions: teacherActions } = useTeacherSlice();
   const { actions: classActions } = useClassSlice();
   const classId = useQuery().get(queryString.classId);
+  const schoolInfo = useSelector(getSchoolInfo);
   const currentClass = useSelector(getCurrentClass);
   const dispatch = useDispatch();
   const handleFetchStudentList = useCallback(() => {
@@ -207,6 +210,7 @@ const TeacherHomePage: React.FC = () => {
     setAnchorEl(null);
     buttonRef.current?.focus();
   };
+  const navigate = useNavigate();
 
   const createHandleMenuClick = (menuItem: string) => {
     switch (menuItem) {
@@ -245,6 +249,15 @@ const TeacherHomePage: React.FC = () => {
       );
     }
   }, [classActions, classId, currentAccessToken, dispatch, studentActions]);
+
+  useEffect(() => {
+    if (!classId) {
+      navigate({
+        pathname: location.pathname,
+        search: `?${queryString.classId}=${schoolInfo?._id}`,
+      });
+    }
+  }, [classId, navigate, schoolInfo?._id]);
 
   return (
     <MainLayout title={t('teacher.home.title')} headerTitle={t('teacher.home.title')}>

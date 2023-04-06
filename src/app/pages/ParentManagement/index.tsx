@@ -50,7 +50,11 @@ const StyledTabs = styled(TabsUnstyled)`
 const ParentManagement = () => {
   const { t } = useTranslation();
   return (
-    <MainLayout title={t('parent.home.title')} headerTitle={t('parent.home.title')} isShowSchoolAndClassList={false}>
+    <MainLayout
+      title={t('parent.home.title')}
+      headerTitle={t('parent.home.title')}
+      isShowSchoolAndClassList={false}
+    >
       <StyledTabs defaultValue={0}>
         <TabsWrapper>
           <StyledTabsList>
