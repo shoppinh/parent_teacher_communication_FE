@@ -45,8 +45,30 @@ export function App() {
             </RoleBaseProtectedRoute>
           }
         />
-        <Route path={SiteMap.teacherEvent.link} element={<TeacherEvent />} />
-        <Route path={SiteMap.teacherManagement.link} element={<TeacherManagement />} />
+        <Route
+          path={SiteMap.teacherEvent.link}
+          element={
+            <RoleBaseProtectedRoute
+              unAuthenticatedRedirectTo={sitemap.login.link}
+              role={ConstantRoles.TEACHER}
+              unAuthorizedRedirectTo={sitemap.landing.link}
+            >
+              <TeacherEvent />
+            </RoleBaseProtectedRoute>
+          }
+        />
+        <Route
+          path={SiteMap.teacherManagement.link}
+          element={
+            <RoleBaseProtectedRoute
+              unAuthenticatedRedirectTo={sitemap.login.link}
+              role={ConstantRoles.TEACHER}
+              unAuthorizedRedirectTo={sitemap.landing.link}
+            >
+              <TeacherManagement />
+            </RoleBaseProtectedRoute>
+          }
+        />
         <Route
           path={SiteMap.parentHome.link}
           element={

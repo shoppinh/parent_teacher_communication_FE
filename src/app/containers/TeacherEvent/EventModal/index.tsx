@@ -3,11 +3,14 @@ import PInput from 'app/components/PInput';
 import React, { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { getUserList } from 'store/selectors/config';
 import styled from 'styled-components';
 import { StyleConstants } from 'styles/constants/style';
 import { pxToRem } from 'styles/theme/utils';
 import tw from 'twin.macro';
 import { CustomDateInfo, EventRequestForm } from 'types/Event';
+import Select from 'react-select';
 
 interface Props {
   onClose: () => void;
@@ -61,17 +64,31 @@ const StyledInput = styled(PInput)`
 `;
 const EventModal: React.FC<Props> = ({ onClose, dateInfo }) => {
   const { t } = useTranslation();
+  const userList = useSelector(getUserList);
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     watch,
     formState: { errors },
   } = useForm<EventRequestForm>({
     defaultValues: {
       title: '',
+      participants: [],
     },
   });
+
+  const selectedParticipants = watch('participants');
+
+  const userOptions = React.useMemo(() => {
+    return userList
+      ? userList.map((user) => ({
+          value: user._id,
+          label: user.fullname,
+        }))
+      : [];
+  }, [userList]);
 
   const onSubmit = useCallback(
     (data: EventRequestForm) => {
@@ -87,6 +104,7 @@ const EventModal: React.FC<Props> = ({ onClose, dateInfo }) => {
           start: data?.start || dateInfo.startStr,
           end: data?.end || dateInfo.endStr,
           allDay: data?.allDay || dateInfo.allDay,
+          participants: data.participants,
         });
       }
 
@@ -99,6 +117,7 @@ const EventModal: React.FC<Props> = ({ onClose, dateInfo }) => {
     if (dateInfo) {
       reset({
         title: dateInfo.title,
+        participants: dateInfo.participants,
       });
     }
   }, [reset, dateInfo]);
@@ -110,6 +129,23 @@ const EventModal: React.FC<Props> = ({ onClose, dateInfo }) => {
           <InputLabel>{t('form.title')}</InputLabel>
           <StyledInput {...register('title')} />
           {errors.title && <Required>{errors.title.message}</Required>}
+        </InputContainer>
+        <InputContainer>
+          <InputLabel>{t('form.participants')}</InputLabel>
+          <Select
+            isMulti
+            name='colors'
+            options={userOptions}
+            onChange={(users) =>
+              setValue(
+                'participants',
+                users.map((user) => user.value)
+              )
+            }
+            value={userOptions.filter((user) => selectedParticipants?.includes(user.value))}
+          />
+
+          {errors.participants && <Required>{errors.participants.message}</Required>}
         </InputContainer>
         {dateInfo.title ? (
           <StyledButton type='submit' variant='danger'>
