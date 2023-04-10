@@ -143,4 +143,11 @@ export const APIs = {
   settings: {
     getSettings: '/api/settings/get-settings',
   },
+  event: {
+    getEventList: '/api/event/list',
+    getEventDetail: '/api/event/{eventId}',
+    addEvent: '/api/event',
+    updateEvent: '/api/event/{eventId}',
+    deleteEvent: '/api/event/{eventId}',
+  },
 };

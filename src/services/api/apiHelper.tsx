@@ -6,6 +6,7 @@ import {
   ConversationRoomQuery,
   PushNotificationQuery,
 } from 'types/Conversation';
+import { EventListQuery } from 'types/Event';
 import {
   PostDetailTokenQuery,
   PostListByClassQuery,
@@ -15,8 +16,6 @@ import {
 } from 'types/Post';
 import { DeviceTokenQuery, RegisterQuery } from 'types/Register';
 import { AuthQuery, LogoutQuery, OnlyTokenQuery, RefreshTokenQuery } from 'types/Session';
-import { TeacherDetailQuery } from '../../types/Teacher';
-import * as api from './index';
 import { ClassDetailTokenQuery, ClassListTokenQuery } from '../../types/Class';
 import { AddCommentTokenRequest } from '../../types/Comment';
 import {
@@ -32,11 +31,12 @@ import {
   StudentListByClassTokenQuery,
   UpdateStudentQuery,
 } from '../../types/Student';
+import { TeacherDetailQuery } from '../../types/Teacher';
 import {
   AssignOrRemoveStudentQuery,
   TeacherAssignmentDetailTokenQuery,
 } from '../../types/TeacherAssignment';
-import {removeStudentFromParent} from "./student";
+import * as api from './index';
 
 export function* apiLogin(query: AuthQuery) {
   return yield call(api.login, query);
@@ -229,4 +229,10 @@ export function* apiAssignStudent(query: AssignOrRemoveStudentQuery) {
 
 export function* apiRemoveStudentFromClass(query: AssignOrRemoveStudentQuery) {
   return yield call(api.removeStudentFromClass, query);
+}
+
+//Event
+
+export function* apiGetEventList(query: EventListQuery) {
+  return yield call(api.getEventList, query);
 }

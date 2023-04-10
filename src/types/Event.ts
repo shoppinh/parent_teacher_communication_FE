@@ -1,5 +1,5 @@
-import { ViewApi } from "@fullcalendar/core";
-import { EventImpl } from "@fullcalendar/core/internal";
+import { ViewApi } from '@fullcalendar/core';
+import { EventImpl } from '@fullcalendar/core/internal';
 
 export interface Event {
   _id: string;
@@ -17,6 +17,44 @@ export interface CustomDateInfo {
   endStr: string;
   allDay: boolean;
   title: string;
+  participants: string[];
   view: ViewApi;
   event?: EventImpl;
 }
+
+export interface EventState {
+  data: EventListResponse;
+  error: EventError | null;
+  loading: boolean;
+}
+
+export interface EventError {
+  code: EventErrorType | null;
+  message?: string;
+}
+
+export enum EventErrorType {
+  RESPONSE_ERROR = 400,
+}
+
+export interface EventListQuery {
+  token: string;
+  sort?: string;
+  skip?: number;
+  limit?: number;
+  search?: string;
+}
+
+export interface EventDetailQuery {
+  token: string;
+  eventId: string;
+}
+
+export interface EventListResponse {
+  data: Event[];
+  total: number;
+}
+
+export type AddEventQuery = EventRequestForm & {
+  token: string;
+};

@@ -11,6 +11,7 @@ import {ClassState} from "./Class";
 import {ProgressState} from "./Progress";
 import {StudentState} from "./Student";
 import {TeacherState} from "./Admin/Teacher";
+import { EventState } from './Event';
 
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
@@ -34,6 +35,7 @@ export interface RootState {
   progress?: ProgressState;
   student?: StudentState;
   teacher?: TeacherState;
+  event?: EventState;
 
   // [INSERT NEW REDUCER KEY ABOVE] < Needed for generating containers seamlessly
 }

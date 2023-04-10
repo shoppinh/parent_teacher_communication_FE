@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import MainLayout from '../../layouts/MainLayout';
 import FullCalendar from '@fullcalendar/react'; // must go before plugins
@@ -14,9 +14,14 @@ import { DateSelectArg, EventClickArg, EventInput } from '@fullcalendar/core';
 import { PModal } from 'app/components/PModal';
 import EventModal from 'app/containers/TeacherEvent/EventModal';
 import { CustomDateInfo } from 'types/Event';
+import { useEventSlice } from 'store/slices/event';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAccessToken } from 'store/selectors/session';
+import { getEventList, getEventLoading } from 'store/selectors/event';
+import { PLoadingIndicator } from 'app/components/PLoadingIndicatior';
 
 const CalendarContainer = styled.div`
-  height: 100%;
+  height: calc(100% - ${pxToRem(StyleConstants.TAB_HEIGHT)}rem);
   overflow: auto;
   padding: ${pxToRem(20)}rem;
 `;
@@ -36,11 +41,13 @@ const INITIAL_EVENTS: EventInput[] = [
     id: '1',
     title: 'All-day event',
     start: todayStr,
+    participants: ['1', '2', '3'],
   },
   {
     id: '2',
     title: 'Timed event',
     start: todayStr + 'T12:00:00',
+    participants: ['2', '4', '5'],
   },
 ];
 
@@ -49,13 +56,18 @@ const TeacherEvent = () => {
   const [currentEvents, setCurrentEvents] = React.useState<EventInput[]>([]);
   const [isEventModalOpen, setIsEventModalOpen] = React.useState(false);
   const [selectedDateInfo, setSelectedDateInfo] = React.useState<CustomDateInfo>();
-
+  const { actions: eventActions } = useEventSlice();
+  const accessToken = useSelector(getAccessToken);
+  const dispatch = useDispatch();
+  const eventList = useSelector(getEventList);
+  const eventLoading = useSelector(getEventLoading);
   const handleDateSelect = (selectInfo: DateSelectArg) => {
     setIsEventModalOpen(true);
     setSelectedDateInfo({
       startStr: selectInfo.startStr,
       endStr: selectInfo.endStr,
       title: '',
+      participants: [],
       allDay: selectInfo.allDay,
       view: selectInfo.view,
     });
@@ -67,6 +79,7 @@ const TeacherEvent = () => {
       endStr: clickInfo.event.endStr,
       title: clickInfo.event.title,
       allDay: clickInfo.event.allDay,
+      participants: clickInfo.event.extendedProps.participants,
       view: clickInfo.view,
       event: clickInfo.event,
     });
@@ -78,6 +91,12 @@ const TeacherEvent = () => {
     setCurrentEvents(events);
   };
 
+  useEffect(() => {
+    if (accessToken) {
+      dispatch(eventActions.loadEventList({ token: accessToken }));
+    }
+  }, [accessToken, dispatch, eventActions]);
+
   return (
     <MainLayout
       title={t('teacher.event.title')}
@@ -85,32 +104,37 @@ const TeacherEvent = () => {
       isShowSchoolAndClassList={false}
     >
       <TabsWrapper></TabsWrapper>
-      <CalendarContainer>
-        <FullCalendar
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-          headerToolbar={{
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay',
-          }}
-          locales={[viLocale, enLocale]}
-          locale='vi'
-          editable={true}
-          selectable={true}
-          selectMirror={true}
-          dayMaxEvents={true}
-          initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
-          select={handleDateSelect}
-          // eventContent={renderEventContent} // custom render function
-          eventClick={handleEventClick}
-          eventsSet={handleEvents} // called after events are initialized/added/changed/removed
-          /* you can update a remote database when these fire:
-            eventAdd={function(){}}
-            eventChange={function(){}}
-            eventRemove={function(){}}
-            */
-        />
-      </CalendarContainer>
+      {!eventLoading && eventList?.data?.length > 0 ? (
+        <CalendarContainer>
+          <FullCalendar
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+            headerToolbar={{
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,timeGridDay',
+            }}
+            locales={[viLocale, enLocale]}
+            locale='vi'
+            editable={true}
+            selectable={true}
+            selectMirror={true}
+            dayMaxEvents={true}
+            events={eventList.data}
+            select={handleDateSelect}
+            // eventContent={renderEventContent} // custom render function
+            eventClick={handleEventClick}
+            eventsSet={handleEvents} // called after events are initialized/added/changed/removed
+            /* you can update a remote database when these fire:
+              eventAdd={function(){}}
+              eventChange={function(){}}
+              eventRemove={function(){}}
+              */
+          />
+        </CalendarContainer>
+      ) : (
+        <PLoadingIndicator />
+      )}
+
       {selectedDateInfo && (
         <PModal open={isEventModalOpen} onClose={() => setIsEventModalOpen(false)}>
           <EventModal onClose={() => setIsEventModalOpen(false)} dateInfo={selectedDateInfo} />
