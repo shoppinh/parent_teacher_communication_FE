@@ -8,3 +8,4 @@ const selectDomain = (state: RootState) => state.event || initialState;
 export const getEventList = createSelector([selectDomain], (state) => state.data);
 export const getEventLoading = createSelector([selectDomain], (state) => state.loading);
 export const getEventError = createSelector([selectDomain], (state) => state.error);
+export const getEventActionLoading = createSelector([selectDomain], (state) => state.actionLoading);

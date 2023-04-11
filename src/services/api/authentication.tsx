@@ -1,6 +1,6 @@
 import apiClient from '../base/apiClient';
 import { APIs } from 'services/base/type';
-import {AuthQuery, LogoutQuery, OnlyTokenQuery, RefreshTokenQuery} from 'types/Session';
+import { AuthQuery, LogoutQuery, OnlyTokenQuery, RefreshTokenQuery } from 'types/Session';
 
 export const login = async (query: AuthQuery) => {
   const params = {

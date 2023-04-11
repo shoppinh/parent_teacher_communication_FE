@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAccessToken, getRefreshToken, getUser } from '../../store/selectors/session';
 import { useConversationSlice } from '../../store/slices/conversation';
 import { mapStringRoleToNumber } from '../helpers';
-import {getCurrentRoomId, getCurrentToUser} from "../../store/selectors/conversation";
+import { getCurrentRoomId, getCurrentToUser } from '../../store/selectors/conversation';
 
 export const useConversation = () => {
   const [showConversation, setShowConversation] = useState(false);
@@ -67,6 +67,6 @@ export const useConversation = () => {
     currentAccessToken,
     setShowConversation,
     conversationToUserData,
-    currentRoomId
+    currentRoomId,
   };
 };

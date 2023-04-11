@@ -19,7 +19,6 @@ const Wrapper = styled.div`
   height: 90%;
   overflow: hidden;
   padding: ${pxToRem(10)}rem;
-
 `;
 
 const ContentWrapper = styled.div`

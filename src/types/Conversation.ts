@@ -1,5 +1,5 @@
 import { User } from './User';
-import {ConstantRolesNumber} from "../utils/constants";
+import { ConstantRolesNumber } from '../utils/constants';
 
 export interface ConversationDetailQuery {
   token: string;
@@ -83,8 +83,6 @@ export interface ConversationState {
   loading: boolean;
   error: any;
 }
-
-
 
 export interface Conversation {
   fromUserName: string;

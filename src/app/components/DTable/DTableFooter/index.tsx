@@ -73,7 +73,7 @@ const DTableFooter: React.FC<DTableFooterProps> = ({
       if (typeof el === 'number')
         return (
           <FooterButton
-              variant='primary'
+            variant='primary'
             key={index}
             // variant={`${page === el ? 'confirmed' : 'secondary'}`}
             onClick={() => typeof el === 'number' && setPage(el)}

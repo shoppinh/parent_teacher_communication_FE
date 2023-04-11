@@ -87,7 +87,10 @@
     "addChildrenTitle": "Add Children",
     "assignStudentTitle": "Assign Student",
     "sendInvitation": "Send Invitation",
-    "email": "Email"
+    "email": "Email",
+    "start": "Start",
+    "end": "End",
+    "participants": "Participants"
   },
   "logout": {
     "title": "Logout"

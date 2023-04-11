@@ -4,6 +4,7 @@ import { EventImpl } from '@fullcalendar/core/internal';
 export interface Event {
   _id: string;
   title: string;
+  content: string;
   start: string;
   end: string;
   allDay: boolean;
@@ -13,10 +14,12 @@ export interface Event {
 export type EventRequestForm = Omit<Event, '_id'>;
 
 export interface CustomDateInfo {
+  _id: string;
   startStr: string;
   endStr: string;
   allDay: boolean;
   title: string;
+  content: string;
   participants: string[];
   view: ViewApi;
   event?: EventImpl;
@@ -26,6 +29,7 @@ export interface EventState {
   data: EventListResponse;
   error: EventError | null;
   loading: boolean;
+  actionLoading: boolean;
 }
 
 export interface EventError {

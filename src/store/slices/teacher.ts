@@ -42,7 +42,6 @@ const slice = createSlice({
     assignStudentSuccess(state) {
       state.loading = false;
     },
-
   },
 });
 

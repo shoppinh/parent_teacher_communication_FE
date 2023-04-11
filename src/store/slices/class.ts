@@ -4,7 +4,7 @@ import { postSaga } from 'store/sagas/postSaga';
 import { PostListByClassQuery, PostState } from 'types/Post';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
-import {ClassDetailTokenQuery, ClassListTokenQuery, ClassState} from '../../types/Class';
+import { ClassDetailTokenQuery, ClassListTokenQuery, ClassState } from '../../types/Class';
 import { classSaga } from '../sagas/classSaga';
 
 const classCache = loadState()?.class;

@@ -1,9 +1,9 @@
 import { PButton } from 'app/components/PButton';
 import PInput from 'app/components/PInput';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getUserList } from 'store/selectors/config';
 import styled from 'styled-components';
 import { StyleConstants } from 'styles/constants/style';
@@ -11,6 +11,11 @@ import { pxToRem } from 'styles/theme/utils';
 import tw from 'twin.macro';
 import { CustomDateInfo, EventRequestForm } from 'types/Event';
 import Select from 'react-select';
+import { useEventSlice } from 'store/slices/event';
+import { getAccessToken, getUser } from 'store/selectors/session';
+import PBackdropLoading from 'app/components/PBackdropLoading';
+import { getEventActionLoading, getEventLoading } from 'store/selectors/event';
+import { ConstantRoles } from 'utils/constants';
 
 interface Props {
   onClose: () => void;
@@ -80,7 +85,12 @@ const EventModal: React.FC<Props> = ({ onClose, dateInfo }) => {
   });
 
   const selectedParticipants = watch('participants');
+  const currentUser = useSelector(getUser);
 
+  const dispatch = useDispatch();
+  const { actions: eventActions } = useEventSlice();
+  const currentAccessToken = useSelector(getAccessToken);
+  const eventActionLoading = useSelector(getEventActionLoading);
   const userOptions = React.useMemo(() => {
     return userList
       ? userList.map((user) => ({
@@ -89,28 +99,49 @@ const EventModal: React.FC<Props> = ({ onClose, dateInfo }) => {
         }))
       : [];
   }, [userList]);
+  const isEditView = useMemo(() => {
+    return !!dateInfo?.title;
+  }, [dateInfo]);
 
   const onSubmit = useCallback(
     (data: EventRequestForm) => {
-      const calendarApi = dateInfo.view.calendar;
-      calendarApi.unselect(); //        clear date selection
+      // const calendarApi = dateInfo.view.calendar;
+      // calendarApi.unselect(); //        clear date selection
 
-      if (dateInfo.title) {
-        dateInfo?.event?.remove();
-      } else {
-        calendarApi.addEvent({
-          id: Math.random().toString(36).substring(7),
-          title: data.title,
-          start: data?.start || dateInfo.startStr,
-          end: data?.end || dateInfo.endStr,
-          allDay: data?.allDay || dateInfo.allDay,
-          participants: data.participants,
-        });
+      if (currentAccessToken) {
+        if (dateInfo.title) {
+          if (dateInfo._id) {
+            // dateInfo?.event?.remove();
+            dispatch(
+              eventActions.deleteEvent({ eventId: dateInfo._id, token: currentAccessToken })
+            );
+          }
+        } else {
+          // calendarApi.addEvent({
+          //   id: Math.random().toString(36).substring(7),
+          //   title: data.title,
+          //   start: data?.start || dateInfo.startStr,
+          //   end: data?.end || dateInfo.endStr,
+          //   allDay: data?.allDay || dateInfo.allDay,
+          //   participants: data.participants,
+          // });
+          dispatch(
+            eventActions.addEvent({
+              title: data.title,
+              start: data?.start || dateInfo.startStr,
+              end: data?.end || dateInfo.endStr,
+              allDay: data?.allDay || dateInfo.allDay,
+              participants: data.participants,
+              token: currentAccessToken,
+              content: data.content,
+            })
+          );
+        }
       }
 
       onClose();
     },
-    [dateInfo, onClose]
+    [currentAccessToken, dateInfo, dispatch, eventActions, onClose]
   );
 
   useEffect(() => {
@@ -118,17 +149,47 @@ const EventModal: React.FC<Props> = ({ onClose, dateInfo }) => {
       reset({
         title: dateInfo.title,
         participants: dateInfo.participants,
+        start: dateInfo.allDay
+          ? dateInfo.startStr
+          : dateInfo.startStr.substring(0, dateInfo.startStr.length - 6),
+        end: dateInfo.allDay
+          ? dateInfo.endStr
+          : dateInfo.endStr.substring(0, dateInfo.endStr.length - 6),
+        content: dateInfo.content,
       });
     }
   }, [reset, dateInfo]);
   return (
     <Container>
-      <FormTitle>{dateInfo.title ? 'Event Detail' : 'Create Event'}</FormTitle>
+      <FormTitle>{isEditView ? 'Event Detail' : 'Create Event'}</FormTitle>
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
         <InputContainer>
           <InputLabel>{t('form.title')}</InputLabel>
-          <StyledInput {...register('title')} />
+          <StyledInput {...register('title')} disabled={isEditView} />
           {errors.title && <Required>{errors.title.message}</Required>}
+        </InputContainer>
+        <InputContainer>
+          <InputLabel>{t('form.content')}</InputLabel>
+          <StyledInput {...register('content')} disabled={isEditView} />
+          {errors.content && <Required>{errors.content.message}</Required>}
+        </InputContainer>
+        <InputContainer>
+          <InputLabel>{t('form.start')}</InputLabel>
+          <StyledInput
+            {...register('start')}
+            type={dateInfo.allDay ? 'date' : 'datetime-local'}
+            disabled={isEditView}
+          />
+          {errors.start && <Required>{errors.start.message}</Required>}
+        </InputContainer>
+        <InputContainer>
+          <InputLabel>{t('form.end')}</InputLabel>
+          <StyledInput
+            {...register('end')}
+            type={dateInfo.allDay ? 'date' : 'datetime-local'}
+            disabled={isEditView}
+          />
+          {errors.end && <Required>{errors.end.message}</Required>}
         </InputContainer>
         <InputContainer>
           <InputLabel>{t('form.participants')}</InputLabel>
@@ -143,20 +204,26 @@ const EventModal: React.FC<Props> = ({ onClose, dateInfo }) => {
               )
             }
             value={userOptions.filter((user) => selectedParticipants?.includes(user.value))}
+            isDisabled={isEditView}
           />
 
           {errors.participants && <Required>{errors.participants.message}</Required>}
         </InputContainer>
-        {dateInfo.title ? (
-          <StyledButton type='submit' variant='danger'>
-            Remove event
-          </StyledButton>
-        ) : (
-          <StyledButton type='submit' variant='primary'>
-            Add event
-          </StyledButton>
+        {currentUser?.roleId !== ConstantRoles.PARENT && (
+          <>
+            {isEditView ? (
+              <StyledButton type='submit' variant='danger'>
+                Remove event
+              </StyledButton>
+            ) : (
+              <StyledButton type='submit' variant='primary'>
+                Add event
+              </StyledButton>
+            )}
+          </>
         )}
       </FormContainer>
+      <PBackdropLoading isShow={eventActionLoading} />
     </Container>
   );
 };

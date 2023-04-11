@@ -50,7 +50,6 @@ const StyledButton = styled(PButton)`
   padding: 0 ${pxToRem(25)}rem;
 `;
 
-
 const StyledListbox = styled.ul(
   ({ theme }) => `
   font-family: IBM Plex Sans, sans-serif;
@@ -107,7 +106,7 @@ const TabPaneContent = styled.div`
 `;
 const StyledTabs = styled(TabsUnstyled)`
   height: 100%;
-`
+`;
 
 const AdminHome = () => {
   const { t } = useTranslation();

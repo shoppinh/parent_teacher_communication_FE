@@ -1,23 +1,29 @@
-import {TabPanelUnstyled, TabsListUnstyled, TabsUnstyled, TabUnstyled, tabUnstyledClasses,} from '@mui/base';
-import React, {useCallback, useEffect} from 'react';
-import {useTranslation} from 'react-i18next';
+import {
+  TabPanelUnstyled,
+  TabsListUnstyled,
+  TabsUnstyled,
+  TabUnstyled,
+  tabUnstyledClasses,
+} from '@mui/base';
+import React, { useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import MainLayout from '../../layouts/MainLayout';
 
-import tw, {styled} from 'twin.macro';
-import {StyleConstants} from '../../../styles/constants/style';
-import {pxToRem} from '../../../styles/theme/utils';
+import tw, { styled } from 'twin.macro';
+import { StyleConstants } from '../../../styles/constants/style';
+import { pxToRem } from '../../../styles/theme/utils';
 import FeedList from '../../containers/TeacherHomePage/FeedList';
 import WelcomePage from '../../containers/Welcome';
-import {useDispatch, useSelector} from 'react-redux';
-import {getAccessToken} from '../../../store/selectors/session';
-import {useStudentSlice} from '../../../store/slices/student';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAccessToken } from '../../../store/selectors/session';
+import { useStudentSlice } from '../../../store/slices/student';
 import ClassInfo from '../../containers/ClassInfo';
-import {useQuery} from '../../../utils/hook';
-import {queryString} from '../../../utils/constants';
-import {useClassSlice} from '../../../store/slices/class';
-import {getCurrentClass} from '../../../store/selectors/class';
-import {getSchoolInfo} from '../../../store/selectors/config';
-import {useNavigate} from "react-router-dom";
+import { useQuery } from '../../../utils/hook';
+import { queryString } from '../../../utils/constants';
+import { useClassSlice } from '../../../store/slices/class';
+import { getCurrentClass } from '../../../store/selectors/class';
+import { getSchoolInfo } from '../../../store/selectors/config';
+import { useNavigate } from 'react-router-dom';
 
 const TabsWrapper = styled.div`
   display: flex;

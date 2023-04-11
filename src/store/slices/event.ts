@@ -1,7 +1,15 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { loadState } from 'store/localStorage';
 import { eventSaga } from 'store/sagas/eventSaga';
-import { Event, EventError, EventListQuery, EventListResponse, EventState } from 'types/Event';
+import {
+  AddEventQuery,
+  Event,
+  EventDetailQuery,
+  EventError,
+  EventListQuery,
+  EventListResponse,
+  EventState,
+} from 'types/Event';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 
@@ -13,6 +21,7 @@ export const initialState: EventState = {
   },
   error: null,
   loading: false,
+  actionLoading: false,
 };
 
 const slice = createSlice({
@@ -27,8 +36,31 @@ const slice = createSlice({
       state.loading = false;
       state.data = action.payload;
     },
+    addEvent(state, _action: PayloadAction<AddEventQuery>) {
+      state.actionLoading = true;
+      state.error = null;
+    },
+    addedEvent(state, action: PayloadAction<Event>) {
+      state.actionLoading = false;
+      state.data = {
+        ...state.data,
+        data: [...state.data.data, action.payload],
+      };
+    },
+    deleteEvent(state, _action: PayloadAction<EventDetailQuery>) {
+      state.actionLoading = true;
+      state.error = null;
+    },
+    deletedEvent(state, action: PayloadAction<EventDetailQuery>) {
+      state.data = {
+        ...state.data,
+        data: state.data.data.filter((event) => event._id !== action.payload.eventId),
+      };
+      state.actionLoading = false;
+    },
     Error(state, action: PayloadAction<EventError>) {
       state.loading = false;
+      state.actionLoading = false;
       state.error = action.payload;
     },
   },

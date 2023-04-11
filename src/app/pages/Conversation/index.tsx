@@ -14,7 +14,7 @@ import OutletPhoneModal from 'app/components/PhoneModal';
 import debounce from 'lodash.debounce';
 import { useConversationSlice } from 'store/slices/conversation';
 import { useSessionSlice } from 'store/slices/session';
-import {pxToRem} from "../../../styles/theme/utils";
+import { pxToRem } from '../../../styles/theme/utils';
 
 interface Props {
   roomId: number;

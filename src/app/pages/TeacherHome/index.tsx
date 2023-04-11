@@ -267,7 +267,9 @@ const TeacherHomePage: React.FC = () => {
             <StyledTab>{t('tab.welcome')}</StyledTab>
             <StyledTab>{t('tab.newsFeed')}</StyledTab>
             <StyledTab>{t('tab.trackingAndAssessment')}</StyledTab>
-            {!currentClass?.classInfo?.isSchoolClass && <StyledTab>{t('tab.portfolios')}</StyledTab>}
+            {!currentClass?.classInfo?.isSchoolClass && (
+              <StyledTab>{t('tab.portfolios')}</StyledTab>
+            )}
             {!currentClass?.classInfo?.isSchoolClass && <StyledTab>{t('tab.classInfo')}</StyledTab>}
           </StyledTabsList>
           <StyledButton

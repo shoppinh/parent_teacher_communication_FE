@@ -9,4 +9,7 @@ export const getStudentLoading = createSelector([selectDomain], (state) => state
 
 export const getStudentError = createSelector([selectDomain], (state) => state.error);
 
-export const getUnassignedStudentList = createSelector([selectDomain], (state) => state.data?.unassignedStudent?.data);
+export const getUnassignedStudentList = createSelector(
+  [selectDomain],
+  (state) => state.data?.unassignedStudent?.data
+);

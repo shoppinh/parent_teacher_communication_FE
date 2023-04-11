@@ -11,7 +11,7 @@ import { PLoadingIndicator } from '../../../components/PLoadingIndicatior';
 import AvatarPlaceholder from '../../../../assets/images/person-placeholder.png';
 import { useStudentSlice } from '../../../../store/slices/student';
 import { getAccessToken } from '../../../../store/selectors/session';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 const Section = styled.div`
   margin-bottom: ${pxToRem(12)}rem;
