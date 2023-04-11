@@ -60,7 +60,6 @@ export interface AuthPayLoad {
 export interface SessionPayload {
   auth?: AuthPayLoad;
   profile?: Profile;
-
 }
 
 export enum SessionErrorType {

@@ -18,7 +18,7 @@ import { getAccessToken } from '../../../../store/selectors/session';
 import { useQuery } from '../../../../utils/hook';
 import { queryString } from '../../../../utils/constants';
 import AssignStudentModal from '../../Porfolios/AssignStudentModal';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 const Section = styled.div`
   margin-bottom: ${pxToRem(12)}rem;
@@ -94,7 +94,6 @@ const Portfolios: React.FC = () => {
     setAssignStudentModalOpen(true);
   };
 
-
   const handleRefetchStudentList = useCallback(() => {
     if (currentAccessToken && classId) {
       dispatch(
@@ -105,8 +104,6 @@ const Portfolios: React.FC = () => {
       );
     }
   }, [classId, currentAccessToken, dispatch, studentActions]);
-
-
 
   return (
     <Container>

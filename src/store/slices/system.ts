@@ -7,7 +7,6 @@ export const initialState: SystemState = {
   data: {},
 };
 
-
 const slice = createSlice({
   name: 'system',
   initialState,

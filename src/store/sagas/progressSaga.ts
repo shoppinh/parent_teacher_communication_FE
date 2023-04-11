@@ -11,7 +11,8 @@ import {
 import { PayloadAction } from '@reduxjs/toolkit';
 import {
   AddProgressTokenQuery,
-  ProgressDetailTokenQuery, ProgressListByStudentTokenQuery,
+  ProgressDetailTokenQuery,
+  ProgressListByStudentTokenQuery,
   ProgressListTokenQuery,
   UpdateProgressTokenQuery,
 } from '../../types/Progress';
@@ -39,7 +40,9 @@ export function* getProgressListByClass({ payload }: PayloadAction<ProgressListT
   }
 }
 
-export function* getProgressListByStudent({ payload }: PayloadAction<ProgressListByStudentTokenQuery>) {
+export function* getProgressListByStudent({
+  payload,
+}: PayloadAction<ProgressListByStudentTokenQuery>) {
   try {
     const response = yield call(apiGetProgressListByStudent, payload);
     if (response.data && response.data.status) {

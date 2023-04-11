@@ -91,7 +91,10 @@
     "addChildrenTitle": "Thêm mới con cái",
     "assignStudentTitle": "Phân lớp học sinh",
     "sendInvitation": "Gửi lời mời",
-    "email": "Email"
+    "email": "Email",
+    "start": "Bắt đầu",
+    "end": "Kết thúc",
+    "participants": "Người tham gia"
   },
   "register": {
     "title": "Tạo tài khoản",
@@ -241,7 +244,6 @@
     "update": "Cập nhật",
     "invitation": "Lời mời",
     "defaultInputPlaceholder": "Nhập vào đây"
-    
   },
   "table": {
     "next": "Tiếp theo",

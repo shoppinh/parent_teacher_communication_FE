@@ -59,7 +59,12 @@ const NavigationBottomBar = styled.div`
   `}
 `;
 
-const MainLayout: React.FC<Props> = ({ children, headerTitle, title, isShowSchoolAndClassList }) => {
+const MainLayout: React.FC<Props> = ({
+  children,
+  headerTitle,
+  title,
+  isShowSchoolAndClassList,
+}) => {
   const [leftBarOpen, setLeftBarOpen] = React.useState(false);
   const [rightBarOpen, setRightBarOpen] = React.useState(false);
 

@@ -81,7 +81,6 @@ const ClassInfo = () => {
             data={currentClass?.teacherAssignments}
             loading={isFetchingClassDetail}
             handleOpenNewConversation={handleOpenNewConversation}
-
           />
         </SectionContent>
       </Section>

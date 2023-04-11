@@ -1,6 +1,6 @@
 import { Subject } from './subject';
 import { Student } from './Student';
-import {Class} from "./Class";
+import { Class } from './Class';
 
 export interface Progress {
   _id: string;
@@ -85,5 +85,5 @@ export interface ProgressDetailPayload {
   classId: string;
   semester: number;
   year: number;
-  note: string
+  note: string;
 }

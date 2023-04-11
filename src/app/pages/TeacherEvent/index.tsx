@@ -34,23 +34,6 @@ const TabsWrapper = styled.div`
   background-color: ${(p) => p.theme.background};
 `;
 
-const todayStr = new Date().toISOString().replace(/T.*$/, ''); // YYYY-MM-DD of today
-
-const INITIAL_EVENTS: EventInput[] = [
-  {
-    id: '1',
-    title: 'All-day event',
-    start: todayStr,
-    participants: ['1', '2', '3'],
-  },
-  {
-    id: '2',
-    title: 'Timed event',
-    start: todayStr + 'T12:00:00',
-    participants: ['2', '4', '5'],
-  },
-];
-
 const TeacherEvent = () => {
   const { t } = useTranslation();
   const [currentEvents, setCurrentEvents] = React.useState<EventInput[]>([]);
@@ -70,6 +53,8 @@ const TeacherEvent = () => {
       participants: [],
       allDay: selectInfo.allDay,
       view: selectInfo.view,
+      _id: Math.random().toString(36).substr(2, 9),
+      content: '',
     });
   };
 
@@ -82,6 +67,8 @@ const TeacherEvent = () => {
       participants: clickInfo.event.extendedProps.participants,
       view: clickInfo.view,
       event: clickInfo.event,
+      _id: clickInfo.event.extendedProps._id,
+      content: clickInfo.event.extendedProps.content,
     });
 
     setIsEventModalOpen(true);
@@ -104,7 +91,7 @@ const TeacherEvent = () => {
       isShowSchoolAndClassList={false}
     >
       <TabsWrapper></TabsWrapper>
-      {!eventLoading && eventList?.data?.length > 0 ? (
+      {!eventLoading ? (
         <CalendarContainer>
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}

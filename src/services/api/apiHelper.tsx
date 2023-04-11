@@ -6,7 +6,7 @@ import {
   ConversationRoomQuery,
   PushNotificationQuery,
 } from 'types/Conversation';
-import { EventListQuery } from 'types/Event';
+import { AddEventQuery, EventDetailQuery, EventListQuery } from 'types/Event';
 import {
   PostDetailTokenQuery,
   PostListByClassQuery,
@@ -235,4 +235,10 @@ export function* apiRemoveStudentFromClass(query: AssignOrRemoveStudentQuery) {
 
 export function* apiGetEventList(query: EventListQuery) {
   return yield call(api.getEventList, query);
+}
+export function* apiAddEvent(query: AddEventQuery) {
+  return yield call(api.createEvent, query);
+}
+export function* apiRemoveEvent(query: EventDetailQuery) {
+  return yield call(api.removeEvent, query);
 }

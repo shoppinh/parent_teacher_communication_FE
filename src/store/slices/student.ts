@@ -4,7 +4,8 @@ import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { studentSaga } from 'store/sagas/studentSaga';
 import {
   AddStudentQuery,
-  Student, StudentDetailTokenQuery,
+  Student,
+  StudentDetailTokenQuery,
   StudentListByClassTokenQuery,
   StudentListResponse,
   StudentState,
@@ -12,7 +13,7 @@ import {
 } from '../../types/Student';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { OnlyTokenQuery } from '../../types/Session';
-import {AssignOrRemoveStudentQuery} from "../../types/TeacherAssignment";
+import { AssignOrRemoveStudentQuery } from '../../types/TeacherAssignment';
 
 const studentCache = loadState()?.student;
 

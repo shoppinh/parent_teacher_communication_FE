@@ -12,5 +12,5 @@ export interface Comment {
 export interface AddCommentTokenRequest {
   postId: string;
   content: string;
-  token: string
+  token: string;
 }

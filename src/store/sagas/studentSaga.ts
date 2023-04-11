@@ -118,7 +118,12 @@ export function* addStudent({ payload }: { type: string; payload: AddStudentQuer
   }
 }
 
-export function* removeStudentFromParent({ payload }: { type: string; payload: StudentDetailTokenQuery }) {
+export function* removeStudentFromParent({
+  payload,
+}: {
+  type: string;
+  payload: StudentDetailTokenQuery;
+}) {
   try {
     const response = yield call(apiRemoveStudentFromParent, payload);
     if (response.data && response.data.status) {

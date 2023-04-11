@@ -7,10 +7,10 @@ import { RegisterState } from './Register';
 import { ConversationState } from './Conversation';
 import { AdminState } from './Admin';
 import { PostState } from './Post';
-import {ClassState} from "./Class";
-import {ProgressState} from "./Progress";
-import {StudentState} from "./Student";
-import {TeacherState} from "./Admin/Teacher";
+import { ClassState } from './Class';
+import { ProgressState } from './Progress';
+import { StudentState } from './Student';
+import { TeacherState } from './Admin/Teacher';
 import { EventState } from './Event';
 
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly

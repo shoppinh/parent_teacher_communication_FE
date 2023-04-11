@@ -55,7 +55,6 @@ export interface PostListByClassQuery extends PostListTokenQuery {
   classId: string;
 }
 
-
 export interface PostState {
   data: {
     posts: {
