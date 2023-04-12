@@ -21,4 +21,5 @@ export const PButton = styled(ButtonUnstyled)<ButtonProp>`
     }
   }}
   ${(p) => p.isHidden && tw`hidden`}
+  ${(p) => p.disabled && `opacity: 0.5; cursor: not-allowed;`}
 `;

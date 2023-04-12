@@ -92,6 +92,8 @@ const StyledMenuItem = styled(MenuItemUnstyled)(
   border-radius: 8px;
   cursor: default;
   user-select: none;
+  font-size: 14px;
+  font-weight: 400;
 
   &:last-of-type {
     border-bottom: none;
@@ -322,7 +324,7 @@ const TeacherHomePage: React.FC = () => {
         <StyledMenuItem onClick={createHandleMenuClick('progress')}>
           {t('menu.markAndAssessment')}
         </StyledMenuItem>
-        <StyledMenuItem onClick={createHandleMenuClick('timesheet')}>Time Sheet</StyledMenuItem>
+        {/* <StyledMenuItem onClick={createHandleMenuClick('timesheet')}>Time Sheet</StyledMenuItem> */}
       </MenuUnstyled>
       <PModal open={isPostModalOpen} onClose={handleClosePostModal}>
         <PEditor

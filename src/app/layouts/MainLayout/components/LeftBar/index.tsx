@@ -1,25 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import tw, { styled } from 'twin.macro';
-import { StyleConstants } from '../../../../../styles/constants/style';
-import { pxToRem } from '../../../../../styles/theme/utils';
-import { media } from '../../../../../styles';
-import Logo from '../../../../../assets/images/app-logo.png';
-import { PIcon } from '../../../../components/PIcon';
-import { PButton } from '../../../../components/PButton';
-import { PModal } from '../../../../components/PModal';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSessionSlice } from '../../../../../store/slices/session';
-import { getAccessToken, getUser } from '../../../../../store/selectors/session';
-import { AuthPayLoad } from '../../../../../types/Session';
-import { PREVIOUS_STORAGE_KEY, queryString } from '../../../../../utils/constants';
-import { useClassSlice } from '../../../../../store/slices/class';
-import { getClassList } from '../../../../../store/selectors/class';
 import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
+import { styled } from 'twin.macro';
+import Logo from '../../../../../assets/images/app-logo.png';
+import { getClassList } from '../../../../../store/selectors/class';
 import { getSystemSettings } from '../../../../../store/selectors/config';
-import { useTranslation } from 'react-i18next';
-import ProfileRow from './ProfileRow';
+import { getAccessToken, getUser } from '../../../../../store/selectors/session';
+import { useClassSlice } from '../../../../../store/slices/class';
+import { media } from '../../../../../styles';
+import { StyleConstants } from '../../../../../styles/constants/style';
+import { pxToRem } from '../../../../../styles/theme/utils';
+import { queryString } from '../../../../../utils/constants';
+import { PButton } from '../../../../components/PButton';
+import { PIcon } from '../../../../components/PIcon';
+import { PModal } from '../../../../components/PModal';
 import InvitationModal from './InvitationModal';
+import ProfileModal from './ProfileModal';
+import ProfileRow from './ProfileRow';
 import SettingModal from './SettingModal';
 
 interface ClassRowProps {
@@ -119,6 +118,7 @@ interface Props {
 const LeftBar: React.FC<Props> = ({ isShowSchoolAndClassList = true }) => {
   const [isShowOptionModal, setIsShowOptionModal] = useState(false);
   const [isShowInvitationModal, setIsShowInvitationModal] = useState(false);
+  const [isShowProfileModal, setIsShowProfileModal] = useState(false);
   const [isShowClassList, setIsShowClassList] = useState(isShowSchoolAndClassList);
   const [isShowSchoolList, setIsShowSchoolList] = useState(isShowSchoolAndClassList);
   const location = useLocation();
@@ -145,6 +145,10 @@ const LeftBar: React.FC<Props> = ({ isShowSchoolAndClassList = true }) => {
   };
   const { t } = useTranslation();
   const classList = useSelector(getClassList);
+  const handleOpenProfileModal = useCallback(() => {
+    setIsShowOptionModal(false);
+    setIsShowProfileModal(true);
+  }, []);
   useEffect(() => {
     if (currentAccessToken && currentUser?.roleId) {
       dispatch(classActions.loadClassList({ token: currentAccessToken, role: currentUser.roleId }));
@@ -240,10 +244,16 @@ const LeftBar: React.FC<Props> = ({ isShowSchoolAndClassList = true }) => {
         </ActionGroup>
       </BottomMenu>
       <PModal open={isShowOptionModal} onClose={handleCloseSettingModal}>
-        <SettingModal onClose={handleCloseSettingModal} />
+        <SettingModal
+          onClose={handleCloseSettingModal}
+          handleOpenProfileModal={handleOpenProfileModal}
+        />
       </PModal>
       <PModal open={isShowInvitationModal} onClose={handleCloseInvitationModal}>
         <InvitationModal onClose={handleCloseInvitationModal} />
+      </PModal>
+      <PModal open={isShowProfileModal} onClose={() => setIsShowProfileModal(false)}>
+        <ProfileModal onClose={() => setIsShowProfileModal(false)} />
       </PModal>
     </Container>
   );

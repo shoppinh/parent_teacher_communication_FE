@@ -11,7 +11,7 @@ export interface User {
   mobilePhone: string;
   roleId: string;
   role?: string;
-  lastLogin?: Date;
+  lastLoggedIn?: Date;
   createdAt?: Date;
   updatedAt?: Date;
   isActive?: boolean;
@@ -21,3 +21,6 @@ export interface User {
 export interface UserSettings {
   lang?: string;
 }
+export type UserPayload = Omit<User, '_id' | 'createdAt' | 'updatedAt' | 'lastLoggedIn'> & {
+  password?: string;
+};

@@ -161,7 +161,7 @@ const EventModal: React.FC<Props> = ({ onClose, dateInfo }) => {
   }, [reset, dateInfo]);
   return (
     <Container>
-      <FormTitle>{isEditView ? 'Event Detail' : 'Create Event'}</FormTitle>
+      <FormTitle>{isEditView ? t('event.eventDetail') : t('event.createEvent')}</FormTitle>
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
         <InputContainer>
           <InputLabel>{t('form.title')}</InputLabel>
@@ -213,11 +213,11 @@ const EventModal: React.FC<Props> = ({ onClose, dateInfo }) => {
           <>
             {isEditView ? (
               <StyledButton type='submit' variant='danger'>
-                Remove event
+                {t('common.removeEvent')}
               </StyledButton>
             ) : (
               <StyledButton type='submit' variant='primary'>
-                Add event
+                {t('common.addEvent')}
               </StyledButton>
             )}
           </>

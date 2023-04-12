@@ -106,12 +106,26 @@ const CommentInputSection = styled.div``;
 const FormContainer = styled.form`
   ${tw`w-full`}
   margin-bottom: ${pxToRem(20)}rem;
+  position: relative;
 `;
 const ActionGroup = styled.div``;
 const ActionButton = styled(PButton)``;
 const TitleSection = styled.div`
   display: flex;
   align-items: center;
+`;
+const StyledInput = styled(PInput)`
+  border: none;
+`;
+const EnterButton = styled(PButton)`
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+`;
+
+const EnterIcon = styled(PIcon)`
+  font-size: ${pxToRem(16)}rem;
 `;
 
 const PostItem: React.FC<Props> = ({ data: postData, triggerRefreshFeedList }) => {
@@ -176,14 +190,16 @@ const PostItem: React.FC<Props> = ({ data: postData, triggerRefreshFeedList }) =
       <AuthorSection>
         <TitleSection>
           <AvatarWrapper>
-            <Avatar src={postData?.author?.avatar || AvatarPlaceholder} />
+            <Avatar
+              src={
+                postData?.author?.avatar
+                  ? `${process.env.REACT_APP_API_URL}/${postData?.author?.avatar}`
+                  : AvatarPlaceholder
+              }
+            />
           </AvatarWrapper>
           <PostTitleWrapper>
-            <AuthorTitle>
-              {postData?.author?.firstname && postData?.author?.lastname
-                ? postData?.author?.firstname + ' ' + postData?.author?.lastname
-                : postData?.author?.username}
-            </AuthorTitle>
+            <AuthorTitle>{postData?.author?.fullname}</AuthorTitle>
             <Description>
               {postData?.author?.roleId === ConstantRoles.TEACHER
                 ? t('post.teacherAuthor', { className: postData?.class?.name })
@@ -225,23 +241,26 @@ const PostItem: React.FC<Props> = ({ data: postData, triggerRefreshFeedList }) =
       {isShowCommentSection && (
         <CommentSection>
           {postData?.comments?.map((comment) => (
-            <CommentItem>
+            <CommentItem key={comment._id}>
               <AvatarCommentWrapper>
                 <Avatar src={comment?.userId?.avatar || AvatarPlaceholder} />
               </AvatarCommentWrapper>
               <CommentContent>
-                <AuthorTitle>{comment?.userId?.username}</AuthorTitle>
+                <AuthorTitle>{comment?.userId?.fullname}</AuthorTitle>
                 <Description>{comment.content}</Description>
               </CommentContent>
             </CommentItem>
           ))}
           <CommentInputSection>
             <FormContainer onSubmit={handleSubmit(submitComment)}>
-              <PInput
+              <StyledInput
                 placeholder={t('post.writeSomething') as string}
                 {...register('commentContent')}
               />
               <input type='submit' hidden />
+              <EnterButton type='submit'>
+                <EnterIcon className='partei-arrow-right2' />
+              </EnterButton>
             </FormContainer>
           </CommentInputSection>
         </CommentSection>

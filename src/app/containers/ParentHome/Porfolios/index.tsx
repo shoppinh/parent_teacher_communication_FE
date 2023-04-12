@@ -93,9 +93,9 @@ const Portfolios: React.FC = () => {
       <Section>
         <ActionContainer>
           <HeaderTitle>{t('portfolios.title')}</HeaderTitle>
-          <StyledButton variant='primary' onClick={() => handleOpenDetailModal(null)}>
+          {/* <StyledButton variant='primary' onClick={() => handleOpenDetailModal(null)}>
             {t('portfolios.addChildren.title')}
-          </StyledButton>
+          </StyledButton> */}
         </ActionContainer>
       </Section>
       <Section>

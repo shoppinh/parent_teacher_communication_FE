@@ -6,9 +6,10 @@ import {
   apiLogout,
   apiRefreshToken,
   apiRegisterDeviceToken,
+  apiUpdateUserInfo,
 } from 'services/api/apiHelper';
 import { sessionActions as actions } from 'store/slices/session';
-import { AuthPayLoad } from 'types/Session';
+import { AuthPayLoad, UpdateUserQuery } from 'types/Session';
 import { User } from 'types/User';
 import { _FORCE_REFRESH_KEY, PREVIOUS_STORAGE_KEY } from 'utils/constants';
 import i18next from 'i18next';
@@ -23,6 +24,7 @@ interface LoginDataRespose {
   role: string;
   firstname: string;
   lastname: string;
+  fullname: string;
   tokenType: string;
   expiresIn: number;
   expiresDate: string;
@@ -39,6 +41,7 @@ export function* sessionSaga() {
     takeLatest(actions.doRefreshToken.type, doRefreshToken),
     takeLatest(actions.getCountUnreadRoom.type, getCountUnreadRoom),
     takeLatest(actions.doGetUserProfile.type, getUserProfile),
+    takeLatest(actions.updateUserInfo.type, updateUserInfo),
   ]);
 }
 
@@ -58,11 +61,12 @@ const ParseLogin = (
       username: response.username,
       firstname: response.firstname,
       lastname: response.lastname,
+      fullname: response.fullname,
       email: response.email,
       mobilePhone: response.mobilePhone,
       isActive: response.isActive,
       roleId: response.role,
-      lastLogin: new Date(response.lastLoggedIn),
+      lastLoggedIn: new Date(response.lastLoggedIn),
       avatar: response.avatar,
     },
   },
@@ -180,6 +184,19 @@ export function* getCountUnreadRoom({ payload }: any) {
           roleId: response.data?.data?.roleId,
         })
       );
+    } else {
+      yield put(actions.Error(response.data.error));
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* updateUserInfo({ payload }: { type: string; payload: UpdateUserQuery }) {
+  try {
+    const response = yield call(apiUpdateUserInfo, payload);
+    if (response.data && response.data.status) {
+      yield put(actions.updatedUserInfo({ user: parseUserData(response.data.data) }));
     } else {
       yield put(actions.Error(response.data.error));
     }

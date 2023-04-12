@@ -14,6 +14,7 @@ import {
   RefreshTokenQuery,
   SessionError,
   SessionState,
+  UpdateUserQuery,
 } from 'types/Session';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
@@ -86,7 +87,11 @@ const slice = createSlice({
       state.error = null;
       state.loading = true;
     },
-    updateUserInfo(state, action: PayloadAction<AuthUserPayload>) {
+    updateUserInfo(state, action: PayloadAction<UpdateUserQuery>) {
+      state.error = null;
+      state.loading = true;
+    },
+    updatedUserInfo(state, action: PayloadAction<AuthUserPayload>) {
       state.error = null;
       state.data.auth = {
         ...state.data.auth,

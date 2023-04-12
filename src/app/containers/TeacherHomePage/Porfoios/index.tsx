@@ -19,6 +19,7 @@ import { useQuery } from '../../../../utils/hook';
 import { queryString } from '../../../../utils/constants';
 import AssignStudentModal from '../../Porfolios/AssignStudentModal';
 import { useTranslation } from 'react-i18next';
+import { getTeacherAssignmentDetail } from 'store/selectors/teacher';
 
 const Section = styled.div`
   margin-bottom: ${pxToRem(12)}rem;
@@ -85,6 +86,8 @@ const Portfolios: React.FC = () => {
   const [selectedItem, setSelectedItem] = React.useState<Student | null>(null);
   const [detailModalOpen, setDetailModalOpen] = React.useState<boolean>(false);
   const [assignStudentModalOpen, setAssignStudentModalOpen] = React.useState<boolean>(false);
+  const teacherAssignmentDetail = useSelector(getTeacherAssignmentDetail);
+
   const handleOpenDetailModal = (item: Student | null) => {
     setSelectedItem(item);
     setDetailModalOpen(true);
@@ -141,6 +144,7 @@ const Portfolios: React.FC = () => {
                 handleRefetchStudentList={handleRefetchStudentList}
                 onClose={() => setDetailModalOpen(false)}
                 type='student'
+                isClassAdmin={teacherAssignmentDetail?.isClassAdmin}
               />
             </PModal>
             <PModal open={assignStudentModalOpen} onClose={() => setAssignStudentModalOpen(false)}>

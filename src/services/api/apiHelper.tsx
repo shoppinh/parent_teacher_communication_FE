@@ -15,7 +15,7 @@ import {
   UpdatePostTokenQuery,
 } from 'types/Post';
 import { DeviceTokenQuery, RegisterQuery } from 'types/Register';
-import { AuthQuery, LogoutQuery, OnlyTokenQuery, RefreshTokenQuery } from 'types/Session';
+import { AuthQuery, LogoutQuery, OnlyTokenQuery, RefreshTokenQuery, UpdateUserQuery } from 'types/Session';
 import { ClassDetailTokenQuery, ClassListTokenQuery } from '../../types/Class';
 import { AddCommentTokenRequest } from '../../types/Comment';
 import {
@@ -116,6 +116,10 @@ export function* apiUpdateLanguage(query: LanguageQuery) {
 
 export function* apiGetSystemSettings() {
   return yield call(api.getSystemSettings);
+}
+
+export function* apiUpdateUserInfo(query: UpdateUserQuery) {
+  return yield call(api.updateUserInfo, query);
 }
 
 // Admin Helper

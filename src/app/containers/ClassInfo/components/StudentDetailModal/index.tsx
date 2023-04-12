@@ -8,6 +8,7 @@ import { mapStringRoleToNumber } from '../../../../../utils/helpers';
 import { useSelector } from 'react-redux';
 import { getUser } from 'store/selectors/session';
 import { ConstantRoles } from 'utils/constants';
+import { useTranslation } from 'react-i18next';
 interface Props {
   data: StudentParentIncludedInfo | null;
   onSendMessageToParent?: (newConversationPayload: NewConversationPayload) => void;
@@ -75,6 +76,7 @@ const SectionContainer = styled.div`
 `;
 const StudentDetailModal: React.FC<Props> = ({ data, onSendMessageToParent }) => {
   const currentUser = useSelector(getUser);
+  const { t } = useTranslation();
   return (
     <Container>
       <AvatarSection>
@@ -91,10 +93,10 @@ const StudentDetailModal: React.FC<Props> = ({ data, onSendMessageToParent }) =>
                 })
               }
             >
-              Message to parent
+              {t('common.messageToParent')}
             </ActionItem>
             {currentUser?.roleId === ConstantRoles.TEACHER && (
-              <ActionItem>Remove this student</ActionItem>
+              <ActionItem>{t('common.removeThisStudent')}</ActionItem>
             )}
           </ActionGroup>
         </SectionContainer>
