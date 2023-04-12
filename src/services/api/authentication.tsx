@@ -1,6 +1,12 @@
 import apiClient from '../base/apiClient';
 import { APIs } from 'services/base/type';
-import { AuthQuery, LogoutQuery, OnlyTokenQuery, RefreshTokenQuery } from 'types/Session';
+import {
+  AuthQuery,
+  LogoutQuery,
+  OnlyTokenQuery,
+  RefreshTokenQuery,
+  UpdateUserQuery,
+} from 'types/Session';
 
 export const login = async (query: AuthQuery) => {
   const params = {
@@ -34,4 +40,9 @@ export const refreshToken = async (query: RefreshTokenQuery) => {
 
 export const getUserProfile = async (query: OnlyTokenQuery) => {
   return new apiClient(query.token).get(APIs.user.info);
+};
+
+export const updateUserInfo = async (query: UpdateUserQuery) => {
+  const { token, ...updateUserPayload } = query;
+  return new apiClient(token).put(APIs.user.info, updateUserPayload);
 };

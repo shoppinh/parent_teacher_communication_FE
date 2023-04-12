@@ -86,10 +86,12 @@ export interface ConversationState {
 
 export interface Conversation {
   fromUserName: string;
+  fromFullName: string;
   fromMobilePhone: string;
   fromRoleId: number;
   fromUserUniqueId: string;
   toUserName: string;
+  toFullName: string;
   toMobilePhone: string;
   toRoleId: number;
   toUserUniqueId: string;

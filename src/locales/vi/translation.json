@@ -87,14 +87,19 @@
     "age": "Tuổi",
     "gender": "Giới tính",
     "relationship": "Mối quan hệ",
-    "editChildrenTitle": "Chỉnh sửa thông tin con cái",
+    "childrenDetailTitle": "Thông tin con cái",
     "addChildrenTitle": "Thêm mới con cái",
     "assignStudentTitle": "Phân lớp học sinh",
     "sendInvitation": "Gửi lời mời",
     "email": "Email",
     "start": "Bắt đầu",
     "end": "Kết thúc",
-    "participants": "Người tham gia"
+    "participants": "Người tham gia",
+    "lastName": "Họ",
+    "firstName": "Tên",
+    "username": "Tên người dùng",
+    "role": "Quyền",
+    "fullName": "Tên đầy đủ"
   },
   "register": {
     "title": "Tạo tài khoản",
@@ -212,7 +217,8 @@
     "message": "Tin nhắn",
     "user": "Người dùng",
     "trackingAndAssessment": "Theo dõi và đánh giá",
-    "classInfo": "Thông tin lớp"
+    "classInfo": "Thông tin lớp",
+    "leaveForm": "Đơn xin nghỉ"
   },
   "menu": {
     "post": "Bài viết",
@@ -243,7 +249,17 @@
     "male": "Nam",
     "update": "Cập nhật",
     "invitation": "Lời mời",
-    "defaultInputPlaceholder": "Nhập vào đây"
+    "defaultInputPlaceholder": "Nhập vào đây",
+    "removeThisStudentFromClass": "Xóa học sinh khỏi lớp học",
+    "removeThisStudentFromParent": "Xóa học sinh khỏi phụ huynh",
+    "removeThisStudent": "Xóa học sinh",
+    "assign": "Phân lớp",
+    "messageToParent": "Gửi tin nhắn cho phụ huynh",
+    "messageToTeacher": "Gửi tin nhắn cho giáo viên",
+    "removeEvent": "Xóa sự kiện",
+    "addEvent": "Thêm sự kiện",
+    "profile": "Hồ sơ"
+
   },
   "table": {
     "next": "Tiếp theo",
@@ -281,5 +297,10 @@
     "title": "Thông tin lớp: {{className}}",
     "parentAndChildrenInfo": "Thông tin phụ huynh và học sinh",
     "teacherInfo": "Thông tin giáo viên"
+  },
+  "event": {
+    "title": "Sự kiện",
+    "eventDetail": "Chi tiết sự kiện",
+    "createEvent": "Tạo sự kiện"
   }
 }

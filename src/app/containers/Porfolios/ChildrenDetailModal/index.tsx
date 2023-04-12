@@ -22,6 +22,7 @@ interface Props {
   handleRefetchStudentList: () => void;
   onClose: () => void;
   type?: 'student' | 'children';
+  isClassAdmin?: boolean;
 }
 
 const FormContainer = styled.form`
@@ -77,6 +78,7 @@ const ChildrenDetailModal: React.FC<Props> = ({
   data,
   handleRefetchStudentList,
   onClose,
+  isClassAdmin,
   type = 'children',
 }) => {
   const schoolInfo = useSelector(getSchoolInfo);
@@ -178,13 +180,20 @@ const ChildrenDetailModal: React.FC<Props> = ({
   return (
     <Container>
       <FormTitle>
-        {data === null ? t('form.addChildrenTitle') : t('form.editChildrenTitle')}
+        {data === null ? t('form.addChildrenTitle') : t('form.childrenDetailTitle')}
       </FormTitle>
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
         <InputContainer>
           <InputLabel>{t('form.name')}</InputLabel>
-          <StyledInput {...register('name')} />
+          <StyledInput {...register('name')} disabled={type === 'children'} />
           {errors.name && <Required>{errors.name.message}</Required>}
+        </InputContainer>
+        <InputContainer>
+          <InputLabel>
+            {t('classInfo.title', {
+              className: data?.class?.name,
+            })}
+          </InputLabel>
         </InputContainer>
         <InputContainer>
           <InputLabel>{t('form.age')}</InputLabel>
@@ -192,12 +201,13 @@ const ChildrenDetailModal: React.FC<Props> = ({
             {...register('age', {
               valueAsNumber: true,
             })}
+            disabled={type === 'children'}
           />
           {errors.age && <Required>{errors.age.message}</Required>}
         </InputContainer>
         <InputContainer>
           <InputLabel>{t('form.gender')}</InputLabel>
-          <PSelection {...register('gender')}>
+          <PSelection {...register('gender')} disabled={type === 'children'}>
             {GENDERS.map((gender) => (
               <option value={gender} key={gender}>
                 {t(`common.${gender}`)}
@@ -209,23 +219,21 @@ const ChildrenDetailModal: React.FC<Props> = ({
         {type === 'children' && (
           <InputContainer>
             <InputLabel>{t('form.relationship')}</InputLabel>
-            <StyledInput {...register('relationship')} />
+            <StyledInput {...register('relationship')} disabled={type === 'children'} />
             {errors.relationship && <Required>{errors.relationship.message}</Required>}
           </InputContainer>
         )}
 
         <ActionGroup>
-          <StyledButton type='submit' variant='primary'>
-            {data === null ? t('common.create') : t('common.update')}
-          </StyledButton>
-          {type === 'student' ? (
-            <StyledButton type='button' onClick={handleRemoveStudentFromClass} variant='danger'>
-              Remove this student from class
-            </StyledButton>
-          ) : (
-            <StyledButton type='button' onClick={handleRemoveStudentFromParent} variant='danger'>
-              Remove this student from parent
-            </StyledButton>
+          {type === 'student' && isClassAdmin && (
+            <>
+              <StyledButton type='submit' variant='primary'>
+                {data === null ? t('common.create') : t('common.update')}
+              </StyledButton>
+              <StyledButton type='button' onClick={handleRemoveStudentFromClass} variant='danger'>
+                {t('common.removeThisStudentFromClass')}
+              </StyledButton>
+            </>
           )}
         </ActionGroup>
       </FormContainer>

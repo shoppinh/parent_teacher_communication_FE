@@ -83,14 +83,19 @@
     "age": "Age",
     "gender": "Gender",
     "relationship": "Relationship",
-    "editChildrenTitle": "Edit Children",
+    "childrenDetailTitle": "Children Detail",
     "addChildrenTitle": "Add Children",
     "assignStudentTitle": "Assign Student",
     "sendInvitation": "Send Invitation",
     "email": "Email",
     "start": "Start",
     "end": "End",
-    "participants": "Participants"
+    "participants": "Participants",
+    "lastName": "Last Name",
+    "firstName": "First Name",
+    "username": "Username",
+    "role": "Role",
+    "fullName": "Full Name"
   },
   "logout": {
     "title": "Logout"
@@ -195,7 +200,8 @@
     "message": "Message",
     "user": "Users",
     "trackingAndAssessment": "Tracking & Assessment",
-    "classInfo": "Class Info"
+    "classInfo": "Class Info",
+    "leaveForm": "Leave Form"
   },
   "menu": {
     "post": "Post",
@@ -226,7 +232,16 @@
     "male": "Male",
     "update": "Update",
     "invitation": "Invitation",
-    "defaultInputPlaceholder": "Please enter"
+    "defaultInputPlaceholder": "Please enter",
+    "removeThisStudentFromClass": "Remove this student from class",
+    "removeThisStudentFromParent": "Remove this student from parent",
+    "removeThisStudent": "Remove this student",
+    "assign": "Assign",
+    "messageToParent": "Message to parent",
+    "messageToTeacher": "Message to teacher",
+    "removeEvent": "Remove event",
+    "addEvent": "Add event",
+    "profile": "Profile"
   },
   "portfolios": {
     "assignStudent": {
@@ -278,5 +293,10 @@
     "title": "Class Info: {{className}}",
     "parentAndChildrenInfo": "Parent and Children Info",
     "teacherInfo": "Teacher Info"
+  },
+  "event": {
+    "title": "Event",
+    "eventDetail": "Event Detail",
+    "createEvent": "Create Event"
   }
 }

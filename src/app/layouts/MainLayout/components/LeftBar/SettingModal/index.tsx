@@ -34,8 +34,9 @@ const StyledButton = styled(PButton)`
 
 interface Props {
   onClose: () => void;
+  handleOpenProfileModal: () => void;
 }
-const SettingModal: React.FC<Props> = ({ onClose }) => {
+const SettingModal: React.FC<Props> = ({ onClose, handleOpenProfileModal }) => {
   const previousAuthStorage = localStorage.getItem(PREVIOUS_STORAGE_KEY);
   const previousAuth = JSON.parse(
     previousAuthStorage && previousAuthStorage !== '' ? previousAuthStorage : '{}'
@@ -64,6 +65,7 @@ const SettingModal: React.FC<Props> = ({ onClose }) => {
           >
             {t('common.logout')}
           </StyledButton>
+          <StyledButton variant='primary' onClick={handleOpenProfileModal}>{t('common.profile')}</StyledButton>
         </SettingModalBody>
       </SettingModalContainer>
     </Container>

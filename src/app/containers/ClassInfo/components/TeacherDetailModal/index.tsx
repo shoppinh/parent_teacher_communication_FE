@@ -5,6 +5,7 @@ import AvatarPlaceholder from '../../../../../assets/images/person-placeholder.p
 import { TeacherAssignmentForClass } from '../../../../../types/TeacherAssignment';
 import { NewConversationPayload } from '../../../../../types/Conversation';
 import { mapStringRoleToNumber } from '../../../../../utils/helpers';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   data: TeacherAssignmentForClass | null;
@@ -71,6 +72,7 @@ const SectionContainer = styled.div`
   gap: 10px;
 `;
 const TeacherDetailModal: React.FC<Props> = ({ data, onSendMessageToTeacher }) => {
+  const { t } = useTranslation();
   return (
     <Container>
       <AvatarSection>
@@ -87,44 +89,44 @@ const TeacherDetailModal: React.FC<Props> = ({ data, onSendMessageToTeacher }) =
                   });
               }}
             >
-              Message to teacher
+              {t('common.messageToTeacher')}
             </ActionItem>
           </ActionGroup>
         </SectionContainer>
       </AvatarSection>
       <InfoContainer>
         <InfoSection>
-          <InfoLabel>Teacher Name: </InfoLabel>
+          <InfoLabel>{t('table.teacherName')}</InfoLabel>
           <InfoText>{data?.teacher?.userId?.fullname}</InfoText>
         </InfoSection>
         <InfoSection>
-          <InfoLabel>Teacher Age: </InfoLabel>
+          <InfoLabel>{t('table.age')}</InfoLabel>
           <InfoText>{data?.teacher?.age}</InfoText>
         </InfoSection>
         <InfoSection>
-          <InfoLabel>Teacher Gender: </InfoLabel>
+          <InfoLabel>{t('table.gender')}</InfoLabel>
           <InfoText>{data?.teacher?.gender}</InfoText>
         </InfoSection>
         <InfoSection>
-          <InfoLabel>Teacher Address: </InfoLabel>
+          <InfoLabel>{t('table.address')}</InfoLabel>
           <InfoText>{data?.teacher?.address}</InfoText>
         </InfoSection>
         <InfoSection>
-          <InfoLabel>Teacer Email: </InfoLabel>
+          <InfoLabel>{t('table.email')}</InfoLabel>
           <InfoText>{data?.teacher?.userId?.email}</InfoText>
         </InfoSection>
 
         <InfoSection>
-          <InfoLabel>Teacher Phone: </InfoLabel>
+          <InfoLabel>{t('table.phoneNumber')}</InfoLabel>
           <InfoText>{data?.teacher?.userId?.mobilePhone}</InfoText>
         </InfoSection>
 
         <InfoSection>
-          <InfoLabel>Teacher Degree: </InfoLabel>
+          <InfoLabel>{t('table.degree')}</InfoLabel>
           <InfoText>{data?.teacher?.degree}</InfoText>
         </InfoSection>
         <InfoSection>
-          <InfoLabel>Subject Name: </InfoLabel>
+          <InfoLabel>{t('form.subject')}</InfoLabel>
           <InfoText>{data?.subject?.name}</InfoText>
         </InfoSection>
       </InfoContainer>

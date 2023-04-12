@@ -1,4 +1,4 @@
-import { User } from './User';
+import { User, UserPayload } from './User';
 import { Student } from './Student';
 
 export interface AuthQuery {
@@ -79,3 +79,7 @@ export interface Profile extends User {
   age?: number;
   children?: Student[];
 }
+
+export type UpdateUserQuery = UserPayload & {
+  token: string;
+};
