@@ -152,7 +152,7 @@ const PEditor: React.FC<Props> = ({
     new Promise<string>((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.withCredentials = false;
-      xhr.open('POST', `${process.env.REACT_APP_API_URL}/file/upload`);
+      xhr.open('POST', `${process.env.REACT_APP_API_URL}/api/file/upload`);
 
       xhr.upload.onprogress = (e) => {
         progress((e.loaded / e.total) * 100);

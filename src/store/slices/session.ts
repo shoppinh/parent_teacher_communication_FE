@@ -76,18 +76,18 @@ const slice = createSlice({
       // state.data.auth = initialState.data.auth || {};
       state.loading = true;
     },
-    doLogout(state, action: PayloadAction<LogoutQuery>) {
+    doLogout(state, _action: PayloadAction<LogoutQuery>) {
       state.error = null;
       state.data.auth = {
         isLogout: true,
       };
       state.loading = false;
     },
-    doGetUserInfo(state, action: PayloadAction<AuthQuery>) {
+    doGetUserInfo(state, _action: PayloadAction<AuthQuery>) {
       state.error = null;
       state.loading = true;
     },
-    updateUserInfo(state, action: PayloadAction<UpdateUserQuery>) {
+    updateUserInfo(state, _action: PayloadAction<UpdateUserQuery>) {
       state.error = null;
       state.loading = true;
     },
@@ -100,7 +100,7 @@ const slice = createSlice({
           data: action.payload.user,
         },
       };
-      state.loading = true;
+      state.loading = false;
     },
 
     doRegisterDeviceToken(state, action: PayloadAction<DeviceTokenQuery>) {},

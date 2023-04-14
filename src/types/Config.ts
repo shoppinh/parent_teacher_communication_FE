@@ -42,6 +42,10 @@ export interface InvitationQuery {
   email: string;
 }
 
+export interface FileUploadQuery {
+  file: File;
+}
+
 export enum ConfigErrorType {
   RESPONSE_ERROR = 1,
   AUTHENTICATION_FAILED = 400,

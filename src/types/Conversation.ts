@@ -92,6 +92,7 @@ export interface Conversation {
   fromUserUniqueId: string;
   toUserName: string;
   toFullName: string;
+  toAvatar: string;
   toMobilePhone: string;
   toRoleId: number;
   toUserUniqueId: string;

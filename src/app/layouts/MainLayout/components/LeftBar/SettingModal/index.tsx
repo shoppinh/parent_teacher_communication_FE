@@ -49,6 +49,9 @@ const SettingModal: React.FC<Props> = ({ onClose, handleOpenProfileModal }) => {
       <SettingModalContainer>
         <SettingModalHeader>{t('common.settings')}</SettingModalHeader>
         <SettingModalBody>
+          <StyledButton variant='primary' onClick={handleOpenProfileModal}>
+            {t('common.profile')}
+          </StyledButton>
           <StyledButton
             variant='primary'
             onClick={() => {
@@ -65,7 +68,6 @@ const SettingModal: React.FC<Props> = ({ onClose, handleOpenProfileModal }) => {
           >
             {t('common.logout')}
           </StyledButton>
-          <StyledButton variant='primary' onClick={handleOpenProfileModal}>{t('common.profile')}</StyledButton>
         </SettingModalBody>
       </SettingModalContainer>
     </Container>

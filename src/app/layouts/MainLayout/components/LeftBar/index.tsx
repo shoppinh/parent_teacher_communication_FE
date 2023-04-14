@@ -88,6 +88,9 @@ const ClassRowItem = styled.div<ClassRowProps>`
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
+  &:hover {
+    background-color: ${(p) => p.theme.backgroundSelected};
+  }
 `;
 const SchoolRowItem = styled(ClassRowItem)`
   border-left: 4px solid ${(p) => p.theme.danger};
@@ -161,7 +164,7 @@ const LeftBar: React.FC<Props> = ({ isShowSchoolAndClassList = true }) => {
         <ImageWrapper>
           <img src={Logo} alt='Logo' width='70%' />
         </ImageWrapper>
-        <ProfileRow data={currentUser} />
+        <ProfileRow data={currentUser} onClick={() => setIsShowProfileModal(true)} />
         {isShowSchoolAndClassList && (
           <>
             <CategorizedSection>
