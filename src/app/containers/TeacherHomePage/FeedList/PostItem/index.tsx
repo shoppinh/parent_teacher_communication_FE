@@ -191,11 +191,7 @@ const PostItem: React.FC<Props> = ({ data: postData, triggerRefreshFeedList }) =
         <TitleSection>
           <AvatarWrapper>
             <Avatar
-              src={
-                postData?.author?.avatar
-                  ? `${process.env.REACT_APP_API_URL}/${postData?.author?.avatar}`
-                  : AvatarPlaceholder
-              }
+              src={postData?.author?.avatar ? `${postData?.author?.avatar}` : AvatarPlaceholder}
             />
           </AvatarWrapper>
           <PostTitleWrapper>

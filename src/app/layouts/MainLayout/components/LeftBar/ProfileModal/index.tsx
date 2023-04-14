@@ -13,6 +13,7 @@ import { pxToRem } from 'styles/theme/utils';
 import tw, { styled } from 'twin.macro';
 import { UserPayload } from 'types/User';
 import AvatarPlaceholder from '../../../../../../assets/images/person-placeholder.png';
+import { uploadFile } from 'services/api/config';
 
 const Container = styled.div`
   width: 50vw;
@@ -79,6 +80,7 @@ const Avatar = styled.img<AvatarProps>`
   height: 80px;
   border-radius: 50px;
   margin-left: ${pxToRem(10)}rem;
+  cursor: pointer;
 `;
 
 interface Props {
@@ -96,13 +98,10 @@ const ProfileModal: React.FC<Props> = ({ onClose }) => {
   const authError = useSelector(getAuthError);
   const authLoading = useSelector(getAuthLoading);
   const userInfo = useSelector(getUser);
-  const [logoUrl, setLogoUrl] = useState(
-    `${process.env.REACT_APP_API_URL}/${userInfo?.avatar}` || ''
-  );
+  const [logoUrl, setLogoUrl] = useState(userInfo?.avatar || '');
   const onSubmit = useCallback(
     (data: UserPayload) => {
       if (currentAccessToken) {
-        console.log('🚀 ~ file: index.tsx:160 ~ data:', data);
         dispatch(
           sessionActions.updateUserInfo({
             token: currentAccessToken,
@@ -114,6 +113,7 @@ const ProfileModal: React.FC<Props> = ({ onClose }) => {
             roleId: data.roleId,
             fullname: data.fullname,
             username: data.username,
+            avatar: data.avatar,
           })
         );
       }
@@ -126,6 +126,7 @@ const ProfileModal: React.FC<Props> = ({ onClose }) => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors, isDirty },
   } = useForm<UserPayload>();
 
@@ -135,11 +136,24 @@ const ProfileModal: React.FC<Props> = ({ onClose }) => {
     fileInputRef?.current?.click();
   };
 
-  const handleLogoChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    // Upload file and set logoUrl
-  };
+  const handleLogoChange = useCallback(
+    async (e) => {
+      const file = e.target.files[0];
+      // Upload file and set logoUrl
+      try {
+        const response = await uploadFile({ file });
+        if (response.data && response.data.status !== 400) {
+          setLogoUrl(response.data.url);
+          setValue('avatar', response.data.url, {
+            shouldDirty: true,
+          });
+        }
+      } catch (e) {
+        console.log('🚀 ~ file: index.tsx:197 ~ handleLogoChange: ~ e', e);
+      }
+    },
+    [setValue]
+  );
 
   useEffect(() => {
     if (userInfo) {

@@ -154,7 +154,7 @@ const Message: React.FC<MessageProp> = ({ handleOpenConversation = () => {}, dat
         )
       }
     >
-      <Avatar />
+      <Avatar src={data.toAvatar} />
       <MessageContentWrapper>
         <MessageTo>{`${data.toFullName} (${t(
           `role.${mapNumberRoleToString(data.toRoleId)}`

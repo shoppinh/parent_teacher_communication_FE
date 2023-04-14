@@ -11,7 +11,7 @@ const Container = styled.div`
   cursor: pointer;
   position: relative;
   &:hover {
-    background-color: ${(p) => p.theme.contrastBackground};
+    background-color: ${(p) => p.theme.backgroundSelected};
   }
   align-items: center;
   margin-bottom: ${pxToRem(20)}rem;
@@ -33,12 +33,13 @@ const MessageContentWrapper = styled.div``;
 
 interface Props {
   data?: User;
+  onClick?: () => void;
 }
 
-const ProfileRow: React.FC<Props> = ({ data }) => {
+const ProfileRow: React.FC<Props> = ({ data, onClick }) => {
   const { t } = useTranslation();
   return (
-    <Container>
+    <Container onClick={onClick}>
       <Avatar src={data?.avatar || AvatarPlaceholder} />
       <Title>
         {data?.firstname && data?.lastname

@@ -122,6 +122,7 @@ const parseUserData = (data: any): User => {
     mobilePhone: data.mobilePhone,
     isActive: data.isActive,
     roleId: data.role,
+    avatar: data.avatar,
   };
 };
 
