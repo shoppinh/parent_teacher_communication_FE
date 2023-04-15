@@ -258,7 +258,12 @@
     "messageToTeacher": "Gửi tin nhắn cho giáo viên",
     "removeEvent": "Xóa sự kiện",
     "addEvent": "Thêm sự kiện",
-    "profile": "Hồ sơ"
+    "profile": "Hồ sơ",
+    "PENDING": "Chờ duyệt",
+    "APPROVED": "Đã duyệt",
+    "REJECTED": "Đã từ chối",
+    "approve": "Duyệt",
+    "reject": "Từ chối"
 
   },
   "table": {
@@ -266,6 +271,8 @@
     "previous": "Trước",
     "studentName": "Tên học sinh",
     "studentId": "ID học sinh",
+    "studentAge": "Tuổi học sinh",
+    "studentGender": "Giới tính học sinh",
     "subjectName": "Tên môn học",
     "frequentMark": "Điểm thường xuyên",
     "middleExamMark": "Điểm giữa kỳ",
@@ -286,7 +293,8 @@
     "relationship": "Mối quan hệ với học sinh",
     "degree": "Trình độ",
     "assignmentId": "ID phân công",
-    "teacherName": "Tên giáo viên"
+    "teacherName": "Tên giáo viên",
+    "parentJob": "Nghề nghiệp phụ huynh"
   },
   "role": {
     "SUPER_USER": "Ban giám hiệu",
@@ -302,5 +310,12 @@
     "title": "Sự kiện",
     "eventDetail": "Chi tiết sự kiện",
     "createEvent": "Tạo sự kiện"
+  },
+  "leaveForm": {
+    "title": "Đơn xin nghỉ học",
+    "studentName": "Tên học sinh: {{name}}",
+    "leaveTitle": "Tiêu đề: {{title}}",
+    "leaveStatus": "Trạng thái: ",
+    "detailTitle": "Chi tiết đơn xin nghỉ"
   }
 }

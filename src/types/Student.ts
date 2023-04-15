@@ -1,5 +1,6 @@
-import { Parent } from './Parent';
+import { LEAVE_FORM_STATUS } from './../utils/constants';
 import { Class } from './Class';
+import { Parent } from './Parent';
 
 export interface Student {
   _id: string;
@@ -63,4 +64,37 @@ export type UpdateStudentQuery = Partial<AddStudentPayload> & {
 export interface StudentDetailTokenQuery {
   token: string;
   studentId: string;
+}
+
+export interface LeaveForm {
+  _id: string;
+  student: Student;
+  class: Class;
+  reason: string;
+  title: string;
+  status: LEAVE_FORM_STATUS;
+  leaveDate: string;
+  createdAt: string;
+}
+
+export interface UpdateLeaveFormStatusPayload {
+  formId: string;
+  status: LEAVE_FORM_STATUS;
+  classId: string;
+}
+
+export interface AddLeaveFormPayload {
+  studentId: string;
+  classId: string;
+  reason: string;
+  title: string;
+  leaveDate: string;
+}
+
+export interface AddLeaveFormQuery extends AddLeaveFormPayload {
+  token: string;
+}
+
+export interface UpdateLeaveFormStatusQuery extends UpdateLeaveFormStatusPayload {
+  token: string;
 }

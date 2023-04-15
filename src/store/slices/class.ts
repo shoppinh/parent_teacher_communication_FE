@@ -4,8 +4,14 @@ import { postSaga } from 'store/sagas/postSaga';
 import { PostListByClassQuery, PostState } from 'types/Post';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
-import { ClassDetailTokenQuery, ClassListTokenQuery, ClassState } from '../../types/Class';
+import {
+  ClassDetailTokenQuery,
+  ClassError,
+  ClassListTokenQuery,
+  ClassState,
+} from '../../types/Class';
 import { classSaga } from '../sagas/classSaga';
+import { UpdateLeaveFormStatusPayload, UpdateLeaveFormStatusQuery } from 'types/Student';
 
 const classCache = loadState()?.class;
 
@@ -43,6 +49,30 @@ const slice = createSlice({
       state.error = null;
     },
     loadClassDetailError(state, action) {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    updateLeaveFormStatus(state, action: PayloadAction<UpdateLeaveFormStatusQuery>) {
+      state.loading = true;
+      state.error = null;
+    },
+    updateLeaveFormStatusSuccess(state, action: PayloadAction<UpdateLeaveFormStatusPayload>) {
+      state.loading = false;
+      state.error = null;
+      state.data.currentClass = {
+        ...state.data.currentClass,
+        leaveForm: state.data.currentClass.leaveForm.map((leaveForm) => {
+          if (leaveForm._id === action.payload.formId) {
+            return {
+              ...leaveForm,
+              status: action.payload.status,
+            };
+          }
+          return leaveForm;
+        }),
+      };
+    },
+    Error(state, action: PayloadAction<ClassError>) {
       state.loading = false;
       state.error = action.payload;
     },

@@ -241,7 +241,12 @@
     "messageToTeacher": "Message to teacher",
     "removeEvent": "Remove event",
     "addEvent": "Add event",
-    "profile": "Profile"
+    "profile": "Profile",
+    "PENDING": "Pending",
+    "APPROVED": "Approved",
+    "REJECTED": "Rejected",
+    "approve": "Approve",
+    "reject": "Reject"
   },
   "portfolios": {
     "assignStudent": {
@@ -263,6 +268,8 @@
     "next": "Next",
     "previous": "Previous",
     "studentName": "Student Name",
+    "studentAge": "Student Age",
+    "studentGender": "Student Gender",
     "studentId": "Student ID",
     "subjectName": "Subject Name",
     "frequentMark": "Frequent mark",
@@ -274,6 +281,7 @@
     "action": "Action",
     "assessment": "Assessment",
     "parentName": "Parent Name",
+    "parentAge": "Parent Age",
     "email": "Parent Email",
     "phoneNumber": "Phone Number",
     "age": "Age",
@@ -282,7 +290,8 @@
     "relationship": "Parent Relationship",
     "degree": "Degree",
     "assignmentId": "Assignment ID",
-    "teacherName": "Teacher Name"
+    "teacherName": "Teacher Name",
+    "parentJob": "Parent Job"
   },
   "role": {
     "SUPER_USER": "Admin",
@@ -298,5 +307,16 @@
     "title": "Event",
     "eventDetail": "Event Detail",
     "createEvent": "Create Event"
+  },
+  "leaveForm" : {
+    "title": "Leave Form",
+    "studentName": "Student Name : {{name}}",
+    "leaveTitle": "Title: {{title}}",
+    "leaveStatus": "Status: ",
+    "detailTitle": "Leave Form Detail",
+    "leaveTitleWithoutParam": "Title",
+    "reasonTitle": "Reason",
+    "leaveDate": "Leave Date",
+    "createdDate": "Created Date"
   }
 }

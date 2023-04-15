@@ -103,43 +103,43 @@ const StudentDetailModal: React.FC<Props> = ({ data, onSendMessageToParent }) =>
       </AvatarSection>
       <InfoContainer>
         <InfoSection>
-          <InfoLabel>Student Name: </InfoLabel>
+          <InfoLabel>{t('table.studentName')}</InfoLabel>
           <InfoText>{data?.name}</InfoText>
         </InfoSection>
         <InfoSection>
-          <InfoLabel>Student Age: </InfoLabel>
+          <InfoLabel>{t('table.studentAge')}</InfoLabel>
           <InfoText>{data?.age}</InfoText>
         </InfoSection>
         <InfoSection>
-          <InfoLabel>Student Gender: </InfoLabel>
+          <InfoLabel>{t('table.studentGender')}</InfoLabel>
           <InfoText>{data?.gender}</InfoText>
         </InfoSection>
         <InfoSection>
-          <InfoLabel>Parent Name: </InfoLabel>
+          <InfoLabel>{t('table.parentName')}</InfoLabel>
           <InfoText>{data?.parentId?.userId?.fullname}</InfoText>
         </InfoSection>
         <InfoSection>
-          <InfoLabel>Parent Age: </InfoLabel>
+          <InfoLabel>{t('table.parentAge')}</InfoLabel>
           <InfoText>{data?.parentId?.age}</InfoText>
         </InfoSection>
         <InfoSection>
-          <InfoLabel>Parent Email: </InfoLabel>
+          <InfoLabel>{t('table.email')}</InfoLabel>
           <InfoText>{data?.parentId?.userId?.email}</InfoText>
         </InfoSection>
         <InfoSection>
-          <InfoLabel>Parent Phone: </InfoLabel>
+          <InfoLabel>{t('table.phoneNumber')}</InfoLabel>
           <InfoText>{data?.parentId?.userId?.mobilePhone}</InfoText>
         </InfoSection>
         <InfoSection>
-          <InfoLabel>Parent Relationship: </InfoLabel>
+          <InfoLabel>{t('table.relationship')}</InfoLabel>
           <InfoText>{data?.relationship}</InfoText>
         </InfoSection>
         <InfoSection>
-          <InfoLabel>Parent Address: </InfoLabel>
+          <InfoLabel>{t('table.address')}</InfoLabel>
           <InfoText>{data?.parentId?.address}</InfoText>
         </InfoSection>
         <InfoSection>
-          <InfoLabel>Parent Job: </InfoLabel>
+          <InfoLabel>{t('table.parentJob')}</InfoLabel>
           <InfoText>{data?.parentId?.job}</InfoText>
         </InfoSection>
       </InfoContainer>

@@ -112,6 +112,7 @@ export const APIs = {
     teacherAssignment: {
       getTeacherAssignmentByClassAndTeacher: '/api/teacher/teacher-assignment-detail/{classId}',
     },
+    updateLeaveFormStatus: '/api/teacher/leave-form/{leaveFormId}',
   },
 
   student: {

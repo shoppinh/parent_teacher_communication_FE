@@ -46,10 +46,10 @@ export enum DateFormat {
   MINUTE_SECONDS = 'mm:ss',
   OUTLET_CLOSED_HOUR = 'hh:mmA',
   HOUR_MINUTE_SECOND = 'HH:mm:ss',
-  FULL_DATE_HOUR_MINUTE = 'dd MMMM yyyy, HH:mm',
-  ORDER_FULL_DATE_HOUR_MINUTE = 'dd/MM/yyyy, HH:mm',
-  LOG_FULL_DATE_HOUR_MINUTE = 'dd/MM/yyyy, HH:mm:ss',
-  FULL_DATE = 'dd MMMM yyyy',
+  FULL_DATE_HOUR_MINUTE = 'dd MMMM YYYY, HH:mm',
+  ORDER_FULL_DATE_HOUR_MINUTE = 'dd/MM/YYYY, HH:mm',
+  LOG_FULL_DATE_HOUR_MINUTE = 'DD/MM/YYYY, HH:mm:ss',
+  FULL_DATE = 'dd MMMM YYYY',
 }
 
 export enum ConstantRoles {
@@ -108,3 +108,9 @@ export const ROWS_PER_PAGE = 10;
 export const GENDERS = ['female', 'male'];
 
 export { SiteMap };
+
+export enum LEAVE_FORM_STATUS {
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
+}

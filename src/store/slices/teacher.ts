@@ -10,6 +10,7 @@ import {
   TeacherAssignment,
   TeacherAssignmentDetailTokenQuery,
 } from '../../types/TeacherAssignment';
+import { UpdateLeaveFormStatusPayload, UpdateLeaveFormStatusQuery } from 'types/Student';
 
 const teacherCache = loadState()?.teacher;
 

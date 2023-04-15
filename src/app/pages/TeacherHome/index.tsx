@@ -32,9 +32,10 @@ import { useTeacherSlice } from '../../../store/slices/teacher';
 import ClassInfo from '../../containers/ClassInfo';
 import { getCurrentClass } from '../../../store/selectors/class';
 import { useClassSlice } from '../../../store/slices/class';
-import Portfolios from '../../containers/TeacherHomePage/Porfoios';
+import Portfolios from '../../containers/TeacherHomePage/Porfolios';
 import { getSchoolInfo } from 'store/selectors/config';
 import { useNavigate } from 'react-router-dom';
+import LeaveList from 'app/containers/TeacherHomePage/LeaveList';
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -273,6 +274,7 @@ const TeacherHomePage: React.FC = () => {
               <StyledTab>{t('tab.portfolios')}</StyledTab>
             )}
             {!currentClass?.classInfo?.isSchoolClass && <StyledTab>{t('tab.classInfo')}</StyledTab>}
+            {!currentClass?.classInfo?.isSchoolClass && <StyledTab>{t('tab.leaveForm')}</StyledTab>}
           </StyledTabsList>
           <StyledButton
             type='button'
@@ -309,6 +311,9 @@ const TeacherHomePage: React.FC = () => {
           </TabPanelUnstyled>
           <TabPanelUnstyled value={4}>
             <ClassInfo />
+          </TabPanelUnstyled>
+          <TabPanelUnstyled value={5}>
+            <LeaveList />
           </TabPanelUnstyled>
         </TabPaneContent>
       </StyledTabs>

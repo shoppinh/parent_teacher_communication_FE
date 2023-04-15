@@ -66,7 +66,7 @@ const ParseLogin = (
       mobilePhone: response.mobilePhone,
       isActive: response.isActive,
       roleId: response.role,
-      lastLoggedIn: new Date(response.lastLoggedIn),
+      lastLoggedIn: response.lastLoggedIn,
       avatar: response.avatar,
     },
   },

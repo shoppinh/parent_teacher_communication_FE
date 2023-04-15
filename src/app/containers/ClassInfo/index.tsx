@@ -22,8 +22,10 @@ const SectionTitle = styled.p`
   font: 700 ${pxToRem(17)}rem / ${pxToRem(20)}rem ${(p) => p.theme.fontFamily};
   margin-bottom: ${pxToRem(12)}rem;
 `;
+const HeaderTitle = styled(SectionTitle)`
+  font: 700 ${pxToRem(20)}rem / ${pxToRem(20)}rem ${(p) => p.theme.fontFamily};
+`;
 const SectionContent = styled.div``;
-const SectionLabel = styled.span``;
 const ClassInfo = () => {
   const {
     handleOpenNewConversation,
@@ -60,9 +62,9 @@ const ClassInfo = () => {
   return (
     <Container>
       <Section>
-        <SectionTitle>
+        <HeaderTitle>
           {t('classInfo.title', { className: currentClass?.classInfo?.name })}
-        </SectionTitle>
+        </HeaderTitle>
       </Section>
       <Section>
         <SectionTitle>{t('classInfo.parentAndChildrenInfo')}</SectionTitle>
