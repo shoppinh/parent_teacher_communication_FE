@@ -1,4 +1,4 @@
-import { Student, StudentParentIncludedInfo } from './Student';
+import { LeaveForm, Student, StudentParentIncludedInfo } from './Student';
 import { Teacher } from './Admin/Teacher';
 import { Parent } from './Parent';
 import { TeacherAssignment, TeacherAssignmentForClass } from './TeacherAssignment';
@@ -14,6 +14,7 @@ export interface ClassDetail {
   students: StudentParentIncludedInfo[];
   teacherAssignments: TeacherAssignmentForClass[];
   parents: Parent[];
+  leaveForm: LeaveForm[];
 }
 
 export interface ClassListTokenQuery {

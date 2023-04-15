@@ -15,7 +15,13 @@ import {
   UpdatePostTokenQuery,
 } from 'types/Post';
 import { DeviceTokenQuery, RegisterQuery } from 'types/Register';
-import { AuthQuery, LogoutQuery, OnlyTokenQuery, RefreshTokenQuery, UpdateUserQuery } from 'types/Session';
+import {
+  AuthQuery,
+  LogoutQuery,
+  OnlyTokenQuery,
+  RefreshTokenQuery,
+  UpdateUserQuery,
+} from 'types/Session';
 import { ClassDetailTokenQuery, ClassListTokenQuery } from '../../types/Class';
 import { AddCommentTokenRequest } from '../../types/Comment';
 import {
@@ -29,6 +35,7 @@ import {
   AddStudentQuery,
   StudentDetailTokenQuery,
   StudentListByClassTokenQuery,
+  UpdateLeaveFormStatusQuery,
   UpdateStudentQuery,
 } from '../../types/Student';
 import { TeacherDetailQuery } from '../../types/Teacher';
@@ -167,6 +174,9 @@ export function* apiGetClassDetail(query: ClassDetailTokenQuery) {
   return yield call(api.getClassDetail, query);
 }
 
+export function* apiUpdateLeaveFormStatus(query: UpdateLeaveFormStatusQuery) {
+  return yield call(api.updateLeaveFormStatus, query);
+}
 // Progress
 
 export function* apiGetProgressListByClass(query: ProgressListTokenQuery) {

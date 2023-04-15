@@ -4,11 +4,11 @@ import {
   apiAssignStudent,
   apiGetTeacherAssignmentByClassAndTeacher,
 } from '../../services/api/apiHelper';
-import { teacherActions as actions } from '../slices/teacher';
 import {
   AssignOrRemoveStudentQuery,
   TeacherAssignmentDetailTokenQuery,
 } from '../../types/TeacherAssignment';
+import { teacherActions as actions } from '../slices/teacher';
 
 export function* teacherSaga() {
   yield all([

@@ -1,7 +1,7 @@
 export { login, logout, getUserProfile, refreshToken, updateUserInfo } from './authentication';
 export { register, registerDeviceToken } from './register';
 export { getPlatformSetting, updateLanguage, getSystemSettings, sendInvitation } from './config';
-export { getClassListByRole, getClassDetail } from './class';
+export { getClassListByRole, getClassDetail, updateLeaveFormStatus } from './class';
 export {
   getConversationDetail,
   getCountUnreadRoom,

@@ -11,7 +11,7 @@ export interface User {
   mobilePhone: string;
   roleId: string;
   role?: string;
-  lastLoggedIn?: Date;
+  lastLoggedIn?: string;
   createdAt?: Date;
   updatedAt?: Date;
   isActive?: boolean;
