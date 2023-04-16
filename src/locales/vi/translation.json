@@ -222,7 +222,8 @@
   },
   "menu": {
     "post": "Bài viết",
-    "markAndAssessment": "Điểm và đánh giá"
+    "markAndAssessment": "Điểm và đánh giá",
+    "leaveForm": "Đơn xin nghỉ"
   },
   "progress": {
     "addProgress": {
@@ -316,6 +317,13 @@
     "studentName": "Tên học sinh: {{name}}",
     "leaveTitle": "Tiêu đề: {{title}}",
     "leaveStatus": "Trạng thái: ",
-    "detailTitle": "Chi tiết đơn xin nghỉ"
+    "detailTitle": "Chi tiết đơn xin nghỉ",
+    "leaveTitleWithoutParam": "Tiêu đề",
+    "reasonTitle": "Lý do",
+    "leaveDate": "Ngày nghỉ",
+    "createdDate": "Ngày tạo"
+  },
+  "interactionList": {
+    "title": "Bảng điểm của học sinh"
   }
 }

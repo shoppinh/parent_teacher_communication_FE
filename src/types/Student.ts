@@ -95,6 +95,24 @@ export interface AddLeaveFormQuery extends AddLeaveFormPayload {
   token: string;
 }
 
+export interface UpdateLeaveFormPayload {
+  studentId: string;
+  classId: string;
+  reason?: string;
+  title?: string;
+  leaveDate?: string;
+  formId: string;
+}
+
+export interface UpdateLeaveFormQuery extends UpdateLeaveFormPayload {
+  token: string;
+}
+
 export interface UpdateLeaveFormStatusQuery extends UpdateLeaveFormStatusPayload {
   token: string;
+}
+
+export interface StudentLeaveFormListQuery {
+  token: string;
+  studentId: string;
 }

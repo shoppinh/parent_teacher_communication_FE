@@ -16,11 +16,12 @@ import { useTranslation } from 'react-i18next';
 import tw, { styled } from 'twin.macro';
 import { StyleConstants } from '../../../styles/constants/style';
 import { pxToRem } from '../../../styles/theme/utils';
-import InteractionList from '../../containers/ParentHome/InteractionList';
-import Porfolios from '../../containers/ParentHome/Porfolios';
+import InteractionList from '../../containers/ParentManagement/InteractionList';
+import Portfolios from '../../containers/ParentManagement/Portfolios';
 import MainLayout from '../../layouts/MainLayout';
 import { PModal } from 'app/components/PModal';
 import LeaveAddModal from 'app/containers/LeaveList/LeaveAddModal';
+import LeaveFormList from 'app/containers/ParentManagement/LeaveFormList';
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -198,9 +199,11 @@ const ParentManagement = () => {
             <InteractionList />
           </TabPanelUnstyled>
           <TabPanelUnstyled value={1}>
-            <Porfolios />
+            <Portfolios />
           </TabPanelUnstyled>
-          <TabPanelUnstyled value={2}>2</TabPanelUnstyled>
+          <TabPanelUnstyled value={2}>
+            <LeaveFormList />
+          </TabPanelUnstyled>
         </TabPaneContent>
       </StyledTabs>
       <MenuUnstyled

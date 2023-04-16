@@ -143,6 +143,13 @@ export function configureAppStore() {
               : persistedStateCache?.teacher?.data),
           },
         },
+        parent: {
+          data: {
+            ...(store.getState().parent
+              ? store.getState().parent.data
+              : persistedStateCache?.parent?.data),
+          },
+        },
       });
     }, 1000)
   );

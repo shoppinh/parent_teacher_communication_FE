@@ -40,7 +40,6 @@ const TableTitle = styled.div`
   font-size: ${pxToRem(20)}rem;
   font-weight: 700;
   margin-bottom: ${pxToRem(10)}rem;
-  padding: 0 ${pxToRem(10)}rem;
 `;
 
 const InteractionList: React.FC = () => {
@@ -194,27 +193,15 @@ const InteractionList: React.FC = () => {
     }
     return [];
   }, [currentPage, progressListData.data]);
-  // const renderedStudentList = useMemo(() => {
-  //   if (studentList && classId) {
-  //     return studentList.filter((student) => student.classId === classId);
-  //   }
-  //   return [];
-  // }, [classId, studentList]);
 
   useEffect(() => {
     handleFetchProgressList();
   }, [handleFetchProgressList]);
 
-  // useEffect(() => {
-  //   if (classId) {
-  //     setStudentId('');
-  //   }
-  // }, [classId]);
-
   return (
     <Container>
       <ActionGroup>
-        <TableTitle>Bảng điểm của học sinh</TableTitle>
+        <TableTitle>{t('interactionList.title')}</TableTitle>
         <StyledPSelection
           onChange={(e) => {
             setStudentId(e.target.value);

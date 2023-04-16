@@ -1,24 +1,24 @@
-import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import MainLayout from '../../layouts/MainLayout';
-import FullCalendar from '@fullcalendar/react'; // must go before plugins
-import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import viLocale from '@fullcalendar/core/locales/vi';
-import enLocale from '@fullcalendar/core/locales/en-gb';
-import tw, { styled } from 'twin.macro';
-import { pxToRem } from 'styles/theme/utils';
-import { StyleConstants } from 'styles/constants/style';
 import { DateSelectArg, EventClickArg, EventInput } from '@fullcalendar/core';
+import enLocale from '@fullcalendar/core/locales/en-gb';
+import viLocale from '@fullcalendar/core/locales/vi';
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
+import interactionPlugin from '@fullcalendar/interaction';
+import FullCalendar from '@fullcalendar/react'; // must go before plugins
+import timeGridPlugin from '@fullcalendar/timegrid';
+import { PLoadingIndicator } from 'app/components/PLoadingIndicatior';
 import { PModal } from 'app/components/PModal';
 import EventModal from 'app/containers/TeacherEvent/EventModal';
-import { CustomDateInfo } from 'types/Event';
-import { useEventSlice } from 'store/slices/event';
+import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAccessToken } from 'store/selectors/session';
 import { getEventList, getEventLoading } from 'store/selectors/event';
-import { PLoadingIndicator } from 'app/components/PLoadingIndicatior';
+import { getAccessToken } from 'store/selectors/session';
+import { useEventSlice } from 'store/slices/event';
+import { StyleConstants } from 'styles/constants/style';
+import { pxToRem } from 'styles/theme/utils';
+import tw, { styled } from 'twin.macro';
+import { CustomDateInfo } from 'types/Event';
+import MainLayout from '../../layouts/MainLayout';
 
 const CalendarContainer = styled.div`
   height: calc(100% - ${pxToRem(StyleConstants.TAB_HEIGHT)}rem);

@@ -205,7 +205,8 @@
   },
   "menu": {
     "post": "Post",
-    "markAndAssessment": "Mark & Assessment"
+    "markAndAssessment": "Mark & Assessment",
+    "leaveForm":"Leave Form"
   },
   "progress": {
     "addProgress": {
@@ -318,5 +319,8 @@
     "reasonTitle": "Reason",
     "leaveDate": "Leave Date",
     "createdDate": "Created Date"
+  },
+  "interactionList": {
+    "title": "Student's Mark Table"
   }
 }
