@@ -105,9 +105,6 @@ const EventModal: React.FC<Props> = ({ onClose, dateInfo }) => {
 
   const onSubmit = useCallback(
     (data: EventRequestForm) => {
-      // const calendarApi = dateInfo.view.calendar;
-      // calendarApi.unselect(); //        clear date selection
-
       if (currentAccessToken) {
         if (dateInfo.title) {
           if (dateInfo._id) {
@@ -117,14 +114,6 @@ const EventModal: React.FC<Props> = ({ onClose, dateInfo }) => {
             );
           }
         } else {
-          // calendarApi.addEvent({
-          //   id: Math.random().toString(36).substring(7),
-          //   title: data.title,
-          //   start: data?.start || dateInfo.startStr,
-          //   end: data?.end || dateInfo.endStr,
-          //   allDay: data?.allDay || dateInfo.allDay,
-          //   participants: data.participants,
-          // });
           dispatch(
             eventActions.addEvent({
               title: data.title,

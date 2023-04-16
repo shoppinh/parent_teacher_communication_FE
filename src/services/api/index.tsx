@@ -40,3 +40,4 @@ export {
 export { getTeacherAssignmentByClassAndTeacher } from './teacherAssignment';
 export { assignStudent, removeStudentFromClass } from './teacher';
 export { createEvent, getEventDetail, getEventList, removeEvent } from './event';
+export { getStudentLeaveFormList, submitLeaveForm, updateLeaveForm } from './parent';

@@ -50,6 +50,7 @@ export enum DateFormat {
   ORDER_FULL_DATE_HOUR_MINUTE = 'dd/MM/YYYY, HH:mm',
   LOG_FULL_DATE_HOUR_MINUTE = 'DD/MM/YYYY, HH:mm:ss',
   FULL_DATE = 'dd MMMM YYYY',
+  FULL_DATE_WITH_SLASH = 'YYYY-MM-DD',
 }
 
 export enum ConstantRoles {

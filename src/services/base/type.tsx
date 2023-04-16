@@ -134,6 +134,12 @@ export const APIs = {
     getAllStudentByClass: '/api/student/list-by-class/{classId}', // Parent and teacher  uses this
     getUnassignedStudentList: '/api/student/unassigned-student-list', // Teacher uses this
   },
+  parent: {
+    leaveForm: {
+      submitLeaveForm: '/api/parent/leave-form',
+      updateLeaveForm: '/api/parent/leave-form/{formId}',
+    },
+  },
   message: {
     getConversationList: '/api/message/get-conversation/{mobilePhone}/{roleId}',
     getConversationDetail: '/api/message/get-conversation/detail/{roomId}',

@@ -32,9 +32,12 @@ import {
   UpdateProgressTokenQuery,
 } from '../../types/Progress';
 import {
+  AddLeaveFormQuery,
   AddStudentQuery,
   StudentDetailTokenQuery,
+  StudentLeaveFormListQuery,
   StudentListByClassTokenQuery,
+  UpdateLeaveFormQuery,
   UpdateLeaveFormStatusQuery,
   UpdateStudentQuery,
 } from '../../types/Student';
@@ -255,4 +258,18 @@ export function* apiAddEvent(query: AddEventQuery) {
 }
 export function* apiRemoveEvent(query: EventDetailQuery) {
   return yield call(api.removeEvent, query);
+}
+
+// Parent
+
+export function* apiGetStudentLeaveFormList(query: StudentLeaveFormListQuery) {
+  return yield call(api.getStudentLeaveFormList, query);
+}
+
+export function* apiSubmitLeaveForm(query: AddLeaveFormQuery) {
+  return yield call(api.submitLeaveForm, query);
+}
+
+export function* apiUpdateLeaveForm(query: UpdateLeaveFormQuery) {
+  return yield call(api.updateLeaveForm, query);
 }
