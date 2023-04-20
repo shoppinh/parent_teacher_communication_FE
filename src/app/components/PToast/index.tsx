@@ -12,7 +12,7 @@ interface Props {
 
 const ToastOverrider = styled(ToastContainer)`
   .Toastify__toast {
-    background-color: ${(p) => p.theme.primary};
+    background-color: ${(p) => p.theme.backgroundVariant};
     color: ${(p) => p.theme.textOpposition};
     padding: 14px;
   }

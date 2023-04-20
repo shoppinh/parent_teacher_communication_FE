@@ -95,9 +95,6 @@ const StudentDetailModal: React.FC<Props> = ({ data, onSendMessageToParent }) =>
             >
               {t('common.messageToParent')}
             </ActionItem>
-            {currentUser?.roleId === ConstantRoles.TEACHER && (
-              <ActionItem>{t('common.removeThisStudent')}</ActionItem>
-            )}
           </ActionGroup>
         </SectionContainer>
       </AvatarSection>

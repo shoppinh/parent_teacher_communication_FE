@@ -10,7 +10,7 @@ export const PSelection = styled.select`
   background-size: 16px 12px;
   appearance: none;
 
-  border: ${pxToRem(1)}rem solid ${(p) => p.theme.primary};
+  border: ${pxToRem(1)}rem solid ${(p) => p.theme.backgroundVariant};
   border-radius: ${pxToRem(10)}rem;
   padding: ${pxToRem(12)}rem ${pxToRem(32)}rem ${pxToRem(12)}rem ${pxToRem(20)}rem;
   outline: none;

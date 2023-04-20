@@ -1,34 +1,27 @@
 import {
-  MenuItemUnstyled,
-  menuItemUnstyledClasses,
-  MenuUnstyled,
-  MenuUnstyledActions,
-  PopperUnstyled,
-  TabPanelUnstyled,
   TabsListUnstyled,
-  TabsUnstyled,
   TabUnstyled,
   tabUnstyledClasses,
+  TabsUnstyled,
+  MenuItemUnstyled,
+  menuItemUnstyledClasses,
+  PopperUnstyled,
+  MenuUnstyledActions,
+  TabPanelUnstyled,
+  MenuUnstyled,
 } from '@mui/base';
-import React, { useEffect } from 'react';
+import { PButton } from 'app/components/PButton';
+import ClassManagement from 'app/containers/AdminManagement/ClassManagement';
+import InteractionList from 'app/containers/ParentManagement/InteractionList';
+import LeaveFormList from 'app/containers/ParentManagement/LeaveFormList';
+import Portfolios from 'app/containers/ParentManagement/Portfolios';
+import MainLayout from 'app/layouts/MainLayout';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import MainLayout from '../../layouts/MainLayout';
-
-import { PEditor } from 'app/components/PEditor/loadable';
-import { PModal } from 'app/components/PModal';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentClass } from 'store/selectors/class';
-import { getAccessToken, getUser } from 'store/selectors/session';
-import { useClassSlice } from 'store/slices/class';
-import tw, { styled } from 'twin.macro';
-import { queryString } from 'utils/constants';
-import { useQuery } from 'utils/hook';
-import { StyleConstants } from '../../../styles/constants/style';
-import { pxToRem } from '../../../styles/theme/utils';
-import { PButton } from '../../components/PButton';
-import FeedList from '../../containers/TeacherHomePage/FeedList';
-import ClassInfo from 'app/containers/ClassInfo';
-
+import styled from 'styled-components';
+import { StyleConstants } from 'styles/constants/style';
+import { pxToRem } from 'styles/theme/utils';
+import tw from 'twin.macro';
 const TabsWrapper = styled.div`
   display: flex;
   ${tw`p-2`}
@@ -48,6 +41,20 @@ const StyledTab = styled(TabUnstyled)`
     border-bottom: 3px solid ${(p) => p.theme.backgroundVariant};
   }
 `;
+// const StyledButton = styled(PButton)`
+//   ${tw`rounded-full`}
+//   font-weight: bold;
+//   font-size: ${pxToRem(16)}rem;
+//   padding: 0 ${pxToRem(25)}rem;
+// `;
+const TabPaneContent = styled.div`
+  ${tw`p-3`}
+  overflow: auto;
+  height: calc(100% - ${pxToRem(StyleConstants.TAB_HEIGHT)}rem);
+`;
+const StyledTabs = styled(TabsUnstyled)`
+  height: 100%;
+`;
 const StyledButton = styled(PButton)`
   ${tw`rounded-full`}
   font-weight: bold;
@@ -64,6 +71,7 @@ const StyledListbox = styled.ul(
   margin: 12px 0;
   min-width: 200px;
   border-radius: 12px;
+  overflow: auto;
   outline: 0px;
   background: #fff;
   border: 1px solid ${theme.borderLight};
@@ -79,6 +87,8 @@ const StyledMenuItem = styled(MenuItemUnstyled)(
   border-radius: 8px;
   cursor: default;
   user-select: none;
+  font-size: 14px;
+  font-weight: 400;
 
   &:last-of-type {
     border-bottom: none;
@@ -104,38 +114,13 @@ const StyledMenuItem = styled(MenuItemUnstyled)(
 const Popper = styled(PopperUnstyled)`
   z-index: 3;
 `;
-const TabPaneContent = styled.div`
-  ${tw`p-3`}
-  overflow: auto;
-  height: calc(100% - ${pxToRem(StyleConstants.TAB_HEIGHT)}rem);
-`;
-const StyledTabs = styled(TabsUnstyled)`
-  height: 100%;
-`;
-
-const AdminHome = () => {
+const AdminManagement = () => {
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
   const isOpen = Boolean(anchorEl);
   const buttonRef = React.useRef<HTMLButtonElement>(null);
   const menuActions = React.useRef<MenuUnstyledActions>(null);
   const preventReopen = React.useRef(false);
-  const [isPostModalOpen, setIsPostModalOpen] = React.useState(false);
-  const [isRefreshFeedList, setIsRefreshFeedList] = React.useState(false);
-  const currentUser = useSelector(getUser);
-  const currentClass = useSelector(getCurrentClass);
-  const { actions: classActions } = useClassSlice();
-  const classId = useQuery().get(queryString.classId);
-  const currentAccessToken = useSelector(getAccessToken);
-  const dispatch = useDispatch();
-  const handleClosePostModal = () => {
-    setIsPostModalOpen(false);
-  };
-
-  const handleTriggerRefreshFeedList = () => {
-    setIsRefreshFeedList(true);
-  };
-
   const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (preventReopen.current) {
       event.preventDefault();
@@ -148,6 +133,15 @@ const AdminHome = () => {
     } else {
       setAnchorEl(event.currentTarget);
     }
+  };
+  const createHandleMenuClick = (menuItem: string) => {
+    // if (menuItem === 'leaveForm') {
+    //   return () => {
+    //     setIsLeaveFormModalOpen(true);
+    //     close();
+    //   };
+    // }
+    return () => close();
   };
 
   const handleButtonMouseDown = () => {
@@ -169,46 +163,23 @@ const AdminHome = () => {
   };
   const close = () => {
     setAnchorEl(null);
-    buttonRef.current!.focus();
+    buttonRef.current?.focus();
   };
-
-  const createHandleMenuClick = (menuItem: string) => {
-    switch (menuItem) {
-      case 'post':
-        return () => {
-          setIsPostModalOpen(true);
-          console.log('post is activated');
-          close();
-        };
-
-      case 'event':
-        return () => {
-          close();
-          console.log('event is activated');
-        };
-
-      default:
-        return () => close();
-    }
-  };
-  useEffect(() => {
-    if (classId && currentAccessToken) {
-      dispatch(
-        classActions.loadClassDetail({
-          classId,
-          token: currentAccessToken,
-        })
-      );
-    }
-  }, [classActions, classId, currentAccessToken, dispatch]);
   return (
-    <MainLayout title={t('admin.home.title')} headerTitle={t('admin.home.title')}>
+    <MainLayout
+      title={t('admin.management.title')}
+      headerTitle={t('admin.management.title')}
+      isShowSchoolAndClassList={false}
+    >
       <StyledTabs defaultValue={0}>
         <TabsWrapper>
           <StyledTabsList>
-            <StyledTab>{t('tab.welcome')}</StyledTab>
-            <StyledTab>{t('tab.newsFeed')}</StyledTab>
-            {!currentClass?.classInfo?.isSchoolClass && <StyledTab>{t('tab.classInfo')}</StyledTab>}
+            <StyledTab>{t('tab.class')}</StyledTab>
+            <StyledTab>{t('tab.teacher')}</StyledTab>
+            <StyledTab>{t('tab.parent')}</StyledTab>
+            <StyledTab>{t('tab.student')}</StyledTab>
+            <StyledTab>{t('tab.assignment')}</StyledTab>
+            <StyledTab>{t('tab.subject')}</StyledTab>
           </StyledTabsList>
           <StyledButton
             type='button'
@@ -225,17 +196,14 @@ const AdminHome = () => {
           </StyledButton>
         </TabsWrapper>
         <TabPaneContent>
-          <TabPanelUnstyled value={0}>Welcome {currentUser?.username}</TabPanelUnstyled>
-          <TabPanelUnstyled value={1}>
-            <FeedList
-              setIsRefreshFeedList={setIsRefreshFeedList}
-              isRefresh={isRefreshFeedList}
-              triggerRefreshFeedList={handleTriggerRefreshFeedList}
-            />
+          <TabPanelUnstyled value={0}>
+            <ClassManagement />
           </TabPanelUnstyled>
-          <TabPanelUnstyled value={2}>
-            <ClassInfo />
-          </TabPanelUnstyled>
+          <TabPanelUnstyled value={1}>Teacher Management</TabPanelUnstyled>
+          <TabPanelUnstyled value={2}>Parent Management</TabPanelUnstyled>
+          <TabPanelUnstyled value={3}>Student Management</TabPanelUnstyled>
+          <TabPanelUnstyled value={4}>Assignment Management</TabPanelUnstyled>
+          <TabPanelUnstyled value={5}>Subject Management</TabPanelUnstyled>
         </TabPaneContent>
       </StyledTabs>
       <MenuUnstyled
@@ -246,19 +214,12 @@ const AdminHome = () => {
         slots={{ root: Popper, listbox: StyledListbox }}
         slotProps={{ listbox: { id: 'simple-menu' } }}
       >
-        <StyledMenuItem onClick={createHandleMenuClick('post')}>Post</StyledMenuItem>
-        <StyledMenuItem onClick={createHandleMenuClick('event')}>Event</StyledMenuItem>
-        <StyledMenuItem onClick={createHandleMenuClick('timesheet')}>Time Sheet</StyledMenuItem>
+        <StyledMenuItem onClick={createHandleMenuClick('leaveForm')}>
+          {t('menu.leaveForm')}
+        </StyledMenuItem>
       </MenuUnstyled>
-      <PModal open={isPostModalOpen} onClose={handleClosePostModal}>
-        <PEditor
-          handleClose={handleClosePostModal}
-          triggerRefreshFeedList={handleTriggerRefreshFeedList}
-          type='create'
-        />
-      </PModal>
     </MainLayout>
   );
 };
 
-export default AdminHome;
+export default AdminManagement;

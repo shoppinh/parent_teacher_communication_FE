@@ -77,6 +77,16 @@ const SiteMap = {
     onLeftSidebar: true,
     iconClass: 'umni-login',
   },
+  adminEvent: {
+    title: 'admin.event.title',
+    link: '/admin-event',
+    isProtected: true,
+  },
+  adminManagement: {
+    title: 'admin.management.title',
+    link: '/admin-management',
+    isProtected: true,
+  },
   logout: {
     title: 'logout.title',
     link: '/logout',

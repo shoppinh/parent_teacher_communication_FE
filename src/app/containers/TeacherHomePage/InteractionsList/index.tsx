@@ -20,7 +20,7 @@ import { PIcon } from '../../../components/PIcon';
 import { PModal } from '../../../components/PModal';
 import AssignMarkModal from './AssignMarkModal';
 import { PButton } from '../../../components/PButton';
-import RemoveMarkModal from './RemoveMarkModal';
+import ConfirmRemoveModal from './ConfirmRemoveModal';
 import { useTranslation } from 'react-i18next';
 
 const Container = styled.div``;
@@ -32,7 +32,27 @@ const ActionGroup = styled.span`
   display: flex;
   justify-content: center;
 `;
-
+const Section = styled.div`
+  margin-bottom: ${pxToRem(12)}rem;
+`;
+const SectionTitle = styled.p`
+  font: 700 ${pxToRem(17)}rem / ${pxToRem(20)}rem ${(p) => p.theme.fontFamily};
+  margin-bottom: ${pxToRem(12)}rem;
+`;
+const HeaderTitle = styled(SectionTitle)`
+  font: 700 ${pxToRem(20)}rem / ${pxToRem(20)}rem ${(p) => p.theme.fontFamily};
+`;
+const StyledButton = styled(PButton)`
+  padding: ${pxToRem(10)}rem ${pxToRem(20)}rem;
+  margin: ${pxToRem(5)}rem ${pxToRem(10)}rem ${pxToRem(5)}rem 0;
+  border-radius: ${pxToRem(20)}rem;
+  font-weight: 700;
+`;
+const ActionContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 interface Props {
   isRefresh: boolean;
   triggerRefreshProgressList: () => void;
@@ -47,6 +67,7 @@ const InteractionList: React.FC<Props> = ({
   const currentAccessToken = useSelector(getAccessToken);
   const classId = useQuery().get(queryString.classId);
   const [isAssignMarkModalOpen, setIsAssignMarkModalOpen] = useState(false);
+  const [isNewAssignMarkModalOpen, setIsNewAssignMarkModalOpen] = useState(false);
   const [isRemoveMarkModalOpen, setIsRemoveMarkModalOpen] = useState(false);
   const [progressIdToRemove, setProgressIdToRemove] = useState<string>('');
   const { actions: progressActions } = useProgressSlice();
@@ -70,6 +91,9 @@ const InteractionList: React.FC<Props> = ({
 
   const handleCloseAssignMarkModal = useCallback(() => {
     setIsAssignMarkModalOpen(false);
+  }, []);
+  const handleCloseNewAssignMarkModal = useCallback(() => {
+    setIsNewAssignMarkModalOpen(false);
   }, []);
   const handleCloseRemoveMarkModal = useCallback(() => {
     setIsRemoveMarkModalOpen(false);
@@ -99,6 +123,8 @@ const InteractionList: React.FC<Props> = ({
       );
     }
   }, [currentAccessToken, dispatch, progressActions, progressIdToRemove]);
+
+  // Start - Table logic section
 
   const columns: ColumnProps[] = useMemo(() => {
     return [
@@ -229,22 +255,35 @@ const InteractionList: React.FC<Props> = ({
       handleFetchProgressList();
     }
   }, [handleFetchProgressList, isRefresh, setIsRefreshProgressList]);
+  // End - Table logic section
+
   return (
     <Container>
-      <DTable
-        columns={columns}
-        tableData={renderedData}
-        paginationRange={paginationRange}
-        handleSorting={() => {}}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalItems={progressListData.totalItem}
-        rowsPerPage={ROWS_PER_PAGE}
-        isLoading={progressLoading}
-        tableSetting={{
-          tableLayout: 'fixed',
-        }}
-      />
+      <Section>
+        <ActionContainer>
+          <HeaderTitle>{t('tab.trackingAndAssessment')}</HeaderTitle>
+          <StyledButton variant='primary' onClick={() => setIsNewAssignMarkModalOpen(true)}>
+            {t('trackingAndAssessment.add.title')}
+          </StyledButton>
+        </ActionContainer>
+      </Section>
+      <Section>
+        <DTable
+          columns={columns}
+          tableData={renderedData}
+          paginationRange={paginationRange}
+          handleSorting={() => {}}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalItems={progressListData.totalItem}
+          rowsPerPage={ROWS_PER_PAGE}
+          isLoading={progressLoading}
+          tableSetting={{
+            tableLayout: 'fixed',
+          }}
+        />
+      </Section>
+
       <PModal open={isAssignMarkModalOpen} onClose={handleCloseAssignMarkModal}>
         <AssignMarkModal
           value={currentProgress}
@@ -253,11 +292,19 @@ const InteractionList: React.FC<Props> = ({
           triggerRefreshProgressList={triggerRefreshProgressList}
         />
       </PModal>
+      <PModal open={isNewAssignMarkModalOpen} onClose={handleCloseNewAssignMarkModal}>
+        <AssignMarkModal
+          value={null}
+          type='assign'
+          handleClose={handleCloseNewAssignMarkModal}
+          triggerRefreshProgressList={triggerRefreshProgressList}
+        />
+      </PModal>
       <PModal open={isRemoveMarkModalOpen} onClose={handleCloseRemoveMarkModal}>
-        <RemoveMarkModal
+        <ConfirmRemoveModal
           handleConfirm={handleRemoveMark}
           handleClose={handleCloseRemoveMarkModal}
-          triggerRefreshProgressList={triggerRefreshProgressList}
+          triggerRefresh={triggerRefreshProgressList}
         />
       </PModal>
     </Container>

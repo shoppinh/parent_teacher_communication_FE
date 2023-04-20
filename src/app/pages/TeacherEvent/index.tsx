@@ -36,7 +36,6 @@ const TabsWrapper = styled.div`
 
 const TeacherEvent = () => {
   const { t } = useTranslation();
-  const [currentEvents, setCurrentEvents] = React.useState<EventInput[]>([]);
   const [isEventModalOpen, setIsEventModalOpen] = React.useState(false);
   const [selectedDateInfo, setSelectedDateInfo] = React.useState<CustomDateInfo>();
   const { actions: eventActions } = useEventSlice();
@@ -74,10 +73,6 @@ const TeacherEvent = () => {
     setIsEventModalOpen(true);
   };
 
-  const handleEvents = (events) => {
-    setCurrentEvents(events);
-  };
-
   useEffect(() => {
     if (accessToken) {
       dispatch(eventActions.loadEventList({ token: accessToken }));
@@ -110,7 +105,6 @@ const TeacherEvent = () => {
             select={handleDateSelect}
             // eventContent={renderEventContent} // custom render function
             eventClick={handleEventClick}
-            eventsSet={handleEvents} // called after events are initialized/added/changed/removed
             /* you can update a remote database when these fire:
               eventAdd={function(){}}
               eventChange={function(){}}

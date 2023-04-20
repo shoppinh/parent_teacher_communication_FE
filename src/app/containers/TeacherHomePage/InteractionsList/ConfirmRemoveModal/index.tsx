@@ -11,7 +11,7 @@ import { getProgressError, getProgressLoading } from '../../../../../store/selec
 interface Props {
   handleClose: () => void;
   handleConfirm: () => void;
-  triggerRefreshProgressList: () => void;
+  triggerRefresh: () => void;
 }
 
 const Wrapper = styled.div`
@@ -23,7 +23,7 @@ const Wrapper = styled.div`
 const ButtonGroup = styled.div`
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: ${pxToRem(40)}rem;
 `;
 const DeleteModalHeader = styled.div`
   margin-bottom: 10px;
@@ -31,7 +31,9 @@ const DeleteModalHeader = styled.div`
   font-size: ${pxToRem(20)}rem;
   font-weight: 700;
 `;
-const DeleteModalBody = styled.div``;
+const DeleteModalBody = styled.div`
+  margin-top: ${pxToRem(20)}rem;
+`;
 const DeleteModalContainer = styled.div`
   ${tw`container mx-auto`}
   padding: 0 40px;
@@ -39,13 +41,10 @@ const DeleteModalContainer = styled.div`
 const StyledButton = styled(PButton)`
   margin-bottom: ${pxToRem(20)}rem;
   font: normal bold 16px / ${StyleConstants.BASE_LINE_HEIGHT}px ${StyleConstants.FONT_FAMILY};
-  ${tw`rounded-full  p-3`}
+  ${tw`rounded-full`}
+  padding: ${pxToRem(10)}rem ${pxToRem(20)}rem;
 `;
-const RemoveMarkModal: React.FC<Props> = ({
-  handleClose,
-  handleConfirm,
-  triggerRefreshProgressList,
-}) => {
+const RemoveMarkModal: React.FC<Props> = ({ handleClose, handleConfirm, triggerRefresh }) => {
   const progressLoading = useSelector(getProgressLoading);
   const progressError = useSelector(getProgressError);
   const [isFormSent, setIsFormSent] = useState(false);
@@ -53,7 +52,7 @@ const RemoveMarkModal: React.FC<Props> = ({
   useEffect(() => {
     if (isFormSent && !progressLoading && !progressError) {
       toast('Delete successfully');
-      triggerRefreshProgressList();
+      triggerRefresh();
       handleClose();
       setIsFormSent(false);
     } else if (isFormSent && progressError) {
@@ -61,7 +60,7 @@ const RemoveMarkModal: React.FC<Props> = ({
       handleClose();
       setIsFormSent(false);
     }
-  }, [handleClose, isFormSent, progressError, progressLoading, triggerRefreshProgressList]);
+  }, [handleClose, isFormSent, progressError, progressLoading, triggerRefresh]);
   return (
     <Wrapper>
       <DeleteModalContainer>

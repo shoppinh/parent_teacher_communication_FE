@@ -73,9 +73,8 @@ const DTableFooter: React.FC<DTableFooterProps> = ({
       if (typeof el === 'number')
         return (
           <FooterButton
-            variant='primary'
             key={index}
-            // variant={`${page === el ? 'confirmed' : 'secondary'}`}
+            variant={`${page === el ? 'primary' : 'secondary'}`}
             onClick={() => typeof el === 'number' && setPage(el)}
           >
             {el}
@@ -116,7 +115,7 @@ const DTableFooter: React.FC<DTableFooterProps> = ({
           variant='secondary'
           disabled={page === range[range.length - 1]}
           isHidden={range.length < 2}
-          onClick={() => page < range[range.length - 1] && setPage(page + 1)}
+          onClick={() => page < Number(range[range.length - 1]) && setPage(page + 1)}
         >
           {t('table.next')}
         </RightNavigationButton>

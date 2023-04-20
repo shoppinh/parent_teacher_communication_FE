@@ -1,21 +1,21 @@
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import SiteMap from '../utils/sitemap';
-import sitemap from '../utils/sitemap';
+import { ConstantRoles } from '../utils/constants';
+import { default as SiteMap, default as sitemap } from '../utils/sitemap';
+import AdminHome from './pages/AdminHome';
+import AdminManagement from './pages/AdminManagement';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
+import ParentEvent from './pages/ParentEvent';
+import ParentHomePage from './pages/ParentHome';
+import ParentManagement from './pages/ParentManagement';
 import Register from './pages/Register';
-import TeacherHome from './pages/TeacherHome';
 import TeacherEvent from './pages/TeacherEvent';
+import TeacherHome from './pages/TeacherHome';
 import TeacherManagement from './pages/TeacherManagement';
 import { RoleBaseProtectedRoute } from './routes';
-import { ConstantRoles } from '../utils/constants';
-import ParentHomePage from './pages/ParentHome';
-import AdminHome from './pages/AdminHome';
-import ParentEvent from './pages/ParentEvent';
-import ParentManagement from './pages/ParentManagement';
 export function App() {
   const { i18n } = useTranslation();
   return (
@@ -115,6 +115,30 @@ export function App() {
               unAuthorizedRedirectTo={sitemap.landing.link}
             >
               <AdminHome />
+            </RoleBaseProtectedRoute>
+          }
+        />
+        <Route
+          path={SiteMap.adminEvent.link}
+          element={
+            <RoleBaseProtectedRoute
+              unAuthenticatedRedirectTo={sitemap.login.link}
+              role={ConstantRoles.SUPER_USER}
+              unAuthorizedRedirectTo={sitemap.landing.link}
+            >
+              <TeacherEvent />
+            </RoleBaseProtectedRoute>
+          }
+        />
+        <Route
+          path={SiteMap.adminManagement.link}
+          element={
+            <RoleBaseProtectedRoute
+              unAuthenticatedRedirectTo={sitemap.login.link}
+              role={ConstantRoles.SUPER_USER}
+              unAuthorizedRedirectTo={sitemap.landing.link}
+            >
+              <AdminManagement />
             </RoleBaseProtectedRoute>
           }
         />
