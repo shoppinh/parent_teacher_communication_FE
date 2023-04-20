@@ -67,13 +67,15 @@ const TeacherAssignmentTableInfo: React.FC<Props> = ({
   ) : (
     <Container>
       <ItemList>
-        {data?.map((item, index) => {
+        {data?.map((item) => {
           return (
-            <ItemRow key={index} onClick={() => handleOpenDetailModal(item)}>
-              <AvatarBadge />
+            <ItemRow key={item._id} onClick={() => handleOpenDetailModal(item)}>
+              <AvatarBadge src={item.teacher?.userId?.avatar} />
               <InfoContent>
-                <InfoTitle>{item?.teacher?.userId?.fullname}</InfoTitle>
-                <InfoTitle>{item?.subject?.name}</InfoTitle>
+                <InfoTitle>
+                  {t('table.teacherNameInfo', { name: item?.teacher?.userId?.fullname })}
+                </InfoTitle>
+                <InfoTitle>{t('table.subjectNameInfo', { name: item?.subject?.name })}</InfoTitle>
               </InfoContent>
             </ItemRow>
           );

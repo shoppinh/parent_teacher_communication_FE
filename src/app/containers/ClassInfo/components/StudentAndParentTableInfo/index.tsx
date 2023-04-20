@@ -71,13 +71,15 @@ const StudentAndParentTableInfo: React.FC<Props> = ({
   ) : (
     <Container>
       <ItemList>
-        {data?.map((item, index) => {
+        {data?.map((item) => {
           return (
-            <ItemRow key={index} onClick={() => handleOpenDetailModal(item)}>
+            <ItemRow key={item._id} onClick={() => handleOpenDetailModal(item)}>
               <AvatarBadge />
               <InfoContent>
-                <InfoTitle>Học sinh: {item?.name}</InfoTitle>
-                <ParentInfo>Phụ huynh: {item?.parentId?.userId?.fullname}</ParentInfo>
+                <InfoTitle>{t('table.studentNameInfo', { name: item?.name })}</InfoTitle>
+                <ParentInfo>
+                  {t('table.parentNameInfo', { name: item?.parentId?.userId?.fullname })}
+                </ParentInfo>
               </InfoContent>
             </ItemRow>
           );

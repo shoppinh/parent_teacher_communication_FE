@@ -169,8 +169,8 @@ const ParentManagement = () => {
   };
   return (
     <MainLayout
-      title={t('parent.home.title')}
-      headerTitle={t('parent.home.title')}
+      title={t('parent.management.title')}
+      headerTitle={t('parent.management.title')}
       isShowSchoolAndClassList={false}
     >
       <StyledTabs defaultValue={0}>

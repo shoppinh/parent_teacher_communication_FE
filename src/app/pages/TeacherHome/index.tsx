@@ -251,7 +251,7 @@ const TeacherHomePage: React.FC = () => {
         })
       );
     }
-  }, [classActions, classId, currentAccessToken, dispatch, studentActions]);
+  }, [classActions, classId, currentAccessToken, dispatch]);
 
   useEffect(() => {
     if (!classId) {

@@ -13,7 +13,7 @@ export const PButton = styled(ButtonUnstyled)<ButtonProp>`
       case 'primary':
         return tw`bg-blue-500 text-white`;
       case 'secondary':
-        return tw`bg-white text-blue-500`;
+        return `background-color: ${p.theme.background}; color: ${p.theme.backgroundVariant}; border: 1px solid ${p.theme.backgroundVariant}`;
       case 'danger':
         return tw`bg-red-500 text-white`;
       default:

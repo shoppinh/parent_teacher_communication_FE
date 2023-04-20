@@ -12,3 +12,4 @@ export const getCurrentLeaveFormList = createSelector(
   [selectDomain],
   (state) => state.data.currentClass.leaveForm
 );
+export const getActionLoading = createSelector([selectDomain], (state) => state.actionLoading);

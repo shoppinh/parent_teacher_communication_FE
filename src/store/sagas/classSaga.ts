@@ -1,20 +1,30 @@
+import { PayloadAction } from '@reduxjs/toolkit';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import {
+  apiAddClass,
   apiGetClassDetail,
   apiGetClassListByRole,
-  apiUpdateLeaveFormStatus,
+  apiRemoveClass,
+  apiUpdateClass,
+  apiUpdateLeaveFormStatus
 } from 'services/api/apiHelper';
 import { classActions as actions } from 'store/slices/class';
-import { PayloadAction } from '@reduxjs/toolkit';
-import { ClassDetailTokenQuery, ClassListTokenQuery } from '../../types/Class';
-import { ConstantRoles } from '../../utils/constants';
 import { UpdateLeaveFormStatusQuery } from 'types/Student';
+import {
+  ClassDetailTokenQuery,
+  ClassListTokenQuery,
+  CreateClassQuery,
+  UpdateClassQuery
+} from '../../types/Class';
+import { ConstantRoles } from '../../utils/constants';
 
 export function* classSaga() {
   yield all([
     takeLatest(actions.loadClassList.type, getClassListByRole),
     takeLatest(actions.loadClassDetail.type, getClassDetail),
     takeLatest(actions.updateLeaveFormStatus.type, updateLeaveFormStatus),
+    takeLatest(actions.createClass.type, addClassSaga),
+    takeLatest(actions.updateClass.type, updateClassSaga),
   ]);
 }
 
@@ -65,14 +75,14 @@ export function* getClassListByRole({ payload }: PayloadAction<ClassListTokenQue
         yield put(
           actions.loadClassListSuccess({
             data: response.data.data.data,
-            total: response.data.data.total,
+            total: response.data.data.totalItem,
           })
         );
       } else {
         yield put(
           actions.loadClassListSuccess({
             data: mapClassList(response.data.data.data),
-            total: response.data.data.total,
+            total: response.data.data.totalItem,
           })
         );
       }
@@ -103,6 +113,45 @@ export function* updateLeaveFormStatus({ payload }: PayloadAction<UpdateLeaveFor
       yield put(
         actions.updateLeaveFormStatusSuccess(parseUpdateLeaveFormResponse(response.data.data))
       );
+    } else {
+      yield put(actions.Error(response.data.error));
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* addClassSaga({ payload }: { type: string; payload: CreateClassQuery }) {
+  try {
+    const response = yield call(apiAddClass, payload);
+    if (response.data && response.data.status) {
+      yield put(actions.createClassSuccess(response.data.data));
+    } else {
+      yield put(actions.Error(response.data.error));
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* updateClassSaga({ payload }: { type: string; payload: UpdateClassQuery }) {
+  try {
+    const response = yield call(apiUpdateClass, payload);
+    if (response.data && response.data.status) {
+      yield put(actions.updateClassSuccess(response.data.data));
+    } else {
+      yield put(actions.Error(response.data.error));
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* removeClassSaga({ payload }: { type: string; payload: ClassDetailTokenQuery }) {
+  try {
+    const response = yield call(apiRemoveClass, payload);
+    if (response.data && response.data.status) {
+      yield put(actions.removeClassSuccess(response.data.data));
     } else {
       yield put(actions.Error(response.data.error));
     }

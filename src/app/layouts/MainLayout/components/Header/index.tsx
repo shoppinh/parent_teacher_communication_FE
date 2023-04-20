@@ -103,12 +103,6 @@ const Header: React.FC<Props> = ({ onRightBarClick, onLeftBarClick, headerTitle 
           url: '/teacher-management',
           iconName: 'partei-users',
         },
-        {
-          id: 'teacherSetting',
-          url: '',
-          iconName: 'partei-cog',
-          action: () => alert('on click success'),
-        },
       ];
     else if (currentUser?.roleId === ConstantRoles.PARENT)
       return [
@@ -127,12 +121,6 @@ const Header: React.FC<Props> = ({ onRightBarClick, onLeftBarClick, headerTitle 
           url: '/parent-management',
           iconName: 'partei-users',
         },
-        {
-          id: 'teacherSetting',
-          url: '',
-          iconName: 'partei-cog',
-          action: () => alert('on click success'),
-        },
       ];
     else
       return [
@@ -142,15 +130,14 @@ const Header: React.FC<Props> = ({ onRightBarClick, onLeftBarClick, headerTitle 
           iconName: 'partei-file-text',
         },
         {
+          id: 'adminEvent',
+          url: '/admin-event',
+          iconName: 'partei-calendar',
+        },
+        {
           id: 'adminManagement',
           url: '/admin-management',
           iconName: 'partei-users',
-        },
-        {
-          id: 'adminSetting',
-          url: '',
-          iconName: 'partei-cog',
-          action: () => alert('on click success'),
         },
       ];
   }, [currentUser?.roleId]);
@@ -168,20 +155,14 @@ const Header: React.FC<Props> = ({ onRightBarClick, onLeftBarClick, headerTitle 
       </HeaderWrapper>
       <ButtonGroup>
         <NavigationGroup>
-          {navigationList.map((navigationItem) =>
-            navigationItem?.action ? (
-              <NavigationButton onClick={navigationItem?.action} key={navigationItem.id}>
-                <StyledIcon className={navigationItem.iconName} />
-              </NavigationButton>
-            ) : (
-              <Link to={navigationItem.url} key={navigationItem.id}>
-                <StyledIcon
-                  className={navigationItem.iconName}
-                  isActive={navigationItem.url === location.pathname}
-                />
-              </Link>
-            )
-          )}
+          {navigationList.map((navigationItem) => (
+            <Link to={navigationItem.url} key={navigationItem.id}>
+              <StyledIcon
+                className={navigationItem.iconName}
+                isActive={navigationItem.url === location.pathname}
+              />
+            </Link>
+          ))}
         </NavigationGroup>
         <DesktopStyledButton>
           <StyledIcon className='partei-bell' />

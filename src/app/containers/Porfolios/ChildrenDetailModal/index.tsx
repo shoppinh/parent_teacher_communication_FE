@@ -6,12 +6,12 @@ import { pxToRem } from '../../../../styles/theme/utils';
 import PInput from '../../../components/PInput';
 import { useTranslation } from 'react-i18next';
 import { PSelection } from '../../../components/PSelection';
-import { GENDERS } from '../../../../utils/constants';
+import { ConstantRoles, GENDERS } from '../../../../utils/constants';
 import { PButton } from '../../../components/PButton';
 import { StyleConstants } from '../../../../styles/constants/style';
 import { useStudentSlice } from '../../../../store/slices/student';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAccessToken } from '../../../../store/selectors/session';
+import { getAccessToken, getUser } from '../../../../store/selectors/session';
 import { getStudentError, getStudentLoading } from '../../../../store/selectors/student';
 import PBackdropLoading from '../../../components/PBackdropLoading';
 import { toast } from 'react-toastify';
@@ -99,6 +99,7 @@ const ChildrenDetailModal: React.FC<Props> = ({
   const studentLoading = useSelector(getStudentLoading);
   const studentError = useSelector(getStudentError);
   const [isFormSent, setIsFormSent] = useState(false);
+  const currentUser = useSelector(getUser);
   const onSubmit = useCallback(
     (submitData: Student) => {
       if (accessToken) {
@@ -180,7 +181,7 @@ const ChildrenDetailModal: React.FC<Props> = ({
   return (
     <Container>
       <FormTitle>
-        {data === null ? t('form.addChildrenTitle') : t('form.childrenDetailTitle')}
+        {data === null ? t('form.addStudentTitle') : t('form.studentDetailTitle')}
       </FormTitle>
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
         <InputContainer>
@@ -225,16 +226,17 @@ const ChildrenDetailModal: React.FC<Props> = ({
         )}
 
         <ActionGroup>
-          {type === 'student' && isClassAdmin && (
-            <>
-              <StyledButton type='submit' variant='primary'>
-                {data === null ? t('common.create') : t('common.update')}
-              </StyledButton>
-              <StyledButton type='button' onClick={handleRemoveStudentFromClass} variant='danger'>
-                {t('common.removeThisStudentFromClass')}
-              </StyledButton>
-            </>
-          )}
+          {type === 'student' &&
+            (isClassAdmin || currentUser?.roleId === ConstantRoles.SUPER_USER) && (
+              <>
+                <StyledButton type='submit' variant='primary'>
+                  {data === null ? t('common.create') : t('common.update')}
+                </StyledButton>
+                <StyledButton type='button' onClick={handleRemoveStudentFromClass} variant='danger'>
+                  {t('common.removeThisStudentFromClass')}
+                </StyledButton>
+              </>
+            )}
         </ActionGroup>
       </FormContainer>
       <PBackdropLoading isShow={studentLoading} />

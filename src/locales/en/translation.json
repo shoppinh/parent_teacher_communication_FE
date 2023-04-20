@@ -84,6 +84,8 @@
     "gender": "Gender",
     "relationship": "Relationship",
     "childrenDetailTitle": "Children Detail",
+    "studentDetailTitle": "Student Detail",
+    "addStudentTitle": "Add Student",
     "addChildrenTitle": "Add Children",
     "assignStudentTitle": "Assign Student",
     "sendInvitation": "Send Invitation",
@@ -95,7 +97,9 @@
     "firstName": "First Name",
     "username": "Username",
     "role": "Role",
-    "fullName": "Full Name"
+    "fullName": "Full Name",
+    "isSchoolClass": "School Class",
+    "isPrivateClass": "Private Class"
   },
   "logout": {
     "title": "Logout"
@@ -132,7 +136,14 @@
       "title": "Admin Event"
     },
     "management": {
-      "title": "Admin Management"
+      "title": "Admin Management",
+      "classManagement": {
+        "title": "Class Management",
+        "addNewClass": "Add New Class",
+        "addSuccess": "Add class success",
+        "editSuccess": "Edit class success",
+        "editClass": "Edit Class"
+      }
     }
   },
   "teacher": {
@@ -179,7 +190,7 @@
     "language": "Language"
   },
   "conversation": {
-    "title": "Chat with outlet",
+    "title": "Chat",
     "chatWithOutlet": "Chat with outlet",
     "sendMesssage": "Send messsage...",
     "youreOffline": "You're offline",
@@ -201,12 +212,18 @@
     "user": "Users",
     "trackingAndAssessment": "Tracking & Assessment",
     "classInfo": "Class Info",
-    "leaveForm": "Leave Form"
+    "leaveForm": "Leave Form",
+    "class": "Class",
+    "teacher": "Teacher",
+    "student": "Student",
+    "parent": "Parent",
+    "assignment": "Assignment",
+    "subject": "Subject"
   },
   "menu": {
     "post": "Post",
     "markAndAssessment": "Mark & Assessment",
-    "leaveForm":"Leave Form"
+    "leaveForm": "Leave Form"
   },
   "progress": {
     "addProgress": {
@@ -247,7 +264,9 @@
     "APPROVED": "Approved",
     "REJECTED": "Rejected",
     "approve": "Approve",
-    "reject": "Reject"
+    "reject": "Reject",
+    "true": "True",
+    "false": "False"
   },
   "portfolios": {
     "assignStudent": {
@@ -292,7 +311,14 @@
     "degree": "Degree",
     "assignmentId": "Assignment ID",
     "teacherName": "Teacher Name",
-    "parentJob": "Parent Job"
+    "parentJob": "Parent Job",
+    "studentNameInfo": "Student: {{name}}",
+    "parentNameInfo": "Parent: {{name}}",
+    "teacherNameInfo": "Teacher: {{name}}",
+    "subjectNameInfo": "Subject: {{name}}",
+    "className": "Class Name",
+    "isSchoolClass": "Is School Class",
+    "isPrivateClass": "Is Private Class"
   },
   "role": {
     "SUPER_USER": "Admin",
@@ -309,7 +335,7 @@
     "eventDetail": "Event Detail",
     "createEvent": "Create Event"
   },
-  "leaveForm" : {
+  "leaveForm": {
     "title": "Leave Form",
     "studentName": "Student Name : {{name}}",
     "leaveTitle": "Title: {{title}}",
@@ -322,5 +348,11 @@
   },
   "interactionList": {
     "title": "Student's Mark Table"
+  },
+  "trackingAndAssessment": {
+    "add": {
+      "title": "Add Tracking & Assessment",
+      "addSuccess": "Add Tracking & Assessment success"
+    }
   }
 }

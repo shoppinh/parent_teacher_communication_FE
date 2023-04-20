@@ -10,19 +10,24 @@ import {
   TabUnstyled,
   tabUnstyledClasses,
 } from '@mui/base';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import MainLayout from '../../layouts/MainLayout';
 
+import { PEditor } from 'app/components/PEditor/loadable';
+import { PModal } from 'app/components/PModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCurrentClass } from 'store/selectors/class';
+import { getAccessToken, getUser } from 'store/selectors/session';
+import { useClassSlice } from 'store/slices/class';
 import tw, { styled } from 'twin.macro';
+import { queryString } from 'utils/constants';
+import { useQuery } from 'utils/hook';
 import { StyleConstants } from '../../../styles/constants/style';
 import { pxToRem } from '../../../styles/theme/utils';
 import { PButton } from '../../components/PButton';
 import FeedList from '../../containers/TeacherHomePage/FeedList';
-import { PEditor } from 'app/components/PEditor/loadable';
-import { PModal } from 'app/components/PModal';
-import { useSelector } from 'react-redux';
-import { getUser } from 'store/selectors/session';
+import ClassInfo from 'app/containers/ClassInfo';
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -118,7 +123,11 @@ const AdminHome = () => {
   const [isPostModalOpen, setIsPostModalOpen] = React.useState(false);
   const [isRefreshFeedList, setIsRefreshFeedList] = React.useState(false);
   const currentUser = useSelector(getUser);
-
+  const currentClass = useSelector(getCurrentClass);
+  const { actions: classActions } = useClassSlice();
+  const classId = useQuery().get(queryString.classId);
+  const currentAccessToken = useSelector(getAccessToken);
+  const dispatch = useDispatch();
   const handleClosePostModal = () => {
     setIsPostModalOpen(false);
   };
@@ -182,6 +191,16 @@ const AdminHome = () => {
         return () => close();
     }
   };
+  useEffect(() => {
+    if (classId && currentAccessToken) {
+      dispatch(
+        classActions.loadClassDetail({
+          classId,
+          token: currentAccessToken,
+        })
+      );
+    }
+  }, [classActions, classId, currentAccessToken, dispatch]);
   return (
     <MainLayout title={t('admin.home.title')} headerTitle={t('admin.home.title')}>
       <StyledTabs defaultValue={0}>
@@ -189,10 +208,7 @@ const AdminHome = () => {
           <StyledTabsList>
             <StyledTab>{t('tab.welcome')}</StyledTab>
             <StyledTab>{t('tab.newsFeed')}</StyledTab>
-            <StyledTab>{t('tab.interactions')}</StyledTab>
-            <StyledTab>{t('tab.assignments')}</StyledTab>
-            <StyledTab>{t('tab.portfolios')}</StyledTab>
-            <StyledTab>{t('tab.reports')}</StyledTab>
+            {!currentClass?.classInfo?.isSchoolClass && <StyledTab>{t('tab.classInfo')}</StyledTab>}
           </StyledTabsList>
           <StyledButton
             type='button'
@@ -217,9 +233,9 @@ const AdminHome = () => {
               triggerRefreshFeedList={handleTriggerRefreshFeedList}
             />
           </TabPanelUnstyled>
-          <TabPanelUnstyled value={2}>2 page</TabPanelUnstyled>
-          <TabPanelUnstyled value={3}>3 page</TabPanelUnstyled>
-          <TabPanelUnstyled value={4}>4 page</TabPanelUnstyled>
+          <TabPanelUnstyled value={2}>
+            <ClassInfo />
+          </TabPanelUnstyled>
         </TabPaneContent>
       </StyledTabs>
       <MenuUnstyled

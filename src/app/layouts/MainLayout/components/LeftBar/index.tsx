@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
@@ -148,6 +148,9 @@ const LeftBar: React.FC<Props> = ({ isShowSchoolAndClassList = true }) => {
   };
   const { t } = useTranslation();
   const classList = useSelector(getClassList);
+  const renderedClassList = useMemo(() => {
+    return classList?.data?.filter((item) => !item?.isSchoolClass);
+  }, [classList?.data]);
   const handleOpenProfileModal = useCallback(() => {
     setIsShowOptionModal(false);
     setIsShowProfileModal(true);
@@ -202,7 +205,7 @@ const LeftBar: React.FC<Props> = ({ isShowSchoolAndClassList = true }) => {
               </ClassListLabel>
               {isShowClassList && (
                 <ClassListContainer>
-                  {classList?.data?.map((item) => {
+                  {renderedClassList?.map((item) => {
                     return (
                       <ClassRowItem
                         isActive={classId ? item._id === classId : false}

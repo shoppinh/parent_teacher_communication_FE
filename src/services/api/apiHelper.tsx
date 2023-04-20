@@ -22,7 +22,7 @@ import {
   RefreshTokenQuery,
   UpdateUserQuery,
 } from 'types/Session';
-import { ClassDetailTokenQuery, ClassListTokenQuery } from '../../types/Class';
+import { ClassDetailTokenQuery, ClassListTokenQuery, CreateClassQuery, UpdateClassQuery } from '../../types/Class';
 import { AddCommentTokenRequest } from '../../types/Comment';
 import {
   AddProgressTokenQuery,
@@ -179,6 +179,18 @@ export function* apiGetClassDetail(query: ClassDetailTokenQuery) {
 
 export function* apiUpdateLeaveFormStatus(query: UpdateLeaveFormStatusQuery) {
   return yield call(api.updateLeaveFormStatus, query);
+}
+
+export function* apiAddClass(query: CreateClassQuery) {
+  return yield call(api.addClass, query);
+}
+
+export function* apiUpdateClass(query: UpdateClassQuery) {
+  return yield call(api.updateClass, query);
+}
+
+export function* apiRemoveClass(query: ClassDetailTokenQuery) {
+  return yield call(api.removeClass, query);
 }
 // Progress
 

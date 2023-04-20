@@ -90,6 +90,8 @@
     "childrenDetailTitle": "Thông tin con cái",
     "addChildrenTitle": "Thêm mới con cái",
     "assignStudentTitle": "Phân lớp học sinh",
+    "studentDetailTitle": "Thông tin học sinh",
+    "addStudentTitle": "Thêm mới học sinh",
     "sendInvitation": "Gửi lời mời",
     "email": "Email",
     "start": "Bắt đầu",
@@ -99,7 +101,9 @@
     "firstName": "Tên",
     "username": "Tên người dùng",
     "role": "Quyền",
-    "fullName": "Tên đầy đủ"
+    "fullName": "Tên đầy đủ",
+    "isSchoolClass": "Lớp toàn trường",
+    "isPrivateClass": "Lớp riêng"
   },
   "register": {
     "title": "Tạo tài khoản",
@@ -192,7 +196,14 @@
       "title": "Sự kiện"
     },
     "management": {
-      "title": "Quản lý"
+      "title": "Quản lý",
+      "classManagement": {
+        "title": "Quản lý lớp học",
+        "addNewClass": "Thêm mới lớp học",
+        "addSuccess": "Thêm mới lớp học thành công",
+        "editSuccess": "Cập nhật lớp học thành công",
+        "editClass": "Cập nhật lớp học"
+      }
     }
   },
   "parent": {
@@ -218,7 +229,13 @@
     "user": "Người dùng",
     "trackingAndAssessment": "Theo dõi và đánh giá",
     "classInfo": "Thông tin lớp",
-    "leaveForm": "Đơn xin nghỉ"
+    "leaveForm": "Đơn xin nghỉ",
+    "class": "Lớp",
+    "teacher": "Giáo viên",
+    "student":"Học sinh",
+    "parent": "Phụ huynh",
+    "assignment": "Phân công",
+    "subject": "Môn học"
   },
   "menu": {
     "post": "Bài viết",
@@ -264,8 +281,9 @@
     "APPROVED": "Đã duyệt",
     "REJECTED": "Đã từ chối",
     "approve": "Duyệt",
-    "reject": "Từ chối"
-
+    "reject": "Từ chối",
+    "true": "Đúng",
+    "false": "Sai"
   },
   "table": {
     "next": "Tiếp theo",
@@ -295,7 +313,14 @@
     "degree": "Trình độ",
     "assignmentId": "ID phân công",
     "teacherName": "Tên giáo viên",
-    "parentJob": "Nghề nghiệp phụ huynh"
+    "parentJob": "Nghề nghiệp phụ huynh",
+    "studentNameInfo": "Học sinh: {{name}}",
+    "parentNameInfo": "Phụ huynh: {{name}}",
+    "teacherNameInfo": "Giáo viên: {{name}}",
+    "subjectNameInfo": "Môn học: {{name}}",
+    "className": "Tên lớp",
+    "isSchoolClass": "Lớp toàn trường",
+    "isPrivateClass": "Lớp riêng"
   },
   "role": {
     "SUPER_USER": "Ban giám hiệu",
@@ -325,5 +350,11 @@
   },
   "interactionList": {
     "title": "Bảng điểm của học sinh"
+  },
+  "trackingAndAssessment": {
+    "add": {
+      "title": "Thêm theo dõi và đánh giá",
+      "addSuccess": "Thêm theo dõi và đánh giá thành công"
+    }
   }
 }

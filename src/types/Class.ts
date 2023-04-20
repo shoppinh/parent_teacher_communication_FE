@@ -1,12 +1,12 @@
-import { LeaveForm, Student, StudentParentIncludedInfo } from './Student';
-import { Teacher } from './Admin/Teacher';
 import { Parent } from './Parent';
-import { TeacherAssignment, TeacherAssignmentForClass } from './TeacherAssignment';
+import { LeaveForm, StudentParentIncludedInfo } from './Student';
+import { TeacherAssignmentForClass } from './TeacherAssignment';
 
 export interface Class {
   _id: string;
   name: string;
   isSchoolClass: boolean;
+  isPrivateClass: boolean;
 }
 
 export interface ClassDetail {
@@ -22,6 +22,10 @@ export interface ClassListTokenQuery {
   role: string;
 }
 
+export interface RemoveClassQuery {
+  classId: string;
+  token: string;
+}
 export interface ClassDetailTokenQuery {
   classId: string;
   token: string;
@@ -36,6 +40,7 @@ export interface ClassState {
     currentClass: ClassDetail;
   };
   loading: boolean;
+  actionLoading: boolean;
   error: ClassError | null;
 }
 
@@ -46,4 +51,19 @@ export interface ClassError {
 
 export enum ClassErrorType {
   RESPONSE_ERROR = 400,
+}
+
+export interface ClassPayload {
+  name: string;
+  isSchoolClass: boolean;
+  isPrivateClass: boolean;
+}
+
+export interface UpdateClassQuery extends ClassPayload {
+  classId: string;
+  token: string;
+}
+
+export interface CreateClassQuery extends Partial<ClassPayload> {
+  token: string;
 }
