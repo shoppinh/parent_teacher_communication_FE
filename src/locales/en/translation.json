@@ -99,7 +99,10 @@
     "role": "Role",
     "fullName": "Full Name",
     "isSchoolClass": "School Class",
-    "isPrivateClass": "Private Class"
+    "isPrivateClass": "Private Class",
+    "isActive": "Active",
+    "address": "Address"
+
   },
   "logout": {
     "title": "Logout"
@@ -143,6 +146,27 @@
         "addSuccess": "Add class success",
         "editSuccess": "Edit class success",
         "editClass": "Edit Class"
+      },
+      "studentManagement": {
+        "title": "Student Management",
+        "addNewStudent": "Add New Student",
+        "addSuccess": "Add student success",
+        "editSuccess": "Edit student success",
+        "editStudent": "Edit Student"
+      },
+      "teacherManagement": {
+        "title": "Teacher Management",
+        "addNewTeacher": "Add New Teacher",
+        "addSuccess": "Add teacher success",
+        "editSuccess": "Edit teacher success",
+        "editTeacher": "Edit Teacher"
+      },
+      "parentManagement": {
+        "title": "Parent Management",
+        "addNewParent": "Add New Parent",
+        "addSuccess": "Add parent success",
+        "editSuccess": "Edit parent success",
+        "editParent": "Edit Parent"
       }
     }
   },
@@ -318,7 +342,8 @@
     "subjectNameInfo": "Subject: {{name}}",
     "className": "Class Name",
     "isSchoolClass": "Is School Class",
-    "isPrivateClass": "Is Private Class"
+    "isPrivateClass": "Is Private Class",
+    "isActive": "Active"
   },
   "role": {
     "SUPER_USER": "Admin",

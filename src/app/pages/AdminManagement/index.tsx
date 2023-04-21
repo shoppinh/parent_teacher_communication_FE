@@ -1,20 +1,22 @@
 import {
-  TabsListUnstyled,
-  TabUnstyled,
-  tabUnstyledClasses,
-  TabsUnstyled,
   MenuItemUnstyled,
-  menuItemUnstyledClasses,
-  PopperUnstyled,
-  MenuUnstyledActions,
-  TabPanelUnstyled,
   MenuUnstyled,
+  MenuUnstyledActions,
+  PopperUnstyled,
+  TabPanelUnstyled,
+  TabUnstyled,
+  TabsListUnstyled,
+  TabsUnstyled,
+  menuItemUnstyledClasses,
+  tabUnstyledClasses,
 } from '@mui/base';
 import { PButton } from 'app/components/PButton';
+import AssignmentManagement from 'app/containers/AdminManagement/AssignmentManagement';
 import ClassManagement from 'app/containers/AdminManagement/ClassManagement';
-import InteractionList from 'app/containers/ParentManagement/InteractionList';
-import LeaveFormList from 'app/containers/ParentManagement/LeaveFormList';
-import Portfolios from 'app/containers/ParentManagement/Portfolios';
+import ParentManagement from 'app/containers/AdminManagement/ParentManagement';
+import StudentManagement from 'app/containers/AdminManagement/StudentManagement';
+import SubjectManagement from 'app/containers/AdminManagement/SubjectManagement';
+import TeacherManagement from 'app/containers/AdminManagement/TeacherManagement';
 import MainLayout from 'app/layouts/MainLayout';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -199,11 +201,21 @@ const AdminManagement = () => {
           <TabPanelUnstyled value={0}>
             <ClassManagement />
           </TabPanelUnstyled>
-          <TabPanelUnstyled value={1}>Teacher Management</TabPanelUnstyled>
-          <TabPanelUnstyled value={2}>Parent Management</TabPanelUnstyled>
-          <TabPanelUnstyled value={3}>Student Management</TabPanelUnstyled>
-          <TabPanelUnstyled value={4}>Assignment Management</TabPanelUnstyled>
-          <TabPanelUnstyled value={5}>Subject Management</TabPanelUnstyled>
+          <TabPanelUnstyled value={1}>
+            <TeacherManagement />
+          </TabPanelUnstyled>
+          <TabPanelUnstyled value={2}>
+            <ParentManagement />
+          </TabPanelUnstyled>
+          <TabPanelUnstyled value={3}>
+            <StudentManagement />
+          </TabPanelUnstyled>
+          <TabPanelUnstyled value={4}>
+            <AssignmentManagement />
+          </TabPanelUnstyled>
+          <TabPanelUnstyled value={5}>
+            <SubjectManagement />
+          </TabPanelUnstyled>
         </TabPaneContent>
       </StyledTabs>
       <MenuUnstyled

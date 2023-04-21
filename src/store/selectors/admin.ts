@@ -12,3 +12,10 @@ export const getAdminConfigPartner = createSelector(
   [selectDomain],
   (state) => state.data.config?.partners
 );
+
+export const getParentList = createSelector(
+  [selectDomain],
+  (state) => state.data.parent?.parentList
+);
+
+export const getAdminActionLoading = createSelector([selectDomain], (state) => state.actionLoading);

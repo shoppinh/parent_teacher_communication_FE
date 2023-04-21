@@ -22,7 +22,12 @@ import {
   RefreshTokenQuery,
   UpdateUserQuery,
 } from 'types/Session';
-import { ClassDetailTokenQuery, ClassListTokenQuery, CreateClassQuery, UpdateClassQuery } from '../../types/Class';
+import {
+  ClassDetailTokenQuery,
+  ClassListTokenQuery,
+  CreateClassQuery,
+  UpdateClassQuery,
+} from '../../types/Class';
 import { AddCommentTokenRequest } from '../../types/Comment';
 import {
   AddProgressTokenQuery,
@@ -41,12 +46,12 @@ import {
   UpdateLeaveFormStatusQuery,
   UpdateStudentQuery,
 } from '../../types/Student';
-import { TeacherDetailQuery } from '../../types/Teacher';
 import {
   AssignOrRemoveStudentQuery,
   TeacherAssignmentDetailTokenQuery,
 } from '../../types/TeacherAssignment';
 import * as api from './index';
+import { TeacherDetailQuery, TeacherListQuery } from 'types/Admin/Teacher';
 
 export function* apiLogin(query: AuthQuery) {
   return yield call(api.login, query);
@@ -136,6 +141,10 @@ export function* apiUpdateUserInfo(query: UpdateUserQuery) {
 
 export function* apiFetchTeacherDetail(query: TeacherDetailQuery) {
   return yield call(api.fetchTeacherDetail, query);
+}
+
+export function* apiGetParentList(query: TeacherListQuery) {
+  return yield call(api.getParentList, query);
 }
 
 //Post

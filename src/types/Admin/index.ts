@@ -1,7 +1,11 @@
+import { Parent } from 'types/Parent';
+import { Teacher } from './Teacher';
+
 export interface AdminState {
   data: AdminData;
   error?: AdminError | null;
   loading?: boolean;
+  actionLoading?: boolean;
 }
 
 export interface AdminBasicQuery {
@@ -23,10 +27,21 @@ export interface Partners {
 }
 
 export interface AdminData {
-  config: {
+  config?: {
     partners?: Partners[];
   };
-  session: {};
+  session?: {};
+  teacher: {
+    teacherList?: { data: Teacher[]; totalItem: number };
+    currentTeacher?: Teacher;
+  };
+  parent: {
+    parentList?: {
+      data?: Parent[];
+      totalItem?: number;
+    };
+    currentParent?: Parent;
+  };
 }
 
 export enum AdminErrorType {
