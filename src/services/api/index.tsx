@@ -15,7 +15,7 @@ export {
   sendPushNotification,
   getConversationListOfUser,
 } from './conversation';
-export { fetchTeacherDetail } from './admin';
+export { fetchTeacherDetail, getParentList } from './admin';
 
 export {
   getPostList,

@@ -103,7 +103,9 @@
     "role": "Quyền",
     "fullName": "Tên đầy đủ",
     "isSchoolClass": "Lớp toàn trường",
-    "isPrivateClass": "Lớp riêng"
+    "isPrivateClass": "Lớp riêng",
+    "isActive": "Đang hoạt động",
+    "address": "Địa chỉ"
   },
   "register": {
     "title": "Tạo tài khoản",
@@ -203,9 +205,31 @@
         "addSuccess": "Thêm mới lớp học thành công",
         "editSuccess": "Cập nhật lớp học thành công",
         "editClass": "Cập nhật lớp học"
+      },
+      "studentManagement": {
+        "title": "Quản lý học sinh",
+        "addNewStudent": "Thêm mới học sinh",
+        "addSuccess": "Thêm mới học sinh thành công",
+        "editSuccess": "Cập nhật học sinh thành công",
+        "editStudent": "Cập nhật học sinh"
+      },
+      "teacherManagement": {
+        "title": "Quản lý giáo viên",
+        "addNewTeacher": "Thêm mới giáo viên",
+        "addSuccess": "Thêm mới giáo viên thành công",
+        "editSuccess": "Cập nhật giáo viên thành công",
+        "editTeacher": "Cập nhật giáo viên"
+      },
+      "parentManagement": {
+        "title": "Quản lý phụ huynh",
+        "addNewParent": "Thêm mới phụ huynh",
+        "addSuccess": "Thêm mới phụ huynh thành công",
+        "editSuccess": "Cập nhật phụ huynh thành công",
+        "editParent": "Cập nhật phụ huynh"
       }
     }
   },
+
   "parent": {
     "home": {
       "title": "Trang chủ phụ huynh"
@@ -232,7 +256,7 @@
     "leaveForm": "Đơn xin nghỉ",
     "class": "Lớp",
     "teacher": "Giáo viên",
-    "student":"Học sinh",
+    "student": "Học sinh",
     "parent": "Phụ huynh",
     "assignment": "Phân công",
     "subject": "Môn học"
@@ -320,7 +344,8 @@
     "subjectNameInfo": "Môn học: {{name}}",
     "className": "Tên lớp",
     "isSchoolClass": "Lớp toàn trường",
-    "isPrivateClass": "Lớp riêng"
+    "isPrivateClass": "Lớp riêng",
+    "isActive": "Đang hoạt động"
   },
   "role": {
     "SUPER_USER": "Ban giám hiệu",

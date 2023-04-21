@@ -53,7 +53,6 @@ const ClassManagement = () => {
   const [isClassDetailModalOpen, setIsClassDetailModalOpen] = React.useState(false);
   const [isRemoveClassModalOpen, setIsRemoveClassModalOpen] = React.useState(false);
   const [selectedClass, setSelectedClass] = React.useState<Class | null>(null);
-  console.log("🚀 ~ file: index.tsx:56 ~ ClassManagement ~ selectedClass:", selectedClass)
   const [isRefresh, setIsRefresh] = React.useState(false);
   const { actions: classActions } = useClassSlice();
   const dispatch = useDispatch();

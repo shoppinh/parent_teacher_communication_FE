@@ -108,6 +108,13 @@ export function configureAppStore() {
         theme: {
           ...store.getState().theme,
         },
+        admin: {
+          data: {
+            ...(store.getState().admin
+              ? store.getState().admin.data
+              : persistedStateCache?.admin?.data),
+          },
+        },
         class: {
           data: {
             ...(store.getState().class

@@ -1,12 +1,10 @@
+import React, { useCallback, useEffect } from 'react';
 import PBackdropLoading from 'app/components/PBackdropLoading';
 import { PButton } from 'app/components/PButton';
 import PCheckbox from 'app/components/PCheckbox';
 import { PIcon } from 'app/components/PIcon';
 import PInput from 'app/components/PInput';
 import { PLoadingIndicator } from 'app/components/PLoadingIndicatior';
-import { t } from 'i18next';
-import { type } from 'os';
-import React, { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -77,7 +75,6 @@ const ModalTitle = styled.p`
   font-weight: bold;
 `;
 const ClassDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type, value }) => {
-  console.log('🚀 ~ file: index.tsx:80 ~ type:', type);
   const { t } = useTranslation();
   const [isFormSent, setIsFormSent] = React.useState(false);
   const accessToken = useSelector(getAccessToken);
