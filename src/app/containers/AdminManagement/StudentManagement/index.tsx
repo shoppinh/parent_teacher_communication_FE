@@ -69,8 +69,8 @@ const StudentManagement = () => {
         render: (item: Student) => item.age,
       },
       {
-        label: t('table.class'),
-        accessor: 'class',
+        label: t('table.className'),
+        accessor: 'className',
         render: (item: Student) => item.class?.name,
       },
       {

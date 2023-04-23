@@ -180,7 +180,6 @@ export function* loadStudentListSaga({
 }) {
   try {
     const response = yield call(apiGetStudentList, payload);
-    console.log('🚀 ~ file: adminSaga.ts:182 ~ response:', response);
     if (response.data && response.data.status) {
       yield put(actions.loadStudentListSuccess(response.data.data));
     } else {

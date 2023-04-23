@@ -107,7 +107,8 @@
     "degree": "Degree",
     "class": "Class",
     "teacher": "Teacher",
-    "isClassAdmin": "Class Admin"
+    "isClassAdmin": "Class Admin",
+    "phoneNumber":"Phone Number"
   },
   "logout": {
     "title": "Logout"
@@ -365,7 +366,8 @@
     "isPrivateClass": "Is Private Class",
     "isActive": "Active",
     "subjectId": "Subject ID",
-    "isClassAdmin": "Class Admin"
+    "isClassAdmin": "Class Admin",
+    "job": "Job"
   },
   "role": {
     "SUPER_USER": "Admin",
