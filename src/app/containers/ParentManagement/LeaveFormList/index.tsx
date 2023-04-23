@@ -1,3 +1,4 @@
+import { PButton } from 'app/components/PButton';
 import { PLoadingIndicator } from 'app/components/PLoadingIndicatior';
 import { PModal } from 'app/components/PModal';
 import { PSelection } from 'app/components/PSelection';
@@ -90,6 +91,12 @@ const NotiText = styled.p`
   font: 400 ${pxToRem(14)}rem / ${pxToRem(20)}rem ${(p) => p.theme.fontFamily};
   text-align: center;
 `;
+const StyledButton = styled(PButton)`
+  padding: ${pxToRem(10)}rem ${pxToRem(20)}rem;
+  margin: ${pxToRem(5)}rem ${pxToRem(10)}rem ${pxToRem(5)}rem 0;
+  border-radius: ${pxToRem(20)}rem;
+  font-weight: 700;
+`;
 const LeaveFormList = () => {
   const { t } = useTranslation();
   const [showConfirmModal, setIsShowConfirmModal] = React.useState(false);
@@ -119,13 +126,18 @@ const LeaveFormList = () => {
     }
   }, [currentAccessToken, dispatch, parentActions, selectedStudentId]);
 
+  const handleAddNewForm = useCallback(() => {
+    setSelectedLeaveForm(undefined);
+    setIsShowConfirmModal(true);
+  }, []);
+
   useEffect(() => {
     handleFetchLeaveFormList();
   }, [handleFetchLeaveFormList]);
   return (
     <Container>
+      <HeaderTitle>{t('leaveForm.title')}</HeaderTitle>
       <ActionGroup>
-        <HeaderTitle>{t('leaveForm.title')}</HeaderTitle>
         <StyledPSelection
           onChange={(e) => {
             setSelectedStudentId(e.target.value);
@@ -140,6 +152,9 @@ const LeaveFormList = () => {
             );
           })}
         </StyledPSelection>
+        <StyledButton variant='primary' onClick={handleAddNewForm}>
+          {t('leaveForm.addNewForm')}
+        </StyledButton>
       </ActionGroup>
       <Section>
         <SectionContent>
@@ -165,7 +180,7 @@ const LeaveFormList = () => {
                   );
                 })
               ) : (
-                <NotiText>{t('common.noData')}</NotiText>
+                <NotiText>{t('common.noDataToShow')}</NotiText>
               )}
             </ItemList>
           )}

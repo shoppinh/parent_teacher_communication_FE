@@ -396,7 +396,9 @@
     "leaveTitleWithoutParam": "Tiêu đề",
     "reasonTitle": "Lý do",
     "leaveDate": "Ngày nghỉ",
-    "createdDate": "Ngày tạo"
+    "createdDate": "Ngày tạo",
+    "addSuccess": "Thêm đơn xin nghỉ thành công",
+    "addNewForm": "Thêm đơn xin nghỉ mới"
   },
   "interactionList": {
     "title": "Bảng điểm của học sinh"

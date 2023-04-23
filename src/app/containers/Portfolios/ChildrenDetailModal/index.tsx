@@ -235,20 +235,22 @@ const ChildrenDetailModal: React.FC<Props> = ({
             </PSelection>
             {errors.gender && <Required>{errors.gender.message}</Required>}
           </InputContainer>
-          <InputContainer>
-            <InputLabel>{t('form.parentId')}</InputLabel>
-            <PSelection {...register('parentId')} disabled={type === 'children'}>
-              <option value='' key='empty-parent'>
-                {t('input.pleaseSelect', { label: t('form.parentId') })}
-              </option>
-              {parentListData?.data?.map((parent) => (
-                <option value={parent._id} key={parent._id}>
-                  {parent.userId?.fullname}
+          {type === 'student' && (
+            <InputContainer>
+              <InputLabel>{t('form.parentId')}</InputLabel>
+              <PSelection {...register('parentId')}>
+                <option value='' key='empty-parent'>
+                  {t('input.pleaseSelect', { label: t('form.parentId') })}
                 </option>
-              ))}
-            </PSelection>
-            {errors.parentId && <Required>{errors.parentId.message}</Required>}
-          </InputContainer>
+                {parentListData?.data?.map((parent) => (
+                  <option value={parent._id} key={parent._id}>
+                    {parent.userId?.fullname}
+                  </option>
+                ))}
+              </PSelection>
+              {errors.parentId && <Required>{errors.parentId.message}</Required>}
+            </InputContainer>
+          )}
           {(type === 'children' || currentUser?.roleId === ConstantRoles.SUPER_USER) && (
             <InputContainer>
               <InputLabel>{t('form.relationship')}</InputLabel>

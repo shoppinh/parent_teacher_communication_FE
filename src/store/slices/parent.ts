@@ -18,6 +18,7 @@ export const initialState: ParentState = {
   data: { ...parentCache?.data },
   error: null,
   loading: false,
+  actionLoading: false,
 };
 
 const slice = createSlice({
@@ -38,19 +39,19 @@ const slice = createSlice({
     },
     submitLeaveForm: (state, action: PayloadAction<AddLeaveFormQuery>) => {
       state.error = null;
-      state.loading = true;
+      state.actionLoading = true;
     },
     submitLeaveFormSuccess: (state) => {
       state.error = null;
-      state.loading = false;
+      state.actionLoading = false;
     },
     updateLeaveForm: (state, action: PayloadAction<UpdateLeaveFormQuery>) => {
       state.error = null;
-      state.loading = true;
+      state.actionLoading = true;
     },
     updateLeaveFormSuccess: (state, action: PayloadAction<UpdateLeaveFormPayload>) => {
       state.error = null;
-      state.loading = false;
+      state.actionLoading = false;
       state.data.leaveFormList.data = state.data.leaveFormList.data?.map((item) => {
         if (item._id === action.payload.formId) {
           return {
@@ -66,6 +67,7 @@ const slice = createSlice({
     Error: (state, action: PayloadAction<ParentError>) => {
       state.error = action.payload;
       state.loading = false;
+      state.actionLoading = false;
     },
   },
 });

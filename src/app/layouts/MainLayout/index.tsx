@@ -1,7 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getSystemSettings } from 'store/selectors/config';
-import { useConfigSlice } from 'store/slices/config';
+import React, { useCallback } from 'react';
 import tw, { styled } from 'twin.macro';
 import { media } from '../../../styles';
 import { StyleConstants } from '../../../styles/constants/style';
@@ -89,14 +86,6 @@ const MainLayout: React.FC<Props> = ({
     setRightBarOpen(!rightBarOpen);
   }, [rightBarOpen]);
 
-  const { actions: configActions } = useConfigSlice();
-  const systemSettings = useSelector(getSystemSettings);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (!systemSettings) {
-      dispatch(configActions.loadSystemSetting());
-    }
-  }, [configActions, dispatch, systemSettings]);
   return (
     <BaseLayout title={title}>
       <Container>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Logo from 'assets/images/app-logo.png';
 import tw, { styled } from 'twin.macro';
 import { pxToRem } from '../../../styles/theme/utils';
@@ -8,6 +8,9 @@ import { StyleConstants } from '../../../styles/constants/style';
 import { useNavigate } from 'react-router-dom';
 import SiteMap from '../../../utils/sitemap';
 import BaseLayout from '../../layouts/BaseLayout';
+import { getUser } from 'store/selectors/session';
+import { useSelector } from 'react-redux';
+import { ConstantRoles } from 'utils/constants';
 
 const Wrapper = styled.div`
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
@@ -46,7 +49,23 @@ const ActionGroup = styled.div`
 
 const Landing = () => {
   const { t } = useTranslation();
+  const currentUser = useSelector(getUser);
   const navigate = useNavigate();
+  useEffect(() => {
+    if (currentUser) {
+      switch (currentUser.roleId) {
+        case ConstantRoles.PARENT:
+          navigate(SiteMap.parentHome.link);
+          break;
+        case ConstantRoles.TEACHER:
+          navigate(SiteMap.teacherHome.link);
+          break;
+        case ConstantRoles.SUPER_USER:
+          navigate(SiteMap.adminHome.link);
+          break;
+      }
+    }
+  }, [currentUser, navigate]);
   return (
     <BaseLayout title={t('landing.title')}>
       <Wrapper>
