@@ -273,12 +273,8 @@ const RightBar: React.FC<RighBarProps> = ({
           </TabPanelUnstyled>
         </TabPaneContent>
       </StyledTabs>
-
-      {/*<PModal open={showNewMessageModal} onClose={() => setShowNewMessageModal(false)}>*/}
-      {/*  <NewMessageModal onClose={() => setShowNewMessageModal(false)} />*/}
-      {/*</PModal>*/}
     </Container>
   );
 };
 
-export default RightBar;
+export default React.memo(RightBar);

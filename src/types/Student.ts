@@ -50,7 +50,14 @@ export interface StudentListByClassTokenQuery {
 export type StudentParentIncludedInfo = Omit<Student, 'parentId'> & {
   parentId: Parent;
 };
-export type AddStudentPayload = Omit<Student, '_id' | 'parentId'>;
+export type AddStudentPayload = {
+  name: string;
+  age: number;
+  gender: string;
+  classId: string;
+  parentId: string;
+  relationship: string;
+};
 
 export type AddStudentQuery = AddStudentPayload & {
   token: string;

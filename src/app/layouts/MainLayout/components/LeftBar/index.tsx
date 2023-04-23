@@ -265,4 +265,4 @@ const LeftBar: React.FC<Props> = ({ isShowSchoolAndClassList = true }) => {
   );
 };
 
-export default LeftBar;
+export default React.memo(LeftBar);

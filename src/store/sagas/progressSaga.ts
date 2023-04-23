@@ -1,3 +1,4 @@
+import { PayloadAction } from '@reduxjs/toolkit';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { progressActions as actions } from 'store/slices/progress';
 import {
@@ -8,7 +9,6 @@ import {
   apiRemoveProgress,
   apiUpdateProgress,
 } from '../../services/api/apiHelper';
-import { PayloadAction } from '@reduxjs/toolkit';
 import {
   AddProgressTokenQuery,
   ProgressDetailTokenQuery,
@@ -16,7 +16,6 @@ import {
   ProgressListTokenQuery,
   UpdateProgressTokenQuery,
 } from '../../types/Progress';
-import { OnlyTokenQuery } from '../../types/Session';
 
 export function* progressSaga() {
   yield all([

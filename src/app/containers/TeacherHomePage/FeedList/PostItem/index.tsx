@@ -281,4 +281,4 @@ const PostItem: React.FC<Props> = ({ data: postData, triggerRefreshFeedList }) =
   );
 };
 
-export default PostItem;
+export default React.memo(PostItem);

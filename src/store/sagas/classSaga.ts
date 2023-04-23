@@ -6,7 +6,7 @@ import {
   apiGetClassListByRole,
   apiRemoveClass,
   apiUpdateClass,
-  apiUpdateLeaveFormStatus
+  apiUpdateLeaveFormStatus,
 } from 'services/api/apiHelper';
 import { classActions as actions } from 'store/slices/class';
 import { UpdateLeaveFormStatusQuery } from 'types/Student';
@@ -14,7 +14,7 @@ import {
   ClassDetailTokenQuery,
   ClassListTokenQuery,
   CreateClassQuery,
-  UpdateClassQuery
+  UpdateClassQuery,
 } from '../../types/Class';
 import { ConstantRoles } from '../../utils/constants';
 
@@ -25,6 +25,7 @@ export function* classSaga() {
     takeLatest(actions.updateLeaveFormStatus.type, updateLeaveFormStatus),
     takeLatest(actions.createClass.type, addClassSaga),
     takeLatest(actions.updateClass.type, updateClassSaga),
+    takeLatest(actions.removeClass.type, removeClassSaga),
   ]);
 }
 
@@ -151,7 +152,7 @@ export function* removeClassSaga({ payload }: { type: string; payload: ClassDeta
   try {
     const response = yield call(apiRemoveClass, payload);
     if (response.data && response.data.status) {
-      yield put(actions.removeClassSuccess(response.data.data));
+      yield put(actions.removeClassSuccess(payload.classId));
     } else {
       yield put(actions.Error(response.data.error));
     }

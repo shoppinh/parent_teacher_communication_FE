@@ -1,11 +1,9 @@
 import PBackdropLoading from 'app/components/PBackdropLoading';
 import { PButton } from 'app/components/PButton';
-import PCheckbox from 'app/components/PCheckbox';
 import { PIcon } from 'app/components/PIcon';
 import PInput from 'app/components/PInput';
 import { PLoadingIndicator } from 'app/components/PLoadingIndicatior';
-import { PSelection } from 'app/components/PSelection';
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,15 +13,13 @@ import { getAccessToken } from 'store/selectors/session';
 import { useAdminSlice } from 'store/slices/admin';
 import { pxToRem } from 'styles/theme/utils';
 import tw, { styled } from 'twin.macro';
-import { Parent, ParentPayload } from 'types/Parent';
-import { ConstantRoles } from 'utils/constants';
+import { Subject, SubjectPayload } from 'types/Subject';
 interface Props {
-  value: Parent | null;
+  value: Subject | null;
   type: 'edit' | 'add';
   handleClose: () => void;
   triggerRefresh: () => void;
 }
-
 const Wrapper = styled.div`
   padding: 20px;
   background-color: ${(p) => p.theme.background};
@@ -52,6 +48,10 @@ const StyledIcon = styled(PIcon)`
 const FormContainer = styled.form`
   ${tw`w-full`}
   margin-bottom: ${pxToRem(20)}rem;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 const InputContainer = styled.div`
   margin-bottom: ${pxToRem(10)}rem;
@@ -76,7 +76,7 @@ const ModalTitle = styled.p`
   font-size: 20px;
   font-weight: bold;
 `;
-const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type, value }) => {
+const SubjectDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type, value }) => {
   const { t } = useTranslation();
   const [isFormSent, setIsFormSent] = React.useState(false);
   const accessToken = useSelector(getAccessToken);
@@ -87,31 +87,26 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
     handleSubmit,
     reset,
     formState: { errors, isDirty },
-  } = useForm<ParentPayload>({
-    defaultValues: {
-      isActive: true,
-    },
-  });
+  } = useForm<SubjectPayload>();
   const loading = useSelector(getAdminActionLoading);
   const fetchingDataLoading = useSelector(getAdminLoading);
   const adminError = useSelector(getAdminError);
   const handleSubmitClass = useCallback(
-    (payload: ParentPayload) => {
+    (payload: SubjectPayload) => {
       if (accessToken) {
         if (type === 'edit' && value?._id) {
           dispatch(
-            adminActions.updateParent({
+            adminActions.updateSubject({
               token: accessToken,
-              parentId: value?._id,
+              subjectId: value?._id,
               ...payload,
             })
           );
         } else {
           dispatch(
-            adminActions.createParent({
+            adminActions.createSubject({
               token: accessToken,
               ...payload,
-              roleKey: ConstantRoles.PARENT,
             })
           );
         }
@@ -123,8 +118,8 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
   useEffect(() => {
     if (isFormSent && !loading && !adminError) {
       if (type === 'add') {
-        toast(t('admin.management.parentManagement.addSuccess'));
-      } else toast(t('admin.management.parentManagement.editSuccess'));
+        toast(t('admin.management.subjectManagement.addSuccess'));
+      } else toast(t('admin.management.subjectManagement.editSuccess'));
       triggerRefresh();
       handleClose();
       setIsFormSent(false);
@@ -135,23 +130,10 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
   }, [handleClose, isFormSent, adminError, loading, t, triggerRefresh, type]);
   useEffect(() => {
     if (value) {
-      reset({
-        username: value.userId.username,
-        email: value.userId.email,
-        firstName: value.userId.firstname,
-        lastName: value.userId.lastname,
-        fullName: value.userId.fullname,
-        mobilePhone: value.userId.mobilePhone,
-        roleKey: value.userId.role,
-        password: '',
-        address: value.address,
-        age: value.age,
-        gender: value.gender,
-        job: value.job,
-        isActive: value.userId.isActive,
-      });
+      reset(value);
     }
   }, [reset, value]);
+
   return (
     <Wrapper>
       {fetchingDataLoading ? (
@@ -161,8 +143,8 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
           <ActionGroup>
             <ModalTitle>
               {type === 'add'
-                ? t('admin.management.parentManagement.addNewParent')
-                : t('admin.management.parentManagement.editParent')}
+                ? t('admin.management.subjectManagement.addNewSubject')
+                : t('admin.management.subjectManagement.editSubject')}
             </ModalTitle>
             <PButton onClick={() => handleClose()}>
               <StyledIcon className='partei-cross' />
@@ -171,55 +153,11 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
 
           <FormContainer onSubmit={handleSubmit(handleSubmitClass)}>
             <InputContainer>
-              <InputLabel>{t('form.username')}</InputLabel>
-              <StyledInput {...register('username')} />
-              {errors.username && <Required>{errors.username.message}</Required>}
+              <InputLabel>{t('form.name')}</InputLabel>
+              <StyledInput {...register('name')} />
+              {errors.name && <Required>{errors.name.message}</Required>}
             </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.email')}</InputLabel>
-              <StyledInput {...register('email')} />
-              {errors.email && <Required>{errors.email.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.firstName')}</InputLabel>
-              <StyledInput {...register('firstName')} />
-              {errors.firstName && <Required>{errors.firstName.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.lastName')}</InputLabel>
-              <StyledInput {...register('lastName')} />
-              {errors.lastName && <Required>{errors.lastName.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.fullName')}</InputLabel>
-              <StyledInput {...register('fullName')} />
-              {errors.fullName && <Required>{errors.fullName.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.age')}</InputLabel>
-              <StyledInput {...register('age', { valueAsNumber: true })} />
-              {errors.age && <Required>{errors.age.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.gender')}</InputLabel>
-              <StyledInput {...register('gender')} />
-              {errors.gender && <Required>{errors.gender.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.address')}</InputLabel>
-              <StyledInput {...register('address')} />
-              {errors.address && <Required>{errors.address.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.isActive')}</InputLabel>
-              <PCheckbox {...register('isActive')} />
-              {errors.isActive && <Required>{errors.isActive.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.job')}</InputLabel>
-              <StyledInput {...register('job')} />
-              {errors.job && <Required>{errors.job.message}</Required>}
-            </InputContainer>
+
             <StyledButton type='submit' variant={'primary'} disabled={!isDirty}>
               {type === 'add' ? t('form.add') : t('form.save')}
             </StyledButton>
@@ -231,4 +169,4 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
   );
 };
 
-export default React.memo(ParentDetailModal);
+export default React.memo(SubjectDetailModal);

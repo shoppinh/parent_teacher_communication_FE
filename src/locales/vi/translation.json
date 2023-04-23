@@ -105,7 +105,13 @@
     "isSchoolClass": "Lớp toàn trường",
     "isPrivateClass": "Lớp riêng",
     "isActive": "Đang hoạt động",
-    "address": "Địa chỉ"
+    "address": "Địa chỉ",
+    "job": "Nghề nghiệp",
+    "parentId": "Phụ huynh",
+    "degree": "Trình độ",
+    "class": "Lớp",
+    "teacher": "Giáo viên",
+    "isClassAdmin": "Là giáo viên chủ nhiệm"
   },
   "register": {
     "title": "Tạo tài khoản",
@@ -226,6 +232,20 @@
         "addSuccess": "Thêm mới phụ huynh thành công",
         "editSuccess": "Cập nhật phụ huynh thành công",
         "editParent": "Cập nhật phụ huynh"
+      },
+      "teacherAssignmentManagement": {
+        "title": "Quản lý phân công giáo viên",
+        "addNewTeacherAssignment": "Thêm mới phân công giáo viên",
+        "addSuccess": "Thêm mới phân công giáo viên thành công",
+        "editSuccess": "Cập nhật phân công giáo viên thành công",
+        "editTeacherAssignment": "Cập nhật phân công giáo viên"
+      },
+      "subjectManagement": {
+        "title": "Quản lý môn học",
+        "addNewSubject": "Thêm mới môn học",
+        "addSuccess": "Thêm mới môn học thành công",
+        "editSuccess": "Cập nhật môn học thành công",
+        "editSubject": "Cập nhật môn học"
       }
     }
   },
@@ -307,7 +327,8 @@
     "approve": "Duyệt",
     "reject": "Từ chối",
     "true": "Đúng",
-    "false": "Sai"
+    "false": "Sai",
+    "unassigned": "Chưa phân lớp"
   },
   "table": {
     "next": "Tiếp theo",
@@ -345,7 +366,9 @@
     "className": "Tên lớp",
     "isSchoolClass": "Lớp toàn trường",
     "isPrivateClass": "Lớp riêng",
-    "isActive": "Đang hoạt động"
+    "isActive": "Đang hoạt động",
+    "subjectId": "ID môn học",
+    "isClassAdmin": "Là chủ nhiệm"
   },
   "role": {
     "SUPER_USER": "Ban giám hiệu",

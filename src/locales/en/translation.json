@@ -101,8 +101,13 @@
     "isSchoolClass": "School Class",
     "isPrivateClass": "Private Class",
     "isActive": "Active",
-    "address": "Address"
-
+    "address": "Address",
+    "job": "Job",
+    "parentId": "Parent",
+    "degree": "Degree",
+    "class": "Class",
+    "teacher": "Teacher",
+    "isClassAdmin": "Class Admin"
   },
   "logout": {
     "title": "Logout"
@@ -167,6 +172,20 @@
         "addSuccess": "Add parent success",
         "editSuccess": "Edit parent success",
         "editParent": "Edit Parent"
+      },
+      "teacherAssignmentManagement": {
+        "title": "Teacher Assignment Management",
+        "addNewTeacherAssignment": "Add New Teacher Assignment",
+        "addSuccess": "Add teacher assignment success",
+        "editSuccess": "Edit teacher assignment success",
+        "editTeacherAssignment": "Edit Teacher Assignment"
+      },
+      "subjectManagement": {
+        "title": "Subject Management",
+        "addNewSubject": "Add New Subject",
+        "addSuccess": "Add subject success",
+        "editSuccess": "Edit subject success",
+        "editSubject": "Edit Subject"
       }
     }
   },
@@ -290,7 +309,8 @@
     "approve": "Approve",
     "reject": "Reject",
     "true": "True",
-    "false": "False"
+    "false": "False",
+    "unassigned": "Unassigned"
   },
   "portfolios": {
     "assignStudent": {
@@ -343,7 +363,9 @@
     "className": "Class Name",
     "isSchoolClass": "Is School Class",
     "isPrivateClass": "Is Private Class",
-    "isActive": "Active"
+    "isActive": "Active",
+    "subjectId": "Subject ID",
+    "isClassAdmin": "Class Admin"
   },
   "role": {
     "SUPER_USER": "Admin",

@@ -72,6 +72,9 @@ const ParentManagement = () => {
         label: t('table.email'),
         accessor: 'email',
         render: (item: Parent) => item.userId.email,
+        style: {
+          wordBreak: 'break-all',
+        },
       },
       {
         label: t('table.age'),
@@ -82,6 +85,16 @@ const ParentManagement = () => {
         label: t('table.phoneNumber'),
         accessor: 'phoneNumber',
         render: (item: Parent) => item.userId.mobilePhone,
+      },
+      {
+        label: t('table.job'),
+        accessor: 'job',
+        render: (item: Parent) => item.job,
+      },
+      {
+        label: t('table.address'),
+        accessor: 'address',
+        render: (item: Parent) => item.address,
       },
       {
         label: t('table.isActive'),
@@ -178,7 +191,7 @@ const ParentManagement = () => {
     <Container>
       <Section>
         <ActionContainer>
-          <HeaderTitle>{t('admin.management.classManagement.title')}</HeaderTitle>
+          <HeaderTitle>{t('admin.management.parentManagement.title')}</HeaderTitle>
           <StyledButton
             variant='primary'
             onClick={() => {
@@ -186,7 +199,7 @@ const ParentManagement = () => {
               setSelectedParent(null);
             }}
           >
-            {t('admin.management.classManagement.addNewClass')}
+            {t('admin.management.parentManagement.addNewParent')}
           </StyledButton>
         </ActionContainer>
       </Section>
@@ -225,4 +238,4 @@ const ParentManagement = () => {
   );
 };
 
-export default ParentManagement;
+export default React.memo(ParentManagement);

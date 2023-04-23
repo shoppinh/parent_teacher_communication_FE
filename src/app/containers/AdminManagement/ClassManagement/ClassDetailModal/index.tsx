@@ -50,7 +50,12 @@ const StyledIcon = styled(PIcon)`
 const FormContainer = styled.form`
   ${tw`w-full`}
   margin-bottom: ${pxToRem(20)}rem;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
+const InputSection = styled.div``;
 const InputContainer = styled.div`
   margin-bottom: ${pxToRem(10)}rem;
 `;
@@ -153,21 +158,23 @@ const ClassDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type, 
           </ActionGroup>
 
           <FormContainer onSubmit={handleSubmit(handleSubmitClass)}>
-            <InputContainer>
-              <InputLabel>{t('form.name')}</InputLabel>
-              <StyledInput {...register('name')} />
-              {errors.name && <Required>{errors.name.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.isSchoolClass')}</InputLabel>
-              <PCheckbox {...register('isSchoolClass')} />
-              {errors.isSchoolClass && <Required>{errors.isSchoolClass.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.isPrivateClass')}</InputLabel>
-              <PCheckbox {...register('isPrivateClass')} />
-              {errors.isPrivateClass && <Required>{errors.isPrivateClass.message}</Required>}
-            </InputContainer>
+            <InputSection>
+              <InputContainer>
+                <InputLabel>{t('form.name')}</InputLabel>
+                <StyledInput {...register('name')} />
+                {errors.name && <Required>{errors.name.message}</Required>}
+              </InputContainer>
+              <InputContainer>
+                <InputLabel>{t('form.isSchoolClass')}</InputLabel>
+                <PCheckbox {...register('isSchoolClass')} />
+                {errors.isSchoolClass && <Required>{errors.isSchoolClass.message}</Required>}
+              </InputContainer>
+              <InputContainer>
+                <InputLabel>{t('form.isPrivateClass')}</InputLabel>
+                <PCheckbox {...register('isPrivateClass')} />
+                {errors.isPrivateClass && <Required>{errors.isPrivateClass.message}</Required>}
+              </InputContainer>
+            </InputSection>
             <StyledButton type='submit' variant={'primary'} disabled={!isDirty}>
               {type === 'add' ? t('form.add') : t('form.save')}
             </StyledButton>
@@ -179,4 +186,4 @@ const ClassDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type, 
   );
 };
 
-export default ClassDetailModal;
+export default React.memo(ClassDetailModal);

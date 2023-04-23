@@ -15,10 +15,10 @@ import { getAccessToken } from 'store/selectors/session';
 import { useAdminSlice } from 'store/slices/admin';
 import { pxToRem } from 'styles/theme/utils';
 import tw, { styled } from 'twin.macro';
-import { Parent, ParentPayload } from 'types/Parent';
+import { Teacher, TeacherPayload } from 'types/Admin/Teacher';
 import { ConstantRoles } from 'utils/constants';
 interface Props {
-  value: Parent | null;
+  value: Teacher | null;
   type: 'edit' | 'add';
   handleClose: () => void;
   triggerRefresh: () => void;
@@ -76,7 +76,7 @@ const ModalTitle = styled.p`
   font-size: 20px;
   font-weight: bold;
 `;
-const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type, value }) => {
+const TeacherDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type, value }) => {
   const { t } = useTranslation();
   const [isFormSent, setIsFormSent] = React.useState(false);
   const accessToken = useSelector(getAccessToken);
@@ -87,7 +87,7 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
     handleSubmit,
     reset,
     formState: { errors, isDirty },
-  } = useForm<ParentPayload>({
+  } = useForm<TeacherPayload>({
     defaultValues: {
       isActive: true,
     },
@@ -96,22 +96,22 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
   const fetchingDataLoading = useSelector(getAdminLoading);
   const adminError = useSelector(getAdminError);
   const handleSubmitClass = useCallback(
-    (payload: ParentPayload) => {
+    (payload: TeacherPayload) => {
       if (accessToken) {
         if (type === 'edit' && value?._id) {
           dispatch(
-            adminActions.updateParent({
+            adminActions.updateTeacher({
               token: accessToken,
-              parentId: value?._id,
+              teacherId: value?._id,
               ...payload,
             })
           );
         } else {
           dispatch(
-            adminActions.createParent({
+            adminActions.createTeacher({
               token: accessToken,
               ...payload,
-              roleKey: ConstantRoles.PARENT,
+              roleKey: ConstantRoles.TEACHER,
             })
           );
         }
@@ -123,8 +123,8 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
   useEffect(() => {
     if (isFormSent && !loading && !adminError) {
       if (type === 'add') {
-        toast(t('admin.management.parentManagement.addSuccess'));
-      } else toast(t('admin.management.parentManagement.editSuccess'));
+        toast(t('admin.management.teacherManagement.addSuccess'));
+      } else toast(t('admin.management.teacherManagement.editSuccess'));
       triggerRefresh();
       handleClose();
       setIsFormSent(false);
@@ -147,7 +147,7 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
         address: value.address,
         age: value.age,
         gender: value.gender,
-        job: value.job,
+        degree: value.degree,
         isActive: value.userId.isActive,
       });
     }
@@ -161,14 +161,13 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
           <ActionGroup>
             <ModalTitle>
               {type === 'add'
-                ? t('admin.management.parentManagement.addNewParent')
-                : t('admin.management.parentManagement.editParent')}
+                ? t('admin.management.teacherManagement.addNewTeacher')
+                : t('admin.management.teacherManagement.editTeacher')}
             </ModalTitle>
             <PButton onClick={() => handleClose()}>
               <StyledIcon className='partei-cross' />
             </PButton>
           </ActionGroup>
-
           <FormContainer onSubmit={handleSubmit(handleSubmitClass)}>
             <InputContainer>
               <InputLabel>{t('form.username')}</InputLabel>
@@ -216,9 +215,9 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
               {errors.isActive && <Required>{errors.isActive.message}</Required>}
             </InputContainer>
             <InputContainer>
-              <InputLabel>{t('form.job')}</InputLabel>
-              <StyledInput {...register('job')} />
-              {errors.job && <Required>{errors.job.message}</Required>}
+              <InputLabel>{t('form.degree')}</InputLabel>
+              <StyledInput {...register('degree')} />
+              {errors.degree && <Required>{errors.degree.message}</Required>}
             </InputContainer>
             <StyledButton type='submit' variant={'primary'} disabled={!isDirty}>
               {type === 'add' ? t('form.add') : t('form.save')}
@@ -231,4 +230,4 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
   );
 };
 
-export default React.memo(ParentDetailModal);
+export default React.memo(TeacherDetailModal);

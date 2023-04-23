@@ -1,14 +1,13 @@
 import React from 'react';
-import { StudentParentIncludedInfo } from '../../../../../types/Student';
-import tw, { styled } from 'twin.macro';
-import { pxToRem } from '../../../../../styles/theme/utils';
-import AvatarPlaceholder from '../../../../../assets/images/person-placeholder.png';
-import { NewConversationPayload } from '../../../../../types/Conversation';
-import { mapStringRoleToNumber } from '../../../../../utils/helpers';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { getUser } from 'store/selectors/session';
-import { ConstantRoles } from 'utils/constants';
-import { useTranslation } from 'react-i18next';
+import tw, { styled } from 'twin.macro';
+import AvatarPlaceholder from '../../../../../assets/images/person-placeholder.png';
+import { pxToRem } from '../../../../../styles/theme/utils';
+import { NewConversationPayload } from '../../../../../types/Conversation';
+import { StudentParentIncludedInfo } from '../../../../../types/Student';
+import { mapStringRoleToNumber } from '../../../../../utils/helpers';
 interface Props {
   data: StudentParentIncludedInfo | null;
   onSendMessageToParent?: (newConversationPayload: NewConversationPayload) => void;
@@ -75,7 +74,6 @@ const SectionContainer = styled.div`
   gap: 10px;
 `;
 const StudentDetailModal: React.FC<Props> = ({ data, onSendMessageToParent }) => {
-  const currentUser = useSelector(getUser);
   const { t } = useTranslation();
   return (
     <Container>
@@ -144,4 +142,4 @@ const StudentDetailModal: React.FC<Props> = ({ data, onSendMessageToParent }) =>
   );
 };
 
-export default StudentDetailModal;
+export default React.memo(StudentDetailModal);

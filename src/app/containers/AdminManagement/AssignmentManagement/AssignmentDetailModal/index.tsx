@@ -10,15 +10,23 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { getAdminActionLoading, getAdminError, getAdminLoading } from 'store/selectors/admin';
+import {
+  getAdminActionLoading,
+  getAdminError,
+  getAdminLoading,
+  getSubjectList,
+  getTeacherList,
+} from 'store/selectors/admin';
+import { getClassList } from 'store/selectors/class';
 import { getAccessToken } from 'store/selectors/session';
 import { useAdminSlice } from 'store/slices/admin';
 import { pxToRem } from 'styles/theme/utils';
 import tw, { styled } from 'twin.macro';
 import { Parent, ParentPayload } from 'types/Parent';
+import { TeacherAssignment, TeacherAssignmentPayload } from 'types/TeacherAssignment';
 import { ConstantRoles } from 'utils/constants';
 interface Props {
-  value: Parent | null;
+  value: TeacherAssignment | null;
   type: 'edit' | 'add';
   handleClose: () => void;
   triggerRefresh: () => void;
@@ -52,6 +60,10 @@ const StyledIcon = styled(PIcon)`
 const FormContainer = styled.form`
   ${tw`w-full`}
   margin-bottom: ${pxToRem(20)}rem;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 const InputContainer = styled.div`
   margin-bottom: ${pxToRem(10)}rem;
@@ -65,18 +77,12 @@ const InputLabel = styled.div`
 const Required = styled.span`
   color: ${(p) => p.theme.danger};
 `;
-const StyledInput = styled(PInput)`
-  background: ${(p) => p.theme.background};
-  padding: ${pxToRem(12)}rem ${pxToRem(20)}rem;
-  font-size: ${pxToRem(16)}rem;
-  line-height: ${pxToRem(24)}rem;
-  width: 100%;
-`;
+const InputSection = styled.div``;
 const ModalTitle = styled.p`
   font-size: 20px;
   font-weight: bold;
 `;
-const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type, value }) => {
+const AssignmentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type, value }) => {
   const { t } = useTranslation();
   const [isFormSent, setIsFormSent] = React.useState(false);
   const accessToken = useSelector(getAccessToken);
@@ -87,31 +93,29 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
     handleSubmit,
     reset,
     formState: { errors, isDirty },
-  } = useForm<ParentPayload>({
-    defaultValues: {
-      isActive: true,
-    },
-  });
+  } = useForm<TeacherAssignmentPayload>();
   const loading = useSelector(getAdminActionLoading);
   const fetchingDataLoading = useSelector(getAdminLoading);
+  const classList = useSelector(getClassList);
+  const subjectList = useSelector(getSubjectList);
+  const teacherList = useSelector(getTeacherList);
   const adminError = useSelector(getAdminError);
   const handleSubmitClass = useCallback(
-    (payload: ParentPayload) => {
+    (payload: TeacherAssignmentPayload) => {
       if (accessToken) {
         if (type === 'edit' && value?._id) {
           dispatch(
-            adminActions.updateParent({
+            adminActions.updateAssignment({
               token: accessToken,
-              parentId: value?._id,
+              teacherAssignmentId: value?._id,
               ...payload,
             })
           );
         } else {
           dispatch(
-            adminActions.createParent({
+            adminActions.createAssignment({
               token: accessToken,
               ...payload,
-              roleKey: ConstantRoles.PARENT,
             })
           );
         }
@@ -123,8 +127,8 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
   useEffect(() => {
     if (isFormSent && !loading && !adminError) {
       if (type === 'add') {
-        toast(t('admin.management.parentManagement.addSuccess'));
-      } else toast(t('admin.management.parentManagement.editSuccess'));
+        toast(t('admin.management.teacherAssignmentManagement.addSuccess'));
+      } else toast(t('admin.management.teacherAssignmentManagement.editSuccess'));
       triggerRefresh();
       handleClose();
       setIsFormSent(false);
@@ -136,19 +140,10 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
   useEffect(() => {
     if (value) {
       reset({
-        username: value.userId.username,
-        email: value.userId.email,
-        firstName: value.userId.firstname,
-        lastName: value.userId.lastname,
-        fullName: value.userId.fullname,
-        mobilePhone: value.userId.mobilePhone,
-        roleKey: value.userId.role,
-        password: '',
-        address: value.address,
-        age: value.age,
-        gender: value.gender,
-        job: value.job,
-        isActive: value.userId.isActive,
+        classId: value.classId?._id || '',
+        teacherId: value.teacherId?._id || '',
+        isClassAdmin: value.isClassAdmin,
+        subjectId: value.subjectId?._id || '',
       });
     }
   }, [reset, value]);
@@ -168,58 +163,50 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
               <StyledIcon className='partei-cross' />
             </PButton>
           </ActionGroup>
-
           <FormContainer onSubmit={handleSubmit(handleSubmitClass)}>
-            <InputContainer>
-              <InputLabel>{t('form.username')}</InputLabel>
-              <StyledInput {...register('username')} />
-              {errors.username && <Required>{errors.username.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.email')}</InputLabel>
-              <StyledInput {...register('email')} />
-              {errors.email && <Required>{errors.email.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.firstName')}</InputLabel>
-              <StyledInput {...register('firstName')} />
-              {errors.firstName && <Required>{errors.firstName.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.lastName')}</InputLabel>
-              <StyledInput {...register('lastName')} />
-              {errors.lastName && <Required>{errors.lastName.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.fullName')}</InputLabel>
-              <StyledInput {...register('fullName')} />
-              {errors.fullName && <Required>{errors.fullName.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.age')}</InputLabel>
-              <StyledInput {...register('age', { valueAsNumber: true })} />
-              {errors.age && <Required>{errors.age.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.gender')}</InputLabel>
-              <StyledInput {...register('gender')} />
-              {errors.gender && <Required>{errors.gender.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.address')}</InputLabel>
-              <StyledInput {...register('address')} />
-              {errors.address && <Required>{errors.address.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.isActive')}</InputLabel>
-              <PCheckbox {...register('isActive')} />
-              {errors.isActive && <Required>{errors.isActive.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.job')}</InputLabel>
-              <StyledInput {...register('job')} />
-              {errors.job && <Required>{errors.job.message}</Required>}
-            </InputContainer>
+            <InputSection>
+              <InputContainer>
+                <InputLabel>{t('form.teacher')}</InputLabel>
+                <PSelection {...register('teacherId')}>
+                  <option value=''>{t('input.pleaseSelect', { label: t('form.teacher') })}</option>
+                  {teacherList?.data?.map((teacher) => (
+                    <option value={teacher?._id} key={teacher?._id}>
+                      {teacher?.userId?.fullname}
+                    </option>
+                  ))}
+                </PSelection>
+                {errors.teacherId && <Required>{errors.teacherId.message}</Required>}
+              </InputContainer>
+              <InputContainer>
+                <InputLabel>{t('form.class')}</InputLabel>
+                <PSelection {...register('classId')}>
+                  <option value=''>{t('input.pleaseSelect', { label: t('form.class') })}</option>
+                  {classList?.data?.map((classItem) => (
+                    <option value={classItem._id} key={classItem._id}>
+                      {classItem?.name}
+                    </option>
+                  ))}
+                </PSelection>
+                {errors.classId && <Required>{errors.classId.message}</Required>}
+              </InputContainer>
+              <InputContainer>
+                <InputLabel>{t('form.subject')}</InputLabel>
+                <PSelection {...register('subjectId')}>
+                  <option value=''>{t('input.pleaseSelect', { label: t('form.subject') })}</option>
+                  {subjectList?.data?.map((subject) => (
+                    <option value={subject?._id} key={subject?._id}>
+                      {subject?.name}
+                    </option>
+                  ))}
+                </PSelection>
+                {errors.subjectId && <Required>{errors.subjectId.message}</Required>}
+              </InputContainer>
+              <InputContainer>
+                <InputLabel>{t('form.isClassAdmin')}</InputLabel>
+                <PCheckbox {...register('isClassAdmin')} />
+                {errors.isClassAdmin && <Required>{errors.isClassAdmin.message}</Required>}
+              </InputContainer>
+            </InputSection>
             <StyledButton type='submit' variant={'primary'} disabled={!isDirty}>
               {type === 'add' ? t('form.add') : t('form.save')}
             </StyledButton>
@@ -231,4 +218,4 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
   );
 };
 
-export default React.memo(ParentDetailModal);
+export default React.memo(AssignmentDetailModal);

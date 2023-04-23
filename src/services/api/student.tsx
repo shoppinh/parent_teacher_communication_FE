@@ -37,17 +37,17 @@ export const getUnassignedStudentList = async (query: OnlyTokenQuery) => {
 
 export const addStudent = async (query: AddStudentQuery) => {
   const { token, ...rest } = query;
-  return new apiClient(token).post(APIs.student.addStudent, rest);
+  return new apiClient(token).post(APIs.admin.student.addStudent, rest);
 };
 
 export const updateStudent = async (query: UpdateStudentQuery) => {
   const { token, ...rest } = query;
-  const endpoint = APIs.student.updateStudent.replace('{studentId}', `${query.studentId}`);
+  const endpoint = APIs.admin.student.updateStudent.replace('{studentId}', `${query.studentId}`);
   return new apiClient(token).put(endpoint, rest);
 };
 
 export const removeStudentFromParent = async (query: StudentDetailTokenQuery) => {
   const { token, studentId } = query;
-  const endpoint = APIs.student.updateStudent.replace('{studentId}', `${studentId}`);
+  const endpoint = APIs.admin.student.deleteStudent.replace('{studentId}', `${studentId}`);
   return new apiClient(token).delete(endpoint);
 };

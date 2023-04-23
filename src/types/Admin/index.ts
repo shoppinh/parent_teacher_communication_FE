@@ -1,5 +1,8 @@
 import { Parent } from 'types/Parent';
 import { Teacher } from './Teacher';
+import { Subject } from 'types/Subject';
+import { Student } from 'types/Student';
+import { TeacherAssignment } from 'types/TeacherAssignment';
 
 export interface AdminState {
   data: AdminData;
@@ -32,7 +35,7 @@ export interface AdminData {
   };
   session?: {};
   teacher: {
-    teacherList?: { data: Teacher[]; totalItem: number };
+    teacherList?: { data?: Teacher[]; totalItem?: number };
     currentTeacher?: Teacher;
   };
   parent: {
@@ -41,6 +44,18 @@ export interface AdminData {
       totalItem?: number;
     };
     currentParent?: Parent;
+  };
+  subject: {
+    subjectList?: { data?: Subject[]; totalItem?: number };
+    currentSubject?: Subject;
+  };
+  student: {
+    studentList?: { data?: Student[]; totalItem?: number };
+    currentStudent?: Student;
+  };
+  teacherAssignment: {
+    teacherAssignmentList?: { data?: TeacherAssignment[]; totalItem?: number };
+    currentTeacherAssignment?: TeacherAssignment;
   };
 }
 

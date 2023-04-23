@@ -86,4 +86,4 @@ const RemoveMarkModal: React.FC<Props> = ({ handleClose, handleConfirm, triggerR
   );
 };
 
-export default RemoveMarkModal;
+export default React.memo(RemoveMarkModal);

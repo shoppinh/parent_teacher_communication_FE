@@ -183,4 +183,4 @@ const LeaveFormList = () => {
   );
 };
 
-export default LeaveFormList;
+export default React.memo(LeaveFormList);

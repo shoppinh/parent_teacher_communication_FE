@@ -109,11 +109,11 @@ export function configureAppStore() {
           ...store.getState().theme,
         },
         admin: {
-          data: {
-            ...(store.getState().admin
-              ? store.getState().admin.data
-              : persistedStateCache?.admin?.data),
-          },
+          // data: {
+          //   ...(store.getState().admin
+          //     ? store.getState().admin.data
+          //     : persistedStateCache?.admin?.data),
+          // },
         },
         class: {
           data: {

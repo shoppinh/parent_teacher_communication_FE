@@ -239,4 +239,4 @@ const InteractionList: React.FC = () => {
   );
 };
 
-export default InteractionList;
+export default React.memo(InteractionList);

@@ -1,21 +1,23 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Student } from '../../../../types/Student';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import tw, { styled } from 'twin.macro';
-import { pxToRem } from '../../../../styles/theme/utils';
-import PInput from '../../../components/PInput';
 import { useTranslation } from 'react-i18next';
-import { PSelection } from '../../../components/PSelection';
-import { ConstantRoles, GENDERS } from '../../../../utils/constants';
-import { PButton } from '../../../components/PButton';
-import { StyleConstants } from '../../../../styles/constants/style';
-import { useStudentSlice } from '../../../../store/slices/student';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { getParentList } from 'store/selectors/admin';
+import tw, { styled } from 'twin.macro';
+import { getSchoolInfo } from '../../../../store/selectors/config';
 import { getAccessToken, getUser } from '../../../../store/selectors/session';
 import { getStudentError, getStudentLoading } from '../../../../store/selectors/student';
+import { useStudentSlice } from '../../../../store/slices/student';
+import { StyleConstants } from '../../../../styles/constants/style';
+import { pxToRem } from '../../../../styles/theme/utils';
+import { Student } from '../../../../types/Student';
+import { ConstantRoles, GENDERS } from '../../../../utils/constants';
 import PBackdropLoading from '../../../components/PBackdropLoading';
-import { toast } from 'react-toastify';
-import { getSchoolInfo } from '../../../../store/selectors/config';
+import { PButton } from '../../../components/PButton';
+import PInput from '../../../components/PInput';
+import { PSelection } from '../../../components/PSelection';
+import { getClassList } from 'store/selectors/class';
 
 interface Props {
   data: Student | null;
@@ -28,7 +30,12 @@ interface Props {
 const FormContainer = styled.form`
   ${tw`w-full`}
   margin-bottom: ${pxToRem(20)}rem;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
+const InputSection = styled.div``;
 const InputContainer = styled.div`
   margin-bottom: ${pxToRem(10)}rem;
 `;
@@ -98,6 +105,8 @@ const ChildrenDetailModal: React.FC<Props> = ({
   const accessToken = useSelector(getAccessToken);
   const studentLoading = useSelector(getStudentLoading);
   const studentError = useSelector(getStudentError);
+  const parentListData = useSelector(getParentList);
+  const classListData = useSelector(getClassList);
   const [isFormSent, setIsFormSent] = useState(false);
   const currentUser = useSelector(getUser);
   const onSubmit = useCallback(
@@ -127,6 +136,7 @@ const ChildrenDetailModal: React.FC<Props> = ({
               gender: submitData.gender,
               relationship: submitData.relationship,
               token: accessToken,
+              parentId: submitData.parentId,
             })
           );
         }
@@ -136,6 +146,15 @@ const ChildrenDetailModal: React.FC<Props> = ({
     },
     [accessToken, data, dispatch, studentActions]
   );
+
+  const renderedClassListOptions = useMemo(() => {
+    if (classListData) {
+      return classListData?.data?.filter(
+        (classItem) => !classItem.isSchoolClass && !classItem.isPrivateClass
+      );
+    }
+    return [];
+  }, [classListData]);
   const handleRemoveStudentFromClass = useCallback(() => {
     if (accessToken && data?._id && schoolInfo?._id) {
       dispatch(
@@ -149,23 +168,14 @@ const ChildrenDetailModal: React.FC<Props> = ({
     }
   }, [accessToken, schoolInfo?._id, data?._id, dispatch, studentActions]);
 
-  const handleRemoveStudentFromParent = useCallback(() => {
-    if (accessToken && data?._id) {
-      dispatch(
-        studentActions.removeStudentFromParent({
-          studentId: data._id,
-          token: accessToken,
-        })
-      );
-      setIsFormSent(true);
-    }
-  }, [accessToken, data?._id, dispatch, studentActions]);
+  // Load detail student if data is not null
   useEffect(() => {
     if (data) {
       reset(data);
     }
   }, [data, reset]);
 
+  // Handle refetch student list after create or update
   useEffect(() => {
     if (isFormSent && !studentLoading && !studentError) {
       handleRefetchStudentList();
@@ -184,57 +194,86 @@ const ChildrenDetailModal: React.FC<Props> = ({
         {data === null ? t('form.addStudentTitle') : t('form.studentDetailTitle')}
       </FormTitle>
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
-        <InputContainer>
-          <InputLabel>{t('form.name')}</InputLabel>
-          <StyledInput {...register('name')} disabled={type === 'children'} />
-          {errors.name && <Required>{errors.name.message}</Required>}
-        </InputContainer>
-        <InputContainer>
-          <InputLabel>
-            {t('classInfo.title', {
-              className: data?.class?.name,
-            })}
-          </InputLabel>
-        </InputContainer>
-        <InputContainer>
-          <InputLabel>{t('form.age')}</InputLabel>
-          <StyledInput
-            {...register('age', {
-              valueAsNumber: true,
-            })}
-            disabled={type === 'children'}
-          />
-          {errors.age && <Required>{errors.age.message}</Required>}
-        </InputContainer>
-        <InputContainer>
-          <InputLabel>{t('form.gender')}</InputLabel>
-          <PSelection {...register('gender')} disabled={type === 'children'}>
-            {GENDERS.map((gender) => (
-              <option value={gender} key={gender}>
-                {t(`common.${gender}`)}
-              </option>
-            ))}
-          </PSelection>
-          {errors.gender && <Required>{errors.gender.message}</Required>}
-        </InputContainer>
-        {type === 'children' && (
+        <InputSection>
           <InputContainer>
-            <InputLabel>{t('form.relationship')}</InputLabel>
-            <StyledInput {...register('relationship')} disabled={type === 'children'} />
-            {errors.relationship && <Required>{errors.relationship.message}</Required>}
+            <InputLabel>{t('form.name')}</InputLabel>
+            <StyledInput {...register('name')} disabled={type === 'children'} />
+            {errors.name && <Required>{errors.name.message}</Required>}
           </InputContainer>
-        )}
+          <InputContainer>
+            <InputLabel>{t('form.class')}</InputLabel>
+            <PSelection {...register('classId')} disabled={type === 'children'}>
+              <option value={schoolInfo?._id} key={schoolInfo?._id}>
+                {t('common.unassigned')}
+              </option>
+              {renderedClassListOptions?.map((classItem) => (
+                <option value={classItem._id} key={classItem._id}>
+                  {classItem.name}
+                </option>
+              ))}
+            </PSelection>
+            {errors.gender && <Required>{errors.gender.message}</Required>}
+          </InputContainer>
+          <InputContainer>
+            <InputLabel>{t('form.age')}</InputLabel>
+            <StyledInput
+              {...register('age', {
+                valueAsNumber: true,
+              })}
+              disabled={type === 'children'}
+            />
+            {errors.age && <Required>{errors.age.message}</Required>}
+          </InputContainer>
+          <InputContainer>
+            <InputLabel>{t('form.gender')}</InputLabel>
+            <PSelection {...register('gender')} disabled={type === 'children'}>
+              {GENDERS.map((gender) => (
+                <option value={gender} key={gender}>
+                  {t(`common.${gender}`)}
+                </option>
+              ))}
+            </PSelection>
+            {errors.gender && <Required>{errors.gender.message}</Required>}
+          </InputContainer>
+          <InputContainer>
+            <InputLabel>{t('form.parentId')}</InputLabel>
+            <PSelection {...register('parentId')} disabled={type === 'children'}>
+              <option value='' key='empty-parent'>
+                {t('input.pleaseSelect', { label: t('form.parentId') })}
+              </option>
+              {parentListData?.data?.map((parent) => (
+                <option value={parent._id} key={parent._id}>
+                  {parent.userId?.fullname}
+                </option>
+              ))}
+            </PSelection>
+            {errors.parentId && <Required>{errors.parentId.message}</Required>}
+          </InputContainer>
+          {(type === 'children' || currentUser?.roleId === ConstantRoles.SUPER_USER) && (
+            <InputContainer>
+              <InputLabel>{t('form.relationship')}</InputLabel>
+              <StyledInput {...register('relationship')} disabled={type === 'children'} />
+              {errors.relationship && <Required>{errors.relationship.message}</Required>}
+            </InputContainer>
+          )}
+        </InputSection>
 
         <ActionGroup>
           {type === 'student' &&
             (isClassAdmin || currentUser?.roleId === ConstantRoles.SUPER_USER) && (
               <>
-                <StyledButton type='submit' variant='primary'>
+                <StyledButton type='submit' variant='primary' disabled={!isDirty}>
                   {data === null ? t('common.create') : t('common.update')}
                 </StyledButton>
-                <StyledButton type='button' onClick={handleRemoveStudentFromClass} variant='danger'>
-                  {t('common.removeThisStudentFromClass')}
-                </StyledButton>
+                {data && (
+                  <StyledButton
+                    type='button'
+                    onClick={handleRemoveStudentFromClass}
+                    variant='danger'
+                  >
+                    {t('common.removeThisStudentFromClass')}
+                  </StyledButton>
+                )}
               </>
             )}
         </ActionGroup>
@@ -244,4 +283,4 @@ const ChildrenDetailModal: React.FC<Props> = ({
   );
 };
 
-export default ChildrenDetailModal;
+export default React.memo(ChildrenDetailModal);
