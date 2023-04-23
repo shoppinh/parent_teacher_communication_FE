@@ -7,3 +7,7 @@ const selectDomain = (state: RootState) => state.parent || initialState;
 export const getParentLoading = createSelector([selectDomain], (state) => state.loading);
 export const getParentError = createSelector([selectDomain], (state) => state.error);
 export const getLeaveFormList = createSelector([selectDomain], (state) => state.data.leaveFormList);
+export const getParentActionLoading = createSelector(
+  [selectDomain],
+  (state) => state.actionLoading
+);

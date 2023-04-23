@@ -21,6 +21,7 @@ export interface ParentState {
     };
   };
   loading: boolean;
+  actionLoading: boolean;
   error: ParentError | null;
 }
 export interface ParentError {

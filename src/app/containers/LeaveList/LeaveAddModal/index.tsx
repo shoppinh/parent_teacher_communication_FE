@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { getParentError, getParentLoading } from 'store/selectors/parent';
+import { getParentActionLoading, getParentError, getParentLoading } from 'store/selectors/parent';
 import { getAccessToken } from 'store/selectors/session';
 import { getStudentList } from 'store/selectors/student';
 import { useParentSlice } from 'store/slices/parent';
@@ -22,7 +22,7 @@ import { formatDateWithTemplate } from 'utils/dateHelpers/formatDate';
 interface Props {
   data?: LeaveForm;
   onClose: () => void;
-  triggerRefreshList?: () => void;
+  triggerRefreshList: () => void;
 }
 const Container = styled.div`
   height: 90vh;
@@ -83,13 +83,13 @@ const StyledInput = styled(PInput)`
   width: 100%;
 `;
 const MainInfoContent = styled.div``;
-const LeaveAddModal: React.FC<Props> = ({ data, onClose, triggerRefreshList = () => {} }) => {
+const LeaveAddModal: React.FC<Props> = ({ data, onClose, triggerRefreshList }) => {
   const { t } = useTranslation();
   const [isFormSent, setIsFormSent] = React.useState(false);
   const accessToken = useSelector(getAccessToken);
   const dispatch = useDispatch();
   const { actions: parentActions } = useParentSlice();
-  const updateLoading = useSelector(getParentLoading);
+  const updateLoading = useSelector(getParentActionLoading);
   const updateError = useSelector(getParentError);
   const studentList = useSelector(getStudentList);
 
@@ -149,17 +149,15 @@ const LeaveAddModal: React.FC<Props> = ({ data, onClose, triggerRefreshList = ()
 
   useEffect(() => {
     if (isFormSent && !updateLoading && !updateError) {
-      toast(t('progress.addProgress.addSuccess'));
+      toast(t('leaveForm.addSuccess'));
       setIsFormSent(false);
-      if (!data) {
-        triggerRefreshList();
-      }
+      triggerRefreshList();
       onClose();
     } else if (isFormSent && updateError) {
       toast.error(updateError.message);
       setIsFormSent(false);
     }
-  }, [isFormSent, onClose, t, updateError, updateLoading]);
+  }, [data, isFormSent, onClose, t, triggerRefreshList, updateError, updateLoading]);
 
   useEffect(() => {
     if (data) {
@@ -227,10 +225,10 @@ const LeaveAddModal: React.FC<Props> = ({ data, onClose, triggerRefreshList = ()
             </StyledButton>
           )}
         </ActionGroup>
-        <PBackdropLoading isShow={updateLoading} />
+        <PBackdropLoading isShow={updateLoading || false} />
       </InfoContainer>
     </Container>
   );
 };
 
-export default LeaveAddModal;
+export default React.memo(LeaveAddModal);

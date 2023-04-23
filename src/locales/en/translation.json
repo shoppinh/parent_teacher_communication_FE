@@ -393,7 +393,9 @@
     "leaveTitleWithoutParam": "Title",
     "reasonTitle": "Reason",
     "leaveDate": "Leave Date",
-    "createdDate": "Created Date"
+    "createdDate": "Created Date",
+    "addSuccess": "Add Leave Form success",
+    "addNewForm": "Add New Leave Form"
   },
   "interactionList": {
     "title": "Student's Mark Table"

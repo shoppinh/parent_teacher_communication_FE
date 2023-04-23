@@ -207,7 +207,8 @@ const PostItem: React.FC<Props> = ({ data: postData, triggerRefreshFeedList }) =
           </PostTitleWrapper>
         </TitleSection>
 
-        {currentUser?._id === postData.author._id && (
+        {(currentUser?._id === postData.author._id ||
+          currentUser?.roleId === ConstantRoles.SUPER_USER) && (
           <ActionGroup>
             <ActionButton onClick={handleEditPost}>
               <StyledIcon className='partei-pencil' />

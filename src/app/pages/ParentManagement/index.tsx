@@ -180,19 +180,6 @@ const ParentManagement = () => {
             <StyledTab>{t('tab.portfolios')}</StyledTab>
             <StyledTab>{t('tab.leaveForm')}</StyledTab>
           </StyledTabsList>
-          <StyledButton
-            type='button'
-            variant='primary'
-            onClick={handleButtonClick}
-            onKeyDown={handleButtonKeyDown}
-            onMouseDown={handleButtonMouseDown}
-            ref={buttonRef}
-            aria-controls={isOpen ? 'simple-menu' : undefined}
-            aria-expanded={isOpen || undefined}
-            aria-haspopup='menu'
-          >
-            {t('common.create')}
-          </StyledButton>
         </TabsWrapper>
         <TabPaneContent>
           <TabPanelUnstyled value={0}>
@@ -218,9 +205,6 @@ const ParentManagement = () => {
           {t('menu.leaveForm')}
         </StyledMenuItem>
       </MenuUnstyled>
-      <PModal open={isLeaveFormModalOpen} onClose={() => setIsLeaveFormModalOpen(false)}>
-        <LeaveAddModal onClose={() => setIsLeaveFormModalOpen(false)} />
-      </PModal>
     </MainLayout>
   );
 };

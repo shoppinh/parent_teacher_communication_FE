@@ -39,6 +39,8 @@ const ImageWrapper = styled.div`
 `;
 const ContentWrapper = styled.div`
   height: calc(100vh - ${pxToRem(StyleConstants.HEADER_HEIGHT)}rem);
+  display: flex;
+  flex-direction: column;
 `;
 const BottomMenu = styled.div`
   height: ${pxToRem(StyleConstants.HEADER_HEIGHT)}rem;
@@ -114,6 +116,10 @@ const StyledIcon = styled(PIcon)`
 const CategorizedSection = styled.div`
   margin-bottom: ${pxToRem(15)}rem;
 `;
+const ClassAndSchoolSection = styled.div`
+  flex: 1;
+  overflow-y: auto;
+`;
 
 interface Props {
   isShowSchoolAndClassList?: boolean;
@@ -169,7 +175,7 @@ const LeftBar: React.FC<Props> = ({ isShowSchoolAndClassList = true }) => {
         </ImageWrapper>
         <ProfileRow data={currentUser} onClick={() => setIsShowProfileModal(true)} />
         {isShowSchoolAndClassList && (
-          <>
+          <ClassAndSchoolSection>
             <CategorizedSection>
               <ClassListLabel>
                 <ClassListText>{t('common.schools')}</ClassListText>
@@ -224,7 +230,7 @@ const LeftBar: React.FC<Props> = ({ isShowSchoolAndClassList = true }) => {
                 </ClassListContainer>
               )}
             </CategorizedSection>
-          </>
+          </ClassAndSchoolSection>
         )}
       </ContentWrapper>
       <BottomMenu>
