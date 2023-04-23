@@ -16,7 +16,7 @@ import { useAdminSlice } from 'store/slices/admin';
 import { pxToRem } from 'styles/theme/utils';
 import tw, { styled } from 'twin.macro';
 import { Parent, ParentPayload } from 'types/Parent';
-import { ConstantRoles } from 'utils/constants';
+import { ConstantRoles, GENDERS } from 'utils/constants';
 interface Props {
   value: Parent | null;
   type: 'edit' | 'add';
@@ -104,6 +104,7 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
               token: accessToken,
               parentId: value?._id,
               ...payload,
+              ...(payload.password && { password: payload.password }),
             })
           );
         } else {
@@ -196,13 +197,24 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
               {errors.fullName && <Required>{errors.fullName.message}</Required>}
             </InputContainer>
             <InputContainer>
+              <InputLabel>{t('form.phoneNumber')}</InputLabel>
+              <StyledInput {...register('mobilePhone')} />
+              {errors.mobilePhone && <Required>{errors.mobilePhone.message}</Required>}
+            </InputContainer>
+            <InputContainer>
               <InputLabel>{t('form.age')}</InputLabel>
               <StyledInput {...register('age', { valueAsNumber: true })} />
               {errors.age && <Required>{errors.age.message}</Required>}
             </InputContainer>
             <InputContainer>
               <InputLabel>{t('form.gender')}</InputLabel>
-              <StyledInput {...register('gender')} />
+              <PSelection {...register('gender')}>
+                {GENDERS.map((gender) => (
+                  <option value={gender} key={gender}>
+                    {t(`common.${gender}`)}
+                  </option>
+                ))}
+              </PSelection>
               {errors.gender && <Required>{errors.gender.message}</Required>}
             </InputContainer>
             <InputContainer>
@@ -211,14 +223,19 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
               {errors.address && <Required>{errors.address.message}</Required>}
             </InputContainer>
             <InputContainer>
-              <InputLabel>{t('form.isActive')}</InputLabel>
-              <PCheckbox {...register('isActive')} />
-              {errors.isActive && <Required>{errors.isActive.message}</Required>}
+              <InputLabel>{t('form.password')}</InputLabel>
+              <StyledInput {...register('password')} type='password' />
+              {errors.password && <Required>{errors.password.message}</Required>}
             </InputContainer>
             <InputContainer>
               <InputLabel>{t('form.job')}</InputLabel>
               <StyledInput {...register('job')} />
               {errors.job && <Required>{errors.job.message}</Required>}
+            </InputContainer>
+            <InputContainer>
+              <InputLabel>{t('form.isActive')}</InputLabel>
+              <PCheckbox {...register('isActive')} />
+              {errors.isActive && <Required>{errors.isActive.message}</Required>}
             </InputContainer>
             <StyledButton type='submit' variant={'primary'} disabled={!isDirty}>
               {type === 'add' ? t('form.add') : t('form.save')}

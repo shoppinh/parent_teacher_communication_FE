@@ -35,7 +35,7 @@ export function mapClassList(data: any) {
       return (
         index ===
         data.findIndex((obj) => {
-          return JSON.stringify(obj) === JSON.stringify(item);
+          return obj.class._id === item.class._id;
         })
       );
     })

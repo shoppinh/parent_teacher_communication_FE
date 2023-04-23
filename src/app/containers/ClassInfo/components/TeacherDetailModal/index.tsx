@@ -6,6 +6,8 @@ import { TeacherAssignmentForClass } from '../../../../../types/TeacherAssignmen
 import { NewConversationPayload } from '../../../../../types/Conversation';
 import { mapStringRoleToNumber } from '../../../../../utils/helpers';
 import { useTranslation } from 'react-i18next';
+import { getUser } from 'store/selectors/session';
+import { useSelector } from 'react-redux';
 
 interface Props {
   data: TeacherAssignmentForClass | null;
@@ -73,24 +75,27 @@ const SectionContainer = styled.div`
 `;
 const TeacherDetailModal: React.FC<Props> = ({ data, onSendMessageToTeacher }) => {
   const { t } = useTranslation();
+  const currentUser = useSelector(getUser);
   return (
     <Container>
       <AvatarSection>
         <SectionContainer>
-          <AvatarBadge />
+          <AvatarBadge src={data?.teacher?.userId?.avatar} />
           <ActionGroup>
-            <ActionItem
-              onClick={() => {
-                onSendMessageToTeacher &&
-                  onSendMessageToTeacher({
-                    _id: data?.teacher?.userId?._id || '',
-                    mobilePhone: data?.teacher?.userId?.mobilePhone || '',
-                    roleId: mapStringRoleToNumber(data?.teacher?.userId?.roleId).toString(),
-                  });
-              }}
-            >
-              {t('common.messageToTeacher')}
-            </ActionItem>
+            {currentUser?._id !== data?.teacher?.userId?._id && (
+              <ActionItem
+                onClick={() => {
+                  onSendMessageToTeacher &&
+                    onSendMessageToTeacher({
+                      _id: data?.teacher?.userId?._id || '',
+                      mobilePhone: data?.teacher?.userId?.mobilePhone || '',
+                      roleId: mapStringRoleToNumber(data?.teacher?.userId?.roleId).toString(),
+                    });
+                }}
+              >
+                {t('common.messageToTeacher')}
+              </ActionItem>
+            )}
           </ActionGroup>
         </SectionContainer>
       </AvatarSection>

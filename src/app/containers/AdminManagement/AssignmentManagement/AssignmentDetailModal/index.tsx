@@ -5,7 +5,7 @@ import { PIcon } from 'app/components/PIcon';
 import PInput from 'app/components/PInput';
 import { PLoadingIndicator } from 'app/components/PLoadingIndicatior';
 import { PSelection } from 'app/components/PSelection';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -100,6 +100,14 @@ const AssignmentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, t
   const subjectList = useSelector(getSubjectList);
   const teacherList = useSelector(getTeacherList);
   const adminError = useSelector(getAdminError);
+  const renderedClassListOptions = useMemo(() => {
+    if (classList?.data) {
+      return classList.data.filter(
+        (classItem) => !classItem.isSchoolClass && !classItem.isPrivateClass
+      );
+    }
+    return [];
+  }, []);
   const handleSubmitClass = useCallback(
     (payload: TeacherAssignmentPayload) => {
       if (accessToken) {
@@ -181,7 +189,7 @@ const AssignmentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, t
                 <InputLabel>{t('form.class')}</InputLabel>
                 <PSelection {...register('classId')}>
                   <option value=''>{t('input.pleaseSelect', { label: t('form.class') })}</option>
-                  {classList?.data?.map((classItem) => (
+                  {renderedClassListOptions?.map((classItem) => (
                     <option value={classItem._id} key={classItem._id}>
                       {classItem?.name}
                     </option>

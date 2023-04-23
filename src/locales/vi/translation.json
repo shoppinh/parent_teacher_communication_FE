@@ -111,7 +111,8 @@
     "degree": "Trình độ",
     "class": "Lớp",
     "teacher": "Giáo viên",
-    "isClassAdmin": "Là giáo viên chủ nhiệm"
+    "isClassAdmin": "Là giáo viên chủ nhiệm",
+    "phoneNumber":"Số điện thoại"
   },
   "register": {
     "title": "Tạo tài khoản",
@@ -368,7 +369,8 @@
     "isPrivateClass": "Lớp riêng",
     "isActive": "Đang hoạt động",
     "subjectId": "ID môn học",
-    "isClassAdmin": "Là chủ nhiệm"
+    "isClassAdmin": "Là chủ nhiệm",
+    "job":"Nghề nghiệp"
   },
   "role": {
     "SUPER_USER": "Ban giám hiệu",
