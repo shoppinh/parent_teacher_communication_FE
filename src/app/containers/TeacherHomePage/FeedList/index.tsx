@@ -8,6 +8,7 @@ import { styled } from 'twin.macro';
 import PostItem from './PostItem';
 import { queryString } from '../../../../utils/constants';
 import { useQuery } from '../../../../utils/hook';
+import React from 'react';
 
 const Container = styled.div``;
 
@@ -54,4 +55,4 @@ const FeedList: React.FC<Props> = ({ isRefresh, setIsRefreshFeedList, triggerRef
   );
 };
 
-export default FeedList;
+export default React.memo(FeedList);

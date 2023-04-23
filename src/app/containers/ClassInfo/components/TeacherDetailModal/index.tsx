@@ -134,4 +134,4 @@ const TeacherDetailModal: React.FC<Props> = ({ data, onSendMessageToTeacher }) =
   );
 };
 
-export default TeacherDetailModal;
+export default React.memo(TeacherDetailModal);

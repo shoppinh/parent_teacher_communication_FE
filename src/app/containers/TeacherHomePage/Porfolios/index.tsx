@@ -9,7 +9,7 @@ import {
 } from '../../../../store/selectors/student';
 import { PLoadingIndicator } from '../../../components/PLoadingIndicatior';
 import { PModal } from '../../../components/PModal';
-import ChildrenDetailModal from '../../Porfolios/ChildrenDetailModal';
+import ChildrenDetailModal from '../../Portfolios/ChildrenDetailModal';
 import { Student } from '../../../../types/Student';
 import AvatarPlaceholder from '../../../../assets/images/person-placeholder.png';
 import { PButton } from '../../../components/PButton';
@@ -17,7 +17,7 @@ import { useStudentSlice } from '../../../../store/slices/student';
 import { getAccessToken } from '../../../../store/selectors/session';
 import { useQuery } from '../../../../utils/hook';
 import { queryString } from '../../../../utils/constants';
-import AssignStudentModal from '../../Porfolios/AssignStudentModal';
+import AssignStudentModal from '../../Portfolios/AssignStudentModal';
 import { useTranslation } from 'react-i18next';
 import { getTeacherAssignmentDetail } from 'store/selectors/teacher';
 
@@ -160,4 +160,4 @@ const Portfolios: React.FC = () => {
   );
 };
 
-export default Portfolios;
+export default React.memo(Portfolios);

@@ -239,4 +239,4 @@ const AssignMarkModal: React.FC<Props> = ({
   );
 };
 
-export default AssignMarkModal;
+export default React.memo(AssignMarkModal);

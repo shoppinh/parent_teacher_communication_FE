@@ -119,4 +119,4 @@ const LeaveList = () => {
   );
 };
 
-export default LeaveList;
+export default React.memo(LeaveList);

@@ -217,4 +217,4 @@ const EventModal: React.FC<Props> = ({ onClose, dateInfo }) => {
   );
 };
 
-export default EventModal;
+export default React.memo(EventModal);

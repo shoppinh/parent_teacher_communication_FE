@@ -60,10 +60,3 @@ export interface UpdateParentQuery extends Partial<ParentPayload> {
   token: string;
   parentId: string;
 }
-
-export interface ParentListQuery {
-  token: string;
-  skip?: number;
-  limit?: number;
-  search?: string;
-}

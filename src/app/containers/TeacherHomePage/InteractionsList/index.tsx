@@ -311,4 +311,4 @@ const InteractionList: React.FC<Props> = ({
   );
 };
 
-export default InteractionList;
+export default React.memo(InteractionList);

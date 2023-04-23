@@ -18,4 +18,24 @@ export const getParentList = createSelector(
   (state) => state.data.parent?.parentList
 );
 
+export const getTeacherList = createSelector(
+  [selectDomain],
+  (state) => state.data.teacher?.teacherList
+);
+
+export const getStudentList = createSelector(
+  [selectDomain],
+  (state) => state.data.student?.studentList
+);
+
+export const getSubjectList = createSelector(
+  [selectDomain],
+  (state) => state.data.subject?.subjectList
+);
+
+export const getTeacherAssignmentList = createSelector(
+  [selectDomain],
+  (state) => state.data.teacherAssignment?.teacherAssignmentList
+);
+
 export const getAdminActionLoading = createSelector([selectDomain], (state) => state.actionLoading);

@@ -41,6 +41,7 @@ const LeftNavigationButton = styled(PButton)`
   margin-right: ${pxToRem(6)}rem;
   font-size: ${pxToRem(14)}rem;
   font-weight: 400;
+  ${(p) => p.disabled && `opacity: 0.5;`}
 `;
 
 const RightNavigationButton = styled(PButton)`
@@ -50,6 +51,7 @@ const RightNavigationButton = styled(PButton)`
   margin-left: ${pxToRem(6)}rem;
   font-size: ${pxToRem(14)}rem;
   font-weight: 400;
+  ${(p) => p.disabled && `opacity: 0.5;`}
 `;
 
 const DTableFooter: React.FC<DTableFooterProps> = ({

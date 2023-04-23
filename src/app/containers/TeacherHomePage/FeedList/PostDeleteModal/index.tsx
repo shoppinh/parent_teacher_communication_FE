@@ -91,4 +91,4 @@ const PostDeleteModal: React.FC<Props> = ({
   );
 };
 
-export default PostDeleteModal;
+export default React.memo(PostDeleteModal);

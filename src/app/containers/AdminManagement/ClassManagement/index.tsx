@@ -146,6 +146,14 @@ const ClassManagement = () => {
     }
   }, [handleFetchClassListData, isRefresh]);
   // End - Table logic section
+
+  // If class list is empty, fetch it
+  const classList = useSelector(getClassList);
+  useEffect(() => {
+    if (accessToken && !classList) {
+      dispatch(classActions.loadClassList({ token: accessToken, role: ConstantRoles.SUPER_USER }));
+    }
+  }, [accessToken, dispatch, classList, classActions]);
   return (
     <Container>
       <Section>
@@ -197,4 +205,4 @@ const ClassManagement = () => {
   );
 };
 
-export default ClassManagement;
+export default React.memo(ClassManagement);

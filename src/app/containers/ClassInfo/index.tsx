@@ -107,4 +107,4 @@ const ClassInfo = () => {
   );
 };
 
-export default ClassInfo;
+export default React.memo(ClassInfo);

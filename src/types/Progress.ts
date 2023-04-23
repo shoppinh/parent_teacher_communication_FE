@@ -1,4 +1,4 @@
-import { Subject } from './subject';
+import { Subject } from './Subject';
 import { Student } from './Student';
 import { Class } from './Class';
 

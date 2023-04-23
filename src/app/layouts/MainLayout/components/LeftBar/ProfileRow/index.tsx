@@ -50,4 +50,4 @@ const ProfileRow: React.FC<Props> = ({ data, onClick }) => {
   );
 };
 
-export default ProfileRow;
+export default React.memo(ProfileRow);

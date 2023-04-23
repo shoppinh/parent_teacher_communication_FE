@@ -28,6 +28,8 @@ import { pxToRem } from '../../../styles/theme/utils';
 import { PButton } from '../../components/PButton';
 import FeedList from '../../containers/TeacherHomePage/FeedList';
 import ClassInfo from 'app/containers/ClassInfo';
+import { getSchoolInfo } from 'store/selectors/config';
+import { useNavigate } from 'react-router-dom';
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -126,6 +128,7 @@ const AdminHome = () => {
   const currentClass = useSelector(getCurrentClass);
   const { actions: classActions } = useClassSlice();
   const classId = useQuery().get(queryString.classId);
+  const schoolInfo = useSelector(getSchoolInfo);
   const currentAccessToken = useSelector(getAccessToken);
   const dispatch = useDispatch();
   const handleClosePostModal = () => {
@@ -171,6 +174,7 @@ const AdminHome = () => {
     setAnchorEl(null);
     buttonRef.current!.focus();
   };
+  const navigate = useNavigate();
 
   const createHandleMenuClick = (menuItem: string) => {
     switch (menuItem) {
@@ -201,6 +205,15 @@ const AdminHome = () => {
       );
     }
   }, [classActions, classId, currentAccessToken, dispatch]);
+  // Redirect to school class if user is not in any class
+  useEffect(() => {
+    if (!classId) {
+      navigate({
+        pathname: location.pathname,
+        search: `?${queryString.classId}=${schoolInfo?._id}`,
+      });
+    }
+  }, [classId, navigate, schoolInfo?._id]);
   return (
     <MainLayout title={t('admin.home.title')} headerTitle={t('admin.home.title')}>
       <StyledTabs defaultValue={0}>

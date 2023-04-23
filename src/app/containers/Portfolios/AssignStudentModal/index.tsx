@@ -148,4 +148,4 @@ const AssignStudentModal: React.FC<Props> = ({ onClose, handleRefetchStudentList
   );
 };
 
-export default AssignStudentModal;
+export default React.memo(AssignStudentModal);

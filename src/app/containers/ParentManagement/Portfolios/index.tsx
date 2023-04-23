@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getStudentList, getStudentLoading } from '../../../../store/selectors/student';
 import { PButton } from '../../../components/PButton';
 import { PModal } from '../../../components/PModal';
-import ChildrenDetailModal from '../../Porfolios/ChildrenDetailModal';
+import ChildrenDetailModal from '../../Portfolios/ChildrenDetailModal';
 import { Student } from '../../../../types/Student';
 import { PLoadingIndicator } from '../../../components/PLoadingIndicatior';
 import AvatarPlaceholder from '../../../../assets/images/person-placeholder.png';
@@ -132,4 +132,4 @@ const Portfolios: React.FC = () => {
   );
 };
 
-export default Portfolios;
+export default React.memo(Portfolios);

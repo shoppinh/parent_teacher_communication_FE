@@ -87,7 +87,11 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
     handleSubmit,
     reset,
     formState: { errors, isDirty },
-  } = useForm<ParentPayload>();
+  } = useForm<ParentPayload>({
+    defaultValues: {
+      isActive: true,
+    },
+  });
   const loading = useSelector(getAdminActionLoading);
   const fetchingDataLoading = useSelector(getAdminLoading);
   const adminError = useSelector(getAdminError);
@@ -107,6 +111,7 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
             adminActions.createParent({
               token: accessToken,
               ...payload,
+              roleKey: ConstantRoles.PARENT,
             })
           );
         }
@@ -118,8 +123,8 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
   useEffect(() => {
     if (isFormSent && !loading && !adminError) {
       if (type === 'add') {
-        toast(t('admin.management.classManagement.addSuccess'));
-      } else toast(t('admin.management.classManagement.editSuccess'));
+        toast(t('admin.management.parentManagement.addSuccess'));
+      } else toast(t('admin.management.parentManagement.editSuccess'));
       triggerRefresh();
       handleClose();
       setIsFormSent(false);
@@ -156,8 +161,8 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
           <ActionGroup>
             <ModalTitle>
               {type === 'add'
-                ? t('admin.management.classManagement.addNewClass')
-                : t('admin.management.classManagement.editClass')}
+                ? t('admin.management.parentManagement.addNewParent')
+                : t('admin.management.parentManagement.editParent')}
             </ModalTitle>
             <PButton onClick={() => handleClose()}>
               <StyledIcon className='partei-cross' />
@@ -196,20 +201,6 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
               {errors.age && <Required>{errors.age.message}</Required>}
             </InputContainer>
             <InputContainer>
-              <InputLabel>{t('form.role')}</InputLabel>
-              <PSelection {...register('roleKey')}>
-                {Object.values(ConstantRoles)?.map((role) => {
-                  return (
-                    <option key={role} value={role}>
-                      {role}
-                    </option>
-                  );
-                })}
-              </PSelection>
-              {errors.roleKey && <Required>{errors.roleKey.message}</Required>}
-
-            </InputContainer>
-            <InputContainer>
               <InputLabel>{t('form.gender')}</InputLabel>
               <StyledInput {...register('gender')} />
               {errors.gender && <Required>{errors.gender.message}</Required>}
@@ -240,4 +231,4 @@ const ParentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, type,
   );
 };
 
-export default ParentDetailModal;
+export default React.memo(ParentDetailModal);

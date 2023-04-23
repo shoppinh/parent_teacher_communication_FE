@@ -126,10 +126,7 @@ export const APIs = {
       getLeaveFormDetail: '/api/student/leave-form/{leaveFormId}', //Parent and teacher use this
       getLeaveFormListByStudent: '/api/student/leave-form-list-by-student/{studentId}', // Parent uses this
     },
-    updateStudent: '/api/student/{studentId}', // Parent update their student/parent
-    deleteStudent: '/api/student/{studentId}', // Parent delete their student/children
     getStudentDetail: '/api/student/{studentId}', // Teacher and parent can access
-    addStudent: '/api/student/', // Parent uses this to add new child
     getAllStudent: '/api/student/list', // Parent uses this to get all child
     getAllStudentByParent: '/api/student/list-by-parent/{parentId}', // Teacher uses this
     getAllStudentByClass: '/api/student/list-by-class/{classId}', // Parent and teacher  uses this

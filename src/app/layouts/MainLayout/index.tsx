@@ -1,19 +1,20 @@
 import React, { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSystemSettings } from 'store/selectors/config';
+import { useConfigSlice } from 'store/slices/config';
 import tw, { styled } from 'twin.macro';
+import { media } from '../../../styles';
 import { StyleConstants } from '../../../styles/constants/style';
+import { pxToRem } from '../../../styles/theme/utils';
+import { mapStringRoleToNumber } from '../../../utils/helpers';
+import { useConversation } from '../../../utils/hook/useConversation';
 import { PDrawer } from '../../components/PDrawer';
+import { PModal } from '../../components/PModal';
+import { Conversation } from '../../pages/Conversation';
+import BaseLayout from '../BaseLayout';
 import Header from './components/Header';
 import LeftBar from './components/LeftBar';
 import RightBar from './components/RightBar';
-import { media } from '../../../styles';
-import { pxToRem } from '../../../styles/theme/utils';
-import BaseLayout from '../BaseLayout';
-import { useDispatch } from 'react-redux';
-import { Conversation } from '../../pages/Conversation';
-import { mapStringRoleToNumber } from '../../../utils/helpers';
-import { PModal } from '../../components/PModal';
-import { useConversation } from '../../../utils/hook/useConversation';
-import { useSessionSlice } from '../../../store/slices/session';
 
 interface Props {
   children?: React.ReactNode;
@@ -81,9 +82,6 @@ const MainLayout: React.FC<Props> = ({
     currentRoomId,
   } = useConversation();
 
-  const { actions: sessionActions } = useSessionSlice();
-  const dispatch = useDispatch();
-
   const onLeftBarClick = useCallback(() => {
     setLeftBarOpen(!leftBarOpen);
   }, [leftBarOpen]);
@@ -91,12 +89,14 @@ const MainLayout: React.FC<Props> = ({
     setRightBarOpen(!rightBarOpen);
   }, [rightBarOpen]);
 
+  const { actions: configActions } = useConfigSlice();
+  const systemSettings = useSelector(getSystemSettings);
+  const dispatch = useDispatch();
   useEffect(() => {
-    if (currentAccessToken) {
-      dispatch(sessionActions.doGetUserProfile({ token: currentAccessToken }));
+    if (!systemSettings) {
+      dispatch(configActions.loadSystemSetting());
     }
-  }, [currentAccessToken, dispatch, sessionActions]);
-
+  }, [configActions, dispatch, systemSettings]);
   return (
     <BaseLayout title={title}>
       <Container>
@@ -161,4 +161,4 @@ const MainLayout: React.FC<Props> = ({
   );
 };
 
-export default MainLayout;
+export default React.memo(MainLayout);

@@ -9,6 +9,7 @@ export const getPhone = createSelector([selectDomain], (state) => state.data.aut
 
 export const getUser = createSelector([selectDomain], (state) => state.data.auth?.user?.data);
 
+export const getUserProfile = createSelector([selectDomain], (state) => state.data?.profile);
 export const getAuthLoading = createSelector([selectDomain], (state) => state.loading);
 
 export const getAccessToken = createSelector(

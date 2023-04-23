@@ -1,4 +1,3 @@
-import { ConstantRoles } from 'utils/constants';
 import { TeacherAssignment } from '../TeacherAssignment';
 import { User } from '../User';
 
@@ -45,8 +44,9 @@ export interface TeacherPayload {
   username: string;
   firstName: string;
   lastName: string;
+  fullName: string;
   password: string;
-  roleKey: ConstantRoles;
+  roleKey: string;
   gender: string;
   address: string;
   degree: string;

@@ -1,4 +1,6 @@
 import { call } from 'redux-saga/effects';
+import { CreateTeacherQuery, TeacherDetailQuery, UpdateTeacherQuery } from 'types/Admin/Teacher';
+import { ListWithPaginationQuery } from 'types/Common';
 import { InvitationQuery, LanguageQuery } from 'types/Config';
 import {
   ConversationDetailQuery,
@@ -7,6 +9,7 @@ import {
   PushNotificationQuery,
 } from 'types/Conversation';
 import { AddEventQuery, EventDetailQuery, EventListQuery } from 'types/Event';
+import { CreateParentQuery, ParentDetailQuery, UpdateParentQuery } from 'types/Parent';
 import {
   PostDetailTokenQuery,
   PostListByClassQuery,
@@ -48,10 +51,13 @@ import {
 } from '../../types/Student';
 import {
   AssignOrRemoveStudentQuery,
+  CreateTeacherAssignmentQuery,
+  TeacherAssignmentDetailQuery,
   TeacherAssignmentDetailTokenQuery,
+  UpdateTeacherAssignmentQuery,
 } from '../../types/TeacherAssignment';
 import * as api from './index';
-import { TeacherDetailQuery, TeacherListQuery } from 'types/Admin/Teacher';
+import { CreateSubjectQuery, SubjectDetailQuery, UpdateSubjectQuery } from 'types/Subject';
 
 export function* apiLogin(query: AuthQuery) {
   return yield call(api.login, query);
@@ -143,10 +149,45 @@ export function* apiFetchTeacherDetail(query: TeacherDetailQuery) {
   return yield call(api.fetchTeacherDetail, query);
 }
 
-export function* apiGetParentList(query: TeacherListQuery) {
+export function* apiGetParentList(query: ListWithPaginationQuery) {
   return yield call(api.getParentList, query);
 }
 
+export function* apiCreateParent(query: CreateParentQuery) {
+  return yield call(api.createParent, query);
+}
+
+export function* apiUpdateParent(query: UpdateParentQuery) {
+  return yield call(api.updateParent, query);
+}
+
+export function* apiRemoveParent(query: ParentDetailQuery) {
+  return yield call(api.removeParent, query);
+}
+
+export function* apiGetTeacherList(query: ListWithPaginationQuery) {
+  return yield call(api.getTeacherList, query);
+}
+
+export function* apiCreateTeacher(query: CreateTeacherQuery) {
+  return yield call(api.createTeacher, query);
+}
+
+export function* apiUpdateTeacher(query: UpdateTeacherQuery) {
+  return yield call(api.updateTeacher, query);
+}
+
+export function* apiRemoveTeacher(query: TeacherDetailQuery) {
+  return yield call(api.removeTeacher, query);
+}
+
+export function* apiRemoveStudent(query: StudentDetailTokenQuery) {
+  return yield call(api.removeStudent, query);
+}
+
+export function* apiGetStudentList(query: ListWithPaginationQuery) {
+  return yield call(api.getStudentList, query);
+}
 //Post
 export function* apiGetPostList(query: PostListTokenQuery) {
   return yield call(api.getPostList, query);
@@ -176,6 +217,37 @@ export function* apiAddPostComment(query: AddCommentTokenRequest) {
   return yield call(api.addPostComment, query);
 }
 
+export function* apiGetTeacherAssignmentList(query: ListWithPaginationQuery) {
+  return yield call(api.getTeacherAssignmentList, query);
+}
+
+export function* apiCreateTeacherAssignment(query: CreateTeacherAssignmentQuery) {
+  return yield call(api.createTeacherAssignment, query);
+}
+
+export function* apiUpdateTeacherAssignment(query: UpdateTeacherAssignmentQuery) {
+  return yield call(api.updateTeacherAssignment, query);
+}
+
+export function* apiRemoveTeacherAssignment(query: TeacherAssignmentDetailQuery) {
+  return yield call(api.removeTeacherAssignment, query);
+}
+
+export function* apiGetSubjectList(query: ListWithPaginationQuery) {
+  return yield call(api.getSubjectList, query);
+}
+
+export function* apiCreateSubject(query: CreateSubjectQuery) {
+  return yield call(api.createSubject, query);
+}
+
+export function* apiUpdateSubject(query: UpdateSubjectQuery) {
+  return yield call(api.updateSubject, query);
+}
+
+export function* apiRemoveSubject(query: SubjectDetailQuery) {
+  return yield call(api.removeSubject, query);
+}
 // Class
 
 export function* apiGetClassListByRole(query: ClassListTokenQuery) {

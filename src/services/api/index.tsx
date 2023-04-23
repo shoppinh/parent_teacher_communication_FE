@@ -1,50 +1,67 @@
-export { login, logout, getUserProfile, refreshToken, updateUserInfo } from './authentication';
-export { register, registerDeviceToken } from './register';
-export { getPlatformSetting, updateLanguage, getSystemSettings, sendInvitation } from './config';
 export {
-  getClassListByRole,
-  getClassDetail,
-  updateLeaveFormStatus,
+  createParent,
+  fetchTeacherDetail,
+  getParentList,
+  removeParent,
+  updateParent,
+  getTeacherList,
+  createTeacher,
+  updateTeacher,
+  removeTeacher,
+  removeStudent,
+  getStudentList,
+  getTeacherAssignmentList,
+  createTeacherAssignment,
+  updateTeacherAssignment,
+  removeTeacherAssignment,
+  getSubjectList,
+  createSubject,
+  updateSubject,
+  removeSubject,
+} from './admin';
+export { getUserProfile, login, logout, refreshToken, updateUserInfo } from './authentication';
+export {
   addClass,
-  updateClass,
+  getClassDetail,
+  getClassListByRole,
   removeClass,
+  updateClass,
+  updateLeaveFormStatus,
 } from './class';
+export { getPlatformSetting, getSystemSettings, sendInvitation, updateLanguage } from './config';
 export {
   getConversationDetail,
+  getConversationListOfUser,
   getCountUnreadRoom,
   sendPushNotification,
-  getConversationListOfUser,
 } from './conversation';
-export { fetchTeacherDetail, getParentList } from './admin';
-
-export {
-  getPostList,
-  getPostListByClass,
-  addPost,
-  getPostDetail,
-  updatePost,
-  deletePost,
-  addPostComment,
-} from './post';
-
-export {
-  getProgressListByClass,
-  getProgressDetail,
-  removeProgress,
-  updateProgress,
-  addProgress,
-} from './progress';
-
-export {
-  getStudentListByClass,
-  getStudentListByParent,
-  getProgressListByStudent,
-  updateStudent,
-  addStudent,
-  removeStudentFromParent,
-  getUnassignedStudentList,
-} from './student';
-export { getTeacherAssignmentByClassAndTeacher } from './teacherAssignment';
-export { assignStudent, removeStudentFromClass } from './teacher';
 export { createEvent, getEventDetail, getEventList, removeEvent } from './event';
 export { getStudentLeaveFormList, submitLeaveForm, updateLeaveForm } from './parent';
+export {
+  addPost,
+  addPostComment,
+  deletePost,
+  getPostDetail,
+  getPostList,
+  getPostListByClass,
+  updatePost,
+} from './post';
+export {
+  addProgress,
+  getProgressDetail,
+  getProgressListByClass,
+  removeProgress,
+  updateProgress,
+} from './progress';
+export { register, registerDeviceToken } from './register';
+export {
+  addStudent,
+  getProgressListByStudent,
+  getStudentListByClass,
+  getStudentListByParent,
+  getUnassignedStudentList,
+  removeStudentFromParent,
+  updateStudent,
+} from './student';
+export { assignStudent, removeStudentFromClass } from './teacher';
+export { getTeacherAssignmentByClassAndTeacher } from './teacherAssignment';
