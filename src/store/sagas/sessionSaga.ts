@@ -5,6 +5,7 @@ import {
   apiLogin,
   apiLogout,
   apiRefreshToken,
+  apiRegister,
   apiRegisterDeviceToken,
   apiUpdateUserInfo,
 } from 'services/api/apiHelper';
@@ -13,6 +14,7 @@ import { AuthPayLoad, UpdateUserQuery } from 'types/Session';
 import { User } from 'types/User';
 import { _FORCE_REFRESH_KEY, PREVIOUS_STORAGE_KEY } from 'utils/constants';
 import i18next from 'i18next';
+import { ParentPayload } from 'types/Parent';
 
 interface LoginDataRespose {
   accessToken: string;
@@ -198,6 +200,19 @@ export function* updateUserInfo({ payload }: { type: string; payload: UpdateUser
     const response = yield call(apiUpdateUserInfo, payload);
     if (response.data && response.data.status) {
       yield put(actions.updatedUserInfo({ user: parseUserData(response.data.data) }));
+    } else {
+      yield put(actions.Error(response.data.error));
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* doRegister({ payload }: { type: string; payload: ParentPayload }) {
+  try {
+    const response = yield call(apiRegister, payload);
+    if (response.data && response.data.status) {
+      yield put(actions.doRegisterSuccess());
     } else {
       yield put(actions.Error(response.data.error));
     }

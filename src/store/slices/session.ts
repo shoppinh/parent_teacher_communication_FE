@@ -4,6 +4,7 @@ import { loadState } from 'store/localStorage';
 import { sessionSaga } from 'store/sagas/sessionSaga';
 // import { sessionSaga } from 'store/sagas';
 import { ConversationRoomQuery, ConversationUnreadPayload } from 'types/Conversation';
+import { ParentPayload } from 'types/Parent';
 import {
   AuthPayLoad,
   AuthQuery,
@@ -62,6 +63,14 @@ const slice = createSlice({
     doGetUserProfile(state, action: PayloadAction<OnlyTokenQuery>) {
       state.error = null;
       state.loading = true;
+    },
+    doRegister(state, action: PayloadAction<ParentPayload>) {
+      state.error = null;
+      state.loading = true;
+    },
+    doRegisterSuccess(state) {
+      state.error = null;
+      state.loading = false;
     },
     doGetUserProfileSuccess(state, action: PayloadAction<Profile>) {
       state.error = null;

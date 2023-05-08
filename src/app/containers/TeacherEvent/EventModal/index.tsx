@@ -186,6 +186,7 @@ const EventModal: React.FC<Props> = ({ onClose, dateInfo }) => {
             isMulti
             name='colors'
             options={userOptions}
+            placeholder={t('common.pleaseSelectParticipants')}
             onChange={(users) =>
               setValue(
                 'participants',

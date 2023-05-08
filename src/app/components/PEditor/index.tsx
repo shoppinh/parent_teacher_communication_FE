@@ -17,6 +17,7 @@ import { useQuery } from '../../../utils/hook';
 import { ConstantPostType, queryString } from '../../../utils/constants';
 import { getPostUpdateOrAddError, getPostUpdateOrAddLoading } from '../../../store/selectors/post';
 import { toast } from 'react-toastify';
+import { PSelection } from '../PSelection';
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -220,13 +221,20 @@ const PEditor: React.FC<Props> = ({
         </InputContainer>
         <InputContainer>
           <InputLabel>{t('form.type')}</InputLabel>
-          <StyledInput {...register('type')} />
+
+          <PSelection {...register('type')}>
+            {Object.values(ConstantPostType).map((type) => (
+              <option key={type} value={type}>
+                {t(`common.${type}`)}
+              </option>
+            ))}
+          </PSelection>
           {errors.type && <Required>{errors.type.message}</Required>}
         </InputContainer>
         <Editor
           apiKey={process.env.REACT_APP_TINY_MCE_API_KEY}
           onInit={(evt, editor) => (editorRef.current = editor)}
-          initialValue={postData?.content || '<p>This is the initial content of the editor.</p>'}
+          initialValue={postData?.content || t('post.initialContent') || ''}
           init={{
             height: 600,
             menubar: true,
@@ -281,7 +289,7 @@ const PEditor: React.FC<Props> = ({
           // value={postData && postData.content}
         />
         <StyledButton type='submit' variant={'primary'}>
-          Save
+          {t('form.save')}
         </StyledButton>
       </FormContainer>
     </Wrapper>

@@ -35,9 +35,10 @@ interface Props {
 const Wrapper = styled.div`
   padding: 20px;
   background-color: ${(p) => p.theme.background};
-  height: 100vh;
+  height: 90vh;
   overflow-y: auto;
   width: 50vw;
+  border-radius: 10px;
 `;
 
 const StyledButton = styled(PButton)`
@@ -164,8 +165,8 @@ const AssignmentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, t
           <ActionGroup>
             <ModalTitle>
               {type === 'add'
-                ? t('admin.management.parentManagement.addNewParent')
-                : t('admin.management.parentManagement.editParent')}
+                ? t('admin.management.teacherAssignmentManagement.addNewTeacherAssignment')
+                : t('admin.management.teacherAssignmentManagement.editTeacherAssignment')}
             </ModalTitle>
             <PButton onClick={() => handleClose()}>
               <StyledIcon className='partei-cross' />

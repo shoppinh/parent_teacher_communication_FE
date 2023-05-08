@@ -110,7 +110,7 @@ const TeacherDetailModal: React.FC<Props> = ({ data, onSendMessageToTeacher }) =
         </InfoSection>
         <InfoSection>
           <InfoLabel>{t('table.gender')}</InfoLabel>
-          <InfoText>{data?.teacher?.gender}</InfoText>
+          <InfoText>{t(`common.${data?.teacher?.gender}`)}</InfoText>
         </InfoSection>
         <InfoSection>
           <InfoLabel>{t('table.address')}</InfoLabel>

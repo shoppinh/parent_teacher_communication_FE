@@ -36,6 +36,7 @@ import Portfolios from '../../containers/TeacherHomePage/Porfolios';
 import { getSchoolInfo } from 'store/selectors/config';
 import { useNavigate } from 'react-router-dom';
 import LeaveList from 'app/containers/TeacherHomePage/LeaveList';
+import { getTeacherAssignmentDetail } from 'store/selectors/teacher';
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -143,6 +144,8 @@ const TeacherHomePage: React.FC = () => {
   const schoolInfo = useSelector(getSchoolInfo);
   const currentClass = useSelector(getCurrentClass);
   const dispatch = useDispatch();
+  const teacherAssignmentDetail = useSelector(getTeacherAssignmentDetail);
+
   const handleFetchStudentList = useCallback(() => {
     if (currentAccessToken && classId) {
       dispatch(
@@ -234,14 +237,17 @@ const TeacherHomePage: React.FC = () => {
     }
   };
 
+  // Fetch student list
   useEffect(() => {
     handleFetchStudentList();
   }, [handleFetchStudentList]);
 
+  // Fetch teacher assignment detail
   useEffect(() => {
     handleFetchTeacherAssignmentDetail();
   }, [handleFetchTeacherAssignmentDetail]);
 
+  // Load class detail info
   useEffect(() => {
     if (classId && currentAccessToken) {
       dispatch(
@@ -252,6 +258,8 @@ const TeacherHomePage: React.FC = () => {
       );
     }
   }, [classActions, classId, currentAccessToken, dispatch]);
+
+  // Add schoolId as default classId params value if classId is not provided
 
   useEffect(() => {
     if (!classId) {
@@ -270,7 +278,7 @@ const TeacherHomePage: React.FC = () => {
             <StyledTab>{t('tab.welcome')}</StyledTab>
             <StyledTab>{t('tab.newsFeed')}</StyledTab>
             <StyledTab>{t('tab.trackingAndAssessment')}</StyledTab>
-            {!currentClass?.classInfo?.isSchoolClass && (
+            {(!currentClass?.classInfo?.isSchoolClass && teacherAssignmentDetail?.isClassAdmin) && (
               <StyledTab>{t('tab.portfolios')}</StyledTab>
             )}
             {!currentClass?.classInfo?.isSchoolClass && <StyledTab>{t('tab.classInfo')}</StyledTab>}

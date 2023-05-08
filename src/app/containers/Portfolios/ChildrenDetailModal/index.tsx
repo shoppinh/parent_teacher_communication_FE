@@ -61,7 +61,7 @@ const Container = styled.div`
   width: 50vw;
   background-color: ${(p) => p.theme.background};
   border-radius: 10px;
-  overflow: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   padding: ${pxToRem(20)}rem;
@@ -235,7 +235,7 @@ const ChildrenDetailModal: React.FC<Props> = ({
             </PSelection>
             {errors.gender && <Required>{errors.gender.message}</Required>}
           </InputContainer>
-          {type === 'student' && (
+          {type === 'student' && currentUser?.roleId === ConstantRoles.SUPER_USER && (
             <InputContainer>
               <InputLabel>{t('form.parentId')}</InputLabel>
               <PSelection {...register('parentId')}>
@@ -267,17 +267,13 @@ const ChildrenDetailModal: React.FC<Props> = ({
                 <StyledButton type='submit' variant='primary' disabled={!isDirty}>
                   {data === null ? t('common.create') : t('common.update')}
                 </StyledButton>
-                {data && (
-                  <StyledButton
-                    type='button'
-                    onClick={handleRemoveStudentFromClass}
-                    variant='danger'
-                  >
-                    {t('common.removeThisStudentFromClass')}
-                  </StyledButton>
-                )}
               </>
             )}
+          {type === 'student' && data && isClassAdmin && (
+            <StyledButton type='button' onClick={handleRemoveStudentFromClass} variant='danger'>
+              {t('common.removeThisStudentFromClass')}
+            </StyledButton>
+          )}
         </ActionGroup>
       </FormContainer>
       <PBackdropLoading isShow={studentLoading} />

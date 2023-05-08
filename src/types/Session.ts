@@ -80,6 +80,9 @@ export interface Profile extends User {
   children?: Student[];
 }
 
-export type UpdateUserQuery = UserPayload & {
+export type UpdateUserQuery = Omit<UserPayload, 'fullname' | 'firstname' | 'lastname'> & {
+  firstName?: string;
+  lastName?: string;
+  fullName?: string;
   token: string;
 };

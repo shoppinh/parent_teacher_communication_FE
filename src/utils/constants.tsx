@@ -24,7 +24,7 @@ export const OTPLength = 6;
 export const OTPTimeOut = 180;
 
 export enum queryString {
-  menuGUID = 'menuGUID',
+  email = 'email',
   roomId = 'roomId',
   classId = 'classId',
   section = 'section',
