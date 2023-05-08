@@ -105,6 +105,10 @@ const SiteMap = {
     link: '/setPassword',
     isProtected: false,
   },
+  inviteUser: {
+    title: 'inviteUser.title',
+    link: '/invite-user',
+  },
   // verifyOTPNumber: {
   //   title: "verifyOTPNumber.title",
   //   link: "/verifyOTPNumber",

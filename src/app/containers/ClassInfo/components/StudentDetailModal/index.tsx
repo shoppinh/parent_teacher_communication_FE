@@ -21,6 +21,7 @@ const Container = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 `;
 const AvatarSection = styled.div`
   display: flex;
@@ -75,24 +76,27 @@ const SectionContainer = styled.div`
 `;
 const StudentDetailModal: React.FC<Props> = ({ data, onSendMessageToParent }) => {
   const { t } = useTranslation();
+  const currentUser = useSelector(getUser);
   return (
     <Container>
       <AvatarSection>
         <SectionContainer>
           <AvatarBadge />
           <ActionGroup>
-            <ActionItem
-              onClick={() =>
-                onSendMessageToParent &&
-                onSendMessageToParent({
-                  _id: data?.parentId?.userId?._id || '',
-                  mobilePhone: data?.parentId?.userId?.mobilePhone || '',
-                  roleId: mapStringRoleToNumber(data?.parentId?.userId?.roleId).toString(),
-                })
-              }
-            >
-              {t('common.messageToParent')}
-            </ActionItem>
+            {data?.parentId?.userId?._id !== currentUser?._id && (
+              <ActionItem
+                onClick={() =>
+                  onSendMessageToParent &&
+                  onSendMessageToParent({
+                    _id: data?.parentId?.userId?._id || '',
+                    mobilePhone: data?.parentId?.userId?.mobilePhone || '',
+                    roleId: mapStringRoleToNumber(data?.parentId?.userId?.roleId).toString(),
+                  })
+                }
+              >
+                {t('common.messageToParent')}
+              </ActionItem>
+            )}
           </ActionGroup>
         </SectionContainer>
       </AvatarSection>
@@ -107,7 +111,7 @@ const StudentDetailModal: React.FC<Props> = ({ data, onSendMessageToParent }) =>
         </InfoSection>
         <InfoSection>
           <InfoLabel>{t('table.studentGender')}</InfoLabel>
-          <InfoText>{data?.gender}</InfoText>
+          <InfoText>{t(`common.${data?.gender}`)}</InfoText>
         </InfoSection>
         <InfoSection>
           <InfoLabel>{t('table.parentName')}</InfoLabel>

@@ -225,6 +225,7 @@ const StudentManagement = () => {
           type='student'
           onClose={() => setIsStudentDetailModalOpen(false)}
           handleRefetchStudentList={handleFetchStudentListData}
+          isClassAdmin={false}
         />
       </PModal>
       <PModal open={isRemoveStudentModalOpen} onClose={() => setIsRemoveStudentModalOpen(false)}>

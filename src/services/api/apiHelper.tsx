@@ -9,7 +9,12 @@ import {
   PushNotificationQuery,
 } from 'types/Conversation';
 import { AddEventQuery, EventDetailQuery, EventListQuery } from 'types/Event';
-import { CreateParentQuery, ParentDetailQuery, UpdateParentQuery } from 'types/Parent';
+import {
+  CreateParentQuery,
+  ParentDetailQuery,
+  ParentPayload,
+  UpdateParentQuery,
+} from 'types/Parent';
 import {
   PostDetailTokenQuery,
   PostListByClassQuery,
@@ -17,7 +22,7 @@ import {
   PostTokenQuery,
   UpdatePostTokenQuery,
 } from 'types/Post';
-import { DeviceTokenQuery, RegisterQuery } from 'types/Register';
+import { DeviceTokenQuery } from 'types/Register';
 import {
   AuthQuery,
   LogoutQuery,
@@ -25,6 +30,7 @@ import {
   RefreshTokenQuery,
   UpdateUserQuery,
 } from 'types/Session';
+import { CreateSubjectQuery, SubjectDetailQuery, UpdateSubjectQuery } from 'types/Subject';
 import {
   ClassDetailTokenQuery,
   ClassListTokenQuery,
@@ -57,7 +63,6 @@ import {
   UpdateTeacherAssignmentQuery,
 } from '../../types/TeacherAssignment';
 import * as api from './index';
-import { CreateSubjectQuery, SubjectDetailQuery, UpdateSubjectQuery } from 'types/Subject';
 
 export function* apiLogin(query: AuthQuery) {
   return yield call(api.login, query);
@@ -69,10 +74,6 @@ export function* apiLogout(query: LogoutQuery) {
 
 export function* apiRefreshToken(query: RefreshTokenQuery) {
   return yield call(api.refreshToken, query);
-}
-
-export function* apiRegister(query: RegisterQuery) {
-  return yield call(api.register, query);
 }
 
 export function* apiSendInvitation(query: InvitationQuery) {
@@ -141,6 +142,10 @@ export function* apiGetSystemSettings() {
 
 export function* apiUpdateUserInfo(query: UpdateUserQuery) {
   return yield call(api.updateUserInfo, query);
+}
+
+export function* apiRegister(query: ParentPayload) {
+  return yield call(api.register, query);
 }
 
 // Admin Helper

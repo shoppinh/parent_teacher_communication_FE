@@ -15,7 +15,7 @@ export const APIs = {
     logout: '/api/auth/logout',
     refreshToken: '/api/auth/refresh-token',
     info: 'api/user/profile/',
-    registerInfo: '/api/user/register/info',
+    registerInfo: '/api/auth/register',
     registerDeviceToken: 'api/auth/device-token',
     platformSetting: '/api/user/platform/setting',
     languageUpdate: 'api/user/language/update',

@@ -108,7 +108,7 @@
     "class": "Class",
     "teacher": "Teacher",
     "isClassAdmin": "Class Admin",
-    "phoneNumber":"Phone Number"
+    "phoneNumber": "Phone Number"
   },
   "logout": {
     "title": "Logout"
@@ -224,7 +224,8 @@
     "comment": "Comment",
     "createSuccess": "Create success",
     "teacherAuthor": "Teacher of {{className}}",
-    "adminAuthor": "Admin"
+    "adminAuthor": "Admin",
+    "initialContent": "This is the initial content of the editor."
   },
   "localizationConfig": {
     "title": "Switch Language",
@@ -288,6 +289,7 @@
     "support": "Support",
     "contactAdmin": "Contact Admin",
     "pleaseSelectChildren": "Please select children",
+    "pleaseSelectParticipants": "Please select participants",
     "schools": "Schools",
     "classes": "Classes",
     "female": "Female",
@@ -311,7 +313,9 @@
     "reject": "Reject",
     "true": "True",
     "false": "False",
-    "unassigned": "Unassigned"
+    "unassigned": "Unassigned",
+    "PUBLIC": "Public",
+    "PRIVATE": "Private"
   },
   "portfolios": {
     "assignStudent": {
@@ -405,5 +409,10 @@
       "title": "Add Tracking & Assessment",
       "addSuccess": "Add Tracking & Assessment success"
     }
+  },
+  "inviteUser": {
+    "title": "Confirm Invite User",
+    "inviteSuccess": "Invite success",
+    "inviteFail": "Invite fail"
   }
 }

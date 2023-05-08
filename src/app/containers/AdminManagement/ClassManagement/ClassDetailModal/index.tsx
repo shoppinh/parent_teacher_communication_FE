@@ -25,9 +25,10 @@ interface Props {
 const Wrapper = styled.div`
   padding: 20px;
   background-color: ${(p) => p.theme.background};
-  height: 100vh;
+  height: 90vh;
   overflow-y: auto;
   width: 50vw;
+  border-radius: 10px;
 `;
 
 const StyledButton = styled(PButton)`

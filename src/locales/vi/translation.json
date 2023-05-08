@@ -112,7 +112,7 @@
     "class": "Lớp",
     "teacher": "Giáo viên",
     "isClassAdmin": "Là giáo viên chủ nhiệm",
-    "phoneNumber":"Số điện thoại"
+    "phoneNumber": "Số điện thoại"
   },
   "register": {
     "title": "Tạo tài khoản",
@@ -179,7 +179,8 @@
     "comment": "Bình luận",
     "createSuccess": "Tạo bài viết thành công",
     "teacherAuthor": "Giáo viên của {{className}}",
-    "adminAuthor": "Ban giám hiệu"
+    "adminAuthor": "Ban giám hiệu",
+    "initialContent": "Đây là nội dung ban đầu."
   },
   "portfolios": {
     "assignStudent": {
@@ -306,6 +307,7 @@
     "support": "Hỗ trợ",
     "contactAdmin": "Liên hệ quản trị viên",
     "pleaseSelectChildren": "Vui lòng chọn học sinh",
+    "pleaseSelectParticipants": "Vui lòng chọn người tham gia",
     "schools": "Trường học",
     "classes": "Lớp học",
     "female": "Nữ",
@@ -329,7 +331,9 @@
     "reject": "Từ chối",
     "true": "Đúng",
     "false": "Sai",
-    "unassigned": "Chưa phân lớp"
+    "unassigned": "Chưa phân lớp",
+    "PUBLIC": "Công khai",
+    "PRIVATE": "Riêng tư"
   },
   "table": {
     "next": "Tiếp theo",
@@ -370,7 +374,7 @@
     "isActive": "Đang hoạt động",
     "subjectId": "ID môn học",
     "isClassAdmin": "Là chủ nhiệm",
-    "job":"Nghề nghiệp"
+    "job": "Nghề nghiệp"
   },
   "role": {
     "SUPER_USER": "Ban giám hiệu",
@@ -408,5 +412,10 @@
       "title": "Thêm theo dõi và đánh giá",
       "addSuccess": "Thêm theo dõi và đánh giá thành công"
     }
+  },
+  "inviteUser": {
+    "title": "Mời thành viên",
+    "inviteSuccess": "Mời thành viên thành công",
+    "inviteFail": "Mời thành viên thất bại"
   }
 }
