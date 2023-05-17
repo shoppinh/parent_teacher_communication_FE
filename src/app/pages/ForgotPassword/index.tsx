@@ -3,7 +3,7 @@ import Logo from 'assets/images/app-logo.png';
 import tw, { styled } from 'twin.macro';
 import { pxToRem } from '../../../styles/theme/utils';
 import { PButton } from '../../components/PButton';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { StyleConstants } from '../../../styles/constants/style';
 import { useNavigate } from 'react-router-dom';
 import SiteMap from '../../../utils/sitemap';
@@ -35,7 +35,6 @@ const StyledButton = styled(PButton)`
 const ContentWrapper = styled.div`
   ${tw`flex flex-col items-center`}
   margin: 0 ${pxToRem(20)}rem;
-
   height: 100%;
 `;
 
@@ -46,40 +45,32 @@ const ActionGroup = styled.div`
   width: 100%;
   margin-top: ${pxToRem(120)}rem;
 `;
+const TextContent = styled.p`
+  font: 400 ${pxToRem(16)}rem / ${StyleConstants.BASE_LINE_HEIGHT}px ${StyleConstants.FONT_FAMILY};
+  margin-top: ${pxToRem(20)}rem;
+`;
+const phoneNumber = '0397273869';
 
-const Landing = () => {
+const ForgotPassword = () => {
   const { t } = useTranslation();
-  const currentUser = useSelector(getUser);
   const navigate = useNavigate();
-  useEffect(() => {
-    if (currentUser) {
-      switch (currentUser.roleId) {
-        case ConstantRoles.PARENT:
-          navigate(SiteMap.parentHome.link);
-          break;
-        case ConstantRoles.TEACHER:
-          navigate(SiteMap.teacherHome.link);
-          break;
-        case ConstantRoles.SUPER_USER:
-          navigate(SiteMap.adminHome.link);
-          break;
-      }
-    }
-  }, [currentUser, navigate]);
+
   return (
     <BaseLayout title={t('landing.title')}>
       <Wrapper>
         <ContentWrapper>
           <StyledImage src={Logo} alt='Logo' />
+          <TextContent>
+            <Trans
+              i18nKey='login.forgotPasswordInstruction'
+              values={{ phoneNumber }}
+              components={[<strong />]}
+              key={phoneNumber}
+            />
+          </TextContent>
           <ActionGroup>
             <StyledButton onClick={() => navigate(SiteMap.login.link)}>
-              {t('login.login')}
-            </StyledButton>
-            <StyledButton onClick={() => navigate(SiteMap.register.link)}>
-              {t('login.register')}
-            </StyledButton>
-            <StyledButton onClick={() => navigate(SiteMap.forgotPassword.link)}>
-              {t('login.forgotPassword')}
+              {t('login.goBackToLogin')}
             </StyledButton>
           </ActionGroup>
         </ContentWrapper>
@@ -88,4 +79,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default ForgotPassword;

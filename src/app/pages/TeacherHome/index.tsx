@@ -37,6 +37,7 @@ import { getSchoolInfo } from 'store/selectors/config';
 import { useNavigate } from 'react-router-dom';
 import LeaveList from 'app/containers/TeacherHomePage/LeaveList';
 import { getTeacherAssignmentDetail } from 'store/selectors/teacher';
+import TeacherWelcome from 'app/containers/Welcome/Teacher';
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -278,7 +279,7 @@ const TeacherHomePage: React.FC = () => {
             <StyledTab>{t('tab.welcome')}</StyledTab>
             <StyledTab>{t('tab.newsFeed')}</StyledTab>
             <StyledTab>{t('tab.trackingAndAssessment')}</StyledTab>
-            {(!currentClass?.classInfo?.isSchoolClass && teacherAssignmentDetail?.isClassAdmin) && (
+            {!currentClass?.classInfo?.isSchoolClass && teacherAssignmentDetail?.isClassAdmin && (
               <StyledTab>{t('tab.portfolios')}</StyledTab>
             )}
             {!currentClass?.classInfo?.isSchoolClass && <StyledTab>{t('tab.classInfo')}</StyledTab>}
@@ -299,7 +300,9 @@ const TeacherHomePage: React.FC = () => {
           </StyledButton>
         </TabsWrapper>
         <TabPaneContent>
-          <TabPanelUnstyled value={0}>Welcome {currentUser?.username}</TabPanelUnstyled>
+          <TabPanelUnstyled value={0}>
+            <TeacherWelcome />
+          </TabPanelUnstyled>
           <TabPanelUnstyled value={1}>
             <FeedList
               setIsRefreshFeedList={setIsRefreshFeedList}

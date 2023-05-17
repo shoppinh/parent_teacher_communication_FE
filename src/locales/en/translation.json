@@ -60,7 +60,9 @@
     "rememberMe": "Remember me",
     "loginToChatWithOutlet": "Login to chat with outlet",
     "notYetRegisteredRegisterHere": "Not yet registered? <1>Register here</1> to access chat and more.",
-    "accountHasBeenDeactivated": "Your account has been deactivated. Please contact your site administrator"
+    "accountHasBeenDeactivated": "Your account has been deactivated. Please contact your site administrator",
+    "goBackToLogin": "Go back to login",
+    "forgotPasswordInstruction": "Contact your site administrator to reset your password. This is the phone of your site administrator: <0>{{phoneNumber}}</0>"
   },
   "form": {
     "emailOrPhone": "Email or phone number",

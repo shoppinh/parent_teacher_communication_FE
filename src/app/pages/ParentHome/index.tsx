@@ -13,7 +13,7 @@ import tw, { styled } from 'twin.macro';
 import { StyleConstants } from '../../../styles/constants/style';
 import { pxToRem } from '../../../styles/theme/utils';
 import FeedList from '../../containers/TeacherHomePage/FeedList';
-import WelcomePage from '../../containers/Welcome';
+import WelcomePage from '../../containers/Welcome/Parent';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAccessToken } from '../../../store/selectors/session';
 import { useStudentSlice } from '../../../store/slices/student';

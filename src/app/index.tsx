@@ -16,6 +16,7 @@ import TeacherEvent from './pages/TeacherEvent';
 import TeacherHome from './pages/TeacherHome';
 import TeacherManagement from './pages/TeacherManagement';
 import { RoleBaseProtectedRoute } from './routes';
+import ForgotPassword from './pages/ForgotPassword';
 export function App() {
   const { i18n } = useTranslation();
   return (
@@ -31,6 +32,7 @@ export function App() {
       </Helmet>
       <Routes>
         <Route path={SiteMap.landing.link} element={<Landing />} />
+        <Route path={SiteMap.forgotPassword.link} element={<ForgotPassword />} />
         <Route path={SiteMap.register.link} element={<Register />} />
         <Route path={SiteMap.login.link} element={<Login />} />
         <Route

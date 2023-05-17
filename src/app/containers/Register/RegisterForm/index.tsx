@@ -67,11 +67,9 @@ const schema = yup.object({
 
 const RegisterForm = () => {
   const { t } = useTranslation();
-  // const navigate = useNavigate();
   const {
     handleSubmit,
     register,
-    getValues,
     formState: { errors, isDirty },
   } = useForm<ParentPayload>({
     defaultValues: {
@@ -83,7 +81,6 @@ const RegisterForm = () => {
   const dispatch = useDispatch();
   const authLoading = useSelector(getAuthLoading);
   const authError = useSelector(getAuthError);
-  const user = useSelector(getUser);
   const [isFormSent, setIsFormSent] = React.useState(false);
   const navigate = useNavigate();
   const onSubmit = useCallback(
@@ -93,18 +90,17 @@ const RegisterForm = () => {
     },
     [dispatch, sessionActions]
   );
-  const systemSettings = useSelector(getSystemSettings);
 
   useEffect(() => {
     if (isFormSent && !authLoading) {
       setIsFormSent(false);
       if (authError) {
-        alert('Login failed');
+        alert('Register failed');
       } else {
         navigate(sitemap.login.link);
       }
     }
-  }, [authError, authLoading, isFormSent, navigate, systemSettings?.schoolInfo?._id, user?.roleId]);
+  }, [authError, authLoading, isFormSent, navigate]);
   return (
     <RegisterFormContainer>
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
@@ -176,7 +172,7 @@ const RegisterForm = () => {
         </InputContainer>
         <ActionGroup>
           <StyledButton type='submit' disabled={!isDirty} variant='primary'>
-            {t('register.register')}
+            {t('login.register')}
           </StyledButton>
         </ActionGroup>
       </FormContainer>

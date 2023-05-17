@@ -30,6 +30,7 @@ import FeedList from '../../containers/TeacherHomePage/FeedList';
 import ClassInfo from 'app/containers/ClassInfo';
 import { getSchoolInfo } from 'store/selectors/config';
 import { useNavigate } from 'react-router-dom';
+import AdminWelcome from 'app/containers/Welcome/Admin';
 
 const TabsWrapper = styled.div`
   display: flex;
@@ -238,7 +239,9 @@ const AdminHome = () => {
           </StyledButton>
         </TabsWrapper>
         <TabPaneContent>
-          <TabPanelUnstyled value={0}>Welcome {currentUser?.username}</TabPanelUnstyled>
+          <TabPanelUnstyled value={0}>
+            <AdminWelcome />
+          </TabPanelUnstyled>
           <TabPanelUnstyled value={1}>
             <FeedList
               setIsRefreshFeedList={setIsRefreshFeedList}

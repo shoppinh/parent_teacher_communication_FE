@@ -18,6 +18,7 @@ import { ConstantPostType, queryString } from '../../../utils/constants';
 import { getPostUpdateOrAddError, getPostUpdateOrAddLoading } from '../../../store/selectors/post';
 import { toast } from 'react-toastify';
 import { PSelection } from '../PSelection';
+import PBackdropLoading from '../PBackdropLoading';
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -236,7 +237,7 @@ const PEditor: React.FC<Props> = ({
           onInit={(evt, editor) => (editorRef.current = editor)}
           initialValue={postData?.content || t('post.initialContent') || ''}
           init={{
-            height: 600,
+            height: 1200,
             menubar: true,
             config: {},
             skin: 'oxide-dark',
@@ -292,6 +293,7 @@ const PEditor: React.FC<Props> = ({
           {t('form.save')}
         </StyledButton>
       </FormContainer>
+      <PBackdropLoading isShow={postLoading} />
     </Wrapper>
   );
 };

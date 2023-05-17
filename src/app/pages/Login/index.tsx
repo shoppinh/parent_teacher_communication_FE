@@ -9,6 +9,7 @@ import { H1 } from '../../../styles/constants/fonts';
 import { PIcon } from 'app/components/PIcon';
 import { PButton } from 'app/components/PButton';
 import { useNavigate } from 'react-router-dom';
+import SiteMap from 'utils/sitemap';
 
 const Wrapper = styled.div`
   ${tw`container mx-auto `}
@@ -56,7 +57,7 @@ const Login = () => {
     <BaseLayout title={t('login.title')}>
       <Wrapper>
         <PageHeader>
-          <StyledButton type='button' onClick={() => navigate(-1)}>
+          <StyledButton type='button' onClick={() => navigate(SiteMap.landing.link)}>
             <StyledIcon className='partei-arrow-left' />
           </StyledButton>
           <PageTitle>{t('login.title')}</PageTitle>
