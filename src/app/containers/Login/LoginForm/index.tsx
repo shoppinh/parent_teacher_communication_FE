@@ -134,7 +134,9 @@ const LoginForm = () => {
           <StyledButton type='submit' disabled={!isDirty} variant='primary'>
             {t('login.login')}
           </StyledButton>
-          <StyledButton variant='secondary'>{t('login.forgotPassword')}</StyledButton>
+          <StyledButton variant='secondary' onClick={() => navigate(sitemap.forgotPassword.link)}>
+            {t('login.forgotPassword')}
+          </StyledButton>
         </ActionGroup>
       </FormContainer>
     </LoginFormContainer>

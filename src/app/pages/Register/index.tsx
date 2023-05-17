@@ -5,6 +5,9 @@ import tw, { styled } from 'twin.macro';
 import { H1 } from '../../../styles/constants/fonts';
 import { pxToRem } from '../../../styles/theme/utils';
 import BaseLayout from '../../layouts/BaseLayout';
+import { PButton } from 'app/components/PButton';
+import { PIcon } from 'app/components/PIcon';
+import SiteMap from 'utils/sitemap';
 
 const Wrapper = styled.div`
   ${tw`container mx-auto `}
@@ -13,7 +16,7 @@ const Wrapper = styled.div`
   background-color: ${(p) => p.theme.contrastBackground};
   width: 50%;
   height: 90%;
-  overflow: hidden;
+  overflow: auto;
   padding: ${pxToRem(10)}rem;
 `;
 
@@ -34,6 +37,16 @@ const PageHeader = styled.div`
   margin-bottom: ${pxToRem(10)}rem;
   display: flex;
 `;
+const StyledButton = styled(PButton)`
+  width: 40px;
+  && {
+    background-color: ${(p) => p.theme.contrastBackground};
+  }
+`;
+const StyledIcon = styled(PIcon)`
+  font-size: ${pxToRem(20)}rem;
+  color: ${(p) => p.theme.text};
+`;
 
 const Register = () => {
   const { t } = useTranslation();
@@ -43,6 +56,9 @@ const Register = () => {
     <BaseLayout title={t('register.title')}>
       <Wrapper>
         <PageHeader>
+          <StyledButton type='button' onClick={() => navigate(SiteMap.landing.link)}>
+            <StyledIcon className='partei-arrow-left' />
+          </StyledButton>
           <PageTitle>{t('register.title')}</PageTitle>
         </PageHeader>
         <ContentWrapper>

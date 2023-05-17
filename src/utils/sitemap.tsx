@@ -124,11 +124,11 @@ const SiteMap = {
     link: '/unAvailable',
     isProtected: false,
   },
-  // forgotPassword: {
-  //   title: "forgotPassword.title",
-  //   link: "/forgotPassword",
-  //   isProtected: false,
-  // },
+  forgotPassword: {
+    title: 'forgotPassword.title',
+    link: '/forgotPassword',
+    isProtected: false,
+  },
 
   notAvailableFeatureiOS: {
     title: '',

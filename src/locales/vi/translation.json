@@ -60,7 +60,10 @@
     "rememberMe": "Lưu tài khoản",
     "loginToChatWithOutlet": "Đăng nhập để chat với cửa hàng",
     "notYetRegisteredRegisterHere": "Chưa có tài khoản? <1>Tạo tài khoản</1> để chat với cửa hàng.",
-    "accountHasBeenDeactivated": "Tài khoản của bạn đã bị hủy kích hoạt. Vui lòng liên hệ với người quản trị trang web của bạn"
+    "accountHasBeenDeactivated": "Tài khoản của bạn đã bị hủy kích hoạt. Vui lòng liên hệ với người quản trị trang web của bạn",
+    "goBackToLogin": "Quay lại trang đăng nhập",
+    "forgotPasswordInstruction": "Liên hệ với người quản trị trang web của bạn để lấy lại mật khẩu. Đây là số diện thoại của quản trị viên: <0>{{phoneNumber}}</0>."
+
   },
   "logout": {
     "title": "Đăng xuất"

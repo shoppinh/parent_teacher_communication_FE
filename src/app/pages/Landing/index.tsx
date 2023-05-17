@@ -78,7 +78,9 @@ const Landing = () => {
             <StyledButton onClick={() => navigate(SiteMap.register.link)}>
               {t('login.register')}
             </StyledButton>
-            <StyledButton>{t('login.forgotPassword')}</StyledButton>
+            <StyledButton onClick={() => navigate(SiteMap.forgotPassword.link)}>
+              {t('login.forgotPassword')}
+            </StyledButton>
           </ActionGroup>
         </ContentWrapper>
       </Wrapper>
