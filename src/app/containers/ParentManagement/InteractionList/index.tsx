@@ -2,13 +2,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAccessToken } from '../../../../store/selectors/session';
 import { useProgressSlice } from '../../../../store/slices/progress';
-import {
-  Progress,
-  ProgressListByStudentTokenQuery,
-  ProgressListTokenQuery,
-} from '../../../../types/Progress';
-import { useQuery } from '../../../../utils/hook';
-import { queryString, ROWS_PER_PAGE } from '../../../../utils/constants';
+import { Progress, ProgressListByStudentTokenQuery } from '../../../../types/Progress';
+import { ROWS_PER_PAGE } from '../../../../utils/constants';
 import { getProgressList, getProgressLoading } from '../../../../store/selectors/progress';
 import { styled } from 'twin.macro';
 import DTable from '../../../components/DTable';
@@ -22,6 +17,7 @@ import { PButton } from '../../../components/PButton';
 import { useTranslation } from 'react-i18next';
 import { getStudentList } from '../../../../store/selectors/student';
 import { PSelection } from '../../../components/PSelection';
+import ExportReportCardModal from './ExportReportCardModal';
 
 const Container = styled.div``;
 
@@ -33,6 +29,11 @@ const ActionGroup = styled.span`
   justify-content: space-between;
   margin-bottom: ${pxToRem(10)}rem;
 `;
+const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: ${pxToRem(10)}rem;
+`;
 const StyledPSelection = styled(PSelection)`
   min-width: ${pxToRem(200)}rem;
 `;
@@ -41,13 +42,18 @@ const TableTitle = styled.div`
   font-weight: 700;
   margin-bottom: ${pxToRem(10)}rem;
 `;
+const StyledButton = styled(PButton)`
+  padding: ${pxToRem(10)}rem ${pxToRem(20)}rem;
+  margin: ${pxToRem(5)}rem ${pxToRem(10)}rem ${pxToRem(5)}rem 0;
+  border-radius: ${pxToRem(20)}rem;
+  font-weight: 700;
+`;
 
 const InteractionList: React.FC = () => {
   const currentAccessToken = useSelector(getAccessToken);
-  const [isAssignMarkModalOpen, setIsAssignMarkModalOpen] = useState(false);
+  const [isExportReportModalOpen, setIsExportReportModalOpen] = useState(false);
   const [studentId, setStudentId] = useState<string>('');
   const studentList = useSelector(getStudentList);
-  // const classId = useQuery().get(queryString.classId);
   const { actions: progressActions } = useProgressSlice();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -62,19 +68,13 @@ const InteractionList: React.FC = () => {
     }
   }, [currentAccessToken, dispatch, progressActions, studentId]);
 
-  const handleCloseAssignMarkModal = useCallback(() => {
-    setIsAssignMarkModalOpen(false);
+  const handleCloseExportReportCardModal = useCallback(() => {
+    setIsExportReportModalOpen(false);
   }, []);
 
-  const handleOpenAssignMarkModal = useCallback(
-    (progressId: string) => {
-      if (currentAccessToken) {
-        dispatch(progressActions.loadProgressDetail({ token: currentAccessToken, progressId }));
-        setIsAssignMarkModalOpen(true);
-      }
-    },
-    [currentAccessToken, dispatch, progressActions]
-  );
+  const handleOpenExportReportCardModal = useCallback(() => {
+    setIsExportReportModalOpen(true);
+  }, []);
 
   const columns: ColumnProps[] = useMemo(() => {
     return [
@@ -101,7 +101,7 @@ const InteractionList: React.FC = () => {
         accessor: 'subjectName',
         render: (item: Progress) => item.subject.name,
         style: {
-          width: '20%',
+          width: '15%',
           wordBreak: 'break-word',
         },
       },
@@ -109,7 +109,7 @@ const InteractionList: React.FC = () => {
         label: t('table.frequentMark'),
         accessor: 'frequentMark',
         style: {
-          width: '20%',
+          width: '10%',
           wordBreak: 'break-word',
         },
       },
@@ -117,7 +117,7 @@ const InteractionList: React.FC = () => {
         label: t('table.middleExamMark'),
         accessor: 'middleExamMark',
         style: {
-          width: '20%',
+          width: '10%',
           wordBreak: 'break-word',
         },
       },
@@ -125,7 +125,7 @@ const InteractionList: React.FC = () => {
         label: t('table.finalExamMark'),
         accessor: 'finalExamMark',
         style: {
-          width: '20%',
+          width: '10%',
           wordBreak: 'break-word',
         },
       },
@@ -133,7 +133,7 @@ const InteractionList: React.FC = () => {
         label: t('table.averageMark'),
         accessor: 'averageMark',
         style: {
-          width: '20%',
+          width: '10%',
           wordBreak: 'break-word',
         },
       },
@@ -157,27 +157,12 @@ const InteractionList: React.FC = () => {
         label: t('table.assessment'),
         accessor: 'note',
         style: {
-          width: '20%',
+          width: '30%',
           wordBreak: 'break-word',
         },
       },
-      {
-        label: t('table.action'),
-        accessor: 'action',
-        render: (item: Progress) => (
-          <ActionGroup>
-            <PButton onClick={() => handleOpenAssignMarkModal(item._id)}>
-              <StyledIcon className='partei-eye' />
-            </PButton>
-          </ActionGroup>
-        ),
-        style: {
-          width: `${pxToRem(70)}rem`,
-          textAlign: 'center',
-        },
-      },
     ];
-  }, [handleOpenAssignMarkModal, t]);
+  }, [t]);
 
   const progressListData = useSelector(getProgressList);
 
@@ -219,21 +204,28 @@ const InteractionList: React.FC = () => {
       </ActionGroup>
 
       {studentId && (
-        <DTable
-          columns={columns}
-          tableData={renderedData}
-          paginationRange={paginationRange}
-          handleSorting={() => {}}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalItems={progressListData.totalItem}
-          rowsPerPage={ROWS_PER_PAGE}
-          isLoading={progressLoading}
-        />
+        <>
+          <ButtonGroup>
+            <StyledButton onClick={handleOpenExportReportCardModal} variant='primary'>
+              {t('interactionList.exportStudentReportCard')}
+            </StyledButton>
+          </ButtonGroup>
+          <DTable
+            columns={columns}
+            tableData={renderedData}
+            paginationRange={paginationRange}
+            handleSorting={() => {}}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalItems={progressListData.totalItem}
+            rowsPerPage={ROWS_PER_PAGE}
+            isLoading={progressLoading}
+          />
+        </>
       )}
 
-      <PModal open={isAssignMarkModalOpen} onClose={handleCloseAssignMarkModal}>
-        <div>View Detail Modal</div>
+      <PModal open={isExportReportModalOpen} onClose={handleCloseExportReportCardModal}>
+        <ExportReportCardModal studentId={studentId} onClose={handleCloseExportReportCardModal} />
       </PModal>
     </Container>
   );

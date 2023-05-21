@@ -110,7 +110,8 @@
     "class": "Class",
     "teacher": "Teacher",
     "isClassAdmin": "Class Admin",
-    "phoneNumber": "Phone Number"
+    "phoneNumber": "Phone Number",
+    "exportStudentCardTitle": "Export Student Card"
   },
   "logout": {
     "title": "Logout"
@@ -404,7 +405,11 @@
     "addNewForm": "Add New Leave Form"
   },
   "interactionList": {
-    "title": "Student's Mark Table"
+    "title": "Student's Mark Table",
+    "exportStudentReportCard": "Export Student Report Card",
+    "semester1": "Semester 1",
+    "semester2": "Semester 2",
+    "exportReportCard": "Export Report Card"
   },
   "trackingAndAssessment": {
     "add": {

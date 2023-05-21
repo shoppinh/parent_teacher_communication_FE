@@ -98,11 +98,6 @@ const Header: React.FC<Props> = ({ onRightBarClick, onLeftBarClick, headerTitle 
           url: '/teacher-event',
           iconName: 'partei-calendar',
         },
-        {
-          id: 'teacherManagement',
-          url: '/teacher-management',
-          iconName: 'partei-users',
-        },
       ];
     else if (currentUser?.roleId === ConstantRoles.PARENT)
       return [

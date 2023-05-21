@@ -95,7 +95,6 @@ export const APIs = {
   class: {
     getClassListByRole: '/api/class/list-by-role',
     getClassDetail: '/api/class/{classId}',
-  
   },
   teacher: {
     profile: '/api/teacher/profile',
@@ -120,6 +119,7 @@ export const APIs = {
     progress: {
       getProgressDetail: '/api/student/progress-tracking/{progressId}', //Parent and teacher use this
       getProgressListByStudent: '/api/student/progress-tracking-list-by-student/{studentId}', // Parent use this
+      exportReportCard: '/api/student/progress-tracking/export-report-card/{studentId}', // Parent use this
     },
     leaveForm: {
       getLeaveFormListByClass: '/api/student/leave-form-list-by-class/{classId}', // Teacher uses this

@@ -41,6 +41,7 @@ import { AddCommentTokenRequest } from '../../types/Comment';
 import {
   AddProgressTokenQuery,
   ProgressDetailTokenQuery,
+  ProgressExportTokenQuery,
   ProgressListByStudentTokenQuery,
   ProgressListTokenQuery,
   UpdateProgressTokenQuery,
@@ -79,30 +80,6 @@ export function* apiRefreshToken(query: RefreshTokenQuery) {
 export function* apiSendInvitation(query: InvitationQuery) {
   return yield call(api.sendInvitation, query);
 }
-
-// export function* apiVerifyCode(query: VerifyQuery) {
-//   return yield call(api.verifyCode, query);
-// }
-//
-// export function* apiResendCode(query: ResendCodeQuery) {
-//   return yield call(api.reSendCode, query);
-// }
-//
-// export function* apiSetPassword(query: SetPasswordQuery) {
-//   return yield call(api.setPassword, query);
-// }
-
-// export function* apiForgotPassword(query: ForgotQuery) {
-//   return yield call(api.forgotPassword, query);
-// }
-//
-// export function* apiForgotVerifyCode(query: VerifyQuery) {
-//   return yield call(api.forgotVerifyCode, query);
-// }
-
-// export function* apiForgotSetPassword(query: SetPasswordQuery) {
-//   return yield call(api.forgotSetPassword, query);
-// }
 
 export function* apiRegisterDeviceToken(query: DeviceTokenQuery) {
   return yield call(api.registerDeviceToken, query);
@@ -302,6 +279,10 @@ export function* apiUpdateProgress(query: UpdateProgressTokenQuery) {
 
 export function* apiAddProgress(query: AddProgressTokenQuery) {
   return yield call(api.addProgress, query);
+}
+
+export function* apiExportReportCard(query: ProgressExportTokenQuery) {
+  return yield call(api.exportReportCard, query);
 }
 
 // Student

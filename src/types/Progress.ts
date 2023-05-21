@@ -26,6 +26,7 @@ export interface ProgressState {
   loading: boolean;
   currentProgressLoading: boolean;
   error: ProgressError | null;
+  exportLoading: boolean;
 }
 
 export interface ProgressListPayload {
@@ -86,4 +87,11 @@ export interface ProgressDetailPayload {
   semester: number;
   year: number;
   note: string;
+}
+
+export interface ProgressExportTokenQuery {
+  token: string;
+  studentId: string;
+  semester: number;
+  year: number;
 }

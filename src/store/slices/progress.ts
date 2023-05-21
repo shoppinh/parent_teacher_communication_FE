@@ -7,6 +7,7 @@ import {
   Progress,
   ProgressDetailTokenQuery,
   ProgressError,
+  ProgressExportTokenQuery,
   ProgressListByStudentTokenQuery,
   ProgressListPayload,
   ProgressListTokenQuery,
@@ -22,6 +23,7 @@ export const initialState: ProgressState = {
   error: null,
   loading: false,
   currentProgressLoading: false,
+  exportLoading: false,
 };
 
 const slice = createSlice({
@@ -92,6 +94,18 @@ const slice = createSlice({
     },
     updateProgressFailed(state, action: PayloadAction<ProgressError>) {
       state.loading = false;
+      state.error = action.payload;
+    },
+    exportProgressReportCard(state, action: PayloadAction<ProgressExportTokenQuery>) {
+      state.exportLoading = true;
+      state.error = null;
+    },
+    exportProgressReportCardSuccess(state) {
+      state.exportLoading = false;
+      state.error = null;
+    },
+    exportProgressReportCardFailed(state, action: PayloadAction<ProgressError>) {
+      state.exportLoading = false;
       state.error = action.payload;
     },
   },
