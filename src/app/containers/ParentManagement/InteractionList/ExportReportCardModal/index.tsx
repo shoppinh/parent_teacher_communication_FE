@@ -4,6 +4,9 @@ import { PSelection } from 'app/components/PSelection';
 import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAccessToken } from 'store/selectors/session';
+import { useProgressSlice } from 'store/slices/progress';
 import { StyleConstants } from 'styles/constants/style';
 import { pxToRem } from 'styles/theme/utils';
 import tw, { styled } from 'twin.macro';
@@ -71,9 +74,26 @@ const ExportReportCardModal: React.FC<Props> = ({ studentId, onClose }) => {
     },
   });
   const { t } = useTranslation();
-  const onSubmit = useCallback(() => {
-    onClose();
-  }, []);
+  const { actions: progressActions } = useProgressSlice();
+  const accessToken = useSelector(getAccessToken);
+  const dispatch = useDispatch();
+  const onSubmit = useCallback(
+    (data: { semester: number; year: number }) => {
+      if (accessToken) {
+        dispatch(
+          progressActions.exportProgressReportCard({
+            semester: data.semester,
+            year: data.year,
+            studentId,
+            token: accessToken,
+          })
+        );
+      }
+
+      onClose();
+    },
+    [accessToken, dispatch, onClose, progressActions, studentId]
+  );
   return (
     <Container>
       <FormContainer onSubmit={handleSubmit(onSubmit)}>

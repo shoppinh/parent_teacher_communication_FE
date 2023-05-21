@@ -102,7 +102,7 @@ export function* exportProgressReportCard({ payload }: PayloadAction<ProgressExp
   try {
     const response = yield call(apiExportReportCard, payload);
     if (response.data && response.data.status) {
-      yield put(actions.exportProgressReportCardSuccess());
+      yield put(actions.exportProgressReportCardSuccess(response.data.data.filePath));
     } else yield put(actions.exportProgressReportCardFailed(response.data.error));
   } catch (err) {
     console.log(err);
