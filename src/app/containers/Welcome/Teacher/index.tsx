@@ -1,7 +1,7 @@
 import React from 'react';
 
 const TeacherWelcome = () => {
-  return <div>TeacherWelcome</div>;
+  return <div>Welcome to ParTe</div>;
 };
 
 export default TeacherWelcome;

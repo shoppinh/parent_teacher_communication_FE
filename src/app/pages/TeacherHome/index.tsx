@@ -276,7 +276,6 @@ const TeacherHomePage: React.FC = () => {
       <StyledTabs defaultValue={0}>
         <TabsWrapper>
           <StyledTabsList>
-            <StyledTab>{t('tab.welcome')}</StyledTab>
             <StyledTab>{t('tab.newsFeed')}</StyledTab>
             <StyledTab>{t('tab.trackingAndAssessment')}</StyledTab>
             {!currentClass?.classInfo?.isSchoolClass && teacherAssignmentDetail?.isClassAdmin && (
@@ -301,29 +300,26 @@ const TeacherHomePage: React.FC = () => {
         </TabsWrapper>
         <TabPaneContent>
           <TabPanelUnstyled value={0}>
-            <TeacherWelcome />
-          </TabPanelUnstyled>
-          <TabPanelUnstyled value={1}>
             <FeedList
               setIsRefreshFeedList={setIsRefreshFeedList}
               isRefresh={isRefreshFeedList}
               triggerRefreshFeedList={handleTriggerRefreshFeedList}
             />
           </TabPanelUnstyled>
-          <TabPanelUnstyled value={2}>
+          <TabPanelUnstyled value={1}>
             <InteractionList
               isRefresh={isRefreshProgressList}
               triggerRefreshProgressList={handleTriggerRefreshProgressList}
               setIsRefreshProgressList={setIsRefreshProgressList}
             />
           </TabPanelUnstyled>
-          <TabPanelUnstyled value={3}>
+          <TabPanelUnstyled value={2}>
             <Portfolios />
           </TabPanelUnstyled>
-          <TabPanelUnstyled value={4}>
+          <TabPanelUnstyled value={3}>
             <ClassInfo />
           </TabPanelUnstyled>
-          <TabPanelUnstyled value={5}>
+          <TabPanelUnstyled value={4}>
             <LeaveList />
           </TabPanelUnstyled>
         </TabPaneContent>

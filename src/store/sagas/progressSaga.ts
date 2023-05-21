@@ -3,6 +3,7 @@ import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { progressActions as actions } from 'store/slices/progress';
 import {
   apiAddProgress,
+  apiExportReportCard,
   apiGetProgressDetail,
   apiGetProgressListByClass,
   apiGetProgressListByStudent,
@@ -12,6 +13,7 @@ import {
 import {
   AddProgressTokenQuery,
   ProgressDetailTokenQuery,
+  ProgressExportTokenQuery,
   ProgressListByStudentTokenQuery,
   ProgressListTokenQuery,
   UpdateProgressTokenQuery,
@@ -25,6 +27,7 @@ export function* progressSaga() {
     takeLatest(actions.addProgress.type, addProgress),
     takeLatest(actions.updateProgress.type, updateProgress),
     takeLatest(actions.loadProgressListByStudent.type, getProgressListByStudent),
+    takeLatest(actions.exportProgressReportCard.type, exportProgressReportCard),
   ]);
 }
 
@@ -90,6 +93,17 @@ export function* updateProgress({ payload }: PayloadAction<UpdateProgressTokenQu
     if (response.data && response.data.status) {
       yield put(actions.updateProgressSuccess(response.data.data));
     } else yield put(actions.updateProgressFailed(response.data.error));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* exportProgressReportCard({ payload }: PayloadAction<ProgressExportTokenQuery>) {
+  try {
+    const response = yield call(apiExportReportCard, payload);
+    if (response.data && response.data.status) {
+      yield put(actions.exportProgressReportCardSuccess());
+    } else yield put(actions.exportProgressReportCardFailed(response.data.error));
   } catch (err) {
     console.log(err);
   }

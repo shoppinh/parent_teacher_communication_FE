@@ -3,6 +3,7 @@ import { APIs } from '../base/type';
 import {
   AddProgressTokenQuery,
   ProgressDetailTokenQuery,
+  ProgressExportTokenQuery,
   ProgressListTokenQuery,
   UpdateProgressTokenQuery,
 } from '../../types/Progress';
@@ -33,4 +34,14 @@ export const updateProgress = async (query: UpdateProgressTokenQuery) => {
 export const addProgress = async (query: AddProgressTokenQuery) => {
   const { token, payload } = query;
   return new apiClient(token).post(APIs.teacher.progress.addProgress, payload);
+};
+export const exportReportCard = async (query: ProgressExportTokenQuery) => {
+  const { token, studentId, year, semester } = query;
+  const endPoint = APIs.student.progress.exportReportCard.replace('{studentId}', `${studentId}`);
+  return new apiClient(token).get(endPoint, {
+    params: {
+      year,
+      semester,
+    },
+  });
 };

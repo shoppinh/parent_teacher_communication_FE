@@ -220,7 +220,6 @@ const AdminHome = () => {
       <StyledTabs defaultValue={0}>
         <TabsWrapper>
           <StyledTabsList>
-            <StyledTab>{t('tab.welcome')}</StyledTab>
             <StyledTab>{t('tab.newsFeed')}</StyledTab>
             {!currentClass?.classInfo?.isSchoolClass && <StyledTab>{t('tab.classInfo')}</StyledTab>}
           </StyledTabsList>
@@ -240,16 +239,13 @@ const AdminHome = () => {
         </TabsWrapper>
         <TabPaneContent>
           <TabPanelUnstyled value={0}>
-            <AdminWelcome />
-          </TabPanelUnstyled>
-          <TabPanelUnstyled value={1}>
             <FeedList
               setIsRefreshFeedList={setIsRefreshFeedList}
               isRefresh={isRefreshFeedList}
               triggerRefreshFeedList={handleTriggerRefreshFeedList}
             />
           </TabPanelUnstyled>
-          <TabPanelUnstyled value={2}>
+          <TabPanelUnstyled value={1}>
             <ClassInfo />
           </TabPanelUnstyled>
         </TabPaneContent>

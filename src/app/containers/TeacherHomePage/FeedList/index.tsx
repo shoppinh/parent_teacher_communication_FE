@@ -26,11 +26,6 @@ const FeedList: React.FC<Props> = ({ isRefresh, setIsRefreshFeedList, triggerRef
   const postList = useSelector(getPostList);
   const postLoading = useSelector(getPostLoading);
 
-  // const handleGetPostList = useCallback(() => {
-  //   if (classId && currentAccessToken) {
-  //   }
-  // }, [classId, currentAccessToken, dispatch, postActions]);
-
   useEffect(() => {
     if (isRefresh && classId && currentAccessToken) {
       dispatch(postActions.loadPostListByClass({ token: currentAccessToken, classId }));

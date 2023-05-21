@@ -44,12 +44,7 @@ const StyledTab = styled(TabUnstyled)`
     border-bottom: 3px solid ${(p) => p.theme.backgroundVariant};
   }
 `;
-// const StyledButton = styled(PButton)`
-//   ${tw`rounded-full`}
-//   font-weight: bold;
-//   font-size: ${pxToRem(16)}rem;
-//   padding: 0 ${pxToRem(25)}rem;
-// `;
+
 const TabPaneContent = styled.div`
   ${tw`p-3`}
   overflow: auto;
@@ -109,39 +104,23 @@ const ParentHomePage = () => {
       <StyledTabs defaultValue={0}>
         <TabsWrapper>
           <StyledTabsList>
-            <StyledTab>{t('tab.welcome')}</StyledTab>
             <StyledTab>{t('tab.newsFeed')}</StyledTab>
             {!currentClass?.classInfo?.isSchoolClass && <StyledTab>{t('tab.classInfo')}</StyledTab>}
           </StyledTabsList>
         </TabsWrapper>
         <TabPaneContent>
           <TabPanelUnstyled value={0}>
-            <WelcomePage />
-          </TabPanelUnstyled>
-          <TabPanelUnstyled value={1}>
             <FeedList
               setIsRefreshFeedList={setIsRefreshFeedList}
               isRefresh={isRefreshFeedList}
               triggerRefreshFeedList={handleTriggerRefreshFeedList}
             />
           </TabPanelUnstyled>
-          <TabPanelUnstyled value={2}>
+          <TabPanelUnstyled value={1}>
             <ClassInfo />
           </TabPanelUnstyled>
         </TabPaneContent>
       </StyledTabs>
-      {/*<MenuUnstyled*/}
-      {/*  actions={menuActions}*/}
-      {/*  open={isOpen}*/}
-      {/*  onClose={close}*/}
-      {/*  anchorEl={anchorEl}*/}
-      {/*  slots={{ root: Popper, listbox: StyledListbox }}*/}
-      {/*  slotProps={{ listbox: { id: 'simple-menu' } }}*/}
-      {/*>*/}
-      {/*  <StyledMenuItem onClick={createHandleMenuClick('post')}>Post</StyledMenuItem>*/}
-      {/*  <StyledMenuItem onClick={createHandleMenuClick('event')}>Event</StyledMenuItem>*/}
-      {/*  <StyledMenuItem onClick={createHandleMenuClick('timesheet')}>Time Sheet</StyledMenuItem>*/}
-      {/*</MenuUnstyled>*/}
     </MainLayout>
   );
 };

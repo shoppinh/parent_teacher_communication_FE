@@ -52,6 +52,7 @@ export {
   getProgressListByClass,
   removeProgress,
   updateProgress,
+  exportReportCard,
 } from './progress';
 export { register, registerDeviceToken } from './register';
 export {
