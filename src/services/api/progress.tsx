@@ -39,9 +39,7 @@ export const exportReportCard = async (query: ProgressExportTokenQuery) => {
   const { token, studentId, year, semester } = query;
   const endPoint = APIs.student.progress.exportReportCard.replace('{studentId}', `${studentId}`);
   return new apiClient(token).get(endPoint, {
-    params: {
-      year,
-      semester,
-    },
+    year,
+    semester,
   });
 };

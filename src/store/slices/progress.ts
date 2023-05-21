@@ -100,9 +100,10 @@ const slice = createSlice({
       state.exportLoading = true;
       state.error = null;
     },
-    exportProgressReportCardSuccess(state) {
+    exportProgressReportCardSuccess(state, action: PayloadAction<string>) {
       state.exportLoading = false;
       state.error = null;
+      window.location.href = `${process.env.REACT_APP_API_URL}/${action.payload}`;
     },
     exportProgressReportCardFailed(state, action: PayloadAction<ProgressError>) {
       state.exportLoading = false;
