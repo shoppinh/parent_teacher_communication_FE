@@ -125,7 +125,6 @@ const AdminHome = () => {
   const preventReopen = React.useRef(false);
   const [isPostModalOpen, setIsPostModalOpen] = React.useState(false);
   const [isRefreshFeedList, setIsRefreshFeedList] = React.useState(false);
-  const currentUser = useSelector(getUser);
   const currentClass = useSelector(getCurrentClass);
   const { actions: classActions } = useClassSlice();
   const classId = useQuery().get(queryString.classId);
@@ -258,9 +257,7 @@ const AdminHome = () => {
         slots={{ root: Popper, listbox: StyledListbox }}
         slotProps={{ listbox: { id: 'simple-menu' } }}
       >
-        <StyledMenuItem onClick={createHandleMenuClick('post')}>Post</StyledMenuItem>
-        <StyledMenuItem onClick={createHandleMenuClick('event')}>Event</StyledMenuItem>
-        <StyledMenuItem onClick={createHandleMenuClick('timesheet')}>Time Sheet</StyledMenuItem>
+        <StyledMenuItem onClick={createHandleMenuClick('post')}>{t('menu.post')}</StyledMenuItem>
       </MenuUnstyled>
       <PModal open={isPostModalOpen} onClose={handleClosePostModal}>
         <PEditor

@@ -336,7 +336,6 @@ const TeacherHomePage: React.FC = () => {
         <StyledMenuItem onClick={createHandleMenuClick('progress')}>
           {t('menu.markAndAssessment')}
         </StyledMenuItem>
-        {/* <StyledMenuItem onClick={createHandleMenuClick('timesheet')}>Time Sheet</StyledMenuItem> */}
       </MenuUnstyled>
       <PModal open={isPostModalOpen} onClose={handleClosePostModal}>
         <PEditor

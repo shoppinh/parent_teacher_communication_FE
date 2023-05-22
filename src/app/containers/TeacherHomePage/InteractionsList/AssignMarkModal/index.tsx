@@ -191,13 +191,13 @@ const AssignMarkModal: React.FC<Props> = ({
               </StyledSelection>
             </InputContainer>
             <InputContainer>
+              <InputLabel>{t('form.subject')}</InputLabel>
+              <StyledInput value={teacherAssignmentDetail?.subjectId?.name} disabled />
+            </InputContainer>
+            <InputContainer>
               <InputLabel>{t('form.frequentMark')}</InputLabel>
               <StyledInput {...register('frequentMark', { valueAsNumber: true })} />
               {errors.frequentMark && <Required>{errors.frequentMark.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.subject')}</InputLabel>
-              <StyledInput value={teacherAssignmentDetail?.subjectId?.name} disabled />
             </InputContainer>
             <InputContainer>
               <InputLabel>{t('form.middleExamMark')}</InputLabel>

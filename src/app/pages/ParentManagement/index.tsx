@@ -19,8 +19,7 @@ import { pxToRem } from '../../../styles/theme/utils';
 import InteractionList from '../../containers/ParentManagement/InteractionList';
 import Portfolios from '../../containers/ParentManagement/Portfolios';
 import MainLayout from '../../layouts/MainLayout';
-import { PModal } from 'app/components/PModal';
-import LeaveAddModal from 'app/containers/LeaveList/LeaveAddModal';
+
 import LeaveFormList from 'app/containers/ParentManagement/LeaveFormList';
 
 const TabsWrapper = styled.div`
@@ -42,12 +41,7 @@ const StyledTab = styled(TabUnstyled)`
     border-bottom: 3px solid ${(p) => p.theme.backgroundVariant};
   }
 `;
-// const StyledButton = styled(PButton)`
-//   ${tw`rounded-full`}
-//   font-weight: bold;
-//   font-size: ${pxToRem(16)}rem;
-//   padding: 0 ${pxToRem(25)}rem;
-// `;
+
 const TabPaneContent = styled.div`
   ${tw`p-3`}
   overflow: auto;
@@ -55,12 +49,6 @@ const TabPaneContent = styled.div`
 `;
 const StyledTabs = styled(TabsUnstyled)`
   height: 100%;
-`;
-const StyledButton = styled(PButton)`
-  ${tw`rounded-full`}
-  font-weight: bold;
-  font-size: ${pxToRem(16)}rem;
-  padding: 0 ${pxToRem(25)}rem;
 `;
 
 const StyledListbox = styled.ul(
@@ -122,20 +110,7 @@ const ParentManagement = () => {
   const isOpen = Boolean(anchorEl);
   const buttonRef = React.useRef<HTMLButtonElement>(null);
   const menuActions = React.useRef<MenuUnstyledActions>(null);
-  const preventReopen = React.useRef(false);
-  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (preventReopen.current) {
-      event.preventDefault();
-      preventReopen.current = false;
-      return;
-    }
 
-    if (isOpen) {
-      setAnchorEl(null);
-    } else {
-      setAnchorEl(event.currentTarget);
-    }
-  };
   const createHandleMenuClick = (menuItem: string) => {
     if (menuItem === 'leaveForm') {
       return () => {
@@ -146,23 +121,6 @@ const ParentManagement = () => {
     return () => close();
   };
 
-  const handleButtonMouseDown = () => {
-    if (isOpen) {
-      // Prevents the menu from reopening right after closing
-      // when clicking the button.
-      preventReopen.current = true;
-    }
-  };
-
-  const handleButtonKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-      event.preventDefault();
-      setAnchorEl(event.currentTarget);
-      if (event.key === 'ArrowUp') {
-        menuActions.current?.highlightLastItem();
-      }
-    }
-  };
   const close = () => {
     setAnchorEl(null);
     buttonRef.current?.focus();

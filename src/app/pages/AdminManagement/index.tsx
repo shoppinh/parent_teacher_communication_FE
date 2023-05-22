@@ -43,12 +43,6 @@ const StyledTab = styled(TabUnstyled)`
     border-bottom: 3px solid ${(p) => p.theme.backgroundVariant};
   }
 `;
-// const StyledButton = styled(PButton)`
-//   ${tw`rounded-full`}
-//   font-weight: bold;
-//   font-size: ${pxToRem(16)}rem;
-//   padding: 0 ${pxToRem(25)}rem;
-// `;
 const TabPaneContent = styled.div`
   ${tw`p-3`}
   overflow: auto;
