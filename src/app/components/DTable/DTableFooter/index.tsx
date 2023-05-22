@@ -37,7 +37,7 @@ const DisplayedText = styled.div`
 const LeftNavigationButton = styled(PButton)`
   width: ${pxToRem(100)}rem;
   height: ${pxToRem(32)}rem;
-  padding: ${pxToRem(5)}rem ${pxToRem(20)}rem;
+  padding: ${pxToRem(5)}rem ${pxToRem(10)}rem;
   margin-right: ${pxToRem(6)}rem;
   font-size: ${pxToRem(14)}rem;
   font-weight: 400;
@@ -47,7 +47,7 @@ const LeftNavigationButton = styled(PButton)`
 const RightNavigationButton = styled(PButton)`
   width: ${pxToRem(100)}rem;
   height: ${pxToRem(32)}rem;
-  padding: ${pxToRem(5)}rem ${pxToRem(20)}rem;
+  padding: ${pxToRem(5)}rem ${pxToRem(10)}rem;
   margin-left: ${pxToRem(6)}rem;
   font-size: ${pxToRem(14)}rem;
   font-weight: 400;

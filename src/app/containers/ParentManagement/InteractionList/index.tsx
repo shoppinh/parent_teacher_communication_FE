@@ -88,15 +88,6 @@ const InteractionList: React.FC = () => {
         },
       },
       {
-        label: t('table.studentId'),
-        accessor: 'studentId',
-        render: (item: Progress) => item.student._id,
-        style: {
-          width: '20%',
-          wordBreak: 'break-word',
-        },
-      },
-      {
         label: t('table.subjectName'),
         accessor: 'subjectName',
         render: (item: Progress) => item.subject.name,
@@ -109,7 +100,7 @@ const InteractionList: React.FC = () => {
         label: t('table.frequentMark'),
         accessor: 'frequentMark',
         style: {
-          width: '10%',
+          width: '5%',
           wordBreak: 'break-word',
         },
       },
@@ -117,7 +108,7 @@ const InteractionList: React.FC = () => {
         label: t('table.middleExamMark'),
         accessor: 'middleExamMark',
         style: {
-          width: '10%',
+          width: '5%',
           wordBreak: 'break-word',
         },
       },
@@ -125,7 +116,7 @@ const InteractionList: React.FC = () => {
         label: t('table.finalExamMark'),
         accessor: 'finalExamMark',
         style: {
-          width: '10%',
+          width: '5%',
           wordBreak: 'break-word',
         },
       },
@@ -133,7 +124,7 @@ const InteractionList: React.FC = () => {
         label: t('table.averageMark'),
         accessor: 'averageMark',
         style: {
-          width: '10%',
+          width: '5%',
           wordBreak: 'break-word',
         },
       },
@@ -157,7 +148,7 @@ const InteractionList: React.FC = () => {
         label: t('table.assessment'),
         accessor: 'note',
         style: {
-          width: '30%',
+          width: '15%',
           wordBreak: 'break-word',
         },
       },
@@ -220,6 +211,9 @@ const InteractionList: React.FC = () => {
             totalItems={progressListData.totalItem}
             rowsPerPage={ROWS_PER_PAGE}
             isLoading={progressLoading}
+            tableSetting={{
+              tableLayout: 'fixed'
+            }}
           />
         </>
       )}

@@ -138,20 +138,11 @@ const InteractionList: React.FC<Props> = ({
         },
       },
       {
-        label: t('table.studentId'),
-        accessor: 'studentId',
-        render: (item: Progress) => item.student._id,
-        style: {
-          width: '20%',
-          wordBreak: 'break-word',
-        },
-      },
-      {
         label: t('table.subjectName'),
         accessor: 'subjectName',
         render: (item: Progress) => item.subject.name,
         style: {
-          width: '20%',
+          width: '10%',
           wordBreak: 'break-word',
         },
       },
@@ -159,7 +150,7 @@ const InteractionList: React.FC<Props> = ({
         label: t('table.frequentMark'),
         accessor: 'frequentMark',
         style: {
-          width: '20%',
+          width: '10%',
           wordBreak: 'break-word',
         },
       },
@@ -167,7 +158,7 @@ const InteractionList: React.FC<Props> = ({
         label: t('table.middleExamMark'),
         accessor: 'middleExamMark',
         style: {
-          width: '20%',
+          width: '10%',
           wordBreak: 'break-word',
         },
       },
@@ -175,7 +166,7 @@ const InteractionList: React.FC<Props> = ({
         label: t('table.finalExamMark'),
         accessor: 'finalExamMark',
         style: {
-          width: '20%',
+          width: '10%',
           wordBreak: 'break-word',
         },
       },
@@ -183,7 +174,7 @@ const InteractionList: React.FC<Props> = ({
         label: t('table.averageMark'),
         accessor: 'averageMark',
         style: {
-          width: '20%',
+          width: '10%',
           wordBreak: 'break-word',
         },
       },
@@ -191,7 +182,7 @@ const InteractionList: React.FC<Props> = ({
         label: t('table.semester'),
         accessor: 'semester',
         style: {
-          width: '20%',
+          width: '10%',
           wordBreak: 'break-word',
         },
       },
@@ -199,7 +190,7 @@ const InteractionList: React.FC<Props> = ({
         label: t('table.year'),
         accessor: 'year',
         style: {
-          width: '20%',
+          width: '10%',
           wordBreak: 'break-word',
         },
       },

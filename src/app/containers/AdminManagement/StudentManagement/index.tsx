@@ -61,7 +61,7 @@ const StudentManagement = () => {
       {
         label: t('form.gender'),
         accessor: 'gender',
-        render: (item: Student) => item.gender,
+        render: (item: Student) => t(`common.${item.gender}`),
       },
       {
         label: t('form.age'),
