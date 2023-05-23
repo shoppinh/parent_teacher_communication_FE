@@ -114,6 +114,7 @@ const ExportReportCardModal: React.FC<Props> = ({ studentId, onClose }) => {
         <InputContainer>
           <InputLabel>{t('table.semester')}</InputLabel>
           <PSelection {...register('semester', { valueAsNumber: true })}>
+            <option value='0'>{t('interactionList.allYear')}</option>
             <option value='1'>{t('interactionList.semester1')}</option>
             <option value='2'>{t('interactionList.semester2')}</option>
           </PSelection>
