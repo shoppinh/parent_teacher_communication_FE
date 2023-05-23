@@ -119,7 +119,11 @@ const AssignMarkModal: React.FC<Props> = ({
             progressActions.updateProgress({
               token: currentAccessToken,
               progressId: value?._id,
-              payload: data,
+              payload: {
+                ...data,
+                finalExamMark:
+                  (data.frequentMark + 2 * data.middleExamMark + 3 * data.finalExamMark) / 6,
+              },
             })
           );
         }
@@ -130,6 +134,8 @@ const AssignMarkModal: React.FC<Props> = ({
               payload: {
                 ...data,
                 classId: classId,
+                finalExamMark:
+                  (data.frequentMark + 2 * data.middleExamMark + 3 * data.finalExamMark) / 6,
               },
             })
           );
@@ -208,11 +214,6 @@ const AssignMarkModal: React.FC<Props> = ({
               <InputLabel>{t('form.finalExamMark')}</InputLabel>
               <StyledInput {...register('finalExamMark', { valueAsNumber: true })} />
               {errors.finalExamMark && <Required>{errors.finalExamMark.message}</Required>}
-            </InputContainer>
-            <InputContainer>
-              <InputLabel>{t('form.averageMark')}</InputLabel>
-              <StyledInput {...register('averageMark', { valueAsNumber: true })} />
-              {errors.averageMark && <Required>{errors.averageMark.message}</Required>}
             </InputContainer>
             <InputContainer>
               <InputLabel>{t('form.semester')}</InputLabel>
