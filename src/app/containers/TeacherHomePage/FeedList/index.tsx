@@ -9,9 +9,15 @@ import PostItem from './PostItem';
 import { queryString } from '../../../../utils/constants';
 import { useQuery } from '../../../../utils/hook';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Container = styled.div``;
-
+const EmptyPostMessage = styled.div`
+  text-align: center;
+  font-size: 20px;
+  color: ${(p) => p.theme.placeholder};
+  margin-top: 20px;
+`;
 interface Props {
   isRefresh: boolean;
   setIsRefreshFeedList: (isRefresh: boolean) => void;
@@ -25,7 +31,7 @@ const FeedList: React.FC<Props> = ({ isRefresh, setIsRefreshFeedList, triggerRef
   const currentAccessToken = useSelector(getAccessToken);
   const postList = useSelector(getPostList);
   const postLoading = useSelector(getPostLoading);
-
+  const { t } = useTranslation();
   useEffect(() => {
     if (isRefresh && classId && currentAccessToken) {
       dispatch(postActions.loadPostListByClass({ token: currentAccessToken, classId }));
@@ -44,7 +50,7 @@ const FeedList: React.FC<Props> = ({ isRefresh, setIsRefreshFeedList, triggerRef
           <PostItem data={post} key={post._id} triggerRefreshFeedList={triggerRefreshFeedList} />
         ))
       ) : (
-        <p>No post</p>
+        <EmptyPostMessage>{t('common.noPost')}</EmptyPostMessage>
       )}
     </Container>
   );

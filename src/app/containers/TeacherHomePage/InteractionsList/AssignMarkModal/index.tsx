@@ -121,7 +121,7 @@ const AssignMarkModal: React.FC<Props> = ({
               progressId: value?._id,
               payload: {
                 ...data,
-                finalExamMark:
+                averageMark:
                   (data.frequentMark + 2 * data.middleExamMark + 3 * data.finalExamMark) / 6,
               },
             })
@@ -134,7 +134,7 @@ const AssignMarkModal: React.FC<Props> = ({
               payload: {
                 ...data,
                 classId: classId,
-                finalExamMark:
+                averageMark:
                   (data.frequentMark + 2 * data.middleExamMark + 3 * data.finalExamMark) / 6,
               },
             })

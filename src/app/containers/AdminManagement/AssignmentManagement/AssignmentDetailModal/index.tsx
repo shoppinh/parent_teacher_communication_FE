@@ -108,7 +108,7 @@ const AssignmentDetailModal: React.FC<Props> = ({ handleClose, triggerRefresh, t
       );
     }
     return [];
-  }, []);
+  }, [classList.data]);
   const handleSubmitClass = useCallback(
     (payload: TeacherAssignmentPayload) => {
       if (accessToken) {

@@ -226,6 +226,7 @@
     "like": "Like",
     "comment": "Comment",
     "createSuccess": "Create success",
+    "updateSuccess": "Update success",
     "teacherAuthor": "Teacher of {{className}}",
     "adminAuthor": "Admin",
     "initialContent": "This is the initial content of the editor."
@@ -318,7 +319,13 @@
     "false": "False",
     "unassigned": "Unassigned",
     "PUBLIC": "Public",
-    "PRIVATE": "Private"
+    "PRIVATE": "Private",
+    "confirmDelete": "Are you sure you want to delete?",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "deleteSuccess": "Delete success",
+    "noPost": "No post to show",
+    "notAvailable": "This function is not available right now"
   },
   "portfolios": {
     "assignStudent": {

@@ -140,7 +140,11 @@ const PEditor: React.FC<Props> = ({
 
   useEffect(() => {
     if (isFormSent && !postLoading && !postError) {
-      toast(t('post.createSuccess'));
+      if (type === 'edit') {
+        toast(t('post.updateSuccess'));
+      } else {
+        toast(t('post.createSuccess'));
+      }
       triggerRefreshFeedList();
       handleClose();
       setIsFormSent(false);
@@ -148,7 +152,7 @@ const PEditor: React.FC<Props> = ({
       toast.error(postError.message);
       setIsFormSent(false);
     }
-  }, [handleClose, isFormSent, postError, postLoading, t, triggerRefreshFeedList]);
+  }, [handleClose, isFormSent, postError, postLoading, t, triggerRefreshFeedList, type]);
 
   const example_image_upload_handler = (blobInfo, progress) =>
     new Promise<string>((resolve, reject) => {

@@ -182,6 +182,7 @@
     "like": "Thích",
     "comment": "Bình luận",
     "createSuccess": "Tạo bài viết thành công",
+    "updateSuccess": "Cập nhật bài viết thành công",
     "teacherAuthor": "Giáo viên của {{className}}",
     "adminAuthor": "Ban giám hiệu",
     "initialContent": "Đây là nội dung ban đầu."
@@ -337,7 +338,13 @@
     "false": "Sai",
     "unassigned": "Chưa phân lớp",
     "PUBLIC": "Công khai",
-    "PRIVATE": "Riêng tư"
+    "PRIVATE": "Riêng tư",
+    "confirmDelete": "Bạn có chắc chắn muốn xóa?",
+    "confirm": "Xác nhận",
+    "cancel": "Hủy",
+    "deleteSuccess": "Xóa thành công",
+    "noPost": "Không có bài viết để hiển thị",
+    "notAvailable": "Chức năng này hiện đang không khả dụng"
   },
   "table": {
     "next": "Tiếp theo",

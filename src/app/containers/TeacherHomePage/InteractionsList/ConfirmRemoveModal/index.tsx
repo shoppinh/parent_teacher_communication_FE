@@ -7,6 +7,8 @@ import { PButton } from '../../../../components/PButton';
 import { pxToRem } from '../../../../../styles/theme/utils';
 import { StyleConstants } from '../../../../../styles/constants/style';
 import { getProgressError, getProgressLoading } from '../../../../../store/selectors/progress';
+import PBackdropLoading from 'app/components/PBackdropLoading';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   handleClose: () => void;
@@ -26,7 +28,7 @@ const ButtonGroup = styled.div`
   gap: ${pxToRem(40)}rem;
 `;
 const DeleteModalHeader = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   text-align: center;
   font-size: ${pxToRem(20)}rem;
   font-weight: 700;
@@ -42,16 +44,16 @@ const StyledButton = styled(PButton)`
   margin-bottom: ${pxToRem(20)}rem;
   font: normal bold 16px / ${StyleConstants.BASE_LINE_HEIGHT}px ${StyleConstants.FONT_FAMILY};
   ${tw`rounded-full`}
-  padding: ${pxToRem(10)}rem ${pxToRem(20)}rem;
+  padding: ${pxToRem(10)}rem ${pxToRem(30)}rem;
 `;
 const RemoveMarkModal: React.FC<Props> = ({ handleClose, handleConfirm, triggerRefresh }) => {
   const progressLoading = useSelector(getProgressLoading);
   const progressError = useSelector(getProgressError);
   const [isFormSent, setIsFormSent] = useState(false);
-
+  const { t } = useTranslation();
   useEffect(() => {
     if (isFormSent && !progressLoading && !progressError) {
-      toast('Delete successfully');
+      toast(t('common.deleteSuccess'));
       triggerRefresh();
       handleClose();
       setIsFormSent(false);
@@ -60,15 +62,15 @@ const RemoveMarkModal: React.FC<Props> = ({ handleClose, handleConfirm, triggerR
       handleClose();
       setIsFormSent(false);
     }
-  }, [handleClose, isFormSent, progressError, progressLoading, triggerRefresh]);
+  }, [handleClose, isFormSent, progressError, progressLoading, t, triggerRefresh]);
   return (
     <Wrapper>
       <DeleteModalContainer>
-        <DeleteModalHeader>Do you want to delete ?</DeleteModalHeader>
+        <DeleteModalHeader>{t('common.confirmDelete')}</DeleteModalHeader>
         <DeleteModalBody>
           <ButtonGroup>
             <StyledButton variant='secondary' onClick={handleClose}>
-              Cancel
+              {t('common.cancel')}
             </StyledButton>
             <StyledButton
               variant='primary'
@@ -77,11 +79,12 @@ const RemoveMarkModal: React.FC<Props> = ({ handleClose, handleConfirm, triggerR
                 setIsFormSent(true);
               }}
             >
-              Confirm
+              {t('common.confirm')}
             </StyledButton>
           </ButtonGroup>
         </DeleteModalBody>
       </DeleteModalContainer>
+      <PBackdropLoading isShow={progressLoading} />
     </Wrapper>
   );
 };
