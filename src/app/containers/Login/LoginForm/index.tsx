@@ -85,7 +85,12 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const onSubmit = useCallback(
     (data: AuthQuery) => {
-      dispatch(sessionActions.doLogin(data));
+      dispatch(
+        sessionActions.doLogin({
+          ...data,
+          rememberMe: true,
+        })
+      );
       setIsFormSent(true);
     },
     [dispatch, sessionActions]

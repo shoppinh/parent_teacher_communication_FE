@@ -42,8 +42,8 @@ const ProfileRow: React.FC<Props> = ({ data, onClick }) => {
     <Container onClick={onClick}>
       <Avatar src={data?.avatar || AvatarPlaceholder} />
       <Title>
-        {data?.firstname && data?.lastname
-          ? `${data.firstname} ${data.lastname} (${t(`role.${data?.roleId}`)}) `
+        {data?.fullname
+          ? `${data.fullname} (${t(`role.${data?.roleId}`)}) `
           : `${data?.username} (${t(`role.${data?.roleId}`)})`}
       </Title>
     </Container>
