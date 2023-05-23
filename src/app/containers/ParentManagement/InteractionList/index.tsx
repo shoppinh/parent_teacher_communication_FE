@@ -100,39 +100,43 @@ const InteractionList: React.FC = () => {
         label: t('table.frequentMark'),
         accessor: 'frequentMark',
         style: {
-          width: '5%',
+          width: '10%',
           wordBreak: 'break-word',
         },
+        render: (item: Progress) => item.frequentMark.toFixed(2),
       },
       {
         label: t('table.middleExamMark'),
         accessor: 'middleExamMark',
         style: {
-          width: '5%',
+          width: '10%',
           wordBreak: 'break-word',
         },
+        render: (item: Progress) => item.middleExamMark.toFixed(2),
       },
       {
         label: t('table.finalExamMark'),
         accessor: 'finalExamMark',
         style: {
-          width: '5%',
+          width: '10%',
           wordBreak: 'break-word',
         },
+        render: (item: Progress) => item.finalExamMark.toFixed(2),
       },
       {
         label: t('table.averageMark'),
         accessor: 'averageMark',
         style: {
-          width: '5%',
+          width: '10%',
           wordBreak: 'break-word',
         },
+        render: (item: Progress) => item.averageMark.toFixed(2),
       },
       {
         label: t('table.semester'),
         accessor: 'semester',
         style: {
-          width: '20%',
+          width: '10%',
           wordBreak: 'break-word',
         },
       },
@@ -140,7 +144,7 @@ const InteractionList: React.FC = () => {
         label: t('table.year'),
         accessor: 'year',
         style: {
-          width: '20%',
+          width: '10%',
           wordBreak: 'break-word',
         },
       },
@@ -148,7 +152,7 @@ const InteractionList: React.FC = () => {
         label: t('table.assessment'),
         accessor: 'note',
         style: {
-          width: '15%',
+          width: '20%',
           wordBreak: 'break-word',
         },
       },

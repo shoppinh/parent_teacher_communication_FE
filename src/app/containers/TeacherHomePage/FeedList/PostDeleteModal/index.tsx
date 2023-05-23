@@ -12,6 +12,8 @@ import { toast } from 'react-toastify';
 import { PButton } from '../../../../components/PButton';
 import { pxToRem } from '../../../../../styles/theme/utils';
 import { StyleConstants } from '../../../../../styles/constants/style';
+import { useTranslation } from 'react-i18next';
+import PBackdropLoading from 'app/components/PBackdropLoading';
 interface Props {
   handleClose: () => void;
   handleConfirm: () => void;
@@ -30,7 +32,7 @@ const ButtonGroup = styled.div`
   gap: 10px;
 `;
 const DeleteModalHeader = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   text-align: center;
   font-size: ${pxToRem(20)}rem;
   font-weight: 700;
@@ -43,7 +45,8 @@ const DeleteModalContainer = styled.div`
 const StyledButton = styled(PButton)`
   margin-bottom: ${pxToRem(20)}rem;
   font: normal bold 16px / ${StyleConstants.BASE_LINE_HEIGHT}px ${StyleConstants.FONT_FAMILY};
-  ${tw`rounded-full  p-3`}
+  ${tw`rounded-full`}
+  padding: 10px 30px;
 `;
 const PostDeleteModal: React.FC<Props> = ({
   handleClose,
@@ -53,10 +56,10 @@ const PostDeleteModal: React.FC<Props> = ({
   const postLoading = useSelector(getPostUpdateOrAddLoading);
   const postError = useSelector(getPostUpdateOrAddError);
   const [isFormSent, setIsFormSent] = useState(false);
-
+  const { t } = useTranslation();
   useEffect(() => {
     if (isFormSent && !postLoading && !postError) {
-      toast('Delete successfully');
+      toast(t('common.deleteSuccess'));
       triggerRefreshFeedList();
       handleClose();
       setIsFormSent(false);
@@ -65,15 +68,15 @@ const PostDeleteModal: React.FC<Props> = ({
       handleClose();
       setIsFormSent(false);
     }
-  }, [handleClose, isFormSent, postError, postLoading, triggerRefreshFeedList]);
+  }, [handleClose, isFormSent, postError, postLoading, t, triggerRefreshFeedList]);
   return (
     <Wrapper>
       <DeleteModalContainer>
-        <DeleteModalHeader>Do you want to delete ?</DeleteModalHeader>
+        <DeleteModalHeader>{t('common.confirmDelete')}</DeleteModalHeader>
         <DeleteModalBody>
           <ButtonGroup>
             <StyledButton variant='secondary' onClick={handleClose}>
-              Cancel
+              {t('common.cancel')}
             </StyledButton>
             <StyledButton
               variant='primary'
@@ -82,11 +85,12 @@ const PostDeleteModal: React.FC<Props> = ({
                 setIsFormSent(true);
               }}
             >
-              Confirm
+              {t('common.confirm')}
             </StyledButton>
           </ButtonGroup>
         </DeleteModalBody>
       </DeleteModalContainer>
+      <PBackdropLoading isShow={postLoading} />
     </Wrapper>
   );
 };

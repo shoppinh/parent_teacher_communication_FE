@@ -125,6 +125,13 @@ const Popper = styled(PopperUnstyled)`
 const StyledTabs = styled(TabsUnstyled)`
   height: 100%;
 `;
+const NotAuthorizedDisplay = styled.div`
+  ${tw`flex items-center justify-center`}
+  height: 100%;
+  font-size: ${pxToRem(20)}rem;
+  font-weight: 700;
+  color: ${(p) => p.theme.text};
+`;
 const TeacherHomePage: React.FC = () => {
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
@@ -278,11 +285,9 @@ const TeacherHomePage: React.FC = () => {
           <StyledTabsList>
             <StyledTab>{t('tab.newsFeed')}</StyledTab>
             <StyledTab>{t('tab.trackingAndAssessment')}</StyledTab>
-            {!currentClass?.classInfo?.isSchoolClass && teacherAssignmentDetail?.isClassAdmin && (
-              <StyledTab>{t('tab.portfolios')}</StyledTab>
-            )}
-            {!currentClass?.classInfo?.isSchoolClass && <StyledTab>{t('tab.classInfo')}</StyledTab>}
-            {!currentClass?.classInfo?.isSchoolClass && <StyledTab>{t('tab.leaveForm')}</StyledTab>}
+            <StyledTab>{t('tab.portfolios')}</StyledTab>
+            <StyledTab>{t('tab.classInfo')}</StyledTab>
+            <StyledTab>{t('tab.leaveForm')}</StyledTab>
           </StyledTabsList>
           <StyledButton
             type='button'
@@ -306,22 +311,46 @@ const TeacherHomePage: React.FC = () => {
               triggerRefreshFeedList={handleTriggerRefreshFeedList}
             />
           </TabPanelUnstyled>
-          <TabPanelUnstyled value={1}>
-            <InteractionList
-              isRefresh={isRefreshProgressList}
-              triggerRefreshProgressList={handleTriggerRefreshProgressList}
-              setIsRefreshProgressList={setIsRefreshProgressList}
-            />
-          </TabPanelUnstyled>
-          <TabPanelUnstyled value={2}>
-            <Portfolios />
-          </TabPanelUnstyled>
-          <TabPanelUnstyled value={3}>
-            <ClassInfo />
-          </TabPanelUnstyled>
-          <TabPanelUnstyled value={4}>
-            <LeaveList />
-          </TabPanelUnstyled>
+          {!currentClass?.classInfo?.isSchoolClass ? (
+            <TabPanelUnstyled value={1}>
+              <InteractionList
+                isRefresh={isRefreshProgressList}
+                triggerRefreshProgressList={handleTriggerRefreshProgressList}
+                setIsRefreshProgressList={setIsRefreshProgressList}
+              />
+            </TabPanelUnstyled>
+          ) : (
+            <TabPanelUnstyled value={1}>
+              <NotAuthorizedDisplay>{t('common.notAvailable')}</NotAuthorizedDisplay>
+            </TabPanelUnstyled>
+          )}
+          {!currentClass?.classInfo?.isSchoolClass && teacherAssignmentDetail?.isClassAdmin ? (
+            <TabPanelUnstyled value={2}>
+              <Portfolios />
+            </TabPanelUnstyled>
+          ) : (
+            <TabPanelUnstyled value={2}>
+              <NotAuthorizedDisplay>{t('common.notAvailable')}</NotAuthorizedDisplay>
+            </TabPanelUnstyled>
+          )}
+          {!currentClass?.classInfo?.isSchoolClass ? (
+            <TabPanelUnstyled value={3}>
+              <ClassInfo />
+            </TabPanelUnstyled>
+          ) : (
+            <TabPanelUnstyled value={3}>
+              <NotAuthorizedDisplay>{t('common.notAvailable')}</NotAuthorizedDisplay>
+            </TabPanelUnstyled>
+          )}
+          {!currentClass?.classInfo?.isSchoolClass ? (
+            <TabPanelUnstyled value={4}>
+              <LeaveList />
+            </TabPanelUnstyled>
+          ) : (
+            <TabPanelUnstyled value={4}>
+              <NotAuthorizedDisplay>{t('common.notAvailable')}</NotAuthorizedDisplay>
+            </TabPanelUnstyled>
+          )}
         </TabPaneContent>
       </StyledTabs>
       <MenuUnstyled

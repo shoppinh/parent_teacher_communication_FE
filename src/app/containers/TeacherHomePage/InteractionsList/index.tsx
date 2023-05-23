@@ -153,6 +153,7 @@ const InteractionList: React.FC<Props> = ({
           width: '10%',
           wordBreak: 'break-word',
         },
+        render: (item: Progress) => item.frequentMark.toFixed(2),
       },
       {
         label: t('table.middleExamMark'),
@@ -161,6 +162,7 @@ const InteractionList: React.FC<Props> = ({
           width: '10%',
           wordBreak: 'break-word',
         },
+        render: (item: Progress) => item.middleExamMark.toFixed(2),
       },
       {
         label: t('table.finalExamMark'),
@@ -169,6 +171,7 @@ const InteractionList: React.FC<Props> = ({
           width: '10%',
           wordBreak: 'break-word',
         },
+        render: (item: Progress) => item.finalExamMark.toFixed(2),
       },
       {
         label: t('table.averageMark'),
@@ -177,6 +180,7 @@ const InteractionList: React.FC<Props> = ({
           width: '10%',
           wordBreak: 'break-word',
         },
+        render: (item: Progress) => item.averageMark.toFixed(2),
       },
       {
         label: t('table.semester'),
